@@ -1,3 +1,3 @@
 docker-compose down
 docker container prune
-docker rmi back mariadb nginx
+docker rmi back mariadb

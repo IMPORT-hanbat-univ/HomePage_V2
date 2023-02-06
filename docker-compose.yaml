@@ -1,31 +1,6 @@
 version: '1.0.0'
 services:
-  nginx:
-    # container 이름
-    container_name: nginx
-    # image 이름
-    image: 
-      nginx
-    # build 방법(Dockerfile 의 경로)
-    build: 
-      ./nginx/
-    # 재시작 기준(항상)
-    restart: 
-      always
-    # 어떤 볼륨을 가지고 갈건지
-    volumes:
-      - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf
-    # 사용 시간
-    environment:
-      - TZ=Asia/Seoul
-    # portfowarding
-    ports:
-      - "80:80"
-      - "443:443"
-    # 연결된 network
-    networks:
-      - import_network
-
+  
   node-server:
     container_name: back_node
     image: 
