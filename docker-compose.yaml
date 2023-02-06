@@ -3,6 +3,8 @@ services:
   
   node-server:
     container_name: back_node
+    restart: 
+      always
     image: 
       back
     build: ./backend
