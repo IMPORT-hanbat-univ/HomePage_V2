@@ -1,0 +1,74 @@
+version: '1.0.0'
+services:
+  nginx:
+    # container 이름
+    container_name: nginx
+    # image 이름
+    image: 
+      nginx
+    # build 방법(Dockerfile 의 경로)
+    build: 
+      ./nginx/
+    # 재시작 기준(항상)
+    restart: 
+      always
+    # 어떤 볼륨을 가지고 갈건지
+    volumes:
+      - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf
+    # 사용 시간
+    environment:
+      - TZ=Asia/Seoul
+    # portfowarding
+    ports:
+      - "80:80"
+      - "443:443"
+    # 연결된 network
+    networks:
+      - import_network
+
+  node-server:
+    container_name: back_node
+    image: 
+      back
+    build: ./backend
+    environment:
+      TZ: Asia/Seoul
+    ports:
+      - "3000:3000"
+    networks:
+      - import_network
+    depends_on:
+      - mariadb
+
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
+    restart: always
+    # 환경에 따라 변경
+    ports:
+      - "3306"
+    volumes:
+      - ./db/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
+      # DB 데이터 저장 디렉터리
+      - ./data:/var/lib/mysql
+      # 설정 파일 저장될 위치
+      - ./config:/etc/mysql/conf.d
+    environment:
+      MYSQL_DATABAS: import
+      # 정의하지 않으면 실행 시, 에러가 발생합니다.
+      MYSQL_ROOT_PASSWORD: import1015
+      # 컨테이너 내의 시스템 타임존을 우리나라에 맞게 설정합니다.
+      TZ: Asia/Seoul
+    command:
+      # 위 명령어를 사용하지 않으면, 일부 설정이 latin으로 설정됩니다.
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    networks:
+      - import_network
+    
+
+
+networks:
+  import_network:
+    driver: bridge
