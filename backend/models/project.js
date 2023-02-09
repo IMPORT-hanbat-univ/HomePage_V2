@@ -1,4 +1,6 @@
-module.exports = class ListPost extends Sequelize.Model{
+const Sequelize = require('sequelize');
+
+module.exports = class Project extends Sequelize.Model{
     static init(sequelize){
         return super.init({
             title:{

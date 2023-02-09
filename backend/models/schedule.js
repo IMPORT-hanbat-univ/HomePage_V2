@@ -5,11 +5,15 @@ module.exports = class Schedule extends Sequlize.Model {
     return super.init(
       {
         date: {
-          type: Sequelize.DATE(),
+          type: Sequelize.DATE,
           allowNull: false,
         },
         content: {
           type: Sequelize.STRING(255),
+          allowNull: false,
+        },
+        order: {
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
       },

@@ -4,18 +4,110 @@ module.exports = class ProjectapplicationQuestion extends Sequlize.Model {
   static init(sequelize) {
     return super.init(
       {
-        q1: {
-          type: Sequelize.STRING(255),
-          allowNull: true,
-        },
-        q25: {
-          type: Sequelize.STRING(255),
-          allowNull: true,
-        },
-        category: {
-          type: Sequlize.STRING(255),
-          allowNull: true,
-        },
+          question1: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+          }, 
+          question2: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question3: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question4: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question5: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question6: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question7: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question8: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question9: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question10: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question11: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question12: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question13: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question14: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question15: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question16: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question17: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question18: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question19: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question20: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question21: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question22: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question23: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question24: {
+              type: Sequelize.STRING(255),
+              allowNull: false,
+          },
+          question25: {
+            type: Sequelize.STRING(255),
+            allowNull: false,
+          },
+          category: {
+            type: Sequlize.STRING(255),
+            allowNull: true,
+          },
       },
       {
         sequelize,

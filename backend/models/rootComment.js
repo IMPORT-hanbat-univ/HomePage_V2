@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 module.exports = class RootComment extends Sequelize.Model{
     static init(sequelize){
         return super.init({

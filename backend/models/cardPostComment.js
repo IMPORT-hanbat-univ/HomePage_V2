@@ -1,4 +1,6 @@
-module.exports = class ListPostComment extends Sequelize.Model{
+const Sequelize = require('sequelize');
+
+module.exports = class CardPostComment extends Sequelize.Model{
     static init(sequelize){
         return super.init({
             content: {
@@ -22,8 +24,8 @@ module.exports = class ListPostComment extends Sequelize.Model{
     sequelize,
     timestamps: true,
     underscored: false,
-    modelName: 'ListPostComment',
-    tableName: 'listPostComments',
+    modelName: 'CardPostComment',
+    tableName: 'cardPostComments',
     paranoid: true,
     charset: 'utf8',
     collate: 'utf8_general_ci',

@@ -5,14 +5,14 @@ module.exports = class Reservation extends Sequlize.Model {
     return super.init(
       {
         startDate: {
-          type: Sequelize.DATE(100),
+          type: Sequelize.DATE,
           allowNull: false,
         },
         endtDate: {
-          type: Sequelize.STRING(255),
+          type: Sequelize.DATE,
           allowNull: true,
         },
-        time: {
+        content: {
           type: Sequelize.STRING(255),
           allowNull: false,
         },

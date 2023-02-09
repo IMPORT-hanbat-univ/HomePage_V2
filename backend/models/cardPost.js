@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 module.exports = class CardPost extends Sequelize.Model{
     static init(sequelize){
         return super.init({
