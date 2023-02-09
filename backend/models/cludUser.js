@@ -50,5 +50,4 @@ module.exports = class ClubUser extends Sequlize.Model {
     );
   }
 
-  static associate(db) {}
 };

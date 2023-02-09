@@ -28,7 +28,7 @@ module.exports = class User extends Sequelize.Model{
                 type: Sequelize.STRING(20),
                 allowNull: true,
             }
-            }
+
         },{
             sequelize,
 			timestamps: true,

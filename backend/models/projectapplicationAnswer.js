@@ -118,5 +118,5 @@ module.exports = class ProjectapplicationAnswer extends Sequlize.Model {
     );
   }
 
-  static associate(db) {}
+
 };

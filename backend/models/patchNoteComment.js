@@ -19,7 +19,7 @@ module.exports = class PatchNoteComment extends Sequelize.Model{
                 type: Sequelize.STRING(100),
                 allowNull: true,
             }
-        }
+
     },{
     sequelize,
     timestamps: true,

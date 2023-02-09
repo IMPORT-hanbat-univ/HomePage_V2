@@ -31,7 +31,7 @@ module.exports = class Project extends Sequelize.Model{
                 type: Sequelize.STRING(255),
                 allowNull: true,
             }
-        }
+
     },{
     sequelize,
     timestamps: true,

@@ -28,7 +28,5 @@ module.exports = class Reservation extends Sequlize.Model {
         collate: "utf8_general_ci",
       }
     );
-  }
+  }}
 
-  static associate(db) {}
-};

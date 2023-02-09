@@ -7,7 +7,7 @@ module.exports = class UserProject extends Sequelize.Model{
                 type: Sequelize.STRING(30),
                 allowNull: false,
             },
-        }
+
     },{
     sequelize,
     timestamps: true, //시간

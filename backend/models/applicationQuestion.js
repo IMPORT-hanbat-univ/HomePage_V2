@@ -122,5 +122,4 @@ const Sequlize = require("sequelize");
       );
     }
 
-  static associate(db) {}
 };

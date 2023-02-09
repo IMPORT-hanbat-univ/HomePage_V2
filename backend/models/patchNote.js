@@ -35,7 +35,7 @@ module.exports = class PatchNote extends Sequelize.Model{
                 type: Sequelize.STRING(255),
                 allowNull: true,
             }
-        }
+
     },{
     sequelize,
     timestamps: true,
