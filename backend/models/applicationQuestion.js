@@ -1,6 +1,6 @@
-const Sequlize = require("sequelize");
+const Sequelize = require('sequelize');
 
-  module.exports = class ApplicationQuestion extends Sequlize.Model {
+  module.exports = class ApplicationQuestion extends Sequelize.Model {
     static init(sequelize) {
       return super.init(
           {
@@ -105,7 +105,7 @@ const Sequlize = require("sequelize");
               allowNull: false,
             },
             category: {
-              type: Sequlize.STRING(255),
+              type: Sequelize.STRING(255),
               allowNull: true,
             },
           },

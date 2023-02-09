@@ -1,6 +1,6 @@
-const Sequlize = require("sequelize");
+const Sequelize = require('sequelize');
 
-module.exports = class ClubUser extends Sequlize.Model {
+module.exports = class ClubUser extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {

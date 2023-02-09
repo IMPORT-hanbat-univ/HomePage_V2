@@ -1,11 +1,11 @@
-const Sequlize = require("sequelize");
+const Sequelize = require('sequelize');
 
-    module.exports = class ApplicationAnswer extends Sequlize.Model {
+    module.exports = class ApplicationAnswer extends Sequelize.Model {
         static init(sequelize) {
             return super.init(
                 {
                     answer1: {
-                        type: Sequelize.DATE(100),
+                        type: Sequelize.STRING(255),
                         allowNull: true,
                     },
                     answer2: {

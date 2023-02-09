@@ -1,6 +1,6 @@
-const Sequlize = require("sequelize");
+const Sequelize = require('sequelize');
 
-module.exports = class Schedule extends Sequlize.Model {
+module.exports = class Schedule extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {

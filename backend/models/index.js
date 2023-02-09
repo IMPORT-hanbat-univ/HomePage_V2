@@ -47,68 +47,70 @@ db.CardPost = CardPost;
 db.ApplicationQuestion = ApplicationQuestion;
 db.ApplicationAnswer = ApplicationAnswer;
 
-db.User.hasMany(db.ListPost);
-db.ListPost.belongsTo(db.User);
+// console.log("1");
+// db.User.hasMany(db.ListPost);
+// console.log("2");
+// db.ListPost.belongsTo(db.User);
 
-db.User.hasMany(db.ListPostComment);
-db.ListPostComment.belongsTo(db.User);
+// db.User.hasMany(db.ListPostComment);
+// db.ListPostComment.belongsTo(db.User);
 
-db.User.hasMany(db.ApplicationAnswer);
-db.ApplicationAnswer.belongsTo(db.User);
+// db.User.hasMany(db.ApplicationAnswer);
+// db.ApplicationAnswer.belongsTo(db.User);
 
-db.User.hasOne(ClubUser);
-db.ClubUser.belongsTo(db.User);
+// db.User.hasOne(ClubUser);
+// db.ClubUser.belongsTo(db.User);
 
-db.ListPost.hasMany(db.ListPostComment);
-db.ListPostComment.belongsTo(db.ListPost);
+// db.ListPost.hasMany(db.ListPostComment);
+// db.ListPostComment.belongsTo(db.ListPost);
 
-db.ApplicationQuestion.hasMany(db.ApplicationAnswer);
-db.ApplicationAnswer.belongsTo(db.ApplicationQuestion);
+// db.ApplicationQuestion.hasMany(db.ApplicationAnswer);
+// db.ApplicationAnswer.belongsTo(db.ApplicationQuestion);
 
-db.ClubUser.hasMany(db.CardPost);
-db.CardPost.belongsTo(db.ClubUser);
+// db.ClubUser.hasMany(db.CardPost);
+// db.CardPost.belongsTo(db.ClubUser);
 
-db.ClubUser.hasMany(db.CardPostComment);
-db.CardPostComment.belongsTo(db.ClubUser);
+// db.ClubUser.hasMany(db.CardPostComment);
+// db.CardPostComment.belongsTo(db.ClubUser);
 
-db.CardPost.hasMany(db.CardPostComment);
-db.CardPostComment.belongsTo(db.CardPost);
+// db.CardPost.hasMany(db.CardPostComment);
+// db.CardPostComment.belongsTo(db.CardPost);
 
-db.ClubUser.hasMany(db.RootPost);
-db.RootPost.belongsTo(db.ClubUser);
+// db.ClubUser.hasMany(db.RootPost);
+// db.RootPost.belongsTo(db.ClubUser);
 
-db.ClubUser.hasMany(db.RootComment);
-db.RootComment.belongsTo(db.ClubUser);
+// db.ClubUser.hasMany(db.RootComment);
+// db.RootComment.belongsTo(db.ClubUser);
 
-db.RootPost.hasMany(db.RootComment);
-db.RootComment.belongsTo(db.RootPost);
-//유저프로젝트모델
-db.ClubUser.hasMany(db.UserProject);
-db.UserProject.belongsTo(db.ClubUser);
+// db.RootPost.hasMany(db.RootComment);
+// db.RootComment.belongsTo(db.RootPost);
+// //유저프로젝트모델
+// db.ClubUser.hasMany(db.UserProject);
+// db.UserProject.belongsTo(db.ClubUser);
 
-db.Project.hasMany(db.UserProject);
-db.UserProject.belongsTo(db.Project);
+// db.Project.hasMany(db.UserProject);
+// db.UserProject.belongsTo(db.Project);
 
-db.Project.hasMany(db.PatchNote);
-db.PatchNote.belongsTo(db.Project);
+// db.Project.hasMany(db.PatchNote);
+// db.PatchNote.belongsTo(db.Project);
 
-db.PatchNote.hasMany(db.PatchNoteComment);
-db.PatchNoteComment.belongsTo(db.PatchNote);
+// db.PatchNote.hasMany(db.PatchNoteComment);
+// db.PatchNoteComment.belongsTo(db.PatchNote);
 
-db.ClubUser.hasMany(db.PatchNoteComment);
-db.RootComment.belongsTo(db.PatchNoteComment);
+// db.ClubUser.hasMany(db.PatchNoteComment);
+// db.RootComment.belongsTo(db.PatchNoteComment);
 
-db.Project.hasMany(db.ProjectapplicationQuestion);
-db.ProjectapplicationQuestion.belongsTo(db.Project);
+// db.Project.hasMany(db.ProjectapplicationQuestion);
+// db.ProjectapplicationQuestion.belongsTo(db.Project);
 
-db.ProjectapplicationQuestion.hasMany(db.ProjectapplicationAnswer);
-db.ProjectapplicationAnswer.belongsTo(db.ProjectapplicationQuestion);
+// db.ProjectapplicationQuestion.hasMany(db.ProjectapplicationAnswer);
+// db.ProjectapplicationAnswer.belongsTo(db.ProjectapplicationQuestion);
 
-db.ClubUser.hasMany(db.ProjectapplicationAnswer);
-db.ProjectapplicationAnswer.belongsTo(db.ClubUser);
+// db.ClubUser.hasMany(db.ProjectapplicationAnswer);
+// db.ProjectapplicationAnswer.belongsTo(db.ClubUser);
 
-db.ClubUser.hasMany(db.Reservation);
-db.Reservation.belongsTo(db.ClubUser);
+// db.ClubUser.hasMany(db.Reservation);
+// db.Reservation.belongsTo(db.ClubUser);
 
 
 User.init(sequelize);
