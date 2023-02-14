@@ -12,75 +12,23 @@ module.exports = class User extends Sequelize.Model{
                 type: Sequelize.STRING(20),
                 allowNull: false,
             },
-            real_name:{
-                type: Sequelize.STRING(20),
-                allowNull: true,
-            },
-            snsId:{
+            snsId:{ //kakao에서 넘어오는 아이디
                 type: Sequelize.STRING(30),
                 allowNull: true,
             },
-            gender:{
-                type: Sequelize.STRING(10),
-                allowNull: true,
-            },
-            age_range:{
-                type: Sequelize.STRING(10),
-                allowNull: true,
-            },
-            provider :{
-                type: Sequelize.STRING(10),
-                allowNull: true,
-            },
-            student_num: {
+            /*password: { //내가 추가
                 type: Sequelize.STRING(100),
+                allowNull: false,
+            },*/
+            provider :{ //회원가입 방식 ex)'kakao'
+                type: Sequelize.STRING(10),
                 allowNull: true,
             },
-            department: {
+            /*rank: {
                 type: Sequelize.STRING(20),
                 allowNull: true,
-            },
-            phone_number:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            degree:{
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                defaultValue: 0,
-            },
-            project_content:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            tech_stack_content:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            objectives_content:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            github_url:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            blog_url:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            blog_url:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            blog_url:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            mannager:{
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            }
+            }*/
+
         },{
             sequelize,
 			timestamps: true,
@@ -91,5 +39,15 @@ module.exports = class User extends Sequelize.Model{
 			charset: 'utf8',
 			collate: 'utf8_general_ci',
         });
+    }
+    static associate(db) {
+        db.User.hasMany(db.ListPost);
+        db.User.hasMany(db.ListPostComment);
+        db.User.hasMany(db.ApplicationAnswer);
+        db.User.hasOne(db.ClubUser);
+        db.ClubUser.hasMany(db.PatchNoteComment);
+        db.ClubUser.hasMany(db.RootComment);
+        db.ClubUser.hasMany(db.CardPostComment);
+
     }
 }
