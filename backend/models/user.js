@@ -45,9 +45,10 @@ module.exports = class User extends Sequelize.Model{
         db.User.hasMany(db.ListPostComment);
         db.User.hasMany(db.ApplicationAnswer);
         db.User.hasOne(db.ClubUser);
-        db.ClubUser.hasMany(db.PatchNoteComment);
-        db.ClubUser.hasMany(db.RootComment);
-        db.ClubUser.hasMany(db.CardPostComment);
+        db.User.hasMany(db.PatchNoteComment);
+        db.User.hasMany(db.RootComment);
+        db.User.hasMany(db.CardPostComment);
+        db.User.hasMany(db.ProjectComment);
 
     }
 }

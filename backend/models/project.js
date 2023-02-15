@@ -46,6 +46,7 @@ module.exports = class Project extends Sequelize.Model{
         db.Project.hasMany(db.UserProject);
         db.Project.hasMany(db.PatchNote);
         db.Project.hasMany(db.ProjectapplicationQuestion);
+        db.Project.hasMany(db.ProjectComment);
 
     }
 }

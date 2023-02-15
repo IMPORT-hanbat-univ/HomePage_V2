@@ -11,23 +11,11 @@ module.exports = class PatchNote extends Sequelize.Model{
                 type: Sequelize.STRING(255),
                 allowNull: false,
             },
-            tagF: { //1
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            tagS: { //2
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            tagT: { //3
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
             category: {
                 type: Sequelize.STRING(30),
                 allowNull: false,
             },
-            order:{
+            order:{//몇번째인지 저장
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
