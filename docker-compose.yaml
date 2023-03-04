@@ -1,6 +1,21 @@
 version: '1.0.0'
 services:
-  
+  next-front:
+    container_name: front_next
+    restart: 
+      always
+    image: 
+      front
+    build: ./frontend
+    environment:
+      TZ: Asia/Seoul
+    ports:
+      - "3000:3000"
+    networks:
+      - import_network
+    depends_on:
+      - node-server
+
   node-server:
     container_name: back_node
     restart: 
@@ -11,7 +26,7 @@ services:
     environment:
       TZ: Asia/Seoul
     ports:
-      - "3000:3000"
+      - "4000:4000"
     networks:
       - import_network
     depends_on:

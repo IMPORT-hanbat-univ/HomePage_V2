@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages() {
+        stage('git clone') {
+            steps() {
+                git 'https://github.com/leeseok0916/jenkinsTest.git'
+            }
+        }
+        stage('NextJS Build') {
+            steps {
+                echo 'NextJS Build..'
+                sh ''
+            }
+        }
+        stage('Continer Image build') {
+            steps {
+                echo 'Container Image Build'
+                sh 'docker-compose build'
+            }
+        }
+        stage('Push Container Image to Nexus') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Nexus pull Container Image') {
+            steps {
+                sh "chmod 774 ./project.sh"
+                sh "./project.sh"
+            }
+        }
+        stage('Container Start') {
+            steps {
+                sh "chmod 774 ./project.sh"
+                sh "./project.sh"
+            }
+        }
+    }
+}
