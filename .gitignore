@@ -5,6 +5,7 @@
 build/    # ignore all files in the build/ directory
 doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
 
+# MariaDB 데이터 적재 방지
 ./mariadb/*.a       # no .a files
 ./mariadb/!lib.a    # but do track lib.a, even though you're ignoring .a files above
 ./mariadb//TODO     # only ignore the root TODO file, not subdir/TODO
