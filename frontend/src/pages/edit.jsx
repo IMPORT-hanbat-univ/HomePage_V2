@@ -1,11 +1,10 @@
-
-import React from 'react';
+import WritingBox from "@/components/WritingBox";
+import React from "react";
 
 export default function Edit() {
-    return (
-        <div>
-            
-        </div>
-    );
+  return (
+    <div>
+      <WritingBox />
+    </div>
+  );
 }
-
