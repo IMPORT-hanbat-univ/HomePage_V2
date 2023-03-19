@@ -1,15 +1,29 @@
-import React, { useState } from "react";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import React, {  useState } from "react";
+import styles from "./WritingBox.module.css"
 import TextareaAutosize from "react-textarea-autosize"
-import rehypeRaw from "rehype-raw";
-import styles from './WritingBox.module.css'
-import remarkGfm from 'remark-gfm';
-import remarkHtml from "remark-html";
+import rehypeSanitize from "rehype-sanitize";
+import  "@uiw/react-md-editor/markdown-editor.css" ; 
+import dynamic from "next/dynamic";
 
-export default function WritingBox() {
+
+const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.default), {
+  ssr: false,
+});
+
+const Markdown = dynamic(
+  () =>
+    import("@uiw/react-md-editor").then((mod) => {
+      return mod.default.Markdown;
+    }),
+  { ssr: false }
+);
+
+
+export default function WritingBox(){
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   
+
   return (
     <div className="flex">
       <div className="w-1/2">
@@ -21,23 +35,15 @@ export default function WritingBox() {
               <input className={styles.tag_input}/>
             </div>
           </div>
+          <MDEditor height={600} preview="edit" value={text} onChange={setText} />
+          <Markdown source={text} rehypePlugins={[rehypeSanitize]} style={{ whiteSpace: 'pre-wrap' }} />
         </div>
-      <textarea className={styles.editor} value={text} onChange={(e) => setText(e.target.value)} />
 
       </div>
     
-      {text && (
-        <ReactMarkdown 
-        className="markdown" 
-        plugins={[remarkGfm, remarkHtml]}
-        linkTarget="_blank"
-        rehypePlugins={[rehypeRaw]}
-      >
-        {text}
-      </ReactMarkdown>
-      )}
       
     </div>
-  
+
+
   );
 }
