@@ -4,10 +4,10 @@ pipeline {
     stages() {
         stage('git clone') {
             steps() {
-                git 'https://github.com/leeseok0916/jenkinsTest.git'
+                git 'https://github.com/IMPORT-hanbat-univ/HomePage_V2.git'
             }
         }
-        stage('NextJS Build') {
+        stage('NextJS Build') {ㄴ
             steps {
                 echo 'NextJS Build..'
                 sh ''
