@@ -26,7 +26,7 @@
     flex-direction: column;
 } */
 
-
+/* 
 
 .markdown {
     font-family: Arial, Helvetica, sans-serif;
@@ -82,4 +82,65 @@
     overflow-x: auto;
     padding: 0;
     font-size: 14px;
-  }
+  } */
+
+/* Editor 관련 css */
+
+.w-md-editor-toolbar > ul:last-child {
+  display: none;
+}
+
+.w-md-editor-toolbar > ul:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #ffffff;
+  z-index: 10;
+  margin-bottom: 1rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  width: auto;
+}
+
+.w-md-editor-bar {
+  display: none;
+}
+
+button[data-name="title5"] {
+  display: none;
+}
+
+button[data-name="title6"] {
+  display: none;
+}
+
+button[data-name="title4"] {
+  display: none;
+}
+
+button[data-name="title1"] > div {
+  visibility: hidden;
+}
+
+button[data-name="title1"] > div::after {
+  visibility: visible;
+  content: "H1";
+}
+
+button[data-name="title2"] > div {
+  visibility: hidden;
+}
+
+button[data-name="title2"] > div::after {
+  visibility: visible;
+  content: "H2";
+}
+
+button[data-name="title3"] > div {
+  visibility: hidden;
+}
+
+button[data-name="title3"] > div::after {
+  visibility: visible;
+  content: "H3";
+}
