@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./WritingBox.module.css";
 import TextareaAutosize from "react-textarea-autosize";
 import rehypeSanitize from "rehype-sanitize";
+import "@uiw/react-md-editor/markdown-editor.css";
 import dynamic from "next/dynamic";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.default), {
