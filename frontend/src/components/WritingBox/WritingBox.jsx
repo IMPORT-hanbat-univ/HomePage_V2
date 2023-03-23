@@ -26,6 +26,7 @@ export default function WritingBox() {
       <div className="w-1/2">
         <div className="max-h-[540px]">
           <div className="pt-8 pl-12 pr-12">
+            <h1>test</h1>
             <TextareaAutosize
               className={styles.title}
               type="text"
