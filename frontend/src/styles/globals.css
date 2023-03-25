@@ -2,98 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .ql-toolbar {
-    top: 0px;
-    display: flex;
+h1 {
+  display: block;
+    font-size: 2em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+
+/* editor 관련 */
+.w-md-editor-toolbar > ul:first-child{
+  padding-left: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.w-md-editor-toolbar-child > .w-md-editor-toolbar > ul:first-child {
+  padding: 0rem !important;
+}
+
+.w-md-editor-toolbar > ul:first-child > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+    height: 3rem;
     -webkit-box-align: center;
-    align-items: center;
-    background: #ffffff;
-    z-index: 10;
-    transition: all 0.125s ease-in 0s;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-    padding-left: 3rem !important;
-    padding-right: 3rem !important;
-    border: none !important;
-    width: auto;
+    -webkit-box-pack: center;
+    color: var(--text3);
+
+    cursor: pointer;
+    flex-shrink: 0;
+    background: none;
+    outline: none;
+    border: none;
+    padding: 0px;
+    
+}
+.w-md-editor-toolbar > ul:first-child > li:hover {
+  background-color: #F8F9FA;
+  
 }
 
-.ql-editor {
-    flex: 1 1 0%;
-    min-height: 300px;
-    outline: none !important;
-    display: flex;
-    flex-direction: column;
-} */
 
-/* 
-
-.markdown {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #333;
-    padding: 24px;
+.w-md-editor-toolbar > ul:first-child > li > button > svg {
+  width: 17px;
+  height: 17px;
 }
 
-.markdown > * {
-    all: revert;
-  }
-
-  
-  h1 {
-    font-size: 32px;
-    margin-bottom: 24px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 16px;
-  }
-  
-  ul,
-  ol {
-    margin-bottom: 24px;
-  }
-  
-  ul > li,
-  ol > li {
-    margin-left: 16px;
-    margin-bottom: 8px;
-  }
-  
-  code {
-    font-family: monospace;
-    font-size: 14px;
-    background-color: #f5f5f5;
-    padding: 4px;
-    border-radius: 4px;
-  }
-  
-  pre {
-    background-color: #f5f5f5;
-    padding: 16px;
-    border-radius: 4px;
-    overflow-x: scroll;
-  }
-  
-  pre > code {
-    display: block;
-    overflow-x: auto;
-    padding: 0;
-    font-size: 14px;
-  } */
-
-/* Editor 관련 css */
-
-/* .w-md-editor-toolbar > ul:last-child {
-  display: none;
+.w-md-editor-toolbar-divider {
+  display: none !important;
 }
-
-.w-md-editor-toolbar-child {
-  z-index: 10 !important;
-} */
-
 button[data-name="title5"] {
   display: none;
 }
@@ -121,3 +83,12 @@ button[data-name="live"] {
 button[data-name="fullscreen"] {
   display: none;
 }
+
+ .w-md-editor-input{
+  padding-left: 3rem;
+}
+
+.w-md-editor-bar {
+  display: none;
+}
+

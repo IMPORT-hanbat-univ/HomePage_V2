@@ -32,3 +32,28 @@
   min-width: 8rem;
   border: none;
 }
+
+.viewer {
+  word-break: break-word;
+  padding: 3rem;
+  flex: 1 1 0%;
+  color: #212529;
+}
+
+.tag {
+  font-size: 1rem;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 2rem;
+  border-radius: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: #f8f9fa;
+  color: #12b886;
+  margin-right: 0.75rem;
+  transition: all 0.125s ease-in 0s;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+  animation: 0.125s ease-in-out 0s 1 normal forwards running lnHDaM;
+}

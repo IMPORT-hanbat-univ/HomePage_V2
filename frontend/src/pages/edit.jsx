@@ -1,6 +1,5 @@
 
-import WritingBox from "@/components/WritingBox/WritingBox";
-import dynamic from "next/dynamic";
+import WritingBox from "@/components/EditorWithPreview/EditorWithPreview";
 import React from "react";
 
 
