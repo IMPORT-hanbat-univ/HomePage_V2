@@ -16,15 +16,13 @@ export default function NoticeList() {
     error,
   } = useQuery(["notice"], async () => {
     const result = await axios.get("/dummy/notice.json");
-    console.log(result);
     return result.data.items;
   });
   const { page, pageData, pageRangeArray } = usePagination(notices, currentPage);
-  console.log(page, pageData);
   return (
     <div className="p-3 flex-shrink basis-0 grow max-w-[980px]">
       <div className="mb-[32px]">{pageData && pageData.map((post) => <NoticeCard post={post} key={post.order} />)}</div>
-      <Pagination currentPage={currentPage} pageRangeArray={pageRangeArray} page={page} />
+      <Pagination nowPage={currentPage} pageRangeArray={pageRangeArray} page={page} />
     </div>
   );
 }

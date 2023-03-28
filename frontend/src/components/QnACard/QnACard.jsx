@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { FaComment } from "react-icons/fa";
 
 export default function QnACard({ post }) {
-  console.log(post);
   return (
     <li className="max-w-[655px] border-b border-b-zinc-500 hover:bg-gray-100">
       <a className="cursor-pointer ">

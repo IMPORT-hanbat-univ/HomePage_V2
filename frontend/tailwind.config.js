@@ -4,7 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-
+        "light-gray": "#868e96",
+        "preview-gray": "#495057",
+        "import-color": "#5856D6",
       },
     },
   },
