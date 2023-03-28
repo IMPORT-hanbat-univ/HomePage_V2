@@ -1,7 +1,7 @@
 import React from "react";
 import NoticeList from "@/components/NoticeList/NoticeList";
-import { useNoticeApi } from "./../../context/noticeContext";
 import { useQuery } from "react-query";
+import { useNoticeApi } from "@/recoil/notice";
 
 export default function NoticeListPage() {
   const notice = useNoticeApi();

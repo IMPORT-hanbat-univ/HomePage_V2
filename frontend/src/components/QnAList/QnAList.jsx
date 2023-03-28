@@ -12,9 +12,9 @@ export default function QnAList({ qnaList }) {
   const currentPage = nowPage ? parseInt(nowPage) : 1;
 
   const { page, pageData, pageRangeArray } = usePagination(qnaList, currentPage);
-  console.log(pageData);
+
   return (
-    <div className="p-3 flex-shrink basis-0 grow max-w-[980px]">
+    <div className="p-3 flex-shrink basis-0 grow ">
       <ul className="mb-[30px] ">
         {pageData.map((post) => (
           <QnACard post={post} key={post.id} />
