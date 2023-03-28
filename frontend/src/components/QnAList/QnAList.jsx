@@ -6,18 +6,11 @@ import QnACard from "./../QnACard/QnACard";
 import Pagination from "./../Pagination/Pagination";
 import usePagination from "@/hooks/usePagination";
 
-export default function QnAList() {
+export default function QnAList({ qnaList }) {
   const router = useRouter();
   const { nowPage } = router.query;
   const currentPage = nowPage ? parseInt(nowPage) : 1;
-  const {
-    data: qnaList,
-    isLoading,
-    error,
-  } = useQuery(["qnaList"], async () => {
-    const result = await axios.get("/dummy/qna.json");
-    return result.data.items;
-  });
+
   const { page, pageData, pageRangeArray } = usePagination(qnaList, currentPage);
   console.log(pageData);
   return (

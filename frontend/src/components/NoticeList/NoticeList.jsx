@@ -6,22 +6,16 @@ import usePagination from "@/hooks/usePagination";
 import { useRouter } from "next/router";
 import Pagination from "../Pagination/Pagination";
 
-export default function NoticeList() {
+export default function NoticeList({ notices }) {
+  console.log(notices);
   const router = useRouter();
   const { nowPage } = router.query;
   const currentPage = nowPage ? parseInt(nowPage) : 1;
-  const {
-    data: notices,
-    isLoading,
-    error,
-  } = useQuery(["notice"], async () => {
-    const result = await axios.get("/dummy/notice.json");
-    return result.data.items;
-  });
+
   const { page, pageData, pageRangeArray } = usePagination(notices, currentPage);
   return (
     <div className="p-3 flex-shrink basis-0 grow max-w-[980px]">
-      <div className="mb-[32px]">{pageData && pageData.map((post) => <NoticeCard post={post} key={post.order} />)}</div>
+      <div className="mb-[32px]">{pageData && pageData.map((post) => <NoticeCard post={post} key={post.id} />)}</div>
       <Pagination nowPage={currentPage} pageRangeArray={pageRangeArray} page={page} />
     </div>
   );
