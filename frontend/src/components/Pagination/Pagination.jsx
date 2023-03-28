@@ -19,7 +19,7 @@ export default function Pagination({ page, nowPage, pageRangeArray }) {
             <li>
               <Link
                 href={{ pathname, query: { ...query, nowPage: 1 } }}
-                className=" min-w-[2.25em] inline-flex items-center justify-center m-1 px-2 py-1   text-[1em] border rounded-sm"
+                className=" min-w-[2.25em] inline-flex items-center justify-center m-1 px-2 py-1   text-[1em] border rounded-sm "
               >
                 1
               </Link>
