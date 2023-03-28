@@ -19,12 +19,12 @@ export default function NoticeList() {
     console.log(result);
     return result.data.items;
   });
-  const { page, pageData } = usePagination(notices, currentPage);
+  const { page, pageData, pageRangeArray } = usePagination(notices, currentPage);
   console.log(page, pageData);
   return (
     <div className="p-3 flex-shrink basis-0 grow max-w-[980px]">
-      <div className="mb-[32px]">{notices && notices.map((post) => <NoticeCard post={post} key={post.order} />)}</div>
-      <Pagination currentPage={currentPage} page={page} />
+      <div className="mb-[32px]">{pageData && pageData.map((post) => <NoticeCard post={post} key={post.order} />)}</div>
+      <Pagination currentPage={currentPage} pageRangeArray={pageRangeArray} page={page} />
     </div>
   );
 }
