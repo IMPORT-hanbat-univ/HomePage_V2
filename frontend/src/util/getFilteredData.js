@@ -1,7 +1,7 @@
-export default function getFilteData(data, queryString) {
-  const filteredObj = Object.fromEntries(Object.entries(queryString).filter(([key, value]) => value !== "all"));
+export default function getFilteData(data, filter, sort="latest") {
+  const filteredObj = Object.fromEntries(Object.entries(filter).filter(([key, value]) => value !== "all"));
   const queryKeys = Object.keys(filteredObj);
-  const filteredData = [];
+  let filteredData = [];
   if (!data || !Array.isArray(data)) {
     return [];
   }
@@ -10,7 +10,7 @@ export default function getFilteData(data, queryString) {
     let match = true;
     for (let j = 0; j < queryKeys.length; j++) {
       const key = queryKeys[j];
-      if (item[key] !== queryString[key]) {
+      if (item[key] !== filter[key]) {
         match = false;
         break;
       }
@@ -19,5 +19,13 @@ export default function getFilteData(data, queryString) {
       filteredData.push(item);
     }
   }
+  console.log("one",filteredData);
+
+  if(sort === "latest"){
+    filteredData = filteredData.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
+  }else if(sort === "oldest"){
+    filteredData = filteredData.sort((a, b) => new Date(a.createAt) - new Date(b.createAt));
+  }
+
   return filteredData;
 }

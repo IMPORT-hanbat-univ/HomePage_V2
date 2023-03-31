@@ -9,11 +9,12 @@ import getFilteredData from "../../util/getFilteredData";
 
 export default function QnAListPage() {
   const router = useRouter();
-  const { category, tag } = router.query;
+  const { category, tag, order } = router.query;
   const seletedCategory = category || "all";
+  const seletedOrder = order || "latest";
   const qna = useQnAApi();
   const { data, isLoading, error } = useQuery(["qnaList"], () => qna.getList());
-  const filteredData = getFilteredData(data, { category: seletedCategory });
+  const filteredData = getFilteredData(data, { category: seletedCategory }, seletedOrder);
   return (
     <section className="flex px-[32px]">
       <section className=" w-3/12  mt-[32px] ml-[40px] max-w-[200px]">
