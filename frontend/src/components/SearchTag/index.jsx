@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-export default function TagSearch() {
+export default function SearchTag() {
     const [tagText, setTagText] = useState("")
     const [tagList, setTagList] = useState([]);
     const router = useRouter();
@@ -42,7 +42,7 @@ export default function TagSearch() {
     return (
         <div className='flex'>
             <div className='w-full'>
-                <div className='w-full h-12 px-3 pt-2 pb-1 overflow-x-hidden overflow-y-auto flex items-center border-zinc-300 rounded'>
+                <div className='w-full h-12 px-3 pt-2 pb-1 overflow-x-hidden overflow-y-auto flex items-center border border-zinc-300 rounded'>
                     <svg className='mt-1 mr-2 overflow-hidden' width="16" xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 16 16">
                         <path fill="#3E4042" fillRule="evenodd" d="M5.773 1.455c-.283 0-.518.216-.542.498L5 4.727H2.545c-.3 0-.545.244-.545.546 0 .301.244.545.545.545H4.91l-.364 4.364h-2c-.3 0-.545.244-.545.545 0 .301.244.546.545.546h1.91l-.224 2.684c-.027.317.224.588.542.588.282 0 .518-.216.541-.498l.231-2.774H9.91l-.224 2.684c-.026.317.224.588.542.588.283 0 .518-.216.542-.498L11 11.273h2.454c.302 0 .546-.245.546-.546 0-.301-.244-.545-.546-.545h-2.363l.364-4.364h2c.3 0 .545-.244.545-.545 0-.302-.244-.546-.546-.546h-1.909l.224-2.684c.027-.317-.224-.588-.542-.588-.282 0-.518.216-.541.498l-.232 2.774H6.091l.224-2.684c.026-.317-.224-.588-.542-.588zM6 5.818l-.364 4.364H10l.364-4.364H6z" clipRule="evenodd">
                         </path>
