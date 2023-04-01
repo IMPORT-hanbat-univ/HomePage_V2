@@ -62,6 +62,7 @@ export default function WritingBox() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            placeholder="제목을 입력하세요"
           />
           <div className={styles.bar}></div>
           <div className=" flex flex-wrap">
@@ -69,7 +70,7 @@ export default function WritingBox() {
               <div key={tag} className={styles.tag} onClick={() => removeTag(tag)}>{tag}</div>
             ))}
             
-            <input className={styles.tag_input} value={tagText} onChange={(e) => setTagText(e.target.value)} onKeyDown={pressTagInput} />
+            <input className={styles.tag_input} value={tagText} onChange={(e) => setTagText(e.target.value)} onKeyDown={pressTagInput} placeholder="태그를 입력하세요"/>
           </div>
         </div>
         <MDEditor  
