@@ -23,7 +23,7 @@ export default function QnAListPage() {
   const filteredData = getFilteredData(data, { category: seletedCategory, tag: seletedTagList, search: currentSearch }, seletedOrder);
   
   return (
-    <section className="flex px-[32px] mt-20">
+    <section className="flex justify-center px-[32px] mt-20">
       <section className=" w-3/12  mt-[32px] ml-[40px] max-w-[200px]">
         <CategoryNav
           categoryList={["frontend", "backend", "Mobile", "Bigdata", "AI"]}
