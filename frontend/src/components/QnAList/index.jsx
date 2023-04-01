@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
-import QnACard from "./../QnACard/QnACard";
-import Pagination from "./../Pagination/Pagination";
+import QnACard from "../QnACard";
+import Pagination from "../Pagination";
 import usePagination from "@/hooks/usePagination";
 
 export default function QnAList({ qnaList }) {
@@ -14,13 +14,15 @@ export default function QnAList({ qnaList }) {
   const { page, pageData, pageRangeArray } = usePagination(qnaList, currentPage);
 
   return (
-    <div className="p-3 flex-shrink basis-0 grow ">
-      <ul className="mb-[30px] ">
-        {pageData.map((post) => (
-          <QnACard post={post} key={post.id} />
-        ))}
-      </ul>
-      <Pagination nowPage={currentPage} page={page} pageRangeArray={pageRangeArray} />
+    <div className="flex items-center justify-center">
+      <div className=" flex-shrink basis-0 grow ">
+        <ul className="mb-[30px] ">
+          {pageData.map((post) => (
+            <QnACard post={post} key={post.id} />
+          ))}
+        </ul>
+        <Pagination nowPage={currentPage} page={page} pageRangeArray={pageRangeArray} />
+      </div>
     </div>
   );
 }

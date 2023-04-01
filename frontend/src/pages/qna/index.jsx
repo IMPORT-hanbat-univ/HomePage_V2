@@ -1,11 +1,12 @@
 import React from "react";
-import QnAList from "@/components/QnAList/QnAList";
+import QnAList from "@/components/QnAList";
 import { useQuery } from "react-query";
 import { useQnAApi } from "../../recoil/qna";
-import PopularTag from "@/components/PopularTag/PopularTag";
+import PopularTag from "@/components/PopularTag";
 import { useRouter } from "next/router";
-import CategoryNav from "@/components/CategoryNav/CategoryNav";
+import CategoryNav from "@/components/CategoryNav";
 import getFilteredData from "../../util/getFilteredData";
+import OrderCategory from "@/components/OrderCategory";
 
 export default function QnAListPage() {
   const router = useRouter();
@@ -23,9 +24,14 @@ export default function QnAListPage() {
           seletedCategory={seletedCategory}
         />
       </section>
-      <div className="flex items-center justify-center w-9/12 max-w-[980px]">
+      <section className=" w-9/12 max-w-[980px]">
+        <div className="box-content border-b pb-3">
+        <OrderCategory seleted={seletedOrder} orderArray={[{order:"latest", name: "최신순"}, {order:"oldest", name: "오래된순"}]} />
+        </div>
+       
         <QnAList qnaList={filteredData} />
-      </div>
+      </section>
+     
       <section className=" w-3/12 mt-[32px] ml-[40px] max-w-[200px]">
         <PopularTag data={filteredData} />
       </section>
