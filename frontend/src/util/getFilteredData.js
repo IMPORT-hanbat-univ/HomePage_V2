@@ -1,10 +1,12 @@
 export default function getFilteData(data, filter, sort = "latest") {
-  const { tag, ...filteredObj } = filter;
-  const queryKeys = Object.keys(filteredObj);
+  if (!data || !Array.isArray(data)) {
+    return [];
+  }
+  const queryKeys = Object.keys(filter).filter((key) => filter[key] !== "all");
   const filteredData = data.filter((item) => {
     return queryKeys.every((key) => {
       if (key === "tag") {
-        const tagList = tag;
+        const tagList = filter[key];
         return tagList.some(
           (tag) =>
             item["tagF"] === tag ||
