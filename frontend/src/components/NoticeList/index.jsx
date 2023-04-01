@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import Pagination from "../Pagination";
 
 export default function NoticeList({ notices }) {
-  console.log(notices);
   const router = useRouter();
   const { nowPage } = router.query;
   const currentPage = nowPage ? parseInt(nowPage) : 1;

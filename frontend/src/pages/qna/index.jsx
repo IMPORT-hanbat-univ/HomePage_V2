@@ -5,27 +5,33 @@ import { useQnAApi } from "../../recoil/qna";
 import PopularTag from "@/components/PopularTag";
 import { useRouter } from "next/router";
 import CategoryNav from "@/components/CategoryNav";
-import getFilteredData from "../../util/getFilteredData";
+import getFilteredData from "@/util/getFilteredData";
 import OrderCategory from "@/components/OrderCategory";
+import TagSearch from "@/components/TagSearch";
 
 export default function QnAListPage() {
   const router = useRouter();
   const { category, tag, order } = router.query;
-  const seletedCategory = category || "all";
+  const seletedCategory = category || "";
+  const seletedTagList = tag ? tag.split("+") : "";
   const seletedOrder = order || "latest";
   
   const qna = useQnAApi();
-  const { data, isLoading, error } = useQuery(["qnaList"], () => qna.getList());
-  const filteredData = getFilteredData(data, { category: seletedCategory, tag: "all" }, seletedOrder);
+  const { data, isLoading, error } = useQuery(["qnaList"], () => qna.getList(), { staleTime: 1000 * 60 * 5});
+
+  const filteredData = getFilteredData(data, { category: seletedCategory, tag: seletedTagList, search: "3" }, seletedOrder);
+  
   return (
     <section className="flex px-[32px]">
       <section className=" w-3/12  mt-[32px] ml-[40px] max-w-[200px]">
+
         <CategoryNav
           categoryList={["frontend", "backend", "Mobile", "Bigdata", "AI"]}
           seletedCategory={seletedCategory}
         />
       </section>
       <section className=" w-9/12 max-w-[980px]">
+        <TagSearch />
         <div className="box-content border-b pb-3">
         <OrderCategory seleted={seletedOrder} orderArray={[{order:"latest", name: "최신순"}, {order:"oldest", name: "오래된순"}]} />
         </div>
@@ -34,7 +40,7 @@ export default function QnAListPage() {
       </section>
      
       <section className=" w-3/12 mt-[32px] ml-[40px] max-w-[200px]">
-        <PopularTag data={filteredData} />
+        <PopularTag data={data} />
       </section>
     </section>
   );

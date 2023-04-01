@@ -12,7 +12,6 @@ export default function QnAList({ qnaList }) {
   const currentPage = nowPage ? parseInt(nowPage) : 1;
 
   const { page, pageData, pageRangeArray } = usePagination(qnaList, currentPage);
-
   return (
     <div className="flex items-center justify-center">
       <div className=" flex-shrink basis-0 grow ">

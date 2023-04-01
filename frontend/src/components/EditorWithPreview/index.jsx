@@ -22,19 +22,19 @@ export default function WritingBox() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [tagText, setTagText] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tagList, setTagList] = useState([]);
   const imageRef = useRef();
 
   const pressTagInput = (e) => {
     if(e.key === "Enter"){
       if(tagText.trim() === ""){
         return;
-      }else if(tags.length === 3){
+      }else if(tagList.length === 3){
         return;
-      }else if(tags.find((prevTag) => prevTag === tagText.trim())){
+      }else if(tagList.find((prevTag) => prevTag === tagText.trim())){
         return;
       }else{
-        setTags((prev) => [...prev, tagText.trim()]);
+        setTagList((prev) => [...prev, tagText.trim()]);
         setTagText("");
       }
    
@@ -43,13 +43,12 @@ export default function WritingBox() {
   }
 
   const removeTag = (tag) => {
-    console.log(tag)
-    setTags((prev) => prev.filter((prevTag) => prevTag !== tag))
+    setTagList((prev) => prev.filter((prevTag) => prevTag !== tag))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(title, tags, text)
+    console.log(title, tagList, text)
   }
 
   return (
@@ -66,7 +65,7 @@ export default function WritingBox() {
           />
           <div className={styles.bar}></div>
           <div className=" flex flex-wrap">
-            {tags.length > 0 && tags.map((tag) => (
+            {tagList.length > 0 && tagList.map((tag) => (
               <div key={tag} className={styles.tag} onClick={() => removeTag(tag)}>{tag}</div>
             ))}
             
