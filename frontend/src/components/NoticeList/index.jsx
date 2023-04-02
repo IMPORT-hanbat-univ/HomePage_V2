@@ -1,13 +1,12 @@
 import React from "react";
 import { useQuery } from "react-query";
-import NoticeCard from "../NoticeCard/NoticeCard";
+import NoticeCard from "../NoticeCard";
 import axios from "axios";
 import usePagination from "@/hooks/usePagination";
 import { useRouter } from "next/router";
-import Pagination from "../Pagination/Pagination";
+import Pagination from "../Pagination";
 
 export default function NoticeList({ notices }) {
-  console.log(notices);
   const router = useRouter();
   const { nowPage } = router.query;
   const currentPage = nowPage ? parseInt(nowPage) : 1;

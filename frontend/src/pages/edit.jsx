@@ -1,5 +1,5 @@
 
-import WritingBox from "@/components/EditorWithPreview/EditorWithPreview";
+import WritingBox from "@/components/EditorWithPreview";
 import React from "react";
 
 

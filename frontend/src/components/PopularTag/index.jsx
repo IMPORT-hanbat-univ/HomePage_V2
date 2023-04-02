@@ -3,7 +3,6 @@ import React from "react";
 
 export default function PopularTag({ data }) {
   const tagArray = usePopularTag(data);
-  console.log(tagArray);
   return (
     <div className="mb-3 w-full ">
       <div className="py-4 px-5 border rounded-sm">

@@ -1,23 +1,36 @@
-export default function getFilteData(data, queryString) {
-  const filteredObj = Object.fromEntries(Object.entries(queryString).filter(([key, value]) => value !== "all"));
-  const queryKeys = Object.keys(filteredObj);
-  const filteredData = [];
+export default function getFilteData(data, filter, sort = "latest") {
   if (!data || !Array.isArray(data)) {
     return [];
   }
-  for (let i = 0; i < data.length; i++) {
-    const item = data[i];
-    let match = true;
-    for (let j = 0; j < queryKeys.length; j++) {
-      const key = queryKeys[j];
-      if (item[key] !== queryString[key]) {
-        match = false;
-        break;
+  const queryKeys = Object.keys(filter).filter((key) => filter[key]);
+  const filteredData = data.filter((item) => {
+    return queryKeys.every((key) => {
+      if (key === "tag") {
+        const tagList = filter[key];
+        return tagList.every(
+          (tag) =>
+            item["tagF"] === tag ||
+            item["tagS"] === tag ||
+            item["tagT"] === tag
+        );
+      } else if (key === "search") {
+        const searchValue = filter[key].toLowerCase().trim();
+        return (
+          item["content"].toLowerCase().trim().includes(searchValue) ||
+          item["title"].toLowerCase().trim().includes(searchValue)
+        );
+      }else {
+        return item[key] === filteredObj[key];
       }
-    }
-    if (match) {
-      filteredData.push(item);
-    }
-  }
-  return filteredData;
+    });
+  });
+
+  const sortedData = [...filteredData].sort(
+    (a, b) => new Date(b.createAt) - new Date(a.createAt)
+  );
+  
+  return sort === "oldest" ? sortedData.reverse() : sortedData;
+
 }
+
+
