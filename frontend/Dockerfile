@@ -19,7 +19,7 @@ COPY package*.json ./
 COPY . .
 
 RUN npm install
-RUN npm run build
+
 # If you are building your code for production
 # RUN npm ci --only=production
 
@@ -28,4 +28,4 @@ RUN npm run build
 
 
 EXPOSE 3000
-CMD [ "npm", "run", "start"]
+CMD [ "npm", "run", "dev"]
