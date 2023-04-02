@@ -35,15 +35,11 @@ export default function usePopularTag(data) {
       }
     }
 
-    tagObject = Object.keys(tagObject)
-      .sort()
-      .reverse()
-      .reduce((acc, key) => {
-        acc[key] = tagObject[key];
-        return acc;
-      }, {});
+ 
 
-    const newTagArray = Object.entries(tagObject);
+    const newTagArray = Object.entries(tagObject)
+    .sort((a, b) => b[1] - a[1])
+    .map(([key, _]) => key)
     setTagArray(newTagArray);
   }, [data]);
 

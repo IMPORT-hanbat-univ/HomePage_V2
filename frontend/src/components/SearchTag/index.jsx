@@ -5,6 +5,7 @@ export default function SearchTag() {
     const [tagText, setTagText] = useState("")
     const [tagList, setTagList] = useState([]);
     const router = useRouter();
+    const {tag} = router.query;
 
     useEffect(() => {
         if(tagList.length > 0){
@@ -14,7 +15,13 @@ export default function SearchTag() {
             delete copyQuery.tag;
             router.push({pathname: router.pathname, query: {...copyQuery}}, undefined, {shallow: true})
         }
-    }, [tagList])
+    }, [tagList]);
+
+    useEffect(() => {
+        if(tag&&tag.trim() !== ""){
+            setTagList(tag.split("+"));
+        }
+    }, [tag])
 
     const pressTagInput = (e) => {
         if(e.key === "Enter"){
@@ -48,7 +55,7 @@ export default function SearchTag() {
                         </path>
                     </svg>
                     {tagList.map((tag) => (
-                        <button key={tag} onClick={() => removeTag(tag)} className='bg-gray-100 w-fit p-1 whitespace-nowrap text-xs border-none mt-2 mr-2 mb-1 inline-flex rounded item-center'>
+                        <button key={tag} onClick={() => removeTag(tag)} className='bg-tag-bg-color text-tag-text bg-opacity-10 w-fit p-1 whitespace-nowrap text-xs border-none mt-2 mr-2 mb-1 inline-flex rounded item-center'>
                             {tag}
                         </button>
                     ))}
