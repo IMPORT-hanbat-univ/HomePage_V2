@@ -6,7 +6,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <>
+    <><a href="http://localhost:4000/auth/kakao" methods="post">
+        <button>회원가입</button>
+    </a>
         </>
   );
 }

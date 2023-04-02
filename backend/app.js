@@ -4,6 +4,7 @@ var express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./passport');
+const jwt = require('jsonwebtoken')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');

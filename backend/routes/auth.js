@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const jwt =require("jsonwebtoken")
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { User } = require('../models');
 
@@ -43,17 +44,34 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         });
     })(req,res,next);
 });
-
+*/
 router.get('/logout', isLoggedIn, (req,res) => {
     req.logout();
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('http://localhost:3000');
 });
-*/
+
 router.get('/kakao', passport.authenticate('kakao'));
 router.get('/kakao/callback',passport.authenticate('kakao',{
-    failureRedirect: '/',
+    failureRedirect: 'http://localhost:3000',
     }),(req,res)=> {
-    res.redirect('/');
+    const token = jwt.sign({
+        id:User.id,
+        nick_name:User.nick_name,
+    }, process.env.JWT_SECRET,{
+        expiresIn: '3h',
+    },(error,token)=> {
+        if(error){
+            console.log(error);
+        }
+        router.post('https://4a81ae53-a497-4ee2-8ead-78f4e246e6c6.mock.pstmn.io/token',(req,res) => {
+            token= token;
+            console.log('post: '+ token);
+            }
+        );
+        console.log('token: ' + token);
+    })
+
+    res.redirect('http://localhost:3000');
 });
 module.exports = router;
