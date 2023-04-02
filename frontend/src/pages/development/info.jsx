@@ -4,7 +4,7 @@ import OrderCategory from '@/components/OrderCategory';
 import PopularTag from '@/components/PopularTag';
 import SearchInput from '@/components/SearchInput';
 import SearchTag from '@/components/SearchTag';
-import { useQnAApi } from '@/recoil/qna';
+import { useInformationApi } from '@/recoil/information';
 import getFilteredData from '@/util/getFilteredData';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -18,9 +18,8 @@ export default function DevelopmentInfo() {
     const seletedOrder = order || "latest";
     const currentSearch = search || "";
 
-    // 일단 qna 데이터 사용
-    const qna = useQnAApi();
-    const { data, isLoading, error } = useQuery(["qnaList"], () => qna.getList(), { staleTime: 1000 * 60 * 5});
+    const info = useInformationApi()
+    const { data, isLoading, error } = useQuery(["devInfoList"], () => info.getDevList(), { staleTime: 1000 * 60 * 5});
   
     const filteredData = getFilteredData(data, { category: seletedCategory, tag: seletedTagList, search: currentSearch }, seletedOrder);
     

@@ -7,7 +7,7 @@ export default function CardList({cardList}) {
     const router = useRouter();
     const { nowPage } = router.query;
     const currentPage = nowPage ? parseInt(nowPage) : 1;
-
+    console.log("cardList", cardList)
     const { page, pageData, pageRangeArray } = usePagination(cardList, currentPage);
 
     return (
