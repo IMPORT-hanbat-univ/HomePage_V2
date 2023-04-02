@@ -12,7 +12,7 @@ export default function PopularTag({ data }) {
             tagArray.length > 0 &&
             tagArray.map((tag) => (
               <li key={tag[0]} className="mr-3 mb-2">
-                <button className="w-fit h-[26px] px-2 py-1 border-none bg-zinc-100 rounded-sm whitespace-nowrap text-sm hover:opacity-70">
+                <button className="w-fit h-[26px] px-2 py-1 border-none bg-tag-bg-color text-tag-text bg-opacity-10 rounded-sm whitespace-nowrap text-sm hover:opacity-70">
                   <span>#</span>
                   <span className="mb-[1px">{tag[0]}</span>
                 </button>

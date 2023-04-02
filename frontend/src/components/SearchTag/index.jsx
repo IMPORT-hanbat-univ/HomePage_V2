@@ -48,7 +48,7 @@ export default function SearchTag() {
                         </path>
                     </svg>
                     {tagList.map((tag) => (
-                        <button key={tag} onClick={() => removeTag(tag)} className='bg-gray-100 w-fit p-1 whitespace-nowrap text-xs border-none mt-2 mr-2 mb-1 inline-flex rounded item-center'>
+                        <button key={tag} onClick={() => removeTag(tag)} className='bg-tag-bg-color text-tag-text bg-opacity-10 w-fit p-1 whitespace-nowrap text-xs border-none mt-2 mr-2 mb-1 inline-flex rounded item-center'>
                             {tag}
                         </button>
                     ))}

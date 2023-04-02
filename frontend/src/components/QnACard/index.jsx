@@ -21,17 +21,17 @@ export default function QnACard({ post }) {
             </p>
             <div className="flex mt-[8px] min-h-[32px]">
               {post.tagF && (
-                <button className="bg-slate-100 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none text-black leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
+                <button className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
                   #{post.tagF}
                 </button>
               )}
               {post.tagS && (
-                <button className="bg-slate-100 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none text-black leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
+                <button className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
                   #{post.tagS}
                 </button>
               )}
               {post.tagT && (
-                <button className="bg-slate-100 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none text-black leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
+                <button className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
                   #{post.tagT}
                 </button>
               )}
