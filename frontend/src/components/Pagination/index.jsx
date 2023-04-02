@@ -9,9 +9,12 @@ export default function Pagination({ page, nowPage, pageRangeArray }) {
   return (
     <nav className="flex items-center justify-center flex-wrap md:justify-between ">
       {nowPage !== 1 && (
-        <a className="px-3 whitespace-nowrap inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-1">
+        <Link
+          className="px-3 whitespace-nowrap inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-1"
+          href={{ pathname, query: { ...query, nowPage: nowPage - 1 } }}
+        >
           이전 페이지
-        </a>
+        </Link>
       )}
       <ul className="grow shrink flex-wrap flex items-center text-center text-xs justify-center order-2">
         {nowPage > 10 && (
@@ -64,9 +67,12 @@ export default function Pagination({ page, nowPage, pageRangeArray }) {
         )}
       </ul>
       {nowPage !== page && (
-        <a className="px-3 whitespace-nowrap inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-3">
+        <Link 
+          className="px-3 whitespace-nowrap inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-3"
+          href={{ pathname, query: { ...query, nowPage: nowPage + 1 } }}
+        >
           다음 페이지
-        </a>
+        </Link>
       )}
     </nav>
   );

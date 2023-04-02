@@ -1,8 +1,24 @@
 import React from "react";
 import dayjs from "dayjs";
 import { FaComment } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 export default function QnACard({ post }) {
+  const router = useRouter();
+  const {tag} = router.query
+  const clickTag = (seletedTag) => {
+    if(tag&&tag.trim() !== ""){
+      if(tag.includes(seletedTag)){
+        return;
+      }
+      const newTag = `${tag}+${seletedTag}`
+      router.push({pathname: router.pathname, query: {...router.query, tag: newTag}}, undefined, {shallow: true})
+    }else{
+      router.push({pathname: router.pathname, query: {...router.query, tag: seletedTag}}, undefined, {shallow: true})
+    }
+  
+  }
+
   return (
     <li className="max-w-[980px] border-b border-b-zinc-400 hover:bg-gray-100">
       <a className="cursor-pointer ">
@@ -21,17 +37,17 @@ export default function QnACard({ post }) {
             </p>
             <div className="flex mt-[8px] min-h-[32px]">
               {post.tagF && (
-                <button className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
+                <button onClick={() => clickTag(post.tagF)} className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
                   #{post.tagF}
                 </button>
               )}
               {post.tagS && (
-                <button className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
+                <button onClick={() => clickTag(post.tagS)} className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
                   #{post.tagS}
                 </button>
               )}
               {post.tagT && (
-                <button className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
+                <button onClick={() => clickTag(post.tagT)} className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[4px] font-medium cursor-pointer">
                   #{post.tagT}
                 </button>
               )}
