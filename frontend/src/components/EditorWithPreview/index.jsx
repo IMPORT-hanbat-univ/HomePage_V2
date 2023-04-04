@@ -51,7 +51,7 @@ export default function WritingBox() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(title, tagList, text);
+    console.log({text});
   };
 
   return (
