@@ -5,12 +5,9 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import dynamic from "next/dynamic";
 import { BsImage } from "react-icons/bs";
 import { BiArrowBack } from "react-icons/bi";
-import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import remarkGfm from "remark-gfm";
-import { atomDark, vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import Image from "next/image";
+import MarkdownViewer from "../MarkdownViewer";
+
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.default), {
   ssr: false,
@@ -128,39 +125,7 @@ export default function WritingBox() {
       <div className="w-1/2 overflow-auto h-screen overflow-y-scroll scroll-smooth" ref={markdownRef}>
         <div className={styles.viewer}>
           <h1 className="mb-16 text-[2.5rem] font-extrabold">{title}</h1>
-          <div className="whitespace-pre-wrap">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              className="scrollbar-hide w-full h-full"
-              components={{
-                code({ node, inline, className, children, ...props }) {
-                  return (
-                    <SyntaxHighlighter
-                      language="typescript"
-                      className="markdown-viewer-code"
-                      PreTag="div"
-                      wrapLines={true}
-                      {...props}
-                      style={vscDarkPlus}
-                    >
-                      {children}
-                    </SyntaxHighlighter>
-                  );
-                },
-                img: (image) => (
-                  <Image
-                    src={image.src || ""}
-                    alt={image.alt || ""}
-                    width={500}
-                    height={300}
-                    className={classes.markdown_container_img}
-                  />
-                ),
-              }}
-            >
-              {text}
-            </ReactMarkdown>
-          </div>
+          <MarkdownViewer text={text} />
         </div>
       </div>
     </div>
