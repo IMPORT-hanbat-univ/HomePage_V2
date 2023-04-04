@@ -22,7 +22,6 @@ h1 {
 
 /* editor 관련 */
 .w-md-editor-toolbar > ul:first-child{
-  padding-left: 3rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -101,9 +100,6 @@ button[data-name="fullscreen"] {
   display: none;
 }
 
- .w-md-editor-input{
-  padding-left: 3rem;
-}
 
 .w-md-editor-bar {
   display: none;

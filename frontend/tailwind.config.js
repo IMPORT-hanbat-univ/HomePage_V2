@@ -8,9 +8,9 @@ module.exports = {
         "preview-gray": "#495057",
         "import-color": "#5856D6",
         "tag-text": "#6B6A9B",
-        "tag-bg-color": "#454493"
+        "tag-bg-color": "#454493",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
