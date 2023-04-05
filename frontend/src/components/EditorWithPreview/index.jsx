@@ -75,7 +75,10 @@ export default function WritingBox() {
             />
           </div>
         </div>
-        <MarkdownEditor text={text} setText={setText} />
+        <div className="pl-12 h-full w-full">
+          <MarkdownEditor text={text} setText={setText} />
+        </div>
+
         <div className="px-4 h-16 w-full flex justify-between items-center">
           <button className="h-10 py-2 px-4 flex items-center cursor-pointer bg-none rounded-sm outline-none hover:bg-zinc-100">
             <BiArrowBack className="mr-1" />

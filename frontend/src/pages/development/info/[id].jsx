@@ -1,3 +1,4 @@
+import CommentContent from "@/components/CommentContent";
 import PostContent from "@/components/PostContent";
 import { useInformationApi } from "@/recoil/information";
 import { useRouter } from "next/router";
@@ -19,6 +20,7 @@ export default function DevelopmentDetail() {
             pathArray={[{ name: "Development" }, { name: "Information", link: "/development/info" }]}
           />
         )}
+        <div className="my-[90px]">{data?.comment && <CommentContent comments={data.comment} />}</div>
       </div>
     </div>
   );

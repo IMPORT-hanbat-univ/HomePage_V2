@@ -44,6 +44,10 @@ h1 {
   margin-top: 2px;
 }
 
+.w-md-editor-content {
+  flex-grow: 1;
+}
+
 .w-md-editor-toolbar > ul:first-child > li {
   display: flex;
   justify-content: center;
@@ -97,4 +101,19 @@ button[data-name="fullscreen"] {
 
 .markdown-viewer-code {
   white-space: pre-wrap !important;
+}
+
+.w-md-editor-input {
+  height: 100%;
+}
+
+.w-md-editor-text {
+  position: relative;
+  height: 100%;
+}
+
+textarea.w-md-editor-text-input {
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
 }

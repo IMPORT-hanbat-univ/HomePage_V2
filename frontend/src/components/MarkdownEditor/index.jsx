@@ -34,7 +34,7 @@ export default function MarkdownEditor({ text, setText }) {
             }
           },
         }}
-        className="!h-full flex-grow-0 overflow-auto pl-12"
+        className="!h-full w-full flex-grow-0 overflow-auto flex flex-col"
         visibleDragbar={false}
       />
       <input type="file" style={{ display: "none" }} ref={imageRef} />
