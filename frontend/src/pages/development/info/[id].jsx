@@ -12,7 +12,14 @@ export default function DevelopmentDetail() {
   console.log(id, data);
   return (
     <div className="flex justify-center">
-      <div className="max-w-[980px] w-full">{data?.content && <PostContent content={data.content} />}</div>
+      <div className="max-w-[980px] w-full">
+        {data?.content && (
+          <PostContent
+            content={data.content}
+            pathArray={[{ name: "Development" }, { name: "Information", link: "/development/info" }]}
+          />
+        )}
+      </div>
     </div>
   );
 }

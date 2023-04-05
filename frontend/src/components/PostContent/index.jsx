@@ -5,16 +5,32 @@ import { MdArrowForwardIos } from "react-icons/md";
 import TagList from "../TagList";
 import Link from "next/link";
 import MarkdownViewer from "../MarkdownViewer";
+import { useRouter } from "next/router";
 
-export default function PostContent({ content }) {
+export default function PostContent({ content, pathArray }) {
   return (
     <div>
       <div className="mt-24 pl-1 flex items-center">
-        <button className="flex justify-center items-center  mr-[32px]">
+        <button className="flex justify-center items-center ">
           <IoHomeOutline className="w-[24px] h-[24px]" />
         </button>
-        <MdArrowForwardIos className="w-[24px] h-[24px] mr-[32px]" />
-        <span className="text-[15px] font-normal leading-6 tracking-[-0.015em] opacity-80">{content.category}</span>
+
+        {pathArray &&
+          pathArray.length > 0 &&
+          pathArray.map((path) => (
+            <div key={path.name} className="flex items-center">
+              <MdArrowForwardIos className="w-[24px] h-[24px] mx-[30px]" />
+              {path.link ? (
+                <Link href={path.link} className="text-[15px] font-normal leading-6 tracking-[-0.015em] opacity-80">
+                  {path.name}
+                </Link>
+              ) : (
+                <span key={path.name} className="text-[15px] font-normal leading-6 tracking-[-0.015em] opacity-80">
+                  {path.name}
+                </span>
+              )}
+            </div>
+          ))}
       </div>
       <h2 className="mt-10 text-4xl font-extrabold leading-6 tracking-[-0.015em]">{content.title}</h2>
       <div className="mt-9 flex items-center justify-between">
