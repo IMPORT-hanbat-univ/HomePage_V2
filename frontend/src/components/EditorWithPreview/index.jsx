@@ -75,7 +75,7 @@ export default function WritingBox() {
           </div>
         </div>
         <div className="pl-12 h-full w-full">
-          <MarkdownEditor text={text} setText={setText} />
+          <MarkdownEditor text={text} setText={setText} hideToolbar={false}/>
         </div>
 
         <div className="px-4 h-16 w-full flex justify-between items-center">

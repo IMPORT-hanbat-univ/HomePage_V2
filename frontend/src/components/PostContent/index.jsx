@@ -12,14 +12,14 @@ export default function PostContent({ content, pathArray }) {
     <div>
       <div className="mt-24 pl-1 flex items-center">
         <button className="flex justify-center items-center ">
-          <IoHomeOutline className="w-[24px] h-[24px]" />
+          <IoHomeOutline className="w-[18px] h-[18px]" />
         </button>
 
         {pathArray &&
           pathArray.length > 0 &&
           pathArray.map((path) => (
             <div key={path.name} className="flex items-center">
-              <MdArrowForwardIos className="w-[24px] h-[24px] mx-[30px]" />
+              <MdArrowForwardIos className="w-[18px] h-[18px] mx-2" />
               {path.link ? (
                 <Link href={path.link} className="text-[15px] font-normal leading-6 tracking-[-0.015em] opacity-80">
                   {path.name}

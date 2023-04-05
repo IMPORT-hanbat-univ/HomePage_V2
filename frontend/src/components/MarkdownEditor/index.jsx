@@ -8,12 +8,13 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.
   ssr: false,
 });
 
-export default function MarkdownEditor({ text, setText }) {
+export default function MarkdownEditor({ text, setText, hideToolbar }) {
   const imageRef = useRef();
   return (
     <>
       <MDEditor
         preview="edit"
+        hideToolbar={hideToolbar}
         value={text}
         onChange={setText}
         highlightEnable={false}

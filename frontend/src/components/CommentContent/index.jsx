@@ -7,8 +7,8 @@ export default function CommentContent({ comments }) {
   return (
     <div>
       <h2 className="text-2xl font-extrabold leading-6 tracking-[-0.15em] ml-2">댓글</h2>
-      <div className="mt-[14px] border h-56 rounded-md">
-        <MarkdownEditor text={parentCommentText} setText={setParentCommentTeXt} />
+      <div className="mt-[14px] border h-44 rounded-md">
+        <MarkdownEditor text={parentCommentText} setText={setParentCommentTeXt} hideToolbar={true} />
       </div>
       <div className="mt-5">
         {comments &&

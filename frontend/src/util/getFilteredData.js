@@ -2,6 +2,7 @@ export default function getFilteredData(data, filter, sort = "latest") {
   if (!data || !Array.isArray(data)) {
     return [];
   }
+  console.log(data)
   const queryKeys = Object.keys(filter).filter((key) => filter[key]);
   const filteredData = data.filter((item) => {
     return queryKeys.every((key) => {
@@ -20,7 +21,7 @@ export default function getFilteredData(data, filter, sort = "latest") {
           item["title"].toLowerCase().trim().includes(searchValue)
         );
       }else {
-        return item[key] === filteredObj[key];
+        return item[key] === filter[key];
       }
     });
   });
