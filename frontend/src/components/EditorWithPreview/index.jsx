@@ -2,23 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./EditorWithPreview.module.css";
 import TextareaAutosize from "react-textarea-autosize";
 import "@uiw/react-md-editor/markdown-editor.css";
-import dynamic from "next/dynamic";
-import { BsImage } from "react-icons/bs";
+
 import { BiArrowBack } from "react-icons/bi";
-import rehypeSanitize from "rehype-sanitize";
+
 import MarkdownViewer from "../MarkdownViewer";
-
-
-const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.default), {
-  ssr: false,
-});
+import MarkdownEditor from "../MarkdownEditor";
 
 export default function WritingBox() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [tagText, setTagText] = useState("");
   const [tagList, setTagList] = useState([]);
-  const imageRef = useRef();
+
   const markdownRef = useRef(null);
 
   const pressTagInput = (e) => {
@@ -48,7 +43,7 @@ export default function WritingBox() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({text});
+    console.log({ text });
   };
 
   return (
@@ -80,33 +75,7 @@ export default function WritingBox() {
             />
           </div>
         </div>
-        <MDEditor
-          preview="edit"
-          value={text}
-          onChange={setText}
-          highlightEnable={false}
-          previewOptions={{
-            rehypePlugins: [[rehypeSanitize]],
-          }}
-          components={{
-            toolbar: (command, disabled, executeCommand) => {
-              if (command.keyCommand === "image") {
-                return (
-                  <button type="button">
-                    <BsImage
-                      onClick={() => {
-                        imageRef.current.click();
-                      }}
-                    />
-                  </button>
-                );
-              }
-            },
-          }}
-          className="!h-full flex-grow-0 overflow-auto pl-12"
-          visibleDragbar={false}
-        />
-        <input type="file" style={{ display: "none" }} ref={imageRef} />
+        <MarkdownEditor text={text} setText={setText} />
         <div className="px-4 h-16 w-full flex justify-between items-center">
           <button className="h-10 py-2 px-4 flex items-center cursor-pointer bg-none rounded-sm outline-none hover:bg-zinc-100">
             <BiArrowBack className="mr-1" />
