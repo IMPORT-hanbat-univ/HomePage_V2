@@ -11,7 +11,7 @@ export default function DevelopmentDetail() {
   const { data, isLoading, error } = useQuery(["devDetail", id], () => info.getDevDetail(id));
   console.log(id, data);
   return (
-    <div className="flex w-screen h-screen justify-center">
+    <div className="flex justify-center">
       <div className="max-w-[980px] w-full">{data?.content && <PostContent content={data.content} />}</div>
     </div>
   );

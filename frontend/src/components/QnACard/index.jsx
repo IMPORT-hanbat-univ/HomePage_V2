@@ -1,26 +1,9 @@
 import React from "react";
 import dayjs from "dayjs";
 import { FaComment } from "react-icons/fa";
-import { useRouter } from "next/router";
 import TagList from "../TagList";
 
 export default function QnACard({ post }) {
-  const router = useRouter();
-  const { tag } = router.query;
-  const clickTag = (seletedTag) => {
-    if (tag && tag.trim() !== "") {
-      if (tag.includes(seletedTag)) {
-        return;
-      }
-      const newTag = `${tag}+${seletedTag}`;
-      router.push({ pathname: router.pathname, query: { ...router.query, tag: newTag } }, undefined, { shallow: true });
-    } else {
-      router.push({ pathname: router.pathname, query: { ...router.query, tag: seletedTag } }, undefined, {
-        shallow: true,
-      });
-    }
-  };
-
   return (
     <li className="max-w-[980px] border-b border-b-zinc-400 hover:bg-gray-100">
       <a className="cursor-pointer ">
@@ -38,7 +21,7 @@ export default function QnACard({ post }) {
               {post.content}
             </p>
             <div className=" mt-[8px]">
-              <TagList post={post} />
+              <TagList post={post} disabled={false} />
             </div>
 
             <div className="!flex overflow-hidden line-clamp-1 whitespace-nowrap mt-4 justify-between text-[12px] font-normal text-light-gray">

@@ -1,28 +1,56 @@
+import { useRouter } from "next/router";
 import React from "react";
-
-export default function TagList({ post }) {
+import cls from "classnames";
+export default function TagList({ post, disabled }) {
+  const router = useRouter();
+  const { tag } = router.query;
+  const clickTag = (seletedTag) => {
+    if (tag && tag.trim() !== "") {
+      if (tag.includes(seletedTag)) {
+        return;
+      }
+      const newTag = `${tag}+${seletedTag}`;
+      router.push({ pathname: router.pathname, query: { ...router.query, tag: newTag } }, undefined, { shallow: true });
+    } else {
+      router.push({ pathname: router.pathname, query: { ...router.query, tag: seletedTag } }, undefined, {
+        shallow: true,
+      });
+    }
+  };
   return (
     <div className="flex min-h-[32px]">
       {post.tagF && (
         <button
+          disabled={disabled}
           onClick={() => clickTag(post.tagF)}
-          className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[40px] font-medium cursor-pointer"
+          className={cls(
+            "bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[40px] font-medium cursor-pointer",
+            { "cursor-none": disabled }
+          )}
         >
           #{post.tagF}
         </button>
       )}
       {post.tagS && (
         <button
+          disabled={disabled}
           onClick={() => clickTag(post.tagS)}
-          className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[40px] font-medium cursor-pointer"
+          className={cls(
+            "bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[40px] font-medium cursor-pointer",
+            { "cursor-none": disabled }
+          )}
         >
           #{post.tagS}
         </button>
       )}
       {post.tagT && (
         <button
+          disabled={disabled}
           onClick={() => clickTag(post.tagT)}
-          className="bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[40px] font-medium cursor-pointer"
+          className={cls(
+            "bg-tag-bg-color text-tag-text bg-opacity-10 mr-[8px] mb-[5px] py-[4px] px-[8px] height-[26px] border-none  leading-5 text-[13px] w-fit inline-flex items-center justify-center rounded-[40px] font-medium cursor-pointer",
+            { "cursor-none": disabled }
+          )}
         >
           #{post.tagT}
         </button>

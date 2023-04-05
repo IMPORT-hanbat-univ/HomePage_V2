@@ -9,7 +9,7 @@ import MarkdownViewer from "../MarkdownViewer";
 export default function PostContent({ content }) {
   return (
     <div>
-      <div className="mt-[224px] pl-1 flex items-center">
+      <div className="mt-24 pl-1 flex items-center">
         <button className="flex justify-center items-center  mr-[32px]">
           <IoHomeOutline className="w-[24px] h-[24px]" />
         </button>
@@ -24,7 +24,7 @@ export default function PostContent({ content }) {
         </time>
       </div>
       <div className="flex items-center justify-between mt-[17px]">
-        <TagList post={content} />
+        <TagList post={content} disabled={true} />
         <div className="flex items-center">
           <Link href="/" className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2">
             수정
