@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./EditorWithPreview.module.css";
 import TextareaAutosize from "react-textarea-autosize";
-import "@uiw/react-md-editor/markdown-editor.css";
 
 import { BiArrowBack } from "react-icons/bi";
 

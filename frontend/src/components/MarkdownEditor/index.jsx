@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import dynamic from "next/dynamic";
 import { BsImage } from "react-icons/bs";
 import rehypeSanitize from "rehype-sanitize";
+import "@uiw/react-md-editor/markdown-editor.css";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.default), {
   ssr: false,
