@@ -11,3 +11,7 @@ doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
 ./mariadb//TODO     # only ignore the root TODO file, not subdir/TODO
 ./mariadb/build/    # ignore all files in the build/ directory
 ./mariadb/doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
+
+
+
+/node_modules

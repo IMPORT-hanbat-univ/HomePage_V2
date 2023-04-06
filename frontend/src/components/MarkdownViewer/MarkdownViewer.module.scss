@@ -1,0 +1,238 @@
+
+ 
+ .mdViewer a {
+    color: #4183C4; 
+}
+    .mdViewer a.absent {
+
+    color: #cc0000;
+}
+    .mdViewer a.anchor {
+    display: block;
+    padding-left: 30px;
+    margin-left: -30px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0; 
+}
+   .mdViewer h1,.mdViewer h2,.mdViewer h3,.mdViewer h4,.mdViewer h5,.mdViewer h6 {
+    margin: 20px 0 10px;
+    padding: 0;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    cursor: text;
+    position: relative; }
+ 
+ .mdViewer h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+    text-decoration: none; }
+ 
+.mdViewer h1 tt,.mdViewer h1 code {
+    font-size: inherit; }
+ 
+.mdViewer h2 tt,.mdViewer h2 code {
+    font-size: inherit; }
+ 
+.mdViewer h3 tt,.mdViewer h3 code {
+    font-size: inherit; }
+ 
+.mdViewer h4 tt,.mdViewer h4 code {
+    font-size: inherit; }
+ 
+.mdViewer h5 tt,.mdViewer h5 code {
+    font-size: inherit; }
+ 
+.mdViewer h6 tt,.mdViewer h6 code {
+    font-size: inherit; }
+ 
+.mdViewer h1 {
+    font-size: 28px;
+    color: black; }
+ 
+.mdViewer h2 {
+    font-size: 24px;
+    color: black; }
+ 
+.mdViewer h3 {
+    font-size: 18px; }
+ 
+.mdViewer h4 {
+    font-size: 16px; }
+ 
+.mdViewer h5 {
+    font-size: 14px; }
+ 
+.mdViewer h6 {
+    color: #777777;
+    font-size: 14px; }
+ 
+.mdViewer blockquote,.mdViewer ul,.mdViewer ol,.mdViewer dl,.mdViewer li,.mdViewer table,.mdViewer pre {
+    margin: 15px 0; }
+
+
+ 
+.mdViewer hr {
+    border: 0 none;
+    color: #cccccc;
+    height: 4px;
+    padding: 0;
+ }
+ 
+
+.mdViewer h1 p,.mdViewer  h2 p,.mdViewer  h3 p,.mdViewer  h4 p,.mdViewer  h5 p,.mdViewer  h6 p {
+    margin-top: 0; }
+ 
+.mdViewer li p.first {
+    display: inline-block; }
+.mdViewer li {
+    margin: 0; }
+
+.mdViewer ul {
+    list-style: disc inside !important;
+
+}
+
+.mdViewer ol {
+    list-style: decimal inside !important;
+}
+ 
+.mdViewer ul :first-child,.mdViewer  ol :first-child {
+    margin-top: 0; }
+ 
+.mdViewer dl {
+    padding: 0; }
+.mdViewer dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+.mdViewer dl dt:first-child {
+    padding: 0; }
+.mdViewer dl dt > :first-child {
+    margin-top: 0; }
+.mdViewer dl dt > :last-child {
+    margin-bottom: 0; }
+.mdViewer dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+.mdViewer dl dd > :first-child {
+    margin-top: 0; }
+.mdViewer dl dd > :last-child {
+    margin-bottom: 0; }
+ 
+.mdViewer blockquote {
+    border-left: 4px solid #dddddd;
+    padding: 0 15px;
+    color: #777777; }
+.mdViewer blockquote > :first-child {
+    margin-top: 0; }
+.mdViewer blockquote > :last-child {
+    margin-bottom: 0; }
+ 
+ 
+.mdViewer img {
+    max-width: 100%; }
+ 
+.mdViewer span.frame {
+    display: block;
+    overflow: hidden; }
+.mdViewer span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+.mdViewer span.frame span img {
+    display: block;
+    float: left; }
+.mdViewer span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+.mdViewer span.align-center {
+    display: block;
+    overflow: hidden;
+    clear: both; }
+.mdViewer span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+.mdViewer span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+.mdViewer span.align-right {
+    display: block;
+    overflow: hidden;
+    clear: both; }
+.mdViewer span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+.mdViewer span.align-right span img {
+    margin: 0;
+    text-align: right; }
+.mdViewer span.float-left {
+    display: block;
+    margin-right: 13px;
+    overflow: hidden;
+    float: left; }
+.mdViewer span.float-left span {
+    margin: 13px 0 0; }
+.mdViewer span.float-right {
+    display: block;
+    margin-left: 13px;
+    overflow: hidden;
+    float: right; }
+.mdViewer span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+ 
+.mdViewer code,.mdViewer  tt {
+    margin: 0 2px;
+    padding: 0 5px;
+    white-space: nowrap;
+
+    border-radius: 3px; }
+ 
+.mdViewer pre code {
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+    border: none;
+    background: transparent; }
+ 
+.mdViewer .highlight pre {
+    background-color: #f8f8f8;
+    border: 1px solid #cccccc;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    border-radius: 3px; }
+ 
+.mdViewer pre {
+ 
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+
+    border-radius: 3px; }
+.mdViewer pre code,.mdViewer  pre tt {
+    background-color: transparent;
+    border: none; }
+ 
+.mdViewer sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+ }
+ 

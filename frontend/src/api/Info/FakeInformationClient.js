@@ -6,4 +6,10 @@ export default class FakeInformationClient {
       return res.data.items;
     });
   }
+
+  async devDetail(id, params) {
+    return axios.get("/dummy/devInfoDetail.json").then((res) => {
+      return res.data;
+    });
+  }
 }
