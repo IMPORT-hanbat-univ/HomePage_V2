@@ -9,6 +9,8 @@ export default function CommentItem({ comment, comments }) {
   const [replyText, setReplyText] = useState("");
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [newSequenceValue, setNewSequenceValue] = useState(null);
+  const [modifyText, setModifyText] = useState(comment?.content ?? "");
+  const [isModify, setIsModify] = useState(false);
 
   useEffect(() => {
     setNewSequenceValue(getCommentSequenceValue(comments, comment.group))
@@ -18,6 +20,9 @@ export default function CommentItem({ comment, comments }) {
     setShowReplyInput((prev) => !prev)
   }
 
+  const handleModify = () => {
+    setIsModify((prev) => !prev)
+  }
 
   const submitComment = (e) => {
     e.preventDefault();
@@ -47,18 +52,37 @@ export default function CommentItem({ comment, comments }) {
             {dayjs(comment.createAT).format("YYYY년 M월 D일 H시 m분")}
           </span>
         </div>
-        <div className="flex items-center">
-          <button  className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2">
+        {isModify ? (
+          <div className="flex items-center">
+            <button onClick={handleModify} className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2">
+              취소
+            </button>
+          </div>
+        ):(
+          <div className="flex items-center">
+          <button onClick={handleModify} className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2">
             수정
           </button>
           <button className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">삭제</button>
         </div>
+        )}
+        
        
       </div>
-      <div className={cls("mt-2", { "pl-6": comment.sequence !== null })}>
-        <MarkdownViewer text={comment.content} />
+      <div className={cls("mt-2 ", { "pl-6": comment.sequence !== null })}>
+        {isModify ? (
+           <form onSubmit={submitComment} className="mt-1">
+           <div className="mt-[14px] border h-40 rounded-md">
+             <MarkdownEditor text={modifyText} setText={setModifyText} hideToolbar={true} />
+           </div>
+           <div className="flex items-center justify-end mt-3">
+             <button className="rounded-md bg-import-color text-sm leading-6 tracking-[-0.15em] text-white py-2 px-4">답글 작성</button>
+           </div>
+        </form>
+        ): <MarkdownViewer text={comment.content} />
+        }
       </div>
-      {comment.sequence === null && (
+      {comment.sequence === null && !isModify && (
       <div className="flex items-center justify-end">
         <button className="text-base leading-6 tracking-[-0.015em] font-normal text-import-color opacity-80" onClick={handleReplyButton}>{showReplyInput ? "숨기기" : "답글 달기"}</button>
       </div>

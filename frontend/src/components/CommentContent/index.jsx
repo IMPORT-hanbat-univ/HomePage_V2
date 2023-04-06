@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MarkdownEditor from "../MarkdownEditor";
 import CommentItem from "../CommentItem";
-import getCommentGroupValue from "@/util/getCommentgroup";
+import getCommentGroupValue from "@/util/getCommentGroupValue";
 
 export default function CommentContent({ comments }) {
   const [parentCommentText, setParentCommentTeXt] = useState("");
