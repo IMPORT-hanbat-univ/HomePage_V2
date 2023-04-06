@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./EditorWithPreview.module.css";
+import styles from "./EditorWithPreview.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
 
 import { BiArrowBack } from "react-icons/bi";

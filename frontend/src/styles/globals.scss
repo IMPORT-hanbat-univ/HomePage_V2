@@ -112,6 +112,11 @@ button[data-name="fullscreen"] {
   height: 100%;
 }
 
+li:has(> button[data-name="comment"]){
+  display: none;
+}
+
+
 textarea.w-md-editor-text-input {
   position: absolute;
   min-height: 100%;
