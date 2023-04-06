@@ -2,8 +2,16 @@ import React, { useEffect, useState } from "react";
 import MarkdownEditor from "../MarkdownEditor";
 import CommentItem from "../CommentItem";
 import getCommentGroupValue from "@/util/getCommentGroupValue";
+import { useRouter } from "next/router";
+import Pagination from "../Pagination";
+import usePagination from "@/hooks/usePagination";
 
 export default function CommentContent({ comments }) {
+  const router  = useRouter();
+  const { nowPage } = router.query;
+  const currentPage = nowPage ? parseInt(nowPage) : 1;
+
+  const { page, pageData:pageComments, pageRangeArray } = usePagination(comments, currentPage);
   const [parentCommentText, setParentCommentTeXt] = useState("");
   const [newGroupValue, setNewGroupValue] = useState(null);
 
@@ -37,11 +45,12 @@ export default function CommentContent({ comments }) {
         </div>
       </form>
     
-      <div className="mt-5">
-        {comments &&
-          comments.length > 0 &&
-          comments.map((comment) => <CommentItem key={comment.id} comment={comment} comments={comments}/>)}
+      <div className="mt-5" id="commentContent">
+        {pageComments &&
+          pageComments.length > 0 &&
+          pageComments.map((comment) => <CommentItem key={comment.id} comment={comment} comments={comments}/>)}
       </div>
+      <Pagination nowPage={currentPage} page={page} pageRangeArray={pageRangeArray} id={"commentContent"} />
     </div>
   );
 }
