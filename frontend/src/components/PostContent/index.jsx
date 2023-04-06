@@ -11,9 +11,9 @@ export default function PostContent({ content, pathArray }) {
   return (
     <div>
       <div className="mt-24 pl-1 flex items-center">
-        <button className="flex justify-center items-center ">
+        <Link href="/" className="flex justify-center items-center ">
           <IoHomeOutline className="w-[18px] h-[18px]" />
-        </button>
+        </Link>
 
         {pathArray &&
           pathArray.length > 0 &&

@@ -31,8 +31,8 @@ export default function CommentItem({ comment, comments }) {
       return;
 
     }
-    console.log(1)
-    if(!newSequenceValue){
+
+    if(isNaN(newSequenceValue)){
       return;
     }
     // 로그인여부도 추가를 해야겠지요를레히요
