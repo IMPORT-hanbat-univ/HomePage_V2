@@ -9,8 +9,7 @@ export default function DevelopmentDetail() {
   const router = useRouter();
   const { id } = router.query;
   const info = useInformationApi();
-  const { data, isLoading, error } = useQuery(["devDetail", id], () => info.getDevDetail(id));
-  console.log(id, data);
+  const { data, isLoading, error } = useQuery(["devDetail", id], () => info.getDevDetail(id), {staleTime: 1000 * 60 * 5});
   return (
     <div className="flex justify-center">
       <div className="max-w-[980px] w-full">
