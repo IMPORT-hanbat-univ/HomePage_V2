@@ -3,14 +3,16 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
 import { atomDark, vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Image from "next/image";
+import styles from "./MarkdownViewer.module.css"
 import ReactMarkdown from "react-markdown";
 
 export default function MarkdownViewer({ text }) {
   return (
     <div className="whitespace-pre-wrap w-full h-full">
       <ReactMarkdown
+
         remarkPlugins={[remarkGfm]}
-        className="scrollbar-hide w-full h-full"
+        className={styles.mdViewer}
         components={{
           code({ node, inline, className, children, ...props }) {
             return (

@@ -13,6 +13,7 @@ export default function MarkdownEditor({ text, setText, hideToolbar }) {
   return (
     <>
       <MDEditor
+
         preview="edit"
         hideToolbar={hideToolbar}
         value={text}
