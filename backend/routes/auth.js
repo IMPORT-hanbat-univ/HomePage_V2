@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt =require("jsonwebtoken")
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { User } = require('../models');
+const IMPORTURL = 'http://localhost:3000';
 
 const router = express.Router();/*
 router.post('/join', isNotLoggedIn ,async (req, res, next) => {
@@ -48,12 +49,12 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 router.get('/logout', isLoggedIn, (req,res) => {
     req.logout();
     req.session.destroy();
-    res.redirect('http://localhost:3000');
+    res.redirect(IMPORTURL);
 });
 
 router.get('/kakao', passport.authenticate('kakao'));
 router.get('/kakao/callback',passport.authenticate('kakao',{
-    failureRedirect: 'http://localhost:3000',
+    failureRedirect: IMPORTURL,
     }),(req,res)=> {
     const token = jwt.sign({
         id:User.id,
@@ -64,7 +65,7 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
         if(error){
             console.log(error);
         }
-        router.post('https://4a81ae53-a497-4ee2-8ead-78f4e246e6c6.mock.pstmn.io/token',(req,res) => {
+        router.get('https://4a81ae53-a497-4ee2-8ead-78f4e246e6c6.mock.pstmn.io/token',(req,res) => {
             token= token;
             console.log('post: '+ token);
             }
@@ -72,6 +73,6 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
         console.log('token: ' + token);
     })
 
-    res.redirect('http://localhost:3000');
+    res.redirect(IMPORTURL);
 });
 module.exports = router;
