@@ -47,7 +47,7 @@ export default function WritingBox() {
 
   return (
     <div className="flex">
-      <div className="w-full md:w-1/2 flex flex-col grow-0 h-screen">
+      <div className="w-full lg:w-1/2 flex flex-col grow-0 h-screen">
         <div className="pt-8 px-4 md:px-12">
           <TextareaAutosize
             className={styles.title}
@@ -93,7 +93,7 @@ export default function WritingBox() {
           </form>
         </div>
       </div>
-      <div className="w-1/2 overflow-auto h-screen overflow-y-scroll scroll-smooth hidden md:block" ref={markdownRef}>
+      <div className="w-1/2 overflow-auto h-screen overflow-y-scroll scroll-smooth hidden lg:block" ref={markdownRef}>
         <div className={styles.viewer}>
           <h1 className="mb-16 text-[2.5rem] font-extrabold">{title}</h1>
           <MarkdownViewer text={text} />
