@@ -5,14 +5,14 @@ import TagList from "../TagList";
 
 export default function CardItem({ post }) {
   return (
-    <article className="w-[300px] py-1">
+    <article className="w-full py-1">
       <Image
         src={post.image}
-        className="rounded"
+        className="rounded w-full"
         width={300}
         height={200}
         alt={post.title}
-        style={{ objectFit: "cover", width: 300, height: 200 }}
+        style={{ objectFit: "cover",  height: 200 }}
       />
       <h3 className="w-full h-[36px] mt-3 font-bold text-2xl leading-9 tracking-[-0.015em]  text-ellipsis overflow-hidden whitespace-nowrap">
         {post.title}

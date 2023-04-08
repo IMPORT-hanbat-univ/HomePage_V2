@@ -13,7 +13,7 @@ export default function CardList({ cardList }) {
   console.log("pageData", pageData);
   return (
     <section>
-      <div className="grid grid-cols-1 md:grid lg:grid-cols-2 xl:grid-cols-3 gap-x-[40px] py-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-[40px] py-3">
         {pageData && pageData.length > 0 && pageData.map((item) => <CardItem post={item} key={item.id} />)}
       </div>
       <Pagination nowPage={currentPage} page={page} pageRangeArray={pageRangeArray} />

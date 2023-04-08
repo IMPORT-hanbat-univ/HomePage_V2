@@ -29,7 +29,7 @@ export default function DevelopmentInfo() {
 
   return (
     <section className="flex justify-center px-[32px] mt-20 ">
-      <section className=" w-3/12  mt-[32px] ml-[40px] max-w-[200px]">
+      <section className="hidden lg:block lg:w-3/12   mt-[32px] ml-[40px] max-w-[200px]">
         <div className="fixed">
           <CategoryNav
             categoryList={["frontend", "backend", "Mobile", "Bigdata", "AI"]}
@@ -37,7 +37,7 @@ export default function DevelopmentInfo() {
           />
         </div>
       </section>
-      <section className=" w-9/12 max-w-[980px]">
+      <section className="w-full lg:w-9/12 max-w-[980px]">
         <div className="py-6">
           <SearchInput />
           <SearchTag />
@@ -54,7 +54,7 @@ export default function DevelopmentInfo() {
         <CardList cardList={filteredData} />
       </section>
 
-      <section className=" w-3/12 mt-[32px] ml-[40px] max-w-[200px] ">
+      <section className=" hidden lg:block lg:w-3/12 mt-[32px] ml-[40px] max-w-[200px]">
         <div className="fixed">
           <PopularTag data={data} />
         </div>
