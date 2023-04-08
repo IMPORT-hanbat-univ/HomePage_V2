@@ -30,7 +30,7 @@ export default function SearchInput() {
                 </svg>
                 <input className='w-full text-[14px] border-none bg-none outline-none' value={search} onChange={(e) => setSearch(e.target.value)} placeholder='검색어를 입력해주세요'/>
             </div>
-            <button type="submit" className='ml-4 h-12 bg-import-color border-import-color text-xs font-semibold p-3 text-white min-w-[96px] rounded inline-flex justify-center items-center'>검색</button> 
+            <button type="submit" className='hidden md:inline-flex ml-2 md:ml-4 h-12 bg-import-color border-import-color text-xs font-semibold p-3  text-white w-[60px] md:min-w-[96px] rounded justify-center items-center'>검색</button> 
             
         </form>
     );

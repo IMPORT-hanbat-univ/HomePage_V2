@@ -7,10 +7,10 @@ export default function Pagination({ page, nowPage, pageRangeArray, id }) {
   const router = useRouter();
   const { pathname, query } = router;
   return (
-    <nav className="flex items-center justify-center flex-wrap md:justify-between ">
+    <nav className="flex items-center justify-center flex-wrap md:justify-between mb-3">
       {nowPage !== 1 && (
         <Link
-          className="px-3 whitespace-nowrap inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-1"
+          className="px-3 whitespace-nowrap hidden md:inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-1"
           href={{ pathname, query: { ...query, nowPage: nowPage - 1 }, hash: id ?? "" }}
         >
           이전 페이지
@@ -71,7 +71,7 @@ export default function Pagination({ page, nowPage, pageRangeArray, id }) {
       {nowPage !== page && (
         <Link 
          
-          className="px-3 whitespace-nowrap inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-3"
+          className="px-3 whitespace-nowrap hidden md:inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-3"
           href={{ pathname, query: { ...query, nowPage: nowPage + 1 }, hash: id ?? "" }}
         >
           다음 페이지
