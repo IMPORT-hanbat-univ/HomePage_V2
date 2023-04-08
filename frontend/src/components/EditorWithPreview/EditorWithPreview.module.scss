@@ -10,6 +10,10 @@
   border: none;
   font-weight: bold;
   color: var(--text1);
+  @media(max-width: 767px) {
+    font-size: 1.8rem;
+
+  }
 }
 
 .bar {
@@ -31,6 +35,9 @@
   margin-bottom: 0.75rem;
   min-width: 8rem;
   border: none;
+  @media(max-width: 767px) {
+    font-size: 1rem;
+  }
 }
 
 .viewer {

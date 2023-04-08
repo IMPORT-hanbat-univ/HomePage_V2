@@ -15,7 +15,7 @@ export default function QnAList({ qnaList }) {
   return (
     <div className="flex items-center justify-center">
       <div className=" flex-shrink basis-0 grow ">
-        <ul className="mb-[30px] ">
+        <ul className="mb-[10px] md:mb-[30px] ">
           {pageData.map((post) => (
             <QnACard post={post} key={post.id} />
           ))}

@@ -83,7 +83,7 @@ export default function SearchTag() {
         </div>
       </div>
       <button
-        className="min-w-[96px] ml-4 h-12 px-3 text-[14px] font-semibold inline-flex justify-center items-center"
+        className="hidden md:inline-flex min-w-[96px] ml-4 h-12 px-3 text-[14px] font-semibold  justify-center items-center"
         onClick={removeAllTag}
       >
         <svg

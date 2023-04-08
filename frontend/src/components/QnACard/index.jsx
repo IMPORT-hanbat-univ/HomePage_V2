@@ -20,11 +20,11 @@ export default function QnACard({ post }) {
             <p className="h-[24px] overflow-hidden text-ellipsis whitespace-normal leading-6 max-h-6 text-left break-all box line-clamp-1 text-xs">
               {post.content}
             </p>
-            <div className=" mt-[8px]">
+            <div className=" mt-[4px] md:mt-[8px]">
               <TagList post={post} disabled={false} />
             </div>
 
-            <div className="!flex overflow-hidden line-clamp-1 whitespace-nowrap mt-4 justify-between text-[12px] font-normal text-light-gray">
+            <div className="!flex overflow-hidden line-clamp-1 whitespace-nowrap mt-1 md:mt-4 justify-between text-[12px] font-normal text-light-gray">
               <div className="flex-auto w-0 max-w-[520px] min-w-0 flex items-center">
                 <span className="shrink overflow-ellipsis whitespace-nowrap inline-block">{post.nick_name}</span>
                 <span className=" shrink-0 inline-block">&nbsp;·&nbsp;</span>

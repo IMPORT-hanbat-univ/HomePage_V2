@@ -47,8 +47,8 @@ export default function WritingBox() {
 
   return (
     <div className="flex">
-      <div className="w-1/2 flex flex-col grow-0 h-screen">
-        <div className="pt-8 pl-12 pr-12">
+      <div className="w-full lg:w-1/2 flex flex-col grow-0 h-screen">
+        <div className="pt-8 px-4 md:px-12">
           <TextareaAutosize
             className={styles.title}
             type="text"
@@ -74,11 +74,11 @@ export default function WritingBox() {
             />
           </div>
         </div>
-        <div className="pl-12 h-full w-full">
+        <div className="pl-3 md:pl-12 h-full w-full">
           <MarkdownEditor text={text} setText={setText} hideToolbar={false}/>
         </div>
 
-        <div className="px-4 h-16 w-full flex justify-between items-center">
+        <div className="px-4 h-16 w-full flex justify-between items-center mb-2">
           <button className="h-10 py-2 px-4 flex items-center cursor-pointer bg-none rounded-sm outline-none hover:bg-zinc-100">
             <BiArrowBack className="mr-1" />
             나가기
@@ -93,7 +93,7 @@ export default function WritingBox() {
           </form>
         </div>
       </div>
-      <div className="w-1/2 overflow-auto h-screen overflow-y-scroll scroll-smooth" ref={markdownRef}>
+      <div className="w-1/2 overflow-auto h-screen overflow-y-scroll scroll-smooth hidden lg:block" ref={markdownRef}>
         <div className={styles.viewer}>
           <h1 className="mb-16 text-[2.5rem] font-extrabold">{title}</h1>
           <MarkdownViewer text={text} />
