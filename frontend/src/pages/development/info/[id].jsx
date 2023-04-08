@@ -12,7 +12,7 @@ export default function DevelopmentDetail() {
   const { data, isLoading, error } = useQuery(["devDetail", id], () => info.getDevDetail(id), {staleTime: 1000 * 60 * 5});
   return (
     <div className="flex justify-center">
-      <div className="max-w-[980px] w-full">
+      <div className="max-w-[980px] w-full px-3">
         {data?.content && (
           <PostContent
             content={data.content}

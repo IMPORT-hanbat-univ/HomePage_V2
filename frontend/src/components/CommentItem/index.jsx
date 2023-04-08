@@ -79,8 +79,11 @@ export default function CommentItem({ comment, comments }) {
              <button className="rounded-md bg-import-color text-sm leading-6 tracking-[-0.15em] text-white py-2 px-4">답글 작성</button>
            </div>
         </form>
-        ): <MarkdownViewer text={comment.content} />
-        }
+        ): (
+        <div className="pl-4">
+          <MarkdownViewer text={comment.content} />
+        </div>
+        )}
       </div>
       {comment.sequence === null && !isModify && (
       <div className="flex items-center justify-end">
