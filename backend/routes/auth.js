@@ -1,8 +1,13 @@
 const express = require('express');
+const session =require('express-session')
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const jwt =require("jsonwebtoken")
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { User } = require('../models');
+
+const {Op} = require("sequelize");
+
 
 const router = express.Router();/*
 router.post('/join', isNotLoggedIn ,async (req, res, next) => {
@@ -43,17 +48,40 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         });
     })(req,res,next);
 });
-
+*/
 router.get('/logout', isLoggedIn, (req,res) => {
     req.logout();
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('http://localhost:3000');
 });
-*/
+
 router.get('/kakao', passport.authenticate('kakao'));
+
 router.get('/kakao/callback',passport.authenticate('kakao',{
-    failureRedirect: '/',
-    }),(req,res)=> {
-    res.redirect('/');
+    failureRedirect: 'http://localhost:4000',
+    failureMessage: true,
+}),async (req, res) => {
+    const kakao = Number(req.user.kakaoId);
+
+    const loggedInUser= await User.findAll({
+        raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
+        attributes:['kakaoId','nick_name'],
+        where:{
+        kakaoId:{ [Op.eq]:kakao } ,
+        }
+    });
+
+    const usertoken = jwt.sign({
+        kakaoId: req.user.kakaoId,
+        nick_name: loggedInUser[0].nick_name,
+    }, process.env.JWT_SECRET,{
+        expiresIn: '1h',
+    });
+
+    console.log("token: " + usertoken);
+
+
+    res.redirect('http://localhost:3000');
+
 });
 module.exports = router;
