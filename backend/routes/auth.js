@@ -5,8 +5,11 @@ const bcrypt = require('bcryptjs');
 const jwt =require("jsonwebtoken")
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { User } = require('../models');
+const { v4: uuidv4 } = require('uuid');
+
 
 const {Op} = require("sequelize");
+const {config} = require("dotenv");
 
 
 const router = express.Router();/*
@@ -71,14 +74,25 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
         }
     });
 
-    const usertoken = jwt.sign({
+    const accessToken = jwt.sign({
         kakaoId: req.user.kakaoId,
-        nick_name: loggedInUser[0].nick_name,
+        nick_name: loggedInUser[0].nick_name, //랭크,
     }, process.env.JWT_SECRET,{
-        expiresIn: '1h',
+        expiresIn: '1h', //기간 1시간
     });
 
-    console.log("token: " + usertoken);
+    const refreshToken = jwt.sign({
+        uuid:uuidv4(),
+    },process.env.JWT_SECRET,{
+            expiresIn: '14d', //기간 1시간
+        }
+    )
+
+    console.log("token: " + accessToken);
+    console.log("refresh: " + refreshToken);
+
+    res.cookie('accessToken',accessToken);
+    res.cookie('refreshToken',refreshToken);
 
 
     res.redirect('http://localhost:3000');
