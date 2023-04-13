@@ -12,7 +12,7 @@ module.exports = class User extends Sequelize.Model{
                 type: Sequelize.STRING(20),
                 allowNull: false,
             },
-            snsId:{ //kakao에서 넘어오는 아이디
+            kakaoId:{ //kakao에서 넘어오는 아이디
                 type: Sequelize.STRING(30),
                 allowNull: true,
             },
