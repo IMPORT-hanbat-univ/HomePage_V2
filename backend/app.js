@@ -36,7 +36,7 @@ app.use(session({
   cookie: {
     httpOnly: 'http://localhost:3000/',
     sameSite:'none',
-    maxAge:60*60*1000, //쿠키가 언제 동안 보관될지 시간 설정
+    //maxAge:60*60*1000, 쿠키가 언제 동안 보관될지 시간 설정
     secure: true,
     credentials:true,
     domain:'localhost',

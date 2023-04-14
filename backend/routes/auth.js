@@ -82,7 +82,7 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
     });
 
     const refreshToken = jwt.sign({
-        uuid:uuidv4(),
+        uuid:uuidv4(), //고유한 난수를 사용하고싶어서 uuid 사용
     },process.env.JWT_SECRET,{
             expiresIn: '14d', //기간 1시간
         }
@@ -91,8 +91,8 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
     console.log("token: " + accessToken);
     console.log("refresh: " + refreshToken);
 
-    res.cookie('accessToken',accessToken);
-    res.cookie('refreshToken',refreshToken);
+    res.cookie('accessToken',accessToken,{maxAge:60*60*1000}); //쿠키 만료 1시간
+    res.cookie('refreshToken',refreshToken,{maxAge:60*60*24*14*1000}); //쿠키 만료 14일
 
 
     res.redirect('http://localhost:3000');
