@@ -7,6 +7,7 @@ const passportConfig = require('./passport');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 require('dotenv').config();
 
 
@@ -27,15 +28,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.set("trust proxy", 1);
 app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
   cookie: {
-    httpOnly: true,
-    secure: false,
+    httpOnly: 'http://localhost:3000/',
+    sameSite:'none',
+    //maxAge:60*60*1000, 쿠키가 언제 동안 보관될지 시간 설정
+    secure: true,
+    credentials:true,
+    domain:'localhost',
+
   },
 }));
+app.use(cors({
+  origin:true,
+  credentials:true,
+  optionsSuccessStatus: 200,
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
