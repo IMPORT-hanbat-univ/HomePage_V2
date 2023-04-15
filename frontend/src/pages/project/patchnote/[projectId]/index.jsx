@@ -6,17 +6,16 @@ import { usePatchnoteApi } from "@/recoil/patchnote";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 export default function PatchnoteList() {
   const router = useRouter();
   const patchnoteApi = usePatchnoteApi();
-  const [month, setMonth] = useState(dayjs().format("YYYY.MM"));
   const { projectId } = router.query;
 
   const { data, isLoading, error } = useQuery(["patchnoteList", projectId], () => patchnoteApi.getList(projectId));
-  const { monthList, monthDataList } = usePatchnoteList(data?.patchnote, month);
+  const { month, setMonth, monthList, monthDataList } = usePatchnoteList(data?.patchnote);
 
   return (
     <div className="flex justify-center">

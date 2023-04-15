@@ -3,7 +3,6 @@ import cls from "classnames";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 export default function PatchnoteTree({ monthList, monthDataList, month, setMonth }) {
-  console.log(month);
   return (
     <div className="relative">
       <ul className="text-base font-thin leading-6 text-right rounded-sm relative">
