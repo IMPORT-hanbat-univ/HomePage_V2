@@ -6,12 +6,82 @@ build/    # ignore all files in the build/ directory
 doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
 
 # MariaDB 데이터 적재 방지
-./mariadb/*.a       # no .a files
-./mariadb/!lib.a    # but do track lib.a, even though you're ignoring .a files above
-./mariadb//TODO     # only ignore the root TODO file, not subdir/TODO
-./mariadb/build/    # ignore all files in the build/ directory
-./mariadb/doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
-
+mariadb/*.a       # no .a files
+mariadb/!lib.a    # but do track lib.a, even though you're ignoring .a files above
+mariadb//TODO     # only ignore the root TODO file, not subdir/TODO
+mariadb/build/    # ignore all files in the build/ directory
+mariadb/doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
+mariadb/data/*
 
 
 /node_modules
+
+
+# Frontend
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+
+# testing
+frontend/coverage
+
+# next.js
+frontend/.next/
+frontend/out/
+
+# production
+frontend/build
+
+# misc
+frontend/.DS_Store
+frontend/*.pem
+
+# debug
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+
+# local env files
+frontend/.env*.local
+
+# vercel
+frontend/.vercel
+
+
+# Brontend
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+backend/node_modules
+backend/.pnp
+backend/.pnp.js
+
+# testing
+backend/coverage
+
+# next.js
+backend/.next/
+backend/out/
+
+# production
+backend/build
+
+# misc
+backend/.DS_Store
+backend/*.pem
+
+# debug
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+backend/.pnpm-debug.log*
+
+# local env files
+backend/.env*.local
+
+# vercel
+backend/.vercel
