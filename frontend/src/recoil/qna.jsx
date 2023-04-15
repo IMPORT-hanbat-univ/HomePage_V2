@@ -4,6 +4,8 @@ import QnA from "@/api/QnA/QnA";
 
 export const qnaAtom = atom({
   key: "qnaAtom",
+  dangerouslyAllowMutability: true,
+
   default: new QnA(new FakeQnAClient()),
 });
 

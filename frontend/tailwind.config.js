@@ -10,6 +10,9 @@ module.exports = {
         "tag-text": "#6B6A9B",
         "tag-bg-color": "#454493",
       },
+      boxShadow: {
+        active: "rgb(255, 255, 255) 0px 0px 0px 4px",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

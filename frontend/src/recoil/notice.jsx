@@ -5,6 +5,7 @@ import Notice from "../api/Notice/Notice";
 export const noticeAtom = atom({
   key: "noticeAtom",
   default: new Notice(new FakeNoticeClient()),
+  dangerouslyAllowMutability: true,
 });
 
 export const useNoticeApi = () => {
