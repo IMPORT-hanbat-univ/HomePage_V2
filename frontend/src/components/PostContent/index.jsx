@@ -7,7 +7,7 @@ import Link from "next/link";
 import MarkdownViewer from "../MarkdownViewer";
 import { useRouter } from "next/router";
 
-export default function PostContent({ content, pathArray }) {
+export default function PostContent({ content, pathArray, children }) {
   return (
     <div>
       <div className="mt-24 pl-1 flex items-center">
@@ -48,9 +48,7 @@ export default function PostContent({ content, pathArray }) {
           <button className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">삭제</button>
         </div>
       </div>
-      <div className="mt-[92px]">
-        <MarkdownViewer text={content.content} />
-      </div>
+      <div className="mt-[92px]">{children}</div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import CommentContent from "@/components/CommentContent";
+import PatchnoteTree from "@/components/PatchnoteTree";
 import PostContent from "@/components/PostContent";
 import usePatchNoteList from "@/hooks/usePatchNoteList";
 import { usePatchnoteApi } from "@/recoil/patchnote";
@@ -15,16 +16,16 @@ export default function PatchnoteList() {
 
   const { data, isLoading, error } = useQuery(["patchnoteList", projectId], () => patchnoteApi.getList(projectId));
   const { monthList, monthDataList } = usePatchNoteList(data?.patchnote, month);
-  console.log(monthList, monthDataList);
-  console.log(data);
+
   return (
     <div className="flex justify-center">
       <div className="max-w-[980px] w-full px-3 ">
         {data?.project && (
-          <PostContent
-            content={data.project}
-            pathArray={[{ name: "Development" }, { name: "Information", link: "/development/info" }]}
-          ></PostContent>
+          <PostContent content={data.project} pathArray={[{ name: "Project" }, { name: "Patchnote", link: "/" }]}>
+            <div className="flex items-center justify-center">
+              <PatchnoteTree monthList={monthList} monthDataList={monthDataList} month={month} setMonth={setMonth} />
+            </div>
+          </PostContent>
         )}
       </div>
     </div>
