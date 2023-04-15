@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
-export default function usePatchNoteList(data, monthString) {
+export default function usePatchnoteList(data, monthString) {
   const [monthList, setMonthList] = useState([]);
   const [monthDataList, setMonthDataList] = useState([]);
   useEffect(() => {

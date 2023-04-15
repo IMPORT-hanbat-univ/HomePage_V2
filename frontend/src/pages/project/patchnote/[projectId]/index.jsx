@@ -1,7 +1,7 @@
 import CommentContent from "@/components/CommentContent";
 import PatchnoteTree from "@/components/PatchnoteTree";
 import PostContent from "@/components/PostContent";
-import usePatchNoteList from "@/hooks/usePatchNoteList";
+import usePatchnoteList from "@/hooks/usePatchnoteList";
 import { usePatchnoteApi } from "@/recoil/patchnote";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -16,7 +16,7 @@ export default function PatchnoteList() {
   const { projectId } = router.query;
 
   const { data, isLoading, error } = useQuery(["patchnoteList", projectId], () => patchnoteApi.getList(projectId));
-  const { monthList, monthDataList } = usePatchNoteList(data?.patchnote, month);
+  const { monthList, monthDataList } = usePatchnoteList(data?.patchnote, month);
 
   return (
     <div className="flex justify-center">

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 import { useQuery } from "react-query";
 import { usePatchnoteApi } from "@/recoil/patchnote";
+import PatchnoteNav from "@/components/PatchnoteNav";
 
 export default function PatchnoteDetail() {
   const router = useRouter();
@@ -16,7 +17,6 @@ export default function PatchnoteDetail() {
     isLoading,
     error,
   } = useQuery(["patchnoteDetail", patchnoteId], () => patchnoteApi.getDetail(patchnoteId));
-  const { data: patchnoteList } = useQuery(["patchnoteList", projectId], () => patchnoteApi.getList(projectId));
   return (
     <div className="flex justify-center">
       <div className="max-w-[980px] w-full px-3 ">
@@ -26,6 +26,9 @@ export default function PatchnoteDetail() {
             pathArray={[{ name: "Project" }, { name: "Patchnote", link: `/project/patchnote/${projectId}` }]}
           >
             <MarkdownViewer text={patchnoteDetail.patchnote.content} />
+            <div className="mt-20">
+              <PatchnoteNav />
+            </div>
           </PostContent>
         )}
         <div className="my-[90px]">
