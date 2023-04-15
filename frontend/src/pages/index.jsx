@@ -31,6 +31,9 @@ export default function Home({ decodeUser }) {
       <Link href={"/project/patchnote/1"} className="p-3 border rounded bg-import-color text-white mr-3">
         패치노트 목록
       </Link>
+      <Link href={"/project/patchnote/1/1"} className="p-3 border rounded bg-import-color text-white mr-3">
+        패치노트 디테일
+      </Link>
       {user ? (
         <>
           <Link href={"/"} className="p-3 border rounded bg-import-color text-white">

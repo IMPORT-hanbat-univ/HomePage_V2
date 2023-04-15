@@ -6,4 +6,11 @@ export default class FakePatchnoteClient {
       return res.data;
     });
   }
+
+  async detail() {
+    return axios.get("/dummy/patchnoteDetail.json").then((res) => {
+      console.log("result", res);
+      return res.data;
+    });
+  }
 }
