@@ -1,5 +1,6 @@
 import React from "react";
 import cls from "classnames";
+import { motion } from "framer-motion";
 import dayjs from "dayjs";
 export default function PatchnoteTree({ monthList, monthDataList, month, setMonth }) {
   console.log(month);
@@ -18,7 +19,8 @@ export default function PatchnoteTree({ monthList, monthDataList, month, setMont
               {monthString}
             </span>
             <span
-              className={cls("left-[-7px] block rounded-full absolute w-3 h-3 bg-slate-800", {
+              onClick={() => setMonth(monthString)}
+              className={cls("left-[-7px] block rounded-full cursor-pointer absolute w-3 h-3 bg-slate-800", {
                 "bg-white shadow-black shadow-active": month === monthString,
               })}
             ></span>
@@ -27,12 +29,17 @@ export default function PatchnoteTree({ monthList, monthDataList, month, setMont
       </ul>
       <ul className="absolute top-[-5px] left-[75px] ">
         {monthDataList.map((monthData) => (
-          <li key={monthData.id}>
+          <motion.li
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            key={monthData.id}
+          >
             <h3 className="mb-1 text-base font-bold leading-5 text-light-gray">
               {dayjs(monthData.createAt).format("YYYY.MM.DD")}
             </h3>
             <h3 className="mb-8 text-base font-semibold leading-6 whitespace-pre-wrap">{monthData.title}</h3>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </div>
