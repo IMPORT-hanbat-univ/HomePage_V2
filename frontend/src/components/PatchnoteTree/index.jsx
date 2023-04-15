@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 export default function PatchnoteTree({ monthList, monthDataList, month, setMonth }) {
   console.log(month);
   return (
-    <div className="mb-2 relative">
+    <div className="relative">
       <ul className="text-base font-thin leading-6 text-right rounded-sm relative">
         {monthList.map((monthString) => (
           <li key={monthString} className="w-[500px] relative h-20  border-l-2  border-l-slate-800 ">
@@ -34,6 +34,7 @@ export default function PatchnoteTree({ monthList, monthDataList, month, setMont
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             key={monthData.id}
+            className="hover:text-light-gray cursor-pointer"
           >
             <h3 className="mb-1 text-base font-bold leading-5 text-light-gray">
               {dayjs(monthData.createAt).format("YYYY.MM.DD")}
