@@ -1,4 +1,5 @@
 # a comment - this is ignored
+.env
 *.a       # no .a files
 !lib.a    # but do track lib.a, even though you're ignoring .a files above
 /TODO     # only ignore the root TODO file, not subdir/TODO
