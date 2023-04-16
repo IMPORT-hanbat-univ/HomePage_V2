@@ -36,7 +36,6 @@ export default function usePatchnoteList(data) {
       setMonthList(monthArray);
       setMonthDataList(monthDataArray);
     } else {
-      console.log(123);
       setMonthList([]);
       setMonthDataList([]);
     }
