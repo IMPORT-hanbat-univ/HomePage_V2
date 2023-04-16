@@ -3,11 +3,12 @@ import cls from "classnames";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 export default function PatchnoteTree({ monthList, monthDataList, month, setMonth }) {
+  console.log(month);
   return (
-    <div className="relative">
-      <ul className="text-base font-thin leading-6 text-right rounded-sm relative">
+    <div className="relative w-full ml-36">
+      <ul className="max-w-[500px] w-full  text-base font-thin leading-6 text-right rounded-sm relative">
         {monthList.map((monthString) => (
-          <li key={monthString} className="w-[500px] relative h-20  border-l-2  border-l-slate-800 ">
+          <li key={monthString} className=" relative h-20  border-l-2  border-l-slate-800 ">
             <span
               onClick={() => setMonth(monthString)}
               className={cls(
@@ -26,7 +27,7 @@ export default function PatchnoteTree({ monthList, monthDataList, month, setMont
           </li>
         ))}
       </ul>
-      <ul className="absolute top-[-5px] left-[75px] ">
+      <ul className="absolute top-[-5px] left-[75px] w-64 lg:w-[320px] xl:w-[480px]  overflow-hidden whitespace-nowrap text-ellipsis mr-4">
         {monthDataList.map((monthData) => (
           <motion.li
             initial={{ opacity: 0, y: 30 }}
@@ -38,7 +39,9 @@ export default function PatchnoteTree({ monthList, monthDataList, month, setMont
             <h3 className="mb-1 text-base font-bold leading-5 text-light-gray">
               {dayjs(monthData.createAt).format("YYYY.MM.DD")}
             </h3>
-            <h3 className="mb-8 text-base font-semibold leading-6 whitespace-pre-wrap">{monthData.title}</h3>
+            <h3 className="mb-8 text-base font-semibold leading-6 whitespace-nowrap  overflow-hidden  text-ellipsis">
+              {monthData.title}
+            </h3>
           </motion.li>
         ))}
       </ul>

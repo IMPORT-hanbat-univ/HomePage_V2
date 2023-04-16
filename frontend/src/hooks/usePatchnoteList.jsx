@@ -8,15 +8,18 @@ export default function usePatchnoteList(data) {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const latestDate = data.reduce((prev, current) => {
-        return new Date(prev.createAt) > new Date(current.createAt) ? prev : current;
-      }).createAt;
-
-      const latestMonth = dayjs(latestDate).format("YYYY.MM");
-      setMonth(latestMonth);
-      const targetYear = dayjs(latestDate.replace(".", "-"), "YYYY.MM").year();
-      const targetMonth = dayjs(latestDate.replace(".", "-"), "YYYY-MM").month();
-
+      let targetYear = dayjs(month.replace(".", "-"), "YYYY-MM").year();
+      let targetMonth = dayjs(month.replace(".", "-"), "YYYY-MM").month();
+      if (month.trim() === "") {
+        const latestDate = data.reduce((prev, current) => {
+          return new Date(prev.createAt) > new Date(current.createAt) ? prev : current;
+        }).createAt;
+        const latestMonth = dayjs(latestDate).format("YYYY.MM");
+        setMonth(latestMonth);
+        targetYear = dayjs(latestDate.replace(".", "-"), "YYYY-MM").year();
+        targetMonth = dayjs(latestDate.replace(".", "-"), "YYYY-MM").month();
+      }
+      console.log("target", targetYear, targetMonth);
       const { monthArray, monthDataArray } = data.reduce(
         (acc, item) => {
           const dateString = dayjs(item.createAt).format("YYYY.MM");
@@ -39,7 +42,7 @@ export default function usePatchnoteList(data) {
       setMonthList([]);
       setMonthDataList([]);
     }
-  }, [data]);
+  }, [data, month]);
 
   return {
     month,
