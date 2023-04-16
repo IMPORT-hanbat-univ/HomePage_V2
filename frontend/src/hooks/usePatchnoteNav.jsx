@@ -5,7 +5,6 @@ export default function usePatchnoteNav(patchnoteList, patchnote) {
   const [nextPatchnote, setNextPatchnote] = useState(null);
 
   useEffect(() => {
-    console.log(patchnote, patchnoteList);
     if (patchnote && patchnoteList && patchnoteList.length > 0) {
       const index = patchnoteList.findIndex((patch) => patch.id === patchnote.id);
       setNextPatchnote(patchnoteList[index + 1]);
