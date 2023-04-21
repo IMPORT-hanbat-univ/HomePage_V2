@@ -6,4 +6,10 @@ export default class FakeQnAClient {
       return res.data.items;
     });
   }
+
+  async detail() {
+    return axios.get("/dummy/qnaDetail.json").then((res) => {
+      return res.data;
+    });
+  }
 }

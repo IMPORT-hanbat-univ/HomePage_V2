@@ -28,7 +28,7 @@ export default function QnAListPage() {
 
   return (
     <section className="flex justify-center px-[32px] mt-20">
-      <section className="hidden lf:block lg:w-3/12   mt-[32px] ml-[40px] max-w-[200px]">
+      <section className="hidden lg:block lg:w-3/12   mt-[32px] ml-[40px] max-w-[200px]">
         <div className="fixed">
           <CategoryNav
             categoryList={["frontend", "backend", "Mobile", "Bigdata", "AI"]}

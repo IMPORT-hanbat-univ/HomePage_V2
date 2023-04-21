@@ -4,8 +4,6 @@ import { IoHomeOutline } from "react-icons/io5";
 import { MdArrowForwardIos } from "react-icons/md";
 import TagList from "../TagList";
 import Link from "next/link";
-import MarkdownViewer from "../MarkdownViewer";
-import { useRouter } from "next/router";
 
 export default function PostContent({ content, pathArray, children }) {
   return (
@@ -14,7 +12,6 @@ export default function PostContent({ content, pathArray, children }) {
         <Link href="/" className="flex justify-center items-center ">
           <IoHomeOutline className="w-[18px] h-[18px]" />
         </Link>
-
         {pathArray &&
           pathArray.length > 0 &&
           pathArray.map((path) => (
