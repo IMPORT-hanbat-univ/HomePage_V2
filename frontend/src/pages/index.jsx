@@ -12,7 +12,7 @@ export default function Home({ decodeUser }) {
   }, [decodeUser, setUser]);
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center flex-wrap">
+    <div className="h-screen w-full  flex items-center justify-center flex-wrap">
       <Link href={"/notice"} className="p-3 border rounded bg-import-color text-white mr-3">
         공지사항
       </Link>
