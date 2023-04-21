@@ -1,6 +1,7 @@
 import CommentContent from "@/components/CommentContent";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import PostContent from "@/components/PostContent";
+import RelatedPost from "@/components/RelatedPost";
 import useRelatedPost from "@/hooks/useRelatedPost";
 import { useQnAApi } from "@/recoil/qna";
 
@@ -24,8 +25,8 @@ export default function QnADetail() {
   const filteredData = useRelatedPost(list, post);
   console.log("result", filteredData);
   return (
-    <div className="flex justify-center">
-      <div className="max-w-[980px] w-full px-3 ">
+    <section className="flex justify-center px-[32px] mt-20">
+      <section className="w-full xl:w-9/12 max-w-[980px]  px-3 ">
         {post?.content && (
           <PostContent
             content={post.content}
@@ -35,7 +36,12 @@ export default function QnADetail() {
           </PostContent>
         )}
         <div className="my-[90px]">{post?.comment && <CommentContent comments={post.comment} />}</div>
-      </div>
-    </div>
+      </section>
+      <section className="hidden xl:block xl:w-3/12 mt-44 ml-[40px] max-w-[320px]">
+        <div className="fixed  max-w-[300px]">
+          {filteredData && filteredData.length > 0 && <RelatedPost relatedList={filteredData} />}
+        </div>
+      </section>
+    </section>
   );
 }
