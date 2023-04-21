@@ -18,8 +18,8 @@ export default function PatchnoteList() {
   const { month, setMonth, monthList, monthDataList } = usePatchnoteList(data?.patchnote);
 
   return (
-    <div className="flex justify-center">
-      <div className="max-w-[980px] w-full px-3 ">
+    <div className="flex justify-center w-screen overflow-hidden">
+      <div className="max-w-[980px] w-full px-5 ">
         {data?.project && (
           <PostContent content={data.project} pathArray={[{ name: "Project" }, { name: "Patchnote", link: "/" }]}>
             <div className="flex flex-col items-center justify-center">
