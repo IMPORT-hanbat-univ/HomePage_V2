@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { userAtom } from "@/recoil/user";
+import axios from "axios";
 
 export default function Home({ decodeUser }) {
   const [user, setUser] = useRecoilState(userAtom);
@@ -59,15 +60,29 @@ export const getServerSideProps = async ({ req, res }) => {
   const cookieObj = parse(cookie);
   console.log(cookieObj);
   if (cookieObj?.accessToken && cookieObj?.refreshToken) {
-    const user = jwt.decode(cookieObj.accessToken);
-    console.log(user);
-    if (user && Object.keys(user).length > 0) {
-      return {
-        props: {
-          decodeUser: user,
-        },
-      };
-    }
+    fetch("/api/user", {
+      method: "GET",
+      headers: {
+        accessToken: cookieObj.accessToken,
+        refreshToken: cookieObj.refreshToken,
+      },
+    });
+
+    return {
+      props: {
+        decodeUser: {},
+      },
+    };
+    // const user = jwt.decode(cookieObj.accessToken);
+    // console.log(user);
+    // if (user && Object.keys(user).length > 0) {
+    //   return {
+    //     props: {
+    //       decodeUser: user,
+    //     },
+    //   };
+    // }
+  } else if (!cookieObj?.accessToken && cookieObj?.refreshToken) {
   }
   return {
     props: {},
