@@ -55,18 +55,31 @@ export default function Home({ decodeUser }) {
 }
 
 export const getServerSideProps = async ({ req, res }) => {
+  fetch("http://localhost:3000/api/tokenverification", {
+    method: "GET",
+    headers: {
+      accessToken: "1234",
+      refreshToken: "5678",
+    },
+  })
+    .then((result) => {
+      console.log("result", result);
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
   const cookie = req.headers.cookie && Object.keys(req.headers.cookie).length > 0 ? req.headers.cookie : "";
-  console.log("cookie", cookie);
+  // console.log("cookie", cookie);
   const cookieObj = parse(cookie);
   console.log(cookieObj);
   if (cookieObj?.accessToken && cookieObj?.refreshToken) {
-    fetch("/api/user", {
-      method: "GET",
-      headers: {
-        accessToken: cookieObj.accessToken,
-        refreshToken: cookieObj.refreshToken,
-      },
-    });
+    // fetch("/api/user", {
+    //   method: "GET",
+    //   headers: {
+    //     accessToken: cookieObj.accessToken,
+    //     refreshToken: cookieObj.refreshToken,
+    //   },
+    // });
 
     return {
       props: {
