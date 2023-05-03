@@ -74,19 +74,8 @@ export default function Home({ decodeUser, error }) {
 }
 
 export const getServerSideProps = async ({ req, res }) => {
-  fetch("http://localhost:3000/api/tokenverification", {
-    method: "GET",
-    headers: {
-      accessToken: null,
-      refreshToken: null,
-    },
-  })
-    .then((result) => {
-      console.log("result", result);
-    })
-    .catch((err) => {
-      console.log("err", err);
-    });
+  let decodeUser = {};
+  let error = null;
   const cookie = req.headers.cookie && Object.keys(req.headers.cookie).length > 0 ? req.headers.cookie : "";
   // console.log("cookie", cookie);
   const cookieObj = parse(cookie);
@@ -95,8 +84,8 @@ export const getServerSideProps = async ({ req, res }) => {
     fetch("http://localhost:3000/api/tokenverification", {
       method: "GET",
       headers: {
-        accessToken: "1234",
-        refreshToken: "5678",
+        accessToken: cookieObj.accessToken,
+        refreshToken: cookieObj.refreshToken,
       },
     })
       .then((res) => {
@@ -110,7 +99,7 @@ export const getServerSideProps = async ({ req, res }) => {
           };
         } else {
           return {
-            props: {},
+            props: { error: "유저 정보를 찾을 수 없습니다." },
           };
         }
       })
@@ -127,11 +116,26 @@ export const getServerSideProps = async ({ req, res }) => {
       method: "GET",
       headers: {
         accessToken: null,
-        refreshToken: "5678",
+        refreshToken: cookieObj.refreshToken,
       },
-    });
-    return { props: {} };
-  } else {
-    return { props: { error: "에러가 발생했습니다." } };
+    })
+      .then((res) => {
+        console.log("res", res);
+        const user = jwt.decode(cookieObj.accessToken);
+        if (user && Object.keys(user).length > 0) {
+          decodeUser = user;
+        } else {
+          error = "유저 정보를 찾을 수 없습니다.";
+        }
+      })
+      .catch((err) => {
+        error = "유저 정보를 찾을 수 없습니다.";
+      });
   }
+  return {
+    props: {
+      decodeUser,
+      error,
+    },
+  };
 };
