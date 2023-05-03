@@ -1,5 +1,7 @@
 import Footer from "@/components/Footer";
 import "../styles/globals.scss";
+import "react-notifications-component/dist/theme.css";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
 

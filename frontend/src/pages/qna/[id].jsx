@@ -38,7 +38,7 @@ export default function QnADetail() {
         <div className="my-[90px]">{post?.comment && <CommentContent comments={post.comment} />}</div>
       </section>
       <section className="hidden xl:block xl:w-3/12 mt-44 ml-[40px] max-w-[320px]">
-        <div className="fixed  max-w-[300px]">
+        <div className="absolute max-w-[300px] mt-20">
           {filteredData && filteredData.length > 0 && <RelatedPost relatedList={filteredData} />}
         </div>
       </section>
