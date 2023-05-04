@@ -4,15 +4,15 @@ module.exports = class ProjectComment extends Sequelize.Model{
     static init(sequelize){
         return super.init({
             content: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.STRING(4000),
                 allowNull: false,
             },
             group:{ //=모 댓글번호
-                type: Sequelize.STRING(30),
+                type: Sequelize.INTEGER(30),
                 allowNull: false,
             },
             sequence: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.INTEGER(30),
                 allowNull: false,
             },
             indent: {

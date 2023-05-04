@@ -24,10 +24,14 @@ module.exports = class User extends Sequelize.Model{
                 type: Sequelize.STRING(10),
                 allowNull: true,
             },
-            /*rank: {
+            refreshToken: {
+                type:Sequelize.STRING(36),
+                allowNull: true,
+            },
+            rank: {
                 type: Sequelize.STRING(20),
                 allowNull: true,
-            }*/
+            }
 
         },{
             sequelize,

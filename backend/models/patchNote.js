@@ -8,11 +8,11 @@ module.exports = class PatchNote extends Sequelize.Model{
                 allowNull: false,
             },
             content: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.STRING(4000),
                 allowNull: false,
             },
             category: {
-                type: Sequelize.STRING(30),
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },
             order:{//몇번째인지 저장

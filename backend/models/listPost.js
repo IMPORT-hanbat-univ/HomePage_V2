@@ -8,19 +8,15 @@ module.exports = class ListPost extends Sequelize.Model{
                 allowNull: false,
             },
             content: {
-                type: Sequelize.STRING(255),
-                allowNull: false,
-            },
-            order:{
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(4000),
                 allowNull: false,
             },
             category: {
-                type: Sequelize.STRING(30),
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },
             file: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.STRING(1000),
                 allowNull: true,
             }
 

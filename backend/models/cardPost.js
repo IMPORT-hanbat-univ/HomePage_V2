@@ -8,27 +8,23 @@ module.exports = class CardPost extends Sequelize.Model{
                 allowNull: false,
             },
             content: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.STRING(4000),
                 allowNull: false,
             },
             tagF: { //1
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(25),
                 allowNull: true,
             },
             tagS: { //2
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(25),
                 allowNull: true,
             },
             tagT: { //3
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(25),
                 allowNull: true,
             },
-            order:{
-                type: Sequelize.STRING(100),
-                allowNull: false,
-            },
             category: {
-                type: Sequelize.STRING(30),
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },
             file: {
