@@ -3,6 +3,7 @@ import Link from "next/link";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { DecodeUser } from "@/util/type";
+import Auth from "@/api/auth";
 
 export default async function Home() {
   const cookieObj: any = cookies()
@@ -12,55 +13,9 @@ export default async function Home() {
         [name]: value,
       };
     });
-
-  let decodeUser: any = {};
-  let error = null;
-  // const cookie = header.cookie && Object.keys(header.cookie).length > 0 ? header.cookie : "";
-  // console.log("cookie", cookie);
-
-  console.log(cookieObj);
-  if (cookieObj?.accessToken && cookieObj?.refreshToken) {
-    fetch("http://localhost:3000/api/tokenverification", {
-      method: "GET",
-      headers: {
-        accessToken: cookieObj.accessToken,
-        refreshToken: cookieObj.refreshToken,
-      },
-    })
-      .then((res) => {
-        console.log("res", res);
-        const user = jwt.decode(cookieObj.accessToken);
-        if (user && Object.keys(user).length > 0) {
-          decodeUser = user;
-        } else {
-          error = "유저 정보를 찾을 수 없습니다.";
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  } else if (cookieObj?.refreshToken && !cookieObj?.accessToken) {
-    fetch("http://localhost:3000/api/tokenverification", {
-      method: "GET",
-      headers: {
-        accessToken: cookieObj.accessToken,
-        refreshToken: cookieObj.refreshToken,
-      },
-    })
-      .then((res) => {
-        console.log("res", res);
-        const user = jwt.decode(cookieObj.accessToken);
-        if (user && Object.keys(user).length > 0) {
-          decodeUser = user;
-        } else {
-          error = "유저 정보를 찾을 수 없습니다.";
-        }
-      })
-      .catch((err) => {
-        error = "유저 정보를 찾을 수 없습니다.";
-      });
-  }
-
+  const auth = new Auth();
+  const { decodeUser, error } = await auth.checkUser(cookieObj);
+  console.log("decode", decodeUser, "error", error);
   return (
     <>
       <div className="h-screen w-full  flex items-center justify-center flex-wrap">
