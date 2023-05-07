@@ -15,3 +15,10 @@ export type NotificationType = {
 export type DecodeUser = {
   nick_name: string;
 };
+
+export type NoticeList = {
+  id: number;
+  title: string;
+  nick_name: string;
+  createAt: Date | string;
+};

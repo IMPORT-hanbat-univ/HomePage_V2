@@ -1,5 +1,5 @@
 import usePagination from "@/hooks/usePagination";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React from "react";
 import Pagination from "../Pagination";
 import CardItem from "../CardItem";

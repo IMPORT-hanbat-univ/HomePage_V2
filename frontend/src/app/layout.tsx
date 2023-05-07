@@ -1,4 +1,6 @@
+import Recoil from "@/components/Recoil";
 import "./global.scss";
+import ReactQuery from "@/components/ReactQuery";
 
 export const metadata = {
   title: "Next.js",
@@ -8,7 +10,11 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <Recoil>
+          <ReactQuery>{children}</ReactQuery>
+        </Recoil>
+      </body>
     </html>
   );
 }

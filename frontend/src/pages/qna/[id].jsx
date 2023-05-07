@@ -5,7 +5,7 @@ import RelatedPost from "@/components/RelatedPost";
 import useRelatedPost from "@/hooks/useRelatedPost";
 import { useQnAApi } from "@/recoil/qna";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { useQuery } from "react-query";

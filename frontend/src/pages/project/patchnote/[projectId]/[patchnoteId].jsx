@@ -2,7 +2,7 @@ import React from "react";
 import CommentContent from "@/components/CommentContent";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import PostContent from "@/components/PostContent";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import { useQuery } from "react-query";
 import { usePatchnoteApi } from "@/recoil/patchnote";
