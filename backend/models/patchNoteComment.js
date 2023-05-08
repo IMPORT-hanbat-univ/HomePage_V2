@@ -4,7 +4,7 @@ module.exports = class PatchNoteComment extends Sequelize.Model{
     static init(sequelize){
         return super.init({
             content: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.TEXT,
                 allowNull: false,
             },
             group:{ //=모 댓글번호
@@ -18,19 +18,23 @@ module.exports = class PatchNoteComment extends Sequelize.Model{
             indent: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
-            }
+            },
+            kakaoId:{ //kakao에서 넘어오는 아이디
+                type: Sequelize.STRING(30),
+                allowNull: false,
+            },
 
-    },{
-    sequelize,
-    timestamps: true,
-    underscored: false,
-    modelName: 'PatchNoteComment',
-    tableName: 'patchNoteComments',
-    paranoid: true,
-    charset: 'utf8',
-    collate: 'utf8_general_ci',
-});
-}
+        },{
+            sequelize,
+            timestamps: true,
+            underscored: false,
+            modelName: 'PatchNoteComment',
+            tableName: 'patchNoteComments',
+            paranoid: true,
+            charset: 'utf8',
+            collate: 'utf8_general_ci',
+        });
+    }
     static associate(db) {
         db.PatchNoteComment.belongsTo(db.PatchNote);
         db.PatchNoteComment.belongsTo(db.User);
