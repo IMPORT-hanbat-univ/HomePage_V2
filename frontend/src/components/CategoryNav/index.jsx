@@ -2,10 +2,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import cls from "classnames";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export default function CategoryNav({ categoryList, seletedCategory }) {
-  const router = useRouter();
-  const { pathname, query } = router;
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
+
   return (
     <nav className="w-full ">
       <h6 className="mb-[1em] h-[20px] text-xs text-light-gray">카테고리</h6>

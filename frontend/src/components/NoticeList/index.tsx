@@ -12,7 +12,7 @@ export default function NoticeList() {
   const notice = useNoticeApi();
   const { data: notices, isLoading, error } = useQuery(["noticeList"], () => notice.getList());
   const searchParams = useSearchParams();
-  let nowPage: string | null | undefined = searchParams?.get("nowPage");
+  const nowPage: string | null | undefined = searchParams?.get("nowPage");
 
   const currentPage = nowPage ? parseInt(nowPage) : 1;
 

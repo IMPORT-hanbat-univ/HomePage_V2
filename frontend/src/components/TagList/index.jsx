@@ -1,18 +1,21 @@
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import React from "react";
 import cls from "classnames";
 export default function TagList({ post, disabled }) {
   const router = useRouter();
-  const { tag } = router.query;
+  const searchParams = useSearchParams();
+  const tag = searchParams.get("tag");
+  const pathname = usePathname();
+  const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const clickTag = (seletedTag) => {
     if (tag && tag.trim() !== "") {
       if (tag.includes(seletedTag)) {
         return;
       }
       const newTag = `${tag}+${seletedTag}`;
-      router.push({ pathname: router.pathname, query: { ...router.query, tag: newTag } }, undefined, { shallow: true });
+      router.push({ pathname: pathname, query: { ...query, tag: newTag } }, undefined, { shallow: true });
     } else {
-      router.push({ pathname: router.pathname, query: { ...router.query, tag: seletedTag } }, undefined, {
+      router.push({ pathname: pathname, query: { ...query, tag: seletedTag } }, undefined, {
         shallow: true,
       });
     }

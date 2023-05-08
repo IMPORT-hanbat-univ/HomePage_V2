@@ -10,7 +10,7 @@ import PatchnoteNav from "@/components/PatchnoteNav";
 
 export default function PatchnoteDetail() {
   const router = useRouter();
-  const { patchnoteId, projectId } = router.query;
+  const { patchnoteId, projectId } = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const patchnoteApi = usePatchnoteApi();
   const {
     data: patchnoteDetail,

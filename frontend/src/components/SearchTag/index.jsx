@@ -1,21 +1,23 @@
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function SearchTag() {
   const [tagText, setTagText] = useState("");
   const [tagList, setTagList] = useState([]);
   const router = useRouter();
-  const { tag } = router.query;
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const tag = searchParams.get("tag");
 
   useEffect(() => {
     if (tagList.length > 0) {
-      router.push({ pathname: router.pathname, query: { ...router.query, tag: tagList.join("+") } }, undefined, {
+      router.push({ pathname: pathname, query: { ...router.query, tag: tagList.join("+") } }, undefined, {
         shallow: true,
       });
     } else {
       const copyQuery = { ...router.query };
       delete copyQuery.tag;
-      router.push({ pathname: router.pathname, query: { ...copyQuery } }, undefined, { shallow: true });
+      router.push({ pathname: pathname, query: { ...copyQuery } }, undefined, { shallow: true });
     }
   }, [tagList]);
 

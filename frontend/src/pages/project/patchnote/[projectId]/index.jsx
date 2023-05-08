@@ -5,14 +5,15 @@ import usePatchnoteList from "@/hooks/usePatchnoteList";
 import { usePatchnoteApi } from "@/recoil/patchnote";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
+
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 export default function PatchnoteList() {
-  const router = useRouter();
+  const searchParams = useSearchParams();
   const patchnoteApi = usePatchnoteApi();
-  const { projectId } = router.query;
+  const projectId = searchParams.get("projectId");
 
   const { data, isLoading, error } = useQuery(["patchnoteList", projectId], () => patchnoteApi.getList(projectId));
   const { month, setMonth, monthList, monthDataList } = usePatchnoteList(data?.patchnote);

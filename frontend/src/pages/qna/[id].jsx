@@ -5,13 +5,13 @@ import RelatedPost from "@/components/RelatedPost";
 import useRelatedPost from "@/hooks/useRelatedPost";
 import { useQnAApi } from "@/recoil/qna";
 
-import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React from "react";
 
 import { useQuery } from "react-query";
 export default function QnADetail() {
-  const router = useRouter();
-  const { id } = router.query;
+  const params = useParams();
+  const { id } = params || {};
   const qna = useQnAApi();
   const {
     data: post,

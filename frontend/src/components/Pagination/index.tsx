@@ -16,10 +16,8 @@ export default function Pagination({
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  let query: {} = {};
-  searchParams?.forEach((key, value) => {
-    query = { ...query, [key]: value };
-  });
+  const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
+
   return (
     <nav className="flex items-center justify-center flex-wrap md:justify-between mb-3">
       {nowPage !== 1 && (
