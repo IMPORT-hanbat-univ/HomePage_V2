@@ -8,14 +8,14 @@ module.exports = class PatchNote extends Sequelize.Model{
                 allowNull: false,
             },
             content: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.TEXT,
                 allowNull: false,
             },
             category: {
-                type: Sequelize.STRING(30),
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },
-            order:{//몇번째인지 저장
+            order:{//몇 번째인지 저장
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
@@ -24,16 +24,16 @@ module.exports = class PatchNote extends Sequelize.Model{
                 allowNull: true,
             }
 
-    },{
-    sequelize,
-    timestamps: true,
-    modelName: 'PatchNote',
-    tableName: 'patchNotes',
-    paranoid: true,
-    charset: 'utf8',
-    collate: 'utf8_general_ci',
-});
-}
+        },{
+            sequelize,
+            timestamps: true,
+            modelName: 'PatchNote',
+            tableName: 'patchNotes',
+            paranoid: true,
+            charset: 'utf8',
+            collate: 'utf8_general_ci',
+        });
+    }
     static associate(db) {
         db.PatchNote.belongsTo(db.Project);
         db.PatchNote.hasMany(db.PatchNoteComment);

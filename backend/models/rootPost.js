@@ -8,24 +8,20 @@ module.exports = class RootPost extends Sequelize.Model{
                 allowNull: false,
             },
             content: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.TEXT,
                 allowNull: false,
             },
             tagF: { //1
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(25),
                 allowNull: true,
             },
             tagS: { //2
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(25),
                 allowNull: true,
             },
             tagT: { //3
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(25),
                 allowNull: true,
-            },
-            order:{
-                type: Sequelize.STRING(100),
-                allowNull: false,
             },
             category: {
                 type: Sequelize.STRING(30),
@@ -34,9 +30,13 @@ module.exports = class RootPost extends Sequelize.Model{
             file: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
-            }
+            },
+            kakaoId:{ //kakao에서 넘어오는 아이디
+                type: Sequelize.STRING(30),
+                allowNull: false,
+            },
 
-            },{
+        },{
             sequelize,
             timestamps: true, //시간
             modelName: 'RootPost',
