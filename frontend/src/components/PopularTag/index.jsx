@@ -7,22 +7,23 @@ export default function PopularTag({ data }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const tag = searchParams.get("tag");
+  const tag = searchParams.get("tag") ? decodeURIComponent(searchParams.get("tag")) : null;
+  console.log("1tat", tag);
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const tagArray = usePopularTag(data);
-  console.log(query);
+
   const clickTag = (seletedTag) => {
-    console.log(tag);
+    console.log("tag");
     let queryString = "";
     if (tag && tag.trim() !== "") {
       if (tag.includes(seletedTag)) {
         return;
       }
       const newTag = `${tag}+${seletedTag}`;
-
-      queryString = new URLSearchParams({ ...query, tag: newTag }).toString();
+      console.log(tag);
+      queryString = new URLSearchParams({ ...query, tag: encodeURIComponent(newTag) }).toString();
     } else {
-      queryString = new URLSearchParams({ ...query, tag: seletedTag }).toString();
+      queryString = new URLSearchParams({ ...query, tag: encodeURIComponent(seletedTag) }).toString();
     }
     console.log("test", `${pathname}?${queryString}`);
     router.push(`${pathname}?${queryString}`);

@@ -7,7 +7,7 @@ export default function SearchTag() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const tag = searchParams.get("tag");
+  const tag = searchParams.get("tag") ? decodeURIComponent(searchParams.get("tag")) : null;
 
   useEffect(() => {
     if (tagList.length > 0) {
