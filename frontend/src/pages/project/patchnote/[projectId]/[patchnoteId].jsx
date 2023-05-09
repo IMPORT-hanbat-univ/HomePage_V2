@@ -1,15 +1,16 @@
+"use client";
 import React from "react";
 import CommentContent from "@/components/CommentContent";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import PostContent from "@/components/PostContent";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useQuery } from "react-query";
 import { usePatchnoteApi } from "@/recoil/patchnote";
 import PatchnoteNav from "@/components/PatchnoteNav";
 
 export default function PatchnoteDetail() {
-  const router = useRouter();
+  const searchParams = useSearchParams();
   const { patchnoteId, projectId } = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const patchnoteApi = usePatchnoteApi();
   const {

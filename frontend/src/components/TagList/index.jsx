@@ -1,3 +1,4 @@
+"use client";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import React from "react";
 import cls from "classnames";
@@ -8,18 +9,22 @@ export default function TagList({ post, disabled }) {
   const pathname = usePathname();
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const clickTag = (seletedTag) => {
+    console.log("tag");
+    let queryString = "";
     if (tag && tag.trim() !== "") {
       if (tag.includes(seletedTag)) {
         return;
       }
       const newTag = `${tag}+${seletedTag}`;
-      router.push({ pathname: pathname, query: { ...query, tag: newTag } }, undefined, { shallow: true });
+      console.log(tag);
+      queryString = new URLSearchParams({ ...query, tag: newTag }).toString();
     } else {
-      router.push({ pathname: pathname, query: { ...query, tag: seletedTag } }, undefined, {
-        shallow: true,
-      });
+      queryString = new URLSearchParams({ ...query, tag: seletedTag }).toString();
     }
+    console.log("test", `${pathname}?${queryString}`);
+    router.push(`${pathname}?${queryString}`);
   };
+
   return (
     <div className="flex min-h-[32px]">
       {post.tagF && (

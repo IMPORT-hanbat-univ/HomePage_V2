@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { BsDot } from "react-icons/bs";
 import cls from "classnames";
@@ -9,7 +10,9 @@ export default function OrderCategory({ seleted, orderArray }) {
   const searchParams = useSearchParams();
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const clickSort = (order) => {
-    router.push({ pathname: pathname, query: { ...query, order } }, undefined, { shallow: true });
+    const queryString = new URLSearchParams({ ...query, order }).toString();
+    console.log("order", `${pathname}?${queryString}`);
+    router.push(`${pathname}?${queryString}`);
   };
   return (
     <ul className="w-full flex items-center ">

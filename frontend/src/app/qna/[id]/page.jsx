@@ -1,3 +1,4 @@
+"use client";
 import CommentContent from "@/components/CommentContent";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import PostContent from "@/components/PostContent";

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -21,7 +22,7 @@ export default function CategoryNav({ categoryList, seletedCategory }) {
                 className={cls("text-base cursor-pointer hover:text-opacity-40", {
                   "text-lg font-semibold text-import-color": category === seletedCategory,
                 })}
-                href={{ pathname, query: { ...query, category: category } }}
+                href={`${pathname}?${new URLSearchParams({ ...query, category: category }).toString()}`}
               >
                 {category}
               </Link>

@@ -1,3 +1,4 @@
+"use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
@@ -8,16 +9,16 @@ export default function SearchInput() {
   const searchParams = useSearchParams();
   const submitSearch = (e) => {
     e.preventDefault();
+    let queryString = "";
     if (search.trim() === "") {
       const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
       const copyQuery = { ...query };
       delete copyQuery.search;
-      router.push({ pathname: pathname, query: { ...copyQuery } }, undefined, { shallow: true });
+      queryString = new URLSearchParams(copyQuery).toString();
     } else {
-      router.push({ pathname: pathname, query: { ...query, search: search.trim() } }, undefined, {
-        shallow: true,
-      });
+      queryString = new URLSearchParams({ ...query, search: search.trim() }).toString();
     }
+    router.push(`${pathname}?${queryString}`);
   };
   return (
     <form onSubmit={submitSearch} className="flex mb-2">

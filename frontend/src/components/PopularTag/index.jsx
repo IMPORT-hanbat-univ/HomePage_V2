@@ -7,7 +7,7 @@ export default function PopularTag({ data }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const tag = searchParams.get("tag") ? decodeURIComponent(searchParams.get("tag")) : null;
+  const tag = searchParams.get("tag");
   console.log("1tat", tag);
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const tagArray = usePopularTag(data);
@@ -21,11 +21,12 @@ export default function PopularTag({ data }) {
       }
       const newTag = `${tag}+${seletedTag}`;
       console.log(tag);
-      queryString = new URLSearchParams({ ...query, tag: encodeURIComponent(newTag) }).toString();
+      queryString = new URLSearchParams({ ...query, tag: newTag }).toString();
     } else {
-      queryString = new URLSearchParams({ ...query, tag: encodeURIComponent(seletedTag) }).toString();
+      queryString = new URLSearchParams({ ...query, tag: seletedTag }).toString();
     }
     console.log("test", `${pathname}?${queryString}`);
+
     router.push(`${pathname}?${queryString}`);
   };
 
