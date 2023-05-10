@@ -2,7 +2,7 @@ import { NoticeList } from "@/util/type";
 export default class NoticeClient {
     async  list():Promise<NoticeList[]|string|null> {
         try{
-            const result = await fetch("http://localhost:4000/api/about/notice", {
+            const result = await fetch("http://localhost:3000/api/about/notice", {
                 method: "GET",
                 next: {
                     revalidate: 0
