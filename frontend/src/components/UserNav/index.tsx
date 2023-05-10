@@ -21,9 +21,9 @@ const UserNav = AsSyncComponent(async function () {
     <>
       {decodeUser && decodeUser?.nick_name ? (
         <>
-          <Link href={"/"} className="p-3 border rounded bg-import-color text-white">
+          <button onClick={async () => await auth.logout(cookies)} className="p-3 border rounded bg-import-color text-white">
             로그아웃
-          </Link>
+          </button>
           <div className="ml-3">{decodeUser?.nick_name}</div>
         </>
       ) : (
