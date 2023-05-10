@@ -1,4 +1,9 @@
- [
+import { NextResponse } from "next/server";
+
+export async function GET(req:Request, res:Response) {
+    
+
+  return NextResponse.json({item: [
     {
       "id": 1,
       "nick_name": "골목쟁이네 빌보",
@@ -744,4 +749,5 @@
       "title": "이제 쓸말이 없다",
       "createAt": "2023-03-21 08:00:00"
     }
-  ]
+  ]})
+}

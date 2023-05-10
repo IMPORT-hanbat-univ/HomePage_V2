@@ -4,7 +4,7 @@ import cls from "classnames";
 import { NoticeList } from "@/util/type";
 export default function NoticeCard({ post, order }: { post: NoticeList; order: number }) {
   return (
-    <article className={cls("p-4 flex", { "border-t border-t-gray-400": order !== 1 })}>
+    <article className={cls("p-4 flex", { "border-t border-t-gray-400": order !== 0 })}>
       <a className="overflow-auto break-words cursor-pointer grow">
         <h3 className="mb-2 text-lg">
           <span className="text-import-color">N.</span>
