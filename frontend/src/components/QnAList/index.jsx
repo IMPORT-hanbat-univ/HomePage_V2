@@ -1,14 +1,13 @@
 import React from "react";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { useRouter } from "next/router";
+
 import QnACard from "../QnACard";
 import Pagination from "../Pagination";
 import usePagination from "@/hooks/usePagination";
+import { useSearchParams } from "next/navigation";
 
 export default function QnAList({ qnaList }) {
-  const router = useRouter();
-  const { nowPage } = router.query;
+  const searchParams = useSearchParams();
+  const nowPage = searchParams.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
 
   const { page, pageData, pageRangeArray } = usePagination(qnaList, currentPage);

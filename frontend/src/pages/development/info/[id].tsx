@@ -2,13 +2,13 @@ import CommentContent from "@/components/CommentContent";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import PostContent from "@/components/PostContent";
 import { useInformationApi } from "@/recoil/information";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import React from "react";
 
 import { useQuery } from "react-query";
 export default function DevelopmentDetail() {
-  const router = useRouter();
-  const { id } = router.query;
+  const params = useParams();
+  const { id } = params || {};
   const info = useInformationApi();
   const { data, isLoading, error } = useQuery(["devDetail", id], () => info.getDevDetail(id), {
     staleTime: 1000 * 60 * 5,

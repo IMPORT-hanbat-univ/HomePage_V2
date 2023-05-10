@@ -1,12 +1,12 @@
 import usePagination from "@/hooks/usePagination";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import Pagination from "../Pagination";
 import CardItem from "../CardItem";
 
 export default function CardList({ cardList }) {
-  const router = useRouter();
-  const { nowPage } = router.query;
+  const searchParams = useSearchParams();
+  const nowPage = searchParams.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
   const { page, pageData, pageRangeArray } = usePagination(cardList, currentPage, 18);
   return (
