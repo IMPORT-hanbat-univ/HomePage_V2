@@ -1,45 +1,54 @@
-import { useRouter } from "next/router";
+"use client";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function SearchTag() {
-  const [tagText, setTagText] = useState("");
-  const [tagList, setTagList] = useState([]);
   const router = useRouter();
-  const { tag } = router.query;
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const tag = searchParams.get("tag");
+  const [tagText, setTagText] = useState( "");
+  const [tagList, setTagList] = useState(tag ? tag.split("+") : []);
 
-  useEffect(() => {
-    if (tagList.length > 0) {
-      router.push({ pathname: router.pathname, query: { ...router.query, tag: tagList.join("+") } }, undefined, {
-        shallow: true,
-      });
-    } else {
-      const copyQuery = { ...router.query };
-      delete copyQuery.tag;
-      router.push({ pathname: router.pathname, query: { ...copyQuery } }, undefined, { shallow: true });
-    }
-  }, [tagList]);
-
-  useEffect(() => {
-    if (tag && tag.trim() !== "") {
-      setTagList(tag.split("+"));
-    }
-  }, [tag]);
+  console.log(tagList, tag);
+ 
 
   const pressTagInput = (e) => {
+    let queryString = "";
     if (e.key === "Enter") {
       if (tagText.trim() === "") {
         return;
       } else if (tagList.find((prevTag) => prevTag === tagText.trim())) {
         return;
       } else {
-        setTagList((prev) => [...prev, tagText.trim()]);
+        const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
+        if (tagList.length > 0) {
+          queryString = new URLSearchParams({ ...query, tag: `${tagList.join("+")}+${tagText}` }).toString();
+        } else {
+          queryString = new URLSearchParams({ ...query, tag: tagText }).toString();
+        }
+
         setTagText("");
+  
+        router.push(`${pathname}?${queryString}`);
       }
     }
   };
 
   const removeTag = (tag) => {
-    setTagList((prev) => prev.filter((prevTag) => prevTag !== tag));
+    let queryString = "";
+    if (tagList.length > 1) {
+      const filteredTag = tagList.filter((item) => item !== tag);
+      queryString = new URLSearchParams({ ...router.query, tag: filteredTag.join("+") }).toString();
+      setTagList(filteredTag);
+    } else {
+      const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
+      const copyQuery = { ...query };
+      delete copyQuery.tag;
+      queryString = new URLSearchParams(copyQuery).toString();
+      setTagList([]);
+    }
+    router.push(`${pathname}?${queryString}`);
   };
 
   const removeAllTag = () => {

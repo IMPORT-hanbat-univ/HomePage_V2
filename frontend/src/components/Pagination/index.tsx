@@ -1,11 +1,23 @@
-import cls from "classnames";
+"use client";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
 
-export default function Pagination({ page, nowPage, pageRangeArray, id }) {
-  const router = useRouter();
-  const { pathname, query } = router;
+export default function Pagination({
+  page,
+  nowPage,
+  pageRangeArray,
+  id,
+}: {
+  page: number;
+  nowPage: number;
+  pageRangeArray: number[];
+  id: string | null;
+}) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
+
   return (
     <nav className="flex items-center justify-center flex-wrap md:justify-between mb-3">
       {nowPage !== 1 && (
@@ -47,7 +59,6 @@ export default function Pagination({ page, nowPage, pageRangeArray, id }) {
           ) : (
             <li key={item}>
               <Link
-             
                 href={{ pathname, query: { ...query, nowPage: item }, hash: id ?? "" }}
                 className=" min-w-[2.25em] inline-flex items-center justify-center m-1 px-2 py-1   text-[1em] border rounded-sm"
               >
@@ -60,7 +71,6 @@ export default function Pagination({ page, nowPage, pageRangeArray, id }) {
           <li>
             <Link
               href={{ pathname, query: { ...query, nowPage: pageRangeArray[0] + 10 }, hash: id ?? "" }}
- 
               className=" min-w-[2.25em] inline-flex items-center justify-center m-1 px-2 py-1   text-[1em] border rounded-sm"
             >
               ...
@@ -69,8 +79,7 @@ export default function Pagination({ page, nowPage, pageRangeArray, id }) {
         )}
       </ul>
       {nowPage !== page && (
-        <Link 
-         
+        <Link
           className="px-3 whitespace-nowrap hidden md:inline-flex items-center justify-center border rounded-md h-9 min-w-[2.25em] text-xs order-3"
           href={{ pathname, query: { ...query, nowPage: nowPage + 1 }, hash: id ?? "" }}
         >

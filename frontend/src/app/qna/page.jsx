@@ -1,20 +1,24 @@
+"use client";
 import React from "react";
 import QnAList from "@/components/QnAList";
 import { useQuery } from "react-query";
 import { useQnAApi } from "../../recoil/qna";
 import PopularTag from "@/components/PopularTag";
-import { useRouter } from "next/router";
 import CategoryNav from "@/components/CategoryNav";
 import getFilteredData from "@/util/getFilteredData";
 import OrderCategory from "@/components/OrderCategory";
 import SearchTag from "@/components/SearchTag";
 import SearchInput from "@/components/SearchInput";
+import { useSearchParams } from "next/navigation";
 
 export default function QnAListPage() {
-  const router = useRouter();
-  const { category, tag, order, search } = router.query;
+  const searchParams = useSearchParams();
+  const { category, tag, order, search } = searchParams ? Object.fromEntries(searchParams.entries()) : {};
+
   const seletedCategory = category || "";
   const seletedTagList = tag ? tag.split("+") : "";
+  
+
   const seletedOrder = order || "latest";
   const currentSearch = search || "";
   const qna = useQnAApi();

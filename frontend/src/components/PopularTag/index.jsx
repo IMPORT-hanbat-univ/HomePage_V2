@@ -1,23 +1,29 @@
+"use client";
 import usePopularTag from "@/hooks/usePopularTag";
-import { useRouter } from "next/router";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 export default function PopularTag({ data }) {
   const router = useRouter();
-  const { tag } = router.query;
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const tag = searchParams.get("tag");
+  const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const tagArray = usePopularTag(data);
+
   const clickTag = (seletedTag) => {
+    let queryString = "";
     if (tag && tag.trim() !== "") {
       if (tag.includes(seletedTag)) {
         return;
       }
       const newTag = `${tag}+${seletedTag}`;
-      router.push({ pathname: router.pathname, query: { ...router.query, tag: newTag } }, undefined, { shallow: true });
+      queryString = new URLSearchParams({ ...query, tag: newTag }).toString();
     } else {
-      router.push({ pathname: router.pathname, query: { ...router.query, tag: seletedTag } }, undefined, {
-        shallow: true,
-      });
+      queryString = new URLSearchParams({ ...query, tag: seletedTag }).toString();
     }
+
+    router.push(`${pathname}?${queryString}`);
   };
 
   return (

@@ -1,14 +1,14 @@
 import usePatchnoteNav from "@/hooks/usePatchnoteNav";
 import { usePatchnoteApi } from "@/recoil/patchnote";
-import { useRouter } from "next/router";
 import React from "react";
 import cls from "classnames";
 import { useQuery } from "react-query";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function PatchnoteNav() {
-  const router = useRouter();
-  const { patchnoteId, projectId } = router.query;
+  const searchParams = useSearchParams();
+  const { patchnoteId, projectId } = Object.fromEntries(searchParams.entries());
   const patchnoteApi = usePatchnoteApi();
   const {
     data: patchnoteDetail,

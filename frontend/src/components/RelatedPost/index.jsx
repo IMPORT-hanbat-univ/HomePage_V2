@@ -1,11 +1,12 @@
+"use client";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function RelatedPost({ relatedList }) {
-  const router = useRouter();
-  const basePath = router.pathname.split("/").slice(0, -1).join("/");
+  const pathname = usePathname();
+  const basePath = pathname.split("/").slice(0, -1).join("/");
 
   return (
     <div className="mb-3 w-full">

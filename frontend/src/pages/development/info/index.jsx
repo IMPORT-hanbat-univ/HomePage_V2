@@ -6,13 +6,15 @@ import SearchInput from "@/components/SearchInput";
 import SearchTag from "@/components/SearchTag";
 import { useInformationApi } from "@/recoil/information";
 import getFilteredData from "@/util/getFilteredData";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
 
 export default function DevelopmentInfo() {
-  const router = useRouter();
-  const { category, tag, order, search } = router.query;
+  const searchParams = useSearchParams();
+
+  const { category, tag, order, search } = Object.fromEntries(searchParams.entries());
   const seletedCategory = category || "";
   const seletedTagList = tag ? tag.split("+") : "";
   const seletedOrder = order || "latest";
