@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const {RootPost, ListPost} = require('../models');
+const Sequelize = require('sequelize');
+const {verifyToken} = require('./middlewares');
+const express = require('express');
+const router = express.Router();
+
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', async function(req, res, next) {
+res.render('index')
 });
 
 module.exports = router;
+
+
