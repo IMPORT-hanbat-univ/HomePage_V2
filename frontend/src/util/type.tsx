@@ -22,3 +22,23 @@ export type NoticeList = {
   nick_name: string;
   createAt: Date | string;
 };
+
+export type PostDetail = {
+  content: {
+    id: number;
+    title: string;
+    content: string;
+    nick_name: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  comment: {
+    id: number;
+    content: string;
+    group: number; //모댓글의 순서, 0부터
+    sequence: number; //대댓글속 순서, 0부터, 모댓글은 이 값을 널값으로 갖는다.,
+    userKakaoId: number;
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
+};
