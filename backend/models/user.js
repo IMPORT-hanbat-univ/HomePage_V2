@@ -25,7 +25,7 @@ module.exports = class User extends Sequelize.Model{
                 allowNull: true,
             },
             refreshToken: {
-                type:Sequelize.STRING(36),
+                type:Sequelize.STRING(255),
                 allowNull: true,
             },
             rank: {
