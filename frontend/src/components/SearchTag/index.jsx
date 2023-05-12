@@ -3,31 +3,15 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function SearchTag() {
-  const [tagText, setTagText] = useState("");
-  const [tagList, setTagList] = useState([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const tag = searchParams.get("tag");
-  console.log(tagList, tag);
-  // useEffect(() => {
-  //   console.log("tagList", tagList);
-  //   let queryString = "";
-  //   if (tagList.length > 0) {
-  //     queryString = new URLSearchParams({ ...router.query, tag: tagList.join("+") }).toString();
-  //   } else {
-  //     const copyQuery = { ...router.query };
-  //     delete copyQuery.tag;
-  //     queryString = new URLSearchParams(copyQuery).toString();
-  //   }
-  //   router.push(`${pathname}?${queryString}`);
-  // }, []);
+  const [tagText, setTagText] = useState( "");
+  const [tagList, setTagList] = useState(tag ? tag.split("+") : []);
 
-  useEffect(() => {
-    if (tag && tag.trim() !== "") {
-      setTagList(tag.split("+"));
-    }
-  }, [tag]);
+  console.log(tagList, tag);
+ 
 
   const pressTagInput = (e) => {
     let queryString = "";
@@ -45,7 +29,7 @@ export default function SearchTag() {
         }
 
         setTagText("");
-        setTagList([]);
+  
         router.push(`${pathname}?${queryString}`);
       }
     }

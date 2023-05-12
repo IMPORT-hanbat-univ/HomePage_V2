@@ -9,19 +9,16 @@ export default function TagList({ post, disabled }) {
   const pathname = usePathname();
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const clickTag = (seletedTag) => {
-    console.log("tag");
     let queryString = "";
     if (tag && tag.trim() !== "") {
       if (tag.includes(seletedTag)) {
         return;
       }
       const newTag = `${tag}+${seletedTag}`;
-      console.log(tag);
       queryString = new URLSearchParams({ ...query, tag: newTag }).toString();
     } else {
       queryString = new URLSearchParams({ ...query, tag: seletedTag }).toString();
     }
-    console.log("test", `${pathname}?${queryString}`);
     router.push(`${pathname}?${queryString}`);
   };
 

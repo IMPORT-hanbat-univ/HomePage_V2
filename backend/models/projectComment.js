@@ -4,21 +4,25 @@ module.exports = class ProjectComment extends Sequelize.Model{
     static init(sequelize){
         return super.init({
             content: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.TEXT,
                 allowNull: false,
             },
             group:{ //=모 댓글번호
-                type: Sequelize.STRING(30),
+                type: Sequelize.INTEGER(30),
                 allowNull: false,
             },
             sequence: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.INTEGER(30),
                 allowNull: false,
             },
             indent: {
                 type: Sequelize.STRING(100),
-                allowNull: true,
-            }
+                allowNull: false,
+            },
+            kakaoId:{ //kakao에서 넘어오는 아이디
+                type: Sequelize.STRING(30),
+                allowNull: false,
+            },
 
         },{
             sequelize,

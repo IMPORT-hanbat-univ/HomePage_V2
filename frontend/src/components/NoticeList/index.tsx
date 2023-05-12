@@ -10,7 +10,10 @@ import { NoticeList } from "@/util/type";
 
 export default function NoticeList() {
   const notice = useNoticeApi();
-  const { data: notices, isLoading, error } = useQuery(["noticeList"], () => notice.getList());
+
+  const { data: notices, isLoading, error } = useQuery(["noticeList"], async () => await notice.getList());
+  
+
   const searchParams = useSearchParams();
   const nowPage: string | null | undefined = searchParams?.get("nowPage");
 

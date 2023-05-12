@@ -4,37 +4,33 @@ module.exports = class ClubUser extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-                department: {
-                    type: Sequelize.STRING(100),
+                department: {//학과
+                    type: Sequelize.STRING(30),
                     allowNull: true,
                 },
                 grade: {
-                    type: Sequelize.INTEGER(100),
+                    type: Sequelize.STRING(10),
                     allowNull: true,
                 },
                 blog: {
-                    type: Sequelize.STRING(100),
+                    type: Sequelize.STRING(500),
                     allowNull: true,
                 },
                 github_url:{
-                    type: Sequelize.STRING(100),
-                    allowNull: true,
-                },
-                studentId: {
-                    type: Sequelize.STRING(100),
+                    type: Sequelize.STRING(500),
                     allowNull: true,
                 },
                 framework: {
-                    type: Sequelize.STRING(100),
+                    type: Sequelize.STRING(500),
                     allowNull: true,
                 },
                 language: {
-                    type: Sequelize.STRING(100),
+                    type: Sequelize.STRING(500),
                     allowNull: true,
                 },
-                phoneNumber: {
-                    type: Sequelize.STRING(100),
-                    allowNull: true,
+                kakaoId:{ //kakao에서 넘어오는 아이디
+                    type: Sequelize.STRING(30),
+                    allowNull: false,
                 },
             },
             {
@@ -53,9 +49,6 @@ module.exports = class ClubUser extends Sequelize.Model {
         db.ClubUser.belongsTo(db.User);
         db.ClubUser.hasMany(db.CardPost);
         db.ClubUser.hasMany(db.RootPost);
-        db.ClubUser.hasMany(db.UserProject);
-        db.ClubUser.hasMany(db.ProjectapplicationAnswer);
-        db.ClubUser.hasMany(db.Reservation);
         db.ClubUser.hasMany(db.Schedule);
     }
 

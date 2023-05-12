@@ -1,6 +1,25 @@
 import jwt from "jsonwebtoken";
 
 export default class Auth {
+
+
+  async logout(cookieObj: any){
+    try{
+   
+      await fetch("http://localhost:4000/api/logout", {
+        method: "GET",
+        headers: {
+          accessToken: cookieObj.accessToken,
+          refreshToken: cookieObj.refreshToken
+        }
+      })
+      return;
+      
+    }catch(err:any){
+      console.log(err);
+      return "로그아웃 과정에서 에러 발생!!"
+    }
+  }
   async checkUser(cookieObj: any) {
     let decodeUser: any = {};
     let error = null;
@@ -9,7 +28,7 @@ export default class Auth {
 
     try {
       if (cookieObj?.accessToken && cookieObj?.refreshToken) {
-        const res = await fetch("http://localhost:3000/api/tokenverification", {
+        const res = await fetch("http://localhost:4000/api/tokenverification", {
           method: "GET",
           headers: {
             accessToken: cookieObj.accessToken,
@@ -27,7 +46,7 @@ export default class Auth {
           throw new Error("유저 정보를 찾을 수 없습니다.");
         }
       } else if (cookieObj?.refreshToken && !cookieObj?.accessToken) {
-        const res = await fetch("http://localhost:3000/api/tokenverification", {
+        const res = await fetch("http://localhost:4000/api/tokenverification", {
           method: "GET",
           headers: {
             accessToken: cookieObj.accessToken,

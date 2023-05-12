@@ -13,13 +13,11 @@ import { useSearchParams } from "next/navigation";
 
 export default function QnAListPage() {
   const searchParams = useSearchParams();
-  console.log("123", searchParams);
   const { category, tag, order, search } = searchParams ? Object.fromEntries(searchParams.entries()) : {};
 
   const seletedCategory = category || "";
   const seletedTagList = tag ? tag.split("+") : "";
-  console.log("object", Object.fromEntries(searchParams.entries()));
-  console.log("seleted", seletedTagList);
+  
 
   const seletedOrder = order || "latest";
   const currentSearch = search || "";
