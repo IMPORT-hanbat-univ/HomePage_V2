@@ -1,15 +1,15 @@
-"use client";
 import CommentContent from "@/components/CommentContent";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import PostContent from "@/components/PostContent";
 import { PostDetail } from "@/util/type";
-import { useParams } from "next/navigation";
+
 import React from "react";
 
-export default function PostDetail({ data }: { data: PostDetail }) {
-  const params = useParams();
-  const { id } = params || {};
+type Props = {
+  data: PostDetail;
+};
 
+export default function PostDetail({ data }: Props) {
   return (
     <div className="flex justify-center">
       <div className="max-w-[980px] w-full px-3 ">

@@ -16,7 +16,7 @@ export type DecodeUser = {
   nick_name: string;
 };
 
-export type NoticeList = {
+export type Notice = {
   id: number;
   title: string;
   nick_name: string;
