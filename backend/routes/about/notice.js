@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 //목록
-router.get('/', async function(req, res, next) {
+router.get('/',verifyToken, async function(req, res) {
 
     /*
        //테스트용 데이터 생성
