@@ -2,9 +2,10 @@ import React from "react";
 
 import { cookies } from "next/headers";
 
-import Auth from "@/api/auth";
 import Link from "next/link";
 import AsSyncComponent from "../AsSyncComponent";
+import { checkUser, logout } from "@/api/auth";
+import LogoutButton from "../LogoutButton";
 
 const UserNav = AsSyncComponent(async function () {
   const cookieObj: any = cookies()
@@ -14,16 +15,15 @@ const UserNav = AsSyncComponent(async function () {
         [name]: value,
       };
     });
-  const auth = new Auth();
-  const { decodeUser, error } = await auth.checkUser(cookieObj);
+
+  const { decodeUser, error } = await checkUser(cookieObj);
   console.log("decode", decodeUser, "error", error);
+
   return (
     <>
       {decodeUser && decodeUser?.nick_name ? (
         <>
-          <button onClick={async () => await auth.logout(cookies)} className="p-3 border rounded bg-import-color text-white">
-            로그아웃
-          </button>
+          <LogoutButton cookieObj={cookieObj} />
           <div className="ml-3">{decodeUser?.nick_name}</div>
         </>
       ) : (
