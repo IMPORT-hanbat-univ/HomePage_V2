@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function getNoticeList(): Promise<Notice[] | string | null> {
   try {
-    const result = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}/api/about/notice`, {
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_NETWORK_BACK_NODE_ADRESS}:4000/about/notice`, {
       method: "GET",
       next: {
         revalidate: 0,
@@ -19,9 +19,9 @@ export async function getNoticeList(): Promise<Notice[] | string | null> {
 
 export async function getNoticeDetail(id: number) {
   try {
-    console.log(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/api/about/notice/${id}`);
+    console.log(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/about/notice/${id}`);
     console.log("123");
-    const result = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/api/about/notice/${id}`);
+    const result = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/about/notice/${id}`);
     let data: any;
     const contentType = result.headers.get("content-type");
     if (contentType && contentType.includes("application/json")) {
