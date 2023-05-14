@@ -1,12 +1,13 @@
+"use client"
 import CommentContent from "@/components/CommentContent";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import PostContent from "@/components/PostContent";
-import { PostDetail } from "@/util/type";
+import { PostDetailType } from "@/util/type";
 
 import React from "react";
 
 type Props = {
-  data: PostDetail;
+  data: PostDetailType;
 };
 
 export default function PostDetail({ data }: Props) {

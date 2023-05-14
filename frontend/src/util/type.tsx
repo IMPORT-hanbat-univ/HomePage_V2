@@ -23,7 +23,8 @@ export type Notice = {
   createAt: Date | string;
 };
 
-export type PostDetail = {
+export type PostDetailType = {
+
   content: {
     id: number;
     title: string;
@@ -41,4 +42,4 @@ export type PostDetail = {
     createdAt: Date;
     updatedAt: Date;
   }[];
-};
+} 
