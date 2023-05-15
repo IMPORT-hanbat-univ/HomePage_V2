@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./EditorWithPreview.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
@@ -7,15 +8,15 @@ import { BiArrowBack } from "react-icons/bi";
 import MarkdownViewer from "../MarkdownViewer";
 import MarkdownEditor from "../MarkdownEditor";
 
-export default function WritingBox() {
+export default function EditorWithPreview(){
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [tagText, setTagText] = useState("");
-  const [tagList, setTagList] = useState([]);
+  const [tagList, setTagList] = useState<string[]>([]);
 
-  const markdownRef = useRef(null);
+  const markdownRef = useRef<HTMLInputElement>(null);
 
-  const pressTagInput = (e) => {
+  const pressTagInput = (e:React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (tagText.trim() === "") {
         return;
@@ -36,11 +37,11 @@ export default function WritingBox() {
     }
   }, [text]);
 
-  const removeTag = (tag) => {
+  const removeTag = (tag:string) => {
     setTagList((prev) => prev.filter((prevTag) => prevTag !== tag));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log({ text });
   };
@@ -51,7 +52,6 @@ export default function WritingBox() {
         <div className="pt-8 px-4 md:px-12">
           <TextareaAutosize
             className={styles.title}
-            type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력하세요"
@@ -59,7 +59,7 @@ export default function WritingBox() {
           <div className={styles.bar}></div>
           <div className=" flex flex-wrap">
             {tagList.length > 0 &&
-              tagList.map((tag) => (
+              tagList.map((tag:string) => (
                 <div key={tag} className={styles.tag} onClick={() => removeTag(tag)}>
                   {tag}
                 </div>

@@ -1,3 +1,4 @@
+"use client"
 import React, { useRef } from "react";
 import dynamic from "next/dynamic";
 import { BsImage } from "react-icons/bs";
