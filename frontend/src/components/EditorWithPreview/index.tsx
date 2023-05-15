@@ -45,7 +45,7 @@ export default function EditorWithPreview(){
     e.preventDefault();
     console.log({ text });
   };
-
+  
   return (
     <div className="flex">
       <div className="w-full lg:w-1/2 flex flex-col grow-0 h-screen">

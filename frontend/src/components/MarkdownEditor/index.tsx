@@ -9,16 +9,16 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.
   ssr: false,
 });
 
-export default function MarkdownEditor({ text, setText, hideToolbar }) {
-  const imageRef = useRef();
+export default function MarkdownEditor({ text, setText, hideToolbar }: {text:string; setText:any; hideToolbar: boolean}) {
+  const imageRef = useRef<HTMLInputElement>(null);
   return (
     <>
       <MDEditor
-
+    
         preview="edit"
         hideToolbar={hideToolbar}
         value={text}
-        onChange={setText}
+        onChange={setText }
         highlightEnable={false}
         previewOptions={{
           rehypePlugins: [[rehypeSanitize]],
@@ -30,7 +30,7 @@ export default function MarkdownEditor({ text, setText, hideToolbar }) {
                 <button type="button">
                   <BsImage
                     onClick={() => {
-                      imageRef.current.click();
+                      imageRef.current?.click();
                     }}
                   />
                 </button>
