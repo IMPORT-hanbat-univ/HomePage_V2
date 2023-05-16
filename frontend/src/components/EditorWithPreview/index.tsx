@@ -7,10 +7,11 @@ import { BiArrowBack } from "react-icons/bi";
 
 import MarkdownViewer from "../MarkdownViewer";
 import MarkdownEditor from "../MarkdownEditor";
+import { createNotice } from "@/api/notice";
 
 export default function EditorWithPreview({type}:{type:string}){
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [content, setContent] = useState("");
   const [tagText, setTagText] = useState("");
   const [tagList, setTagList] = useState<string[]>([]);
 
@@ -35,16 +36,26 @@ export default function EditorWithPreview({type}:{type:string}){
     if (markdownRef.current) {
       markdownRef.current.scrollTop = markdownRef.current.scrollHeight;
     }
-  }, [text]);
+  }, [content]);
 
   const removeTag = (tag:string) => {
     setTagList((prev) => prev.filter((prevTag) => prevTag !== tag));
   };
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const [tagF="", tagS="", tagT=""] = tagList;
     if(type==="notice"){
-      
+
+      const result = await createNotice({
+        title,
+        content,
+        tagF,
+        tagS,
+        tagT,
+        category: "notice",
+        nick_name: "string"
+      })
     }
   };
   
@@ -77,7 +88,7 @@ export default function EditorWithPreview({type}:{type:string}){
           </div>
         </div>
         <div className="pl-3 md:pl-12 h-full w-full">
-          <MarkdownEditor text={text} setText={setText} hideToolbar={false}/>
+          <MarkdownEditor text={content} setText={setContent} hideToolbar={false}/>
         </div>
 
         <div className="px-4 h-16 w-full flex justify-between items-center mb-2">
@@ -98,7 +109,7 @@ export default function EditorWithPreview({type}:{type:string}){
       <div className="w-1/2 overflow-auto h-screen overflow-y-scroll scroll-smooth hidden lg:block" ref={markdownRef}>
         <div className={styles.viewer}>
           <h1 className="mb-16 text-[2.5rem] font-extrabold">{title}</h1>
-          <MarkdownViewer text={text} />
+          <MarkdownViewer text={content} />
         </div>
       </div>
     </div>

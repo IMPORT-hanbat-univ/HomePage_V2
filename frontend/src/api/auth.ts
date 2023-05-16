@@ -54,7 +54,7 @@ export async function checkUser(cookieObj: CookieObject[] | []) {
     );
 
     try {
-      const res = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/api/tokenverification`, {
+      const res = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/auth/tokenverification`, {
         method: "GET",
         headers: {
           accessToken: accessToken || "",

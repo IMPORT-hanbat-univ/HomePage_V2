@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function getNoticeList(): Promise<Notice[] | string | null> {
   try {
-    const result = await fetch(`http://${process.env.NEXT_PUBLIC_NETWORK_BACK_NODE_ADRESS}:4000/about/notice`, {
+    const result = await fetch(`http://localhost:4000/about/notice`, {
       method: "GET",
       next: {
         revalidate: 0,
@@ -40,7 +40,7 @@ export async function getNoticeDetail(id: number) {
 
 export async function createNotice(post: CreatePost){
   try{
-    
+    console.log(post);
   }catch(err:any){
     console.log(err);
     return "글 저장 과정에서 오류가 발생했습니다."

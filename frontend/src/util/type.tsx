@@ -51,13 +51,13 @@ tagT?: string;
 } 
 
 export interface CreatePost {
-  id: number;
+
   title: string;
   content: string;
   tagF?: string;
 tagS?: string;
+category: string;
 tagT?: string;
   nick_name: string;
-  createdAt: Date;
-  updatedAt: Date;
+  
 }
