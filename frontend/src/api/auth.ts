@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-
 interface CookieObject {
   accessToken?: string;
   refreshToken?: string;

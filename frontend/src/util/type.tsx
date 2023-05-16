@@ -19,16 +19,22 @@ export type DecodeUser = {
 export type Notice = {
   id: number;
   title: string;
+  tagF: string;
+  tagS: string;
+  tagT: string;
   nick_name: string;
   createAt: Date | string;
 };
 
-export type PostDetailType = {
+export interface PostDetailType  {
 
   content: {
     id: number;
     title: string;
     content: string;
+    tagF?: string;
+  tagS?: string;
+tagT?: string;
     nick_name: string;
     createdAt: Date;
     updatedAt: Date;
@@ -43,3 +49,15 @@ export type PostDetailType = {
     updatedAt: Date;
   }[];
 } 
+
+export interface CreatePost {
+  id: number;
+  title: string;
+  content: string;
+  tagF?: string;
+tagS?: string;
+tagT?: string;
+  nick_name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

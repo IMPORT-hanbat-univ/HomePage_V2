@@ -8,7 +8,7 @@ import { BiArrowBack } from "react-icons/bi";
 import MarkdownViewer from "../MarkdownViewer";
 import MarkdownEditor from "../MarkdownEditor";
 
-export default function EditorWithPreview(){
+export default function EditorWithPreview({type}:{type:string}){
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [tagText, setTagText] = useState("");
@@ -43,7 +43,9 @@ export default function EditorWithPreview(){
 
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ text });
+    if(type==="notice"){
+      
+    }
   };
   
   return (

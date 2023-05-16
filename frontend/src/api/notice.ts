@@ -1,4 +1,4 @@
-import { Notice, PostDetailType } from "@/util/type";
+import { CreatePost, Notice, PostDetailType } from "@/util/type";
 import axios from "axios";
 
 export async function getNoticeList(): Promise<Notice[] | string | null> {
@@ -34,5 +34,15 @@ export async function getNoticeDetail(id: number) {
   } catch (err: any) {
     console.log(err);
     return "공지사항 글을 가져오는 도중 발생한 에러!";
+  }
+}
+
+
+export async function createNotice(post: CreatePost){
+  try{
+    
+  }catch(err:any){
+    console.log(err);
+    return "글 저장 과정에서 오류가 발생했습니다."
   }
 }
