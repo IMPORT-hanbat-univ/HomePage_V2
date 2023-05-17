@@ -44,6 +44,7 @@ export async function createNotice(post: CreatePost, accessToken:string, refresh
     const result = await fetch("http://localhost:4000/about/notice/post", {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         accessToken,
         refreshToken
       },

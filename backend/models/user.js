@@ -5,8 +5,8 @@ module.exports = class User extends Sequelize.Model{
         return super.init({
             email:{
                 type: Sequelize.STRING(20),
-                allowNull: false,
-                unique: true,
+                allowNull: true,
+
             },
             nick_name: {
                 type: Sequelize.STRING(20),
@@ -15,6 +15,7 @@ module.exports = class User extends Sequelize.Model{
             kakaoId:{ //kakao에서 넘어오는 아이디
                 type: Sequelize.STRING(30),
                 allowNull: false,
+                unique: true,
             },
             /*password: { //내가 추가
                 type: Sequelize.STRING(100),

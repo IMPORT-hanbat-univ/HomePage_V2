@@ -5,10 +5,10 @@ const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./passport');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
 
 var indexRouter = require('./routes/index');

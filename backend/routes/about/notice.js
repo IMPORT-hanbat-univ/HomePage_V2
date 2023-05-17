@@ -3,10 +3,10 @@ const Sequelize = require('sequelize');
 const {verifyToken} = require('../middlewares');
 const express = require('express');
 const router = express.Router();
-
+const {v4:uuidv4} = require("uuid")
 
 //목록
-router.get('/',verifyToken, async function(req, res) {
+router.get('/', async function(req, res) {
 
     /*
        //테스트용 데이터 생성
@@ -77,22 +77,25 @@ router.get('/:id',async (req,res)=>{
 
 //create
 router.post('/post',verifyToken,async (req, res)=>{
-    console.log(req.headers)
+  
+    console.log("req", req)
+    const body = req.body
+    const user = req.user
     try {
         await RootPost.create({
-            id:req.id,
-            title:req.title,
-            content: req.content,
 
-            tagF: req.tagF,
-            tagS: req.tagS,
-            tagT: req.tagT,
-            category: req.category,
-            file: req.file,
-            kakaoId: req.userKakaoId,
+            title: body.title,
+            content: body.content,
+
+            tagF: body.tagF,
+            tagS: body.tagS,
+            tagT: body.tagT,
+            category: body.category,
+            file: "",
+            kakaoId: user.kakaoId,
 
         })
-        return res.statusCode(200);
+        return res.sendStatus(200);
 
     }catch (error){
         console.error(error);

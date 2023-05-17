@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const jwt =require("jsonwebtoken")
-const { verifyToken} = require('./middlewares');
+const { verifyToken,authenticationToken} = require('./middlewares');
 const { User } = require('../models');
 const { v4: uuidv4 } = require('uuid');
 const {Op} = require("sequelize");
@@ -48,10 +48,26 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     })(req,res,next);
 });
 */
-router.get('/logout', verifyToken, (req,res) => {
-    req.logout();
-    req.session.destroy();
-    res.redirect('http://localhost:3000');
+router.get('/logout', authenticationToken, (req,res) => {
+    try{
+    
+        req.logout(function(err) {
+            if (err) { 
+                console.log(err);
+                return res.sendStatus(401)
+             }
+            
+            req.session.destroy();
+             return res.sendStatus(200)
+          });
+       
+        //refresh, access 삭제
+       
+    }catch(err){
+        console.log(err);
+    
+    }
+   
 });
 
 router.get('/kakao', passport.authenticate('kakao'));
@@ -75,13 +91,13 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
         nick_name: loggedInUser[0].nick_name,
         rank: loggedInUser[0].rank,
     }, process.env.ACCESS_TOKEN_SECRET,{
-        expiresIn: '1h', //기간 1시간
+        expiresIn: '10m', //기간 10분
     });
 
     const refreshToken = jwt.sign({
             uuid:uuidv4(), //고유한 난수를 사용하고싶어서 uuid 사용
         },process.env.REFRESH_TOKEN_SECRET,{
-            expiresIn: '14d', //기간 14일
+            expiresIn: '12h', //기간 12시간
         }
     );
 
@@ -90,8 +106,8 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
     console.log("token: " + accessToken);
     console.log("refresh: " + refreshToken);
 
-    res.cookie('accessToken',accessToken,{maxAge:60*60*1000}); //쿠키 만료 1시간
-    res.cookie('refreshToken',refreshToken,{maxAge:60*60*24*14*1000}); //쿠키 만료 14일
+    res.cookie('accessToken',accessToken,{maxAge:60*10*1000}); //쿠키 만료 10분
+    res.cookie('refreshToken',refreshToken,{maxAge:60*60*12*1000}); //쿠키 만료 12시간
 
     try {
         await User.update(
@@ -110,4 +126,19 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
     res.redirect('http://localhost:3000');
 
 });
+
+router.get("/tokenverification",verifyToken, (req, res) => {
+    console.log("123123");
+    const accessToken = req.headers["accesstoken"] || req.cookies.accessToken;
+    const refreshToken = req.headers["refreshtoken"] || req.cookies.refreshToken;
+    console.log("accessToken", accessToken);
+    console.log("refreshtoken", refreshToken);
+    if (!accessToken ) {
+        return res.sendStatus(400); // Bad Request
+    }
+    res.setHeader("accesstoken", accessToken);
+    res.setHeader("refreshtoken", refreshToken);
+    return res.sendStatus(200); // Success
+});
 module.exports = router;
+
