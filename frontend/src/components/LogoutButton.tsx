@@ -2,11 +2,12 @@
 import { logout } from "@/api/auth";
 import React from "react";
 import { redirect } from "next/navigation";
-export default function LogoutButton({ cookieObj }: { cookieObj: any }) {
+import getClientCookie from "@/util/getClientCookie"
+export default function LogoutButton() {
   const handleLogout = async () => {
-    console.log("cookieObj", cookieObj);
-    await logout(cookieObj);
-    redirect("/");
+  
+    await logout(getClientCookie("accessToken")||"", getClientCookie("refreshToken")||"");
+    return redirect("/");
   };
   return (
     <button onClick={handleLogout} className="p-3 border rounded bg-import-color text-white">

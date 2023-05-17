@@ -1,9 +1,9 @@
-import { Notice, PostDetailType } from "@/util/type";
-import axios from "axios";
+import { CreatePost, Notice, PostDetailType } from "@/util/type";
+
 
 export async function getNoticeList(): Promise<Notice[] | string | null> {
   try {
-    const result = await fetch(`http://${process.env.NEXT_PUBLIC_NETWORK_BACK_NODE_ADRESS}:4000/about/notice`, {
+    const result = await fetch(`http://localhost:4000/about/notice`, {
       method: "GET",
       next: {
         revalidate: 0,
@@ -34,5 +34,24 @@ export async function getNoticeDetail(id: number) {
   } catch (err: any) {
     console.log(err);
     return "공지사항 글을 가져오는 도중 발생한 에러!";
+  }
+}
+
+
+export async function createNotice(post: CreatePost, accessToken:string, refreshToken:string):Promise<boolean|string>{
+  try{
+    console.log('createNotice', post)
+    const result = await fetch("http://localhost:4000/about/notice/post", {
+      method: "POST",
+      headers: {
+        accessToken,
+        refreshToken
+      },
+      body: JSON.stringify(post)
+    })
+    return true
+  }catch(err:any){
+    console.log(err);
+    return "글 저장 과정에서 오류가 발생했습니다."
   }
 }
