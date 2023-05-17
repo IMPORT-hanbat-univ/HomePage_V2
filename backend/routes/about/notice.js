@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 //목록
-router.get('/', async function(req, res, next) {
+router.get('/',verifyToken, async function(req, res) {
 
     /*
        //테스트용 데이터 생성
@@ -57,7 +57,7 @@ router.get('/', async function(req, res, next) {
 
 
 //상세보기 데이터가 없을때는 빈 배열을 보낸다.
-router.get('http://localhost:3000/about/notice/:id',async (req,res)=>{
+router.get('/:id',async (req,res)=>{
     try {
         const post = await RootPost.findOne({
             where:{id:req.params.id},
@@ -76,12 +76,14 @@ router.get('http://localhost:3000/about/notice/:id',async (req,res)=>{
 });
 
 //create
-router.post('http://localhost:3000/about/notice/post',verifyToken,async (req, res)=>{
+router.post('/post',verifyToken,async (req, res)=>{
+    console.log(req.headers)
     try {
         await RootPost.create({
             id:req.id,
             title:req.title,
             content: req.content,
+
             tagF: req.tagF,
             tagS: req.tagS,
             tagT: req.tagT,
@@ -90,6 +92,7 @@ router.post('http://localhost:3000/about/notice/post',verifyToken,async (req, re
             kakaoId: req.userKakaoId,
 
         })
+        return res.statusCode(200);
 
     }catch (error){
         console.error(error);
