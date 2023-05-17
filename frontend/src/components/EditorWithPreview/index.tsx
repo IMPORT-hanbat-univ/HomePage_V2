@@ -2,14 +2,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./EditorWithPreview.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
-
+import {redirect} from "next/navigation"
 import { BiArrowBack } from "react-icons/bi";
 
 import MarkdownViewer from "../MarkdownViewer";
 import MarkdownEditor from "../MarkdownEditor";
 import { createNotice } from "@/api/notice";
+import getClientCookie from "@/util/getClientCookie";
 
-export default function EditorWithPreview({type}:{type:string}){
+export default function EditorWithPreview({type, nick_name=""}:{type:string, nick_name: string}){
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tagText, setTagText] = useState("");
@@ -44,18 +45,26 @@ export default function EditorWithPreview({type}:{type:string}){
 
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const accessToken:string = getClientCookie("accessToken") ||"";
+    const refreshToken:string = getClientCookie("refreshToken") || "";
     const [tagF="", tagS="", tagT=""] = tagList;
     if(type==="notice"){
 
-      const result = await createNotice({
+      const result:boolean|string = await createNotice({
         title,
         content,
         tagF,
         tagS,
         tagT,
         category: "notice",
-        nick_name: "string"
-      })
+        nick_name
+      }, accessToken, refreshToken)
+      if(typeof result === "boolean"){
+        redirect("/")
+      }else if(typeof result === "string"){
+        alert(result)
+        return;
+      }
     }
   };
   
