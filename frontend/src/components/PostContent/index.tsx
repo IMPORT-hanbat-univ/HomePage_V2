@@ -1,11 +1,42 @@
+"use client";
 import dayjs from "dayjs";
 import React from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdArrowForwardIos } from "react-icons/md";
 import TagList from "../TagList";
 import Link from "next/link";
+import getClientCookie from "@/util/getClientCookie";
+import { deleteNotice } from "@/api/notice";
+import { PostDetailType } from "@/util/type";
 
-export default function PostContent({ content, pathArray, children }) {
+import { useRouter } from "next/navigation";
+
+export default function PostContent({
+  content,
+  pathArray,
+  children,
+}: {
+  content: PostDetailType["content"];
+  pathArray: { name: string; link?: string }[];
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const handleRemove = async () => {
+    if (!content?.id) {
+      return;
+    } else {
+      const accessToken: string = getClientCookie("accessToken") || "";
+      const refreshToken: string = getClientCookie("refreshToken") || "";
+      const result: string | boolean = await deleteNotice(content?.id as number, accessToken, refreshToken);
+      if (typeof result === "string") {
+        alert(result);
+        return;
+      } else {
+        return router.replace("/about/notice");
+      }
+    }
+  };
+
   return (
     <div>
       <div className="mt-24 pl-1 flex items-center">
@@ -33,7 +64,7 @@ export default function PostContent({ content, pathArray, children }) {
       <div className="mt-9 flex items-center justify-between">
         <span className="leading-6 tracking-[-0.015em] text-[20px] font-semibold opacity-80">{content.nick_name}</span>
         <time className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-80">
-          {dayjs(content.createAt).format("YYYY년 M월 D일")}
+          {dayjs(content.createdAt).format("YYYY년 M월 D일")}
         </time>
       </div>
       <div className="flex items-center justify-between mt-[17px]">
@@ -42,7 +73,9 @@ export default function PostContent({ content, pathArray, children }) {
           <Link href="/" className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2">
             수정
           </Link>
-          <button className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">삭제</button>
+          <button onClick={handleRemove} className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">
+            삭제
+          </button>
         </div>
       </div>
       <div className="mt-[92px]">{children}</div>

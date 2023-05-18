@@ -1,24 +1,25 @@
-"use client"
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./EditorWithPreview.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
-import {redirect} from "next/navigation"
+
 import { BiArrowBack } from "react-icons/bi";
 
 import MarkdownViewer from "../MarkdownViewer";
 import MarkdownEditor from "../MarkdownEditor";
 import { createNotice } from "@/api/notice";
 import getClientCookie from "@/util/getClientCookie";
+import { useRouter } from "next/navigation";
 
-export default function EditorWithPreview({type, nick_name=""}:{type:string, nick_name: string}){
+export default function EditorWithPreview({ type, nick_name = "" }: { type: string; nick_name: string }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tagText, setTagText] = useState("");
   const [tagList, setTagList] = useState<string[]>([]);
-
+  const router = useRouter();
   const markdownRef = useRef<HTMLInputElement>(null);
 
-  const pressTagInput = (e:React.KeyboardEvent<HTMLInputElement>) => {
+  const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (tagText.trim() === "") {
         return;
@@ -39,35 +40,38 @@ export default function EditorWithPreview({type, nick_name=""}:{type:string, nic
     }
   }, [content]);
 
-  const removeTag = (tag:string) => {
+  const removeTag = (tag: string) => {
     setTagList((prev) => prev.filter((prevTag) => prevTag !== tag));
   };
 
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const accessToken:string = getClientCookie("accessToken") ||"";
-    const refreshToken:string = getClientCookie("refreshToken") || "";
-    const [tagF="", tagS="", tagT=""] = tagList;
-    if(type==="notice"){
-
-      const result:boolean|string = await createNotice({
-        title,
-        content,
-        tagF,
-        tagS,
-        tagT,
-        category: "notice",
-        nick_name
-      }, accessToken, refreshToken)
-      if(typeof result === "boolean"){
-        redirect("/")
-      }else if(typeof result === "string"){
-        alert(result)
+    const accessToken: string = getClientCookie("accessToken") || "";
+    const refreshToken: string = getClientCookie("refreshToken") || "";
+    const [tagF = "", tagS = "", tagT = ""] = tagList;
+    if (type === "notice") {
+      const result: boolean | string = await createNotice(
+        {
+          title,
+          content,
+          tagF,
+          tagS,
+          tagT,
+          category: "notice",
+          nick_name,
+        },
+        accessToken,
+        refreshToken
+      );
+      if (typeof result === "boolean") {
+        router.push("/");
+      } else if (typeof result === "string") {
+        alert(result);
         return;
       }
     }
   };
-  
+
   return (
     <div className="flex">
       <div className="w-full lg:w-1/2 flex flex-col grow-0 h-screen">
@@ -81,7 +85,7 @@ export default function EditorWithPreview({type, nick_name=""}:{type:string, nic
           <div className={styles.bar}></div>
           <div className=" flex flex-wrap">
             {tagList.length > 0 &&
-              tagList.map((tag:string) => (
+              tagList.map((tag: string) => (
                 <div key={tag} className={styles.tag} onClick={() => removeTag(tag)}>
                   {tag}
                 </div>
@@ -97,7 +101,7 @@ export default function EditorWithPreview({type, nick_name=""}:{type:string, nic
           </div>
         </div>
         <div className="pl-3 md:pl-12 h-full w-full">
-          <MarkdownEditor text={content} setText={setContent} hideToolbar={false}/>
+          <MarkdownEditor text={content} setText={setContent} hideToolbar={false} />
         </div>
 
         <div className="px-4 h-16 w-full flex justify-between items-center mb-2">

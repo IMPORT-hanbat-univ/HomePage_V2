@@ -1,6 +1,5 @@
 import { CreatePost, Notice, PostDetailType } from "@/util/type";
 
-
 export async function getNoticeList(): Promise<Notice[] | string | null> {
   try {
     const result = await fetch(`http://localhost:4000/about/notice`, {
@@ -30,29 +29,53 @@ export async function getNoticeDetail(id: number) {
       data = await result.text();
     }
     console.log("data", data);
-    return (data as  PostDetailType | [] ) || (data as string);
+    return (data as PostDetailType | []) || (data as string);
   } catch (err: any) {
     console.log(err);
     return "공지사항 글을 가져오는 도중 발생한 에러!";
   }
 }
 
-
-export async function createNotice(post: CreatePost, accessToken:string, refreshToken:string):Promise<boolean|string>{
-  try{
-    console.log('createNotice', post)
+export async function createNotice(
+  post: CreatePost,
+  accessToken: string,
+  refreshToken: string
+): Promise<boolean | string> {
+  try {
+    console.log("createNotice", post);
     const result = await fetch("http://localhost:4000/about/notice/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         accessToken,
-        refreshToken
+        refreshToken,
       },
-      body: JSON.stringify(post)
-    })
-    return true
-  }catch(err:any){
+      body: JSON.stringify(post),
+    });
+    return true;
+  } catch (err: any) {
     console.log(err);
-    return "글 저장 과정에서 오류가 발생했습니다."
+    return "글 저장 과정에서 오류가 발생했습니다.";
+  }
+}
+
+export async function deleteNotice(
+  postId: number,
+  accessToken: string,
+  refreshToken: string
+): Promise<boolean | string> {
+  try {
+    await fetch(`http://localhost:4000/about/notice/post/${postId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+        refreshToken,
+      },
+    });
+    return true;
+  } catch (err: any) {
+    console.log(err);
+    return "삭제과정에서 에러가 발생했습니다.";
   }
 }

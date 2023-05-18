@@ -6,10 +6,11 @@ import getCommentGroupValue from "@/util/getCommentGroupValue";
 import { useSearchParams } from "next/navigation";
 import Pagination from "../Pagination";
 import usePagination from "@/hooks/usePagination";
+import { PostDetailType } from "@/util/type";
 
-export default function CommentContent({ comments }) {
+export default function CommentContent({ comments }: { comments: PostDetailType["comment"] }) {
   const searchParams = useSearchParams();
-  const nowPage = searchParams.get("nowPage");
+  const nowPage = searchParams?.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
 
   const { page, pageData: pageComments, pageRangeArray } = usePagination(comments, currentPage);
@@ -20,7 +21,7 @@ export default function CommentContent({ comments }) {
     setNewGroupValue(getCommentGroupValue(comments));
   }, [comments]);
 
-  const submitComment = (e) => {
+  const submitComment = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (parentCommentText.trim() === "") {
@@ -53,7 +54,7 @@ export default function CommentContent({ comments }) {
       <div className="mt-5" id="commentContent">
         {pageComments &&
           pageComments.length > 0 &&
-          pageComments.map((comment) => <CommentItem key={comment.id} comment={comment} comments={comments} />)}
+          pageComments.map((comment: any) => <CommentItem key={comment.id} comment={comment} comments={comments} />)}
       </div>
       <Pagination nowPage={currentPage} page={page} pageRangeArray={pageRangeArray} id={"commentContent"} />
     </div>
