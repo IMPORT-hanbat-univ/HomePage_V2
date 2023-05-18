@@ -30,7 +30,7 @@ export async function getNoticeDetail(id: number) {
       data = await result.text();
     }
     console.log("data", data);
-    return (data?.item as { item: PostDetailType | [] }) || (data as string);
+    return (data as  PostDetailType | [] ) || (data as string);
   } catch (err: any) {
     console.log(err);
     return "공지사항 글을 가져오는 도중 발생한 에러!";

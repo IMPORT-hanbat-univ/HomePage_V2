@@ -23,7 +23,7 @@ export default function TagList({ post, disabled }) {
   };
 
   return (
-    <div className="flex min-h-[32px]">
+    <div className="flex items-center min-h-[32px]">
       {post.tagF && (
         <button
           disabled={disabled}

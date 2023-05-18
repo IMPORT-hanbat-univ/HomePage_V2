@@ -15,13 +15,13 @@ export default async function NoticePage({ params: { id } }: Props) {
   const data = await getNoticeDetail(parseInt(id));
   console.log("client data");
 
-  if ( typeof data === "string" || Array.isArray(data?.item) ) {
+  if ( typeof data === "string" || Array.isArray(data) ) {
     notFound()
   }else{
     return (
       <>
    
-          <PostDetail data={data.item} />
+          <PostDetail data={data} />
   
       </>
     )
