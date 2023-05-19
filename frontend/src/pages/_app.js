@@ -12,7 +12,6 @@ function MyApp({ Component, pageProps }) {
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <Component {...pageProps} />
-        <Footer />
       </RecoilRoot>
     </QueryClientProvider>
   );
