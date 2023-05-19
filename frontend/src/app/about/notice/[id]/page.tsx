@@ -1,4 +1,4 @@
-import { getNoticeDetail, getNoticeList } from "@/api/notice";
+import { getNoticeDetail } from "@/api/notice";
 
 import React from "react";
 import PostDetail from "@/components/PostDetail";
@@ -12,10 +12,12 @@ type Props = {
 };
 
 export default async function NoticePage({ params: { id } }: Props) {
+  console.log(123);
   const dataPromise = getNoticeDetail(parseInt(id));
   const cookieObj = cookies();
   const userPromise = checkUser(cookieObj.get("accessToken")?.value || "", cookieObj.get("refreshToken")?.value || "");
   const [data, { decodeUser, error }] = await Promise.all([dataPromise, userPromise]);
+  console.log("id", data);
   if (typeof data === "string" || Array.isArray(data)) {
     notFound();
   } else {

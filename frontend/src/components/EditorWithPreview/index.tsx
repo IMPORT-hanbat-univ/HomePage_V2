@@ -7,7 +7,7 @@ import { BiArrowBack } from "react-icons/bi";
 
 import MarkdownViewer from "../MarkdownViewer";
 import MarkdownEditor from "../MarkdownEditor";
-import { createNotice } from "@/api/notice";
+import { createNotice, updateNotice } from "@/api/notice";
 import getClientCookie from "@/util/getClientCookie";
 import { useRouter } from "next/navigation";
 import { PostDetailType } from "@/util/type";
@@ -21,13 +21,11 @@ export default function EditorWithPreview({
   nick_name: string | null;
   data: PostDetailType["content"] | null;
 }) {
-  const [title, setTitle] = useState(data ? data.title : "");
-  const [content, setContent] = useState(data ? data.title : "");
-  const [tagText, setTagText] = useState("");
   const tags: Array<keyof PostDetailType["content"]> = ["tagF", "tagS", "tagT"];
-  const [tagList, setTagList] = useState<string[]>(
-    data ? tags.filter((tag) => data.hasOwnProperty(tag) && data[tag] !== "").map((tag) => data[tag] as string) : []
-  );
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [tagText, setTagText] = useState("");
+  const [tagList, setTagList] = useState<string[]>([]);
   const router = useRouter();
   const markdownRef = useRef<HTMLInputElement>(null);
 
@@ -45,6 +43,14 @@ export default function EditorWithPreview({
       }
     }
   };
+
+  useEffect(() => {
+    setTitle(data ? data.title : "");
+    setContent(data ? data.content : "");
+    setTagList(
+      data ? tags.filter((tag) => data.hasOwnProperty(tag) && data[tag] !== "").map((tag) => data[tag] as string) : []
+    );
+  }, [data]);
 
   useEffect(() => {
     if (markdownRef.current) {
@@ -65,9 +71,26 @@ export default function EditorWithPreview({
       alert("작성 권한이 없습니다.");
       return;
     }
-    if (type === "notice") {
-      const result: boolean | string = await createNotice(
-        {
+    let result: boolean | string;
+    switch (type) {
+      case "createNotice": {
+        result = await createNotice(
+          {
+            title,
+            content,
+            tagF,
+            tagS,
+            tagT,
+            category: "notice",
+            nick_name,
+          },
+          accessToken,
+          refreshToken
+        );
+        break;
+      }
+      case "updateNotice": {
+        console.log("update", {
           title,
           content,
           tagF,
@@ -75,16 +98,36 @@ export default function EditorWithPreview({
           tagT,
           category: "notice",
           nick_name,
-        },
-        accessToken,
-        refreshToken
-      );
-      if (typeof result === "boolean") {
-        router.push("/");
-      } else if (typeof result === "string") {
-        alert(result);
-        return;
+        });
+        if (!data?.id) {
+          result = "해당 공지사항을 찾을 수 없습니다.";
+        } else {
+          result = await updateNotice(
+            {
+              title,
+              content,
+              tagF,
+              tagS,
+              tagT,
+              category: "notice",
+              nick_name,
+            },
+            data.id,
+            accessToken,
+            refreshToken
+          );
+        }
+        break;
       }
+      default:
+        result = "올바른 경로가 아닙니다.";
+        break;
+    }
+    if (typeof result === "boolean") {
+      router.push("/about/notice");
+    } else if (typeof result === "string") {
+      alert(result);
+      return;
     }
   };
 

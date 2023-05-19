@@ -16,7 +16,7 @@ export default async function EditPage() {
   }
   return (
     <div>
-      <EditorWithPreview type={"notice"} nick_name={decodeUser?.nick_name} data={null} />
+      <EditorWithPreview type={"createNotice"} nick_name={decodeUser?.nick_name} data={null} />
     </div>
   );
 }
