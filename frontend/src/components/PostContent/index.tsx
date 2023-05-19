@@ -15,14 +15,18 @@ export default function PostContent({
   content,
   pathArray,
   children,
+  user,
 }: {
   content: PostDetailType["content"];
   pathArray: { name: string; link?: string }[];
   children: React.ReactNode;
+  user: any;
 }) {
   const router = useRouter();
   const handleRemove = async () => {
     if (!content?.id) {
+      return;
+    } else if (!user || Object.keys(user).length === 0) {
       return;
     } else {
       const accessToken: string = getClientCookie("accessToken") || "";
@@ -69,14 +73,19 @@ export default function PostContent({
       </div>
       <div className="flex items-center justify-between mt-[17px]">
         <TagList post={content} disabled={true} />
-        <div className="flex items-center">
-          <Link href="/" className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2">
-            수정
-          </Link>
-          <button onClick={handleRemove} className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">
-            삭제
-          </button>
-        </div>
+        {user && Object.keys(user).length > 0 && (
+          <div className="flex items-center">
+            <Link
+              href={`/about/notice/edit/${content.id}`}
+              className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2"
+            >
+              수정
+            </Link>
+            <button onClick={handleRemove} className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">
+              삭제
+            </button>
+          </div>
+        )}
       </div>
       <div className="mt-[92px]">{children}</div>
     </div>

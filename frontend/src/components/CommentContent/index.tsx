@@ -8,7 +8,7 @@ import Pagination from "../Pagination";
 import usePagination from "@/hooks/usePagination";
 import { PostDetailType } from "@/util/type";
 
-export default function CommentContent({ comments }: { comments: PostDetailType["comment"] }) {
+export default function CommentContent({ comments, user }: { comments: PostDetailType["comment"]; user: any }) {
   const searchParams = useSearchParams();
   const nowPage = searchParams?.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
@@ -36,20 +36,24 @@ export default function CommentContent({ comments }: { comments: PostDetailType[
   };
   return (
     <div>
-      <h2 className="text-2xl font-extrabold leading-6 tracking-[-0.15em] ml-2">댓글</h2>
-      <form onSubmit={submitComment}>
-        <div className="mt-[14px] border h-40 rounded-md">
-          <MarkdownEditor text={parentCommentText} setText={setParentCommentTeXt} hideToolbar={true} />
-        </div>
-        <div className="flex items-center justify-end mt-3">
-          <button
-            type="submit"
-            className="rounded-md bg-import-color text-sm leading-6 tracking-[-0.15em] text-white py-2 px-4"
-          >
-            댓글 작성
-          </button>
-        </div>
-      </form>
+      {user && Object.keys(user).length > 0 && (
+        <>
+          <h2 className="text-2xl font-extrabold leading-6 tracking-[-0.15em] ml-2">댓글</h2>
+          <form onSubmit={submitComment}>
+            <div className="mt-[14px] border h-40 rounded-md">
+              <MarkdownEditor text={parentCommentText} setText={setParentCommentTeXt} hideToolbar={true} />
+            </div>
+            <div className="flex items-center justify-end mt-3">
+              <button
+                type="submit"
+                className="rounded-md bg-import-color text-sm leading-6 tracking-[-0.15em] text-white py-2 px-4"
+              >
+                댓글 작성
+              </button>
+            </div>
+          </form>
+        </>
+      )}
 
       <div className="mt-5" id="commentContent">
         {pageComments &&

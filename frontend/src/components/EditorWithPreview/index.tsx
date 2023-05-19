@@ -10,12 +10,24 @@ import MarkdownEditor from "../MarkdownEditor";
 import { createNotice } from "@/api/notice";
 import getClientCookie from "@/util/getClientCookie";
 import { useRouter } from "next/navigation";
+import { PostDetailType } from "@/util/type";
 
-export default function EditorWithPreview({ type, nick_name = "" }: { type: string; nick_name: string }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+export default function EditorWithPreview({
+  type,
+  nick_name,
+  data,
+}: {
+  type: string;
+  nick_name: string | null;
+  data: PostDetailType["content"] | null;
+}) {
+  const [title, setTitle] = useState(data ? data.title : "");
+  const [content, setContent] = useState(data ? data.title : "");
   const [tagText, setTagText] = useState("");
-  const [tagList, setTagList] = useState<string[]>([]);
+  const tags: Array<keyof PostDetailType["content"]> = ["tagF", "tagS", "tagT"];
+  const [tagList, setTagList] = useState<string[]>(
+    data ? tags.filter((tag) => data.hasOwnProperty(tag) && data[tag] !== "").map((tag) => data[tag] as string) : []
+  );
   const router = useRouter();
   const markdownRef = useRef<HTMLInputElement>(null);
 
@@ -49,6 +61,10 @@ export default function EditorWithPreview({ type, nick_name = "" }: { type: stri
     const accessToken: string = getClientCookie("accessToken") || "";
     const refreshToken: string = getClientCookie("refreshToken") || "";
     const [tagF = "", tagS = "", tagT = ""] = tagList;
+    if (!nick_name) {
+      alert("작성 권한이 없습니다.");
+      return;
+    }
     if (type === "notice") {
       const result: boolean | string = await createNotice(
         {
