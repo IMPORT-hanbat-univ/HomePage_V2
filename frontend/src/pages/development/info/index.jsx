@@ -7,7 +7,7 @@ import SearchTag from "@/components/SearchTag";
 import { useInformationApi } from "@/recoil/information";
 import getFilteredData from "@/util/getFilteredData";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+
 import React from "react";
 import { useQuery } from "react-query";
 

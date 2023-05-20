@@ -6,7 +6,11 @@ import Link from "next/link";
 export default function NoticeCard({ post, order }: { post: Notice; order: number }) {
   return (
     <article className={cls("p-4 flex", { "border-t border-t-gray-400": order !== 0 })}>
-      <Link href={`/about/notice/${post.id}`} className="overflow-auto break-words cursor-pointer grow">
+      <Link
+        prefetch={false}
+        href={`/about/notice/${post.id}`}
+        className="overflow-auto break-words cursor-pointer grow"
+      >
         <h3 className="mb-2 text-lg">
           <span className="text-import-color">N.</span>
           {post.title}

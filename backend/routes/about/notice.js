@@ -3,10 +3,10 @@ const Sequelize = require('sequelize');
 const {verifyToken} = require('../middlewares');
 const express = require('express');
 const router = express.Router();
-
+const {v4:uuidv4} = require("uuid")
 
 //목록
-router.get('/', async function(req, res, next) {
+router.get('/', async function(req, res) {
 
     /*
        //테스트용 데이터 생성
@@ -57,7 +57,7 @@ router.get('/', async function(req, res, next) {
 
 
 //상세보기 데이터가 없을때는 빈 배열을 보낸다.
-router.get('http://localhost:3000/about/notice/:id',async (req,res)=>{
+router.get('/:id',async (req,res)=>{
     try {
         const post = await RootPost.findOne({
             where:{id:req.params.id},
@@ -76,20 +76,26 @@ router.get('http://localhost:3000/about/notice/:id',async (req,res)=>{
 });
 
 //create
-router.post('http://localhost:3000/about/notice/post',verifyToken,async (req, res)=>{
+router.post('/post',verifyToken,async (req, res)=>{
+  
+    console.log("req", req)
+    const body = req.body
+    const user = req.user
     try {
         await RootPost.create({
-            id:req.id,
-            title:req.title,
-            content: req.content,
-            tagF: req.tagF,
-            tagS: req.tagS,
-            tagT: req.tagT,
-            category: req.category,
-            file: req.file,
-            kakaoId: req.userKakaoId,
+
+            title: body.title,
+            content: body.content,
+
+            tagF: body.tagF,
+            tagS: body.tagS,
+            tagT: body.tagT,
+            category: body.category,
+            file: "",
+            kakaoId: user.kakaoId,
 
         })
+        return res.sendStatus(200);
 
     }catch (error){
         console.error(error);
