@@ -4,6 +4,7 @@ const {verifyToken} = require('../middlewares');
 const express = require('express');
 const router = express.Router();
 const {v4:uuidv4} = require("uuid")
+const {Op} = require("sequelize");
 
 //목록
 router.get('/', async function(req, res) {
@@ -59,15 +60,22 @@ router.get('/', async function(req, res) {
 //상세보기 데이터가 없을때는 빈 배열을 보낸다.
 router.get('/:id',async (req,res)=>{
     try {
-        const post = await RootPost.findOne({
-            where:{id:req.params.id},
-            attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt'],
+        console.log('id:' + req.params.id);
+        const post2 = await RootPost.findAll({
+                attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt'],
+                where:{
+                    id:{ [Op.eq]:req.params.id}}
+            ,
             raw: true,
         });
+
+        const post= JSON.stringify(post2);
 
         if (!post) {
             return res.status(404).send('Post not found');
         }
+
+        console.log("post"+ post);
         res.json(post);
 
     }catch (error){
@@ -107,11 +115,7 @@ router.post('/post',verifyToken,async (req, res)=>{
 //update
 router.post('http://localhost:3000/about/notice/post/:id',verifyToken,async (req, res)=>{
     try {
-        const post = await RootPost.findOne({
-            where:{id:req.params.id},
-            attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt'],
-            raw: true,
-        });
+
         await RootPost.update({
             id:req.id,
             title:req.title,
@@ -124,7 +128,8 @@ router.post('http://localhost:3000/about/notice/post/:id',verifyToken,async (req
             kakaoId: req.kakaoId,
 
         },{
-            where: {id: req.params.id},
+            where: {
+                id:{ [Op.eq]:req.params.id}}
         })
 
     }catch (error){
