@@ -1,4 +1,4 @@
-const {RootPost, ListPost} = require('../../models');
+const {RootPost, ListPost,User} = require('../../models');
 const Sequelize = require('sequelize');
 const {verifyToken} = require('../middlewares');
 const express = require('express');
@@ -60,23 +60,37 @@ router.get('/', async function(req, res) {
 //상세보기 데이터가 없을때는 빈 배열을 보낸다.
 router.get('/:id',async (req,res)=>{
     try {
+
         console.log('id:' + req.params.id);
-        const post2 = await RootPost.findAll({
-                attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt'],
+        const data1 = await RootPost.findAll({
+                attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt','kakaoId'],//닉네임추가,카카오 id
                 where:{
                     id:{ [Op.eq]:req.params.id}}
             ,
             raw: true,
         });
+        JSON.stringify(data1);
+        const data2 = await User.findAll({
+            attributes:['kakaoId', 'nick_name','rank'], //닉네임추가,카카오 id
+            where:{
+                kakaoId:{ [Op.eq]:data1[0].kakaoId}}
+            ,
+            raw: true,
+        });
+        JSON.stringify(data2)
 
-        const post= JSON.stringify(post2);
+        const post = {...data1[0],...data2[0]};
+        JSON.stringify(post);
 
-        if (!post) {
+
+        if (!data1) {
             return res.status(404).send('Post not found');
         }
 
-        console.log("post"+ post);
-        res.json(post);
+
+        console.log({content:post});
+
+        res.json({content:post});
 
     }catch (error){
         console.error(error);
@@ -94,7 +108,6 @@ router.post('/post',verifyToken,async (req, res)=>{
 
             title: body.title,
             content: body.content,
-
             tagF: body.tagF,
             tagS: body.tagS,
             tagT: body.tagT,
@@ -103,7 +116,7 @@ router.post('/post',verifyToken,async (req, res)=>{
             kakaoId: user.kakaoId,
 
         })
-        return res.sendStatus(200);
+        return res.sendStatus(200); //글 아이디 보내주기
 
     }catch (error){
         console.error(error);
