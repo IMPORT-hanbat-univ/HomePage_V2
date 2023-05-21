@@ -8,13 +8,15 @@ import Pagination from "../Pagination";
 import { Notice } from "@/util/type";
 
 import Link from "next/link";
+import { useQuery } from "react-query";
+import { getNoticeList } from "@/api/notice";
 
-const NoticeList = ({ notices, user }: { notices: Notice[] | [] | null; user: any }) => {
+const NoticeList = ({ user }: { user: any }) => {
   const searchParams = useSearchParams();
   const nowPage: string | null | undefined = searchParams?.get("nowPage");
 
   const currentPage = nowPage ? parseInt(nowPage) : 1;
-
+  const { data: notices, isLoading, error } = useQuery(["noticeList"], async () => await getNoticeList());
   const {
     page,
     pageData = [],

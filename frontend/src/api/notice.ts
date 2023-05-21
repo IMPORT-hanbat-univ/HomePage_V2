@@ -2,7 +2,7 @@ import { CreatePost, Notice, PostDetailType } from "@/util/type";
 
 export async function getNoticeList(): Promise<Notice[] | string | null> {
   try {
-    const result = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/about/notice`, {
+    const result = await fetch(`http://localhost:4000/about/notice`, {
       method: "GET",
       next: {
         revalidate: 0,
