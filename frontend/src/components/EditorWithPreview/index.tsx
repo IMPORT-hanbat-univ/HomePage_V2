@@ -124,7 +124,7 @@ export default function EditorWithPreview({
         break;
     }
     if (typeof result === "boolean") {
-      router.push("/about/notice");
+      router.replace("/about/notice");
     } else if (typeof result === "string") {
       alert(result);
       return;
