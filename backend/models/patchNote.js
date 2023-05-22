@@ -15,13 +15,13 @@ module.exports = class PatchNote extends Sequelize.Model{
                 type: Sequelize.STRING(50),
                 allowNull: false,
             },
-            order:{//몇 번째인지 저장
-                type: Sequelize.STRING(100),
-                allowNull: false,
-            },
             file: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
+            },
+            projectId: {
+                type: Sequelize.STRING(50),
+                allowNull: false,
             }
 
         },{

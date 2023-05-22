@@ -15,10 +15,6 @@ module.exports = class ProjectComment extends Sequelize.Model{
                 type: Sequelize.INTEGER(30),
                 allowNull: false,
             },
-            indent: {
-                type: Sequelize.STRING(100),
-                allowNull: false,
-            },
             kakaoId:{ //kakao에서 넘어오는 아이디
                 type: Sequelize.STRING(30),
                 allowNull: false,

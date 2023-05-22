@@ -23,6 +23,11 @@ module.exports = class Project extends Sequelize.Model{
                 type: Sequelize.STRING(25),
                 allowNull: true,
             },
+            category:{
+                type: Sequelize.STRING(50),
+                allowNull: false,
+
+            }, //추가
             file: {
                 type: Sequelize.STRING(1000),
                 allowNull: true,
