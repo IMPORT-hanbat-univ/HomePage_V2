@@ -11,9 +11,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body>
+        <div className="min-h-screen">
         <Recoil>
           <ReactQuery>{children}</ReactQuery>
         </Recoil>
+        </div>
         <Footer />
       </body>
     </html>
