@@ -11,6 +11,9 @@ import { createNotice, updateNotice } from "@/api/notice";
 import getClientCookie from "@/util/getClientCookie";
 import { useRouter } from "next/navigation";
 import { PostDetailType } from "@/util/type";
+import { useSetRecoilState } from "recoil";
+import { notificationAtom } from "@/recoil/notification";
+import Notification from "../Notification";
 
 export default function EditorWithPreview({
   type,
@@ -26,6 +29,8 @@ export default function EditorWithPreview({
   const [content, setContent] = useState("");
   const [tagText, setTagText] = useState("");
   const [tagList, setTagList] = useState<string[]>([]);
+  // const [notification, setNotification] = useState<string>("")
+  const setNotification =  useSetRecoilState(notificationAtom);
   const router = useRouter();
   const markdownRef = useRef<HTMLInputElement>(null);
 
@@ -34,6 +39,7 @@ export default function EditorWithPreview({
       if (tagText.trim() === "") {
         return;
       } else if (tagList.length === 3) {
+        setNotification({notificationType:"Warning", message:"태그는 3개까지만 추가 가능합니다.", type:"warning"})
         return;
       } else if (tagList.find((prevTag) => prevTag === tagText.trim())) {
         return;
@@ -133,6 +139,7 @@ export default function EditorWithPreview({
 
   return (
     <div className="flex">
+      <Notification />
       <div className="w-full lg:w-1/2 flex flex-col grow-0 h-screen">
         <div className="pt-8 px-4 md:px-12">
           <TextareaAutosize

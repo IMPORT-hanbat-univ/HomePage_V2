@@ -38,7 +38,6 @@ export default function Notification() {
       {typeof notificationType === "string" && typeof message === "string" && (
         <>
           <ReactNotifications />
-          hello
         </>
       )}
     </>
