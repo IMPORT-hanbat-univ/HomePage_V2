@@ -15,10 +15,6 @@ module.exports = class PatchNoteComment extends Sequelize.Model{
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
-            indent: {
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
             kakaoId:{ //kakao에서 넘어오는 아이디
                 type: Sequelize.STRING(30),
                 allowNull: false,
