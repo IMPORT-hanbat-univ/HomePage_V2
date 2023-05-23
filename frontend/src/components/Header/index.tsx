@@ -6,8 +6,9 @@ export default function Header(){
     return (
         <header className="w-full ">
             <div className="h-[60px] fixed z-10 flex bg-white justify-between items-center px-[75px] w-full">
-                <h2 className="leading-8 text-[28px]">Import</h2>
-                <menu className="flex relative justify-between group items-center text-base leading-4 gap-[90px]">
+                <div className="flex items-center" >
+                <h2 className="leading-8 text-[28px] mr-10">Import</h2>
+                <menu className="flex relative justify-between group items-center text-base leading-4 gap-8">
                     <div className="group-hover">About</div>
                     <div >Community</div>
                     <div>Project</div>
@@ -15,6 +16,7 @@ export default function Header(){
                         왜 안됨..
                     </div>      
                 </menu>
+                </div>
                 <div>
                 <UserNav />
                 </div>
