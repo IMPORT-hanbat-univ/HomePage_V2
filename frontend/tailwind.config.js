@@ -13,6 +13,32 @@ module.exports = {
       boxShadow: {
         active: "rgb(255, 255, 255) 0px 0px 0px 4px",
       },
+      keyframes: {
+        'slide-down': {
+          '0%': {
+            transform: 'translateY(-100%)',
+            opacity: 0,
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: 1,
+          },
+        },
+        'header-fade-in': {
+          '0%': {
+            opacity: 0,
+            height: 0,
+          },
+          '100%': {
+            opacity: 1,
+            height: '16rem',
+          },
+        },
+      },
+      animation: {
+        'slide-down': 'slide-down 0.5s',
+        'header-fade-in': 'header-fade-in 0.5s'
+      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],
