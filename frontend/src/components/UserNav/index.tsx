@@ -14,13 +14,14 @@ const UserNav = AsSyncComponent(async function () {
   return (
     <>
       {decodeUser && decodeUser?.nick_name ? (
-        <>
+        <span>
+          <div className="mr-3 inline-block">{decodeUser?.nick_name}</div>
           <LogoutButton />
-          <div className="ml-3">{decodeUser?.nick_name}</div>
-        </>
+          
+        </span>
       ) : (
-        <Link href={"http://localhost:4000/auth/kakao"} className="p-3 border rounded bg-import-color text-white">
-          로그인
+        <Link href={"http://localhost:4000/auth/kakao"} className="border border-import-color rounded-md leading-[18px] px-[42px] py-[11px] bg-white">
+          Log in
         </Link>
       )}
     </>
