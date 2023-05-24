@@ -11,7 +11,7 @@ export default function DesktopHeader() {
           <h2 className="leading-8 text-[28px] mr-10">Import</h2>
           <menu className="flex relative justify-between items-center text-base leading-4 gap-4">
             <div className="p-6 group relative">
-              <span className="relative group-hover:border-b-2 group-hover:border-b-black">
+              <span className="relative group-hover:text-import-color">
                 About
               </span>
               <div className="absolute hidden group-hover:block top-14 bg-white z-20 hover:block shadow-md p-4 border h-auto w-36">
@@ -33,8 +33,8 @@ export default function DesktopHeader() {
     
               </div>
             </div>
-            <div className="p-6 group relative after:">
-              <span className="relative group-hover:border-b-2 group-hover:border-b-black">
+            <div className="p-6 group relative ">
+              <span className="relative group-hover:text-import-color">
                 Community
               </span>
               <div className="absolute hidden group-hover:block top-14 bg-white z-20 hover:block shadow-md p-4 border h-auto w-36">
@@ -49,10 +49,10 @@ export default function DesktopHeader() {
                 <div className="absolute top-[-5px] left-[30%] transform -translate-x-1/2 w-2 h-2 bg-white border-t border-r border-gray-300 rotate-[-45deg]"></div>    
               </div>
             </div>
-            <div className="p-6 group after:">
+            <div className="p-6 group ">
               <Link
                 href="/project"
-                className="relative group-hover:border-b-2 group-hover:border-b-black"
+                className="relative group-hover:text-import-color"
               >
                 Project
               </Link>
