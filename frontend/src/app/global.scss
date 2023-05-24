@@ -1,16 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Nanum+Gothic&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Alike&family=Cinzel:wght@400;900&family=Hanuman&family=Montserrat&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 body {
+  //font-family: "Alike", serif;
+  //font-family: 'Cinzel', serif;
+  //font-family: "Hanuman", serif;
   font-family: "Montserrat", sans-serif;
 }
-
 code {
   display: block;
 }
