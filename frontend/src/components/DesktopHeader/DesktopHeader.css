@@ -1,0 +1,14 @@
+.header-after::after:hover {
+    content: "";
+    border-color: transparent transparent #fff;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    top: 46px;
+    right: 0;
+    left: 0;
+    z-index: 21;
+    margin: 0 auto;
+}

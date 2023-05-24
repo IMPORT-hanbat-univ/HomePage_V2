@@ -31,7 +31,7 @@ module.exports = {
           },
           '100%': {
             opacity: 1,
-            height: '16rem',
+            height: 'auto',
           },
         },
       },
