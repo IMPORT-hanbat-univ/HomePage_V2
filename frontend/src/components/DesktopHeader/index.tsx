@@ -1,7 +1,6 @@
 import React from "react";
 import UserNav from "../UserNav";
 import Link from "next/link";
-import "./DesktopHeader.css";
 
 export default function DesktopHeader() {
   return (
