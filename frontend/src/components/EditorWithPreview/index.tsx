@@ -30,7 +30,7 @@ export default function EditorWithPreview({
   const [tagText, setTagText] = useState("");
   const [tagList, setTagList] = useState<string[]>([]);
   // const [notification, setNotification] = useState<string>("")
-  const setNotification =  useSetRecoilState(notificationAtom);
+  const setNotification = useSetRecoilState(notificationAtom);
   const router = useRouter();
   const markdownRef = useRef<HTMLInputElement>(null);
 
@@ -39,7 +39,7 @@ export default function EditorWithPreview({
       if (tagText.trim() === "") {
         return;
       } else if (tagList.length === 3) {
-        setNotification({notificationType:"Warning", message:"태그는 3개까지만 추가 가능합니다.", type:"warning"})
+        setNotification({ notificationType: "Warning", message: "태그는 3개까지만 추가 가능합니다.", type: "warning" });
         return;
       } else if (tagList.find((prevTag) => prevTag === tagText.trim())) {
         return;
@@ -75,6 +75,13 @@ export default function EditorWithPreview({
     const [tagF = "", tagS = "", tagT = ""] = tagList;
     if (!nick_name) {
       alert("작성 권한이 없습니다.");
+      return;
+    }
+    if (title.trim() === "") {
+      setNotification({ notificationType: "Warning", message: "제목은 비워둘 수 없습니다.", type: "warning" });
+      return;
+    } else if (content.trim() === "") {
+      setNotification({ notificationType: "Warning", message: "내용은 비워둘 수 없습니다.", type: "warning" });
       return;
     }
     let result: boolean | string;
@@ -132,7 +139,8 @@ export default function EditorWithPreview({
     if (typeof result === "boolean") {
       router.replace("/about/notice");
     } else if (typeof result === "string") {
-      alert(result);
+      setNotification({ notificationType: "Warning", message: result, type: "warning" });
+
       return;
     }
   };

@@ -17,9 +17,8 @@ export default function QnAListPage() {
 
   const seletedCategory = category || "";
   const seletedTagList = tag ? tag.split("+") : "";
-  
 
-  const seletedOrder = order || "latest";
+  const selectedOrder = order || "latest";
   const currentSearch = search || "";
   const qna = useQnAApi();
   const { data, isLoading, error } = useQuery(["qnaList"], () => qna.getList(), { staleTime: 1000 * 60 * 5 });
@@ -27,7 +26,7 @@ export default function QnAListPage() {
   const filteredData = getFilteredData(
     data,
     { category: seletedCategory, tag: seletedTagList, search: currentSearch },
-    seletedOrder
+    selectedOrder
   );
 
   return (
@@ -47,7 +46,7 @@ export default function QnAListPage() {
         </div>
         <div className="box-content border-b pb-3">
           <OrderCategory
-            seleted={seletedOrder}
+            seleted={selectedOrder}
             orderArray={[
               { order: "latest", name: "최신순" },
               { order: "oldest", name: "오래된순" },

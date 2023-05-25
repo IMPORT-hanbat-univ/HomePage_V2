@@ -34,7 +34,7 @@ export default function DesktopHeader() {
                   <Link href="/" className="hover:text-import-color">
                     Schedule
                   </Link>
-                  <Link href="/notice" className="hover:text-import-color">
+                  <Link href="/about/notice" className="hover:text-import-color">
                     Notice
                   </Link>
                 </div>

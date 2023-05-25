@@ -15,7 +15,7 @@ export default function OrderCategory({ seleted, orderArray }) {
     router.push(`${pathname}?${queryString}`);
   };
   return (
-    <ul className="w-full flex items-center ">
+    <ul className="w-auto flex items-center ">
       {orderArray.map((item) => (
         <li key={item.order}>
           <button
