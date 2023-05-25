@@ -29,25 +29,40 @@ router.get('/', async function(req, res) {
         const posts = await RootPost.findAll({
             attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt','kakaoId'],
             raw: true,
+            /*include:[{
+                model:User,
+                attributes:['id','kakaoId','rank','nick_name'],
+                raw: true,
+            }]*/
         });
 
+
+
+
+        console.log(posts);
+
+/*
         const data = posts.map((post) => ({
             id:post.id,
             title:post.title,
-            content: post.content,
+            //content: post.content,
             tagF: post.tagF,
             tagS: post.tagS,
             tagT: post.tagT,
             category: post.category,
             file: post.file,
-            createdAt: post.createAt,
-            updatedAt: post.updateAt,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
             deletedAt: post.deldtedAt,
-            userKakaoId: post.kakaoId,
-        }));
+            userKakaoId: post.kakao_Id,
+            nick_name:post.User.nick_name,
+        }));*/
+        //console.log(data);
+        JSON.stringify(posts);
+        console.log(posts);
 
 
-        res.json({item: data}); //배열 안에 내용이 없을때 {item: []} 로 보내짐
+        res.json({item: posts}); //배열 안에 내용이 없을때 {item: []} 로 보내짐
 
 
     }catch (error){
@@ -62,28 +77,35 @@ router.get('/:id',async (req,res)=>{
     try {
 
         console.log('id:' + req.params.id);
-        const data1 = await RootPost.findAll({
-                attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt','kakaoId'],//닉네임추가,카카오 id
-                where:{
-                    id:{ [Op.eq]:req.params.id}}
-            ,
-            raw: true,
-        });
-        JSON.stringify(data1);
-        const data2 = await User.findAll({
-            attributes:['kakaoId', 'nick_name','rank'], //닉네임추가,카카오 id
+        //data1, 2 통합 예정
+        const userid= await RootPost.findAll({
+            attributes:['UserId'],
             where:{
-                kakaoId:{ [Op.eq]:data1[0].kakaoId}}
-            ,
+                id:{ [Op.eq]:req.params.id}},
             raw: true,
         });
-        JSON.stringify(data2)
+        console.log(userid);
+        const post = await RootPost.findAll({
+            attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt','kakaoId','UserId'],//닉네임추가,카카오 id
+            where:{
+                id:{ [Op.eq]:req.params.id}},
+            raw: true,
+            /*include:
+            [{
+                model:User,
+                attributes:['nick_name','rank'],
 
-        const post = {...data1[0],...data2[0]};
+            }]*/
+
+
+        });
+
+        console.log(post);
         JSON.stringify(post);
 
+        console.log(post);
 
-        if (!data1) {
+        if (!post) {
             return res.status(404).send('Post not found');
         }
 
@@ -100,12 +122,13 @@ router.get('/:id',async (req,res)=>{
 //create
 router.post('/post',verifyToken,async (req, res)=>{
   
-    console.log("req", req)
+
     const body = req.body
     const user = req.user
-    try {
-        await RootPost.create({
+    console.log(req.user);
 
+    try {
+        const newPost= await RootPost.create({
             title: body.title,
             content: body.content,
             tagF: body.tagF,
@@ -114,10 +137,28 @@ router.post('/post',verifyToken,async (req, res)=>{
             category: body.category,
             file: "",
             kakaoId: user.kakaoId,
+            UserId:user.userId,
 
         })
-        return res.sendStatus(200); //글 아이디 보내주기
 
+        const nowPost = await RootPost.findAll({
+            attributes:['id','title','content','tagF','tagS','tagT','category','file','kakaoId','createdAt','updatedAt','UserId'],
+            where:{
+                id:{ [Op.eq]:newPost.id},
+
+            },
+            raw: true,
+
+        })
+
+        JSON.stringify(nowPost);
+        console.log(nowPost);
+
+        const data = {...nowPost[0],...{nick_name:user.nick_name},...{rank:user.rank}}
+        JSON.stringify(data);
+        console.log(data)
+
+        return res.json({content:data});
     }catch (error){
         console.error(error);
         return res.sendStatus(401);
@@ -139,6 +180,7 @@ router.post('http://localhost:3000/about/notice/post/:id',verifyToken,async (req
             category: req.category,
             file: req.file,
             kakaoId: req.kakaoId,
+            UserId: req.userId,
 
         },{
             where: {

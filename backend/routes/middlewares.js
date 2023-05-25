@@ -40,15 +40,16 @@ exports.verifyToken = async (req, res, next) => {
             if (err.name === 'TokenExpiredError' && refreshToken) {
                 try {
                     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-                    user = await User.findAll({
+                    const user = await User.findAll({
                         raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
-                        attributes:['kakaoId','nick_name','rank'],
+                        attributes:['id','nick_name','rank','kakaoId'],
                         where:{
                              refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                         }
                     })
 
-                    const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+
+                    const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
                     const refresh = uuidv4();
                     const newRefreshToken = jwt.sign({refresh}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '12h' });
 
@@ -84,7 +85,7 @@ exports.verifyToken = async (req, res, next) => {
             const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
             const user = User.findAll({
                 raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
-                attributes:['kakaoId','nick_name','rank'],
+                attributes:['id','nick_name','rank','kakaoId'],
                 where:{
                     refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                 }
@@ -138,7 +139,7 @@ exports.authenticationToken = async (req, res, next) => {
                     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
                     user = await User.findAll({
                         raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
-                        attributes:['kakaoId','nick_name','rank'],
+                        attributes:['id','nick_name','rank','kakaoId'],
                         where:{
                             refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                         }
@@ -160,7 +161,7 @@ exports.authenticationToken = async (req, res, next) => {
             const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
             const user = User.findAll({
                 raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
-                attributes:['kakaoId','nick_name','rank'],
+                attributes:['id','nick_name','rank','kakaoId'],
                 where:{
                     refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                 }

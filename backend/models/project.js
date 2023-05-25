@@ -58,7 +58,7 @@ module.exports = class Project extends Sequelize.Model{
     static associate(db) {
 
         db.Project.hasMany(db.PatchNote);
-
+        db.Project.belongsTo(db.User);
         db.Project.hasMany(db.ProjectComment);
 
     }

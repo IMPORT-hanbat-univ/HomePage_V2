@@ -47,9 +47,6 @@ module.exports = class ClubUser extends Sequelize.Model {
     }
     static associate(db) {
         db.ClubUser.belongsTo(db.User);
-        db.ClubUser.hasMany(db.CardPost);
-        db.ClubUser.hasMany(db.RootPost);
-        db.ClubUser.hasMany(db.Schedule);
     }
 
 };

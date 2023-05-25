@@ -48,6 +48,6 @@ module.exports = class CardPost extends Sequelize.Model{
     }
     static associate(db) {
         db.CardPost.hasMany(db.CardPostComment);
-        db.CardPost.belongsTo(db.ClubUser);
+        db.CardPost.belongsTo(db.User);
     }
 }

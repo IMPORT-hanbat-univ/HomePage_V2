@@ -47,7 +47,7 @@ module.exports = class RootPost extends Sequelize.Model{
         });
     }
     static associate(db) {
-        db.RootPost.belongsTo(db.ClubUser);
+        db.RootPost.belongsTo(db.User);
         db.RootPost.hasMany(db.RootComment);
     }
 }
