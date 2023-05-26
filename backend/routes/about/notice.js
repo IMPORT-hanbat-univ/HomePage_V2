@@ -1,4 +1,4 @@
-const {RootPost, ListPost,User} = require('../../models');
+const {RootPost,RootComment,User} = require('../../models');
 const Sequelize = require('sequelize');
 const {verifyToken} = require('../middlewares');
 const express = require('express');
@@ -92,7 +92,6 @@ router.post('/post',verifyToken,async (req, res)=>{
             tagT: body.tagT,
             category: body.category,
             file: "",
-            user_Id:user.userId,
             UserId:user.userId,
 
 
@@ -124,15 +123,15 @@ router.post('/post',verifyToken,async (req, res)=>{
 })
 
 //update
-router.post('http://localhost:3000/about/notice/post/:id',verifyToken,async (req, res)=>{
+router.post('/post/:postId',verifyToken,async (req, res)=>{
     try {
-        console.log(req.body);
-        console.log(req);
+
         const body = req.body
+        console.log(body)
         const user = req.user
         console.log(req.user);
 
-        const updatePost= await RootPost.update({
+        await RootPost.update({
             title: body.title,
             content: body.content,
             tagF: body.tagF,
@@ -140,18 +139,17 @@ router.post('http://localhost:3000/about/notice/post/:id',verifyToken,async (req
             tagT: body.tagT,
             category: body.category,
             file: "",
-            kakaoId: user.kakaoId,
             UserId:user.userId,
 
         },{
             where: {
-                id:{ [Op.eq]:req.params.id}}
+                id:{ [Op.eq]:req.params.postId}}
         })
 
         const updatedPost = await RootPost.findAll({
-            attributes:['id','title','content','tagF','tagS','tagT','category','file','kakaoId','createdAt','updatedAt','UserId'],
+            attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','UserId'],
             where:{
-                id:{ [Op.eq]:updatePost.id},
+                id:{ [Op.eq]:req.params.id},
 
             },
             raw: true,
@@ -168,14 +166,72 @@ router.post('http://localhost:3000/about/notice/post/:id',verifyToken,async (req
         return res.json({content:data});
 
 
-
     }catch (error){
         console.error(error);
         return res.sendStatus(401);
     }
 
 })
-router.post('/delete/:id',verifyToken,(req,res)=>{
+router.post('/comment/:id',verifyToken,async (req,res)=>{
+    //댓글 작성
+
+    const body = req.body
+    const user = req.user
+    console.log(req.user);
+
+    try {
+        RootComment.findOne({
+            attributes: [
+                [sequelize.fn('MAX', sequelize.cast(sequelize.col('sequence'), 'UNSIGNED')), 'max_sequence']
+            ]
+        }).then(result => {
+            const maxSequence = result.get('max_sequence') || 0;
+            console.log('가장 큰 숫자:', maxSequence);
+        }).catch(error => {
+            console.error('오류 발생:', error);
+        });
+
+        const newcomment= await RootComment.create({
+
+            content: body.content,
+            group:body.group,
+            sequence: maxSequence+1,
+            UserId:user.userId,
+            RootPostId:body.id,
+
+
+        })
+
+        const nowcomment = await RootComment.findAll({
+            attributes:['content','sequence','group','createdAt','UserId'],
+            where:{
+                id:{ [Op.eq]:newcomment.id},
+
+            },
+            raw: true,
+
+        })
+
+        JSON.stringify(nowcomment);
+        console.log(nowcomment);
+
+        const data = {...nowcomment[0],...{nick_name:user.nick_name},...{rank:user.rank}}
+        JSON.stringify(data);
+        console.log(data)
+
+        return res.json({content:data});
+    }catch (error){
+        console.error(error);
+        return res.sendStatus(401);
+    }
+
+})
+router.delete('/post/:postId',verifyToken,async (req,res)=>{
+    await RootPost.destroy({
+        where:{
+            id:{[Op.eq]:req.params.postId}
+        }
+    });
     //삭제하기
 })
 
