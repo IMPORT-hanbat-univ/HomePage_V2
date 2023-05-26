@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import MobileMenu from "../MobileMenu";
 import { Poppins } from "next/font/google";
+import UserNav from "../UserNav";
 
 const hanuman = Poppins({
   weight: "600",
@@ -17,7 +18,9 @@ export default function MobileHeader() {
           <span className={hanuman.className}>#IMPORT</span>
         </Link>
 
-        <MobileMenu />
+        <MobileMenu>
+          <UserNav />
+        </MobileMenu>
       </div>
     </header>
   );

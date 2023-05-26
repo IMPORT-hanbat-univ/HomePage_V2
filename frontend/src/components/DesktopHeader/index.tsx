@@ -17,9 +17,9 @@ export default function DesktopHeader() {
       <div className="h-[60px] fixed z-10 flex bg-white justify-between items-center px-[75px] w-full">
         <div className="flex items-center">
           {/* <HeaderLogoSvg /> */}
-          <h2 className="text-3xl text-import-color mr-8">
+          <Link href="/" className="text-3xl text-import-color mr-8">
             <span className={hanuman.className}>#IMPORT</span>
-          </h2>
+          </Link>
           <menu className="flex relative justify-between items-center text-base leading-4 gap-4">
             <div className="p-6 group relative">
               <span className="relative group-hover:text-import-color">About</span>

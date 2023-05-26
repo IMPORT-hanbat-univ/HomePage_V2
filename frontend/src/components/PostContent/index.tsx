@@ -53,7 +53,7 @@ export default function PostContent({
 
   return (
     <div>
-      <div className="mt-24 pl-1 flex items-center">
+      <div className="mt-[60px] pl-1 flex items-center">
         <Link href="/" className="flex justify-center items-center ">
           <IoHomeOutline className="w-[18px] h-[18px]" />
         </Link>

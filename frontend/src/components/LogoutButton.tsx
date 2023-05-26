@@ -11,7 +11,10 @@ export default function LogoutButton() {
     return router.push("/");
   };
   return (
-    <button onClick={handleLogout} className="border border-import-color rounded-md leading-[18px] px-[38px] py-[11px] bg-white">
+    <button
+      onClick={handleLogout}
+      className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px bg-white"
+    >
       Log out
     </button>
   );
