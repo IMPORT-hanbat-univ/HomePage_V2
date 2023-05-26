@@ -19,10 +19,7 @@ module.exports = class ListPost extends Sequelize.Model{
                 type: Sequelize.STRING(1000),
                 allowNull: true,
             },
-            user_Id:{
-                type: Sequelize.STRING(30),
-                allowNull: true,
-            },
+
 
         },{
             sequelize,

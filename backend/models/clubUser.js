@@ -28,10 +28,7 @@ module.exports = class ClubUser extends Sequelize.Model {
                     type: Sequelize.STRING(500),
                     allowNull: true,
                 },
-                user_Id:{
-                    type: Sequelize.STRING(30),
-                    allowNull: false,
-                },
+
             },
             {
                 sequelize,
