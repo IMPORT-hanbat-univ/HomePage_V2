@@ -15,10 +15,7 @@ module.exports = class PatchNoteComment extends Sequelize.Model{
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
-            user_Id:{
-                type: Sequelize.STRING(30),
-                allowNull: false,
-            },
+
 
         },{
             sequelize,

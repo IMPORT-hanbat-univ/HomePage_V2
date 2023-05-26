@@ -32,10 +32,7 @@ module.exports = class Project extends Sequelize.Model{
                 type: Sequelize.STRING(1000),
                 allowNull: true,
             },
-            user_Id:{
-                type: Sequelize.STRING(30),
-                allowNull: false,
-            },
+
             leader:{
                 type: Sequelize.STRING(40),
                 allowNull: false,

@@ -19,10 +19,7 @@ module.exports = class PatchNote extends Sequelize.Model{
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
-            project_Id: {
-                type: Sequelize.STRING(50),
-                allowNull: false,
-            }
+
 
         },{
             sequelize,
