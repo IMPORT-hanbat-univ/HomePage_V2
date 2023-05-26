@@ -24,6 +24,7 @@ module.exports = class User extends Sequelize.Model{
             provider :{ //회원가입 방식 ex)'kakao'
                 type: Sequelize.STRING(10),
                 allowNull: true,
+
             },
             refreshToken: {
                 type:Sequelize.STRING(255),
@@ -49,9 +50,13 @@ module.exports = class User extends Sequelize.Model{
         db.User.hasMany(db.ListPost);
         db.User.hasMany(db.ListPostComment);
         db.User.hasOne(db.ClubUser);
+        db.User.hasMany(db.PatchNote);
         db.User.hasMany(db.PatchNoteComment);
+        db.User.hasMany(db.RootPost);
         db.User.hasMany(db.RootComment);
+        db.User.hasMany(db.CardPost);
         db.User.hasMany(db.CardPostComment);
+        db.User.hasMany(db.Project);
         db.User.hasMany(db.ProjectComment);
 
     }

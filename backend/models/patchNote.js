@@ -19,7 +19,7 @@ module.exports = class PatchNote extends Sequelize.Model{
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
-            projectId: {
+            project_Id: {
                 type: Sequelize.STRING(50),
                 allowNull: false,
             }
@@ -37,6 +37,7 @@ module.exports = class PatchNote extends Sequelize.Model{
     static associate(db) {
         db.PatchNote.belongsTo(db.Project);
         db.PatchNote.hasMany(db.PatchNoteComment);
+        db.PatchNote.belongsTo(db.User);
 
     }
 }

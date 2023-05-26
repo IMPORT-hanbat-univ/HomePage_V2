@@ -9,45 +9,27 @@ const {Op} = require("sequelize");
 //목록
 router.get('/', async function(req, res) {
 
-    /*
-       //테스트용 데이터 생성
-      await RootPost.create({
-        title: "title2",
-        content: "content2",
-        tagF: "tagF",
-        tagS: "tagS",
-        tagT: "tagT",
-        category: "category2",
-        kakaoId: "08773456768",
-
-      })
-    */
-
-
 
     try{
         const posts = await RootPost.findAll({
-            attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt','kakaoId'],
+            attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt'],
             raw: true,
+            include:[{
+                model:User,
+                attributes:['rank','nick_name'],
+                raw: true,
+            }]
+        });
+        posts.forEach(obj => {
+            obj.rank = obj['User.rank'];
+            obj.nick_name = obj['User.nick_name'];
+            delete obj['User.rank'];
+            delete obj['User.nick_name'];
         });
 
-        const data = posts.map((post) => ({
-            id:post.id,
-            title:post.title,
-            content: post.content,
-            tagF: post.tagF,
-            tagS: post.tagS,
-            tagT: post.tagT,
-            category: post.category,
-            file: post.file,
-            createdAt: post.createAt,
-            updatedAt: post.updateAt,
-            deletedAt: post.deldtedAt,
-            userKakaoId: post.kakaoId,
-        }));
+        console.log(posts);
 
-
-        res.json({item: data}); //배열 안에 내용이 없을때 {item: []} 로 보내짐
+        res.json({item: posts}); //배열 안에 내용이 없을때 {item: []} 로 보내짐
 
 
     }catch (error){
@@ -61,36 +43,33 @@ router.get('/', async function(req, res) {
 router.get('/:id',async (req,res)=>{
     try {
 
-        console.log('id:' + req.params.id);
-        const data1 = await RootPost.findAll({
-                attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt','kakaoId'],//닉네임추가,카카오 id
-                where:{
-                    id:{ [Op.eq]:req.params.id}}
-            ,
-            raw: true,
-        });
-        JSON.stringify(data1);
-        const data2 = await User.findAll({
-            attributes:['kakaoId', 'nick_name','rank'], //닉네임추가,카카오 id
+        const post = await RootPost.findAll({
+            attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','deletedAt','UserId'],//닉네임추가,카카오 id
             where:{
-                kakaoId:{ [Op.eq]:data1[0].kakaoId}}
-            ,
+                id:{ [Op.eq]:req.params.id}},
             raw: true,
+            include:
+            [{
+                model:User,
+                attributes:['nick_name','rank'],
+            }]
         });
-        JSON.stringify(data2)
+        const user = {
+            nick_name: post[0]['User.nick_name'],
+            rank: post[0]['User.rank']
+        };
 
-        const post = {...data1[0],...data2[0]};
-        JSON.stringify(post);
+        delete post[0]['User.nick_name'];
+        delete post[0]['User.rank'];
 
+        const data = {...post[0],...user};
+        console.log(data);
 
-        if (!data1) {
+        if (!post) {
             return res.status(404).send('Post not found');
         }
-
-
-        console.log({content:post});
-
-        res.json({content:post});
+        console.log({content:data});
+        res.json({content:data});
 
     }catch (error){
         console.error(error);
@@ -99,13 +78,13 @@ router.get('/:id',async (req,res)=>{
 
 //create
 router.post('/post',verifyToken,async (req, res)=>{
-  
-    console.log("req", req)
+
     const body = req.body
     const user = req.user
-    try {
-        await RootPost.create({
+    console.log(req.user);
 
+    try {
+        const newPost= await RootPost.create({
             title: body.title,
             content: body.content,
             tagF: body.tagF,
@@ -113,11 +92,30 @@ router.post('/post',verifyToken,async (req, res)=>{
             tagT: body.tagT,
             category: body.category,
             file: "",
-            kakaoId: user.kakaoId,
+            user_Id:user.userId,
+            UserId:user.userId,
+
 
         })
-        return res.sendStatus(200); //글 아이디 보내주기
 
+        const nowPost = await RootPost.findAll({
+            attributes:['id','title','content','tagF','tagS','tagT','category','file','createdAt','updatedAt','UserId'],
+            where:{
+                id:{ [Op.eq]:newPost.id},
+
+            },
+            raw: true,
+
+        })
+
+        JSON.stringify(nowPost);
+        console.log(nowPost);
+
+        const data = {...nowPost[0],...{nick_name:user.nick_name},...{rank:user.rank}}
+        JSON.stringify(data);
+        console.log(data)
+
+        return res.json({content:data});
     }catch (error){
         console.error(error);
         return res.sendStatus(401);
@@ -128,28 +126,57 @@ router.post('/post',verifyToken,async (req, res)=>{
 //update
 router.post('http://localhost:3000/about/notice/post/:id',verifyToken,async (req, res)=>{
     try {
+        console.log(req.body);
+        console.log(req);
+        const body = req.body
+        const user = req.user
+        console.log(req.user);
 
-        await RootPost.update({
-            id:req.id,
-            title:req.title,
-            content: req.content,
-            tagF: req.tagF,
-            tagS: req.tagS,
-            tagT: req.tagT,
-            category: req.category,
-            file: req.file,
-            kakaoId: req.kakaoId,
+        const updatePost= await RootPost.update({
+            title: body.title,
+            content: body.content,
+            tagF: body.tagF,
+            tagS: body.tagS,
+            tagT: body.tagT,
+            category: body.category,
+            file: "",
+            kakaoId: user.kakaoId,
+            UserId:user.userId,
 
         },{
             where: {
                 id:{ [Op.eq]:req.params.id}}
         })
 
+        const updatedPost = await RootPost.findAll({
+            attributes:['id','title','content','tagF','tagS','tagT','category','file','kakaoId','createdAt','updatedAt','UserId'],
+            where:{
+                id:{ [Op.eq]:updatePost.id},
+
+            },
+            raw: true,
+
+        })
+
+        JSON.stringify(updatedPost);
+        console.log(updatedPost);
+
+        const data = {...updatedPost[0],...{nick_name:user.nick_name},...{rank:user.rank}}
+        JSON.stringify(data);
+        console.log(data)
+
+        return res.json({content:data});
+
+
+
     }catch (error){
         console.error(error);
         return res.sendStatus(401);
     }
 
+})
+router.post('/delete/:id',verifyToken,(req,res)=>{
+    //삭제하기
 })
 
 module.exports = router;

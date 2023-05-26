@@ -80,7 +80,7 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
 
     const loggedInUser= await User.findAll({
         raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
-        attributes:['kakaoId','nick_name','rank'],
+        attributes:['kakaoId','nick_name','rank','id'],
         where:{
             kakaoId:{ [Op.eq]:kakao } ,
         }
@@ -88,6 +88,7 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
 
     const accessToken = jwt.sign({
         kakaoId: req.user.kakaoId,
+        userId: loggedInUser[0].id,
         nick_name: loggedInUser[0].nick_name,
         rank: loggedInUser[0].rank,
     }, process.env.ACCESS_TOKEN_SECRET,{
@@ -113,7 +114,7 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
         await User.update(
             { refreshToken: refreshToken },
             { where:{
-                    kakaoId:{ [Op.eq]:kakao } ,
+                    id:{ [Op.eq]:loggedInUser[0].id } ,
                 } }
         );
     } catch (error) {
