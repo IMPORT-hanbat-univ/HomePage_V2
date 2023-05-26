@@ -23,11 +23,16 @@ module.exports = class Project extends Sequelize.Model{
                 type: Sequelize.STRING(25),
                 allowNull: true,
             },
+            category:{
+                type: Sequelize.STRING(50),
+                allowNull: false,
+
+            }, //추가
             file: {
                 type: Sequelize.STRING(1000),
                 allowNull: true,
             },
-            kakaoId:{ //kakao에서 넘어오는 아이디
+            user_Id:{
                 type: Sequelize.STRING(30),
                 allowNull: false,
             },
@@ -53,7 +58,7 @@ module.exports = class Project extends Sequelize.Model{
     static associate(db) {
 
         db.Project.hasMany(db.PatchNote);
-
+        db.Project.belongsTo(db.User);
         db.Project.hasMany(db.ProjectComment);
 
     }

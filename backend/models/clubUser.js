@@ -28,7 +28,7 @@ module.exports = class ClubUser extends Sequelize.Model {
                     type: Sequelize.STRING(500),
                     allowNull: true,
                 },
-                kakaoId:{ //kakao에서 넘어오는 아이디
+                user_Id:{
                     type: Sequelize.STRING(30),
                     allowNull: false,
                 },
@@ -47,9 +47,6 @@ module.exports = class ClubUser extends Sequelize.Model {
     }
     static associate(db) {
         db.ClubUser.belongsTo(db.User);
-        db.ClubUser.hasMany(db.CardPost);
-        db.ClubUser.hasMany(db.RootPost);
-        db.ClubUser.hasMany(db.Schedule);
     }
 
 };

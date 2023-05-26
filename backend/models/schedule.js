@@ -30,7 +30,7 @@ module.exports = class Schedule extends Sequelize.Model {
         );
     }
     static associate(db) {
-        db.Schedule.belongsTo(db.ClubUser);
+        db.Schedule.belongsTo(db.User);
 
     }
 

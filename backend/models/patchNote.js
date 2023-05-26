@@ -15,13 +15,13 @@ module.exports = class PatchNote extends Sequelize.Model{
                 type: Sequelize.STRING(50),
                 allowNull: false,
             },
-            order:{//몇 번째인지 저장
-                type: Sequelize.STRING(100),
-                allowNull: false,
-            },
             file: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
+            },
+            project_Id: {
+                type: Sequelize.STRING(50),
+                allowNull: false,
             }
 
         },{
@@ -37,6 +37,7 @@ module.exports = class PatchNote extends Sequelize.Model{
     static associate(db) {
         db.PatchNote.belongsTo(db.Project);
         db.PatchNote.hasMany(db.PatchNoteComment);
+        db.PatchNote.belongsTo(db.User);
 
     }
 }
