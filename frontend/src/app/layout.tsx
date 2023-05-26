@@ -15,16 +15,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const headersList = headers();
   const header_url = headersList.get("x-url") || "";
   const isEdit = header_url.split("/").includes("edit");
-
+  console.log("isEdit", isEdit);
   return (
     <html lang="ko">
-      <head>
-        <link
-          href="https://www.dafontfree.net/embed/Y29vcGVyLWhld2l0dC1oZWF2eSZkYXRhLzE2L2MvNzgwMDUvQ29vcGVySGV3aXR0LUhlYXZ5Lm90Zg"
-          rel="stylesheet"
-          type="text/css"
-        />
-      </head>
       <body>
         <div className="min-h-screen">
           <Recoil>

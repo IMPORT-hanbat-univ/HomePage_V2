@@ -31,12 +31,22 @@ export default function PostContent({
     } else {
       const accessToken: string = getClientCookie("accessToken") || "";
       const refreshToken: string = getClientCookie("refreshToken") || "";
-      const result: string | boolean = await deleteNotice(content?.id as number, accessToken, refreshToken);
-      if (typeof result === "string") {
-        alert(result);
+      try {
+        const isRemove = confirm("정말 삭제하시겠습니까?");
+        if (!isRemove) {
+          return;
+        }
+        const result: string | boolean = await deleteNotice(content?.id as number, accessToken, refreshToken);
+        if (typeof result === "string") {
+          alert(result);
+          return;
+        } else {
+          return router.replace("/about/notice");
+        }
+      } catch (err: any) {
+        console.log(err);
+        alert("삭제 과정에서 에러가 발생했습니다.");
         return;
-      } else {
-        return router.replace("/about/notice");
       }
     }
   };
@@ -72,8 +82,11 @@ export default function PostContent({
         </time>
       </div>
       <div className="flex items-center justify-between mt-[17px]">
-        <TagList post={content} disabled={true} />
-        {user && Object.keys(user).length > 0 && (
+        <TagList
+          post={{ tagF: content?.tagF || "", tagS: content?.tagS || "", tagT: content?.tagT || "" }}
+          disabled={true}
+        />
+        {(user.userId === content.UserId || user.rank >= 4) && (
           <div className="flex items-center">
             <Link
               href={`/about/notice/edit/${content.id}`}

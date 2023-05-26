@@ -3,13 +3,19 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import React from "react";
 import cls from "classnames";
 import { Notice } from "@/util/type";
-export default function TagList({ post, disabled }: {post: {tagF: string; tagS: string; tagT: string;}; disabled: boolean}) {
+export default function TagList({
+  post,
+  disabled,
+}: {
+  post: { tagF: string; tagS: string; tagT: string };
+  disabled: boolean;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tag = searchParams?.get("tag");
   const pathname = usePathname();
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
-  const clickTag = (seletedTag:string) => {
+  const clickTag = (seletedTag: string) => {
     let queryString = "";
     if (tag && tag.trim() !== "") {
       if (tag.includes(seletedTag)) {

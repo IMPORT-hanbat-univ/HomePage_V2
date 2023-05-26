@@ -26,16 +26,17 @@ export type Notice = {
   createAt: Date | string;
 };
 
-export interface PostDetailType  {
-
+export interface PostDetailType {
   content: {
     id: number;
     title: string;
     content: string;
     tagF?: string;
-  tagS?: string;
-tagT?: string;
+    tagS?: string;
+    tagT?: string;
     nick_name: string;
+    UserId: number;
+    rank?: number;
     createdAt: Date;
     updatedAt: Date;
   };
@@ -48,16 +49,14 @@ tagT?: string;
     createdAt: Date;
     updatedAt: Date;
   }[];
-} 
+}
 
 export interface CreatePost {
-
   title: string;
   content: string;
   tagF?: string;
-tagS?: string;
-category: string;
-tagT?: string;
+  tagS?: string;
+  category: string;
+  tagT?: string;
   nick_name: string;
-  
 }

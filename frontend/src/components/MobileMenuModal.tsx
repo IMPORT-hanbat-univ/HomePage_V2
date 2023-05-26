@@ -13,7 +13,7 @@ const hanuman = Poppins({
 export default function MobileMenuModal({ isModal, handleModal }: { isModal: boolean; handleModal: () => void }) {
   return (
     <AnimatePresence>
-      <div className="fixed top-0 left-0 h-full w-full flex z-30">
+      <div className="fixed top-0 left-0 h-full w-full flex z-30 lg:hidden">
         <motion.div
           className="w-1/2 h-full fixed bg-white z-40"
           initial={{ x: "-100%" }}
@@ -31,6 +31,7 @@ export default function MobileMenuModal({ isModal, handleModal }: { isModal: boo
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.5 }}
           exit={{ opacity: 0 }}
+          onClick={handleModal}
         />
       </div>
     </AnimatePresence>
