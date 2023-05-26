@@ -147,7 +147,7 @@ export default function EditorWithPreview({
 
         return;
       } else {
-        console.log(result);
+        console.log("result", result);
         startTrasition(() => {
           router.replace(`/about/notice/${result?.content?.id}`);
         });

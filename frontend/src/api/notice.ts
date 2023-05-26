@@ -76,7 +76,7 @@ export async function deleteNotice(
   refreshToken: string
 ): Promise<boolean | string> {
   try {
-    await fetch(`http://localhost:4000/about/notice/post/${postId}`, {
+    const result = await fetch(`http://localhost:4000/about/notice/post/${postId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +108,12 @@ export async function updateNotice(
       },
       body: JSON.stringify(post),
     });
-    return true;
+
+    if (result.ok) {
+      return result.json();
+    } else {
+      throw new Error("result ok false");
+    }
   } catch (err: any) {
     console.log(err);
     return "글 수정 과정에서 오류가 발생했습니다.";
