@@ -30,7 +30,7 @@ module.exports = (passport) => {
                     kakaoId: profile.id,
                     //rank:"common", 동아리 회원이 될때 랭크 생성 => 여기서 랭크 안넣음
                     provider: 'kakao',
-                    rank:'1', //그냥 유저는 1(=기본값)
+                    rank:1, //그냥 유저는 1(=기본값)
                 });
                 done(null, newUser);
             }
