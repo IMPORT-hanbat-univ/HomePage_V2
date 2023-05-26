@@ -15,10 +15,7 @@ module.exports = class ProjectComment extends Sequelize.Model{
                 type: Sequelize.INTEGER(30),
                 allowNull: false,
             },
-            user_Id:{
-                type: Sequelize.STRING(30),
-                allowNull: false,
-            },
+
 
         },{
             sequelize,

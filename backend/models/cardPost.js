@@ -31,10 +31,7 @@ module.exports = class CardPost extends Sequelize.Model{
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
-            user_Id:{
-                type: Sequelize.STRING(30),
-                allowNull: false,
-            },
+
 
         },{
             sequelize,
