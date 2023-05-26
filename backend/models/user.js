@@ -27,7 +27,7 @@ module.exports = class User extends Sequelize.Model{
                 allowNull: true,
             },
             rank: {
-                type: Sequelize.STRING(20),
+                type: Sequelize.INTEGER,
                 allowNull: true,
             }
 
