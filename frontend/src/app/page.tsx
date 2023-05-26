@@ -49,7 +49,7 @@ export default async function Home() {
         >
           패치노트 디테일
         </Link>
-        <UserNav />
+
       </div>
     </>
   );

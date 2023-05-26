@@ -2,13 +2,20 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import React from "react";
 import cls from "classnames";
-export default function TagList({ post, disabled }) {
+import { Notice } from "@/util/type";
+export default function TagList({
+  post,
+  disabled,
+}: {
+  post: { tagF: string; tagS: string; tagT: string };
+  disabled: boolean;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const tag = searchParams.get("tag");
+  const tag = searchParams?.get("tag");
   const pathname = usePathname();
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
-  const clickTag = (seletedTag) => {
+  const clickTag = (seletedTag: string) => {
     let queryString = "";
     if (tag && tag.trim() !== "") {
       if (tag.includes(seletedTag)) {
@@ -24,7 +31,7 @@ export default function TagList({ post, disabled }) {
 
   return (
     <div className="flex items-center min-h-[32px]">
-      {post.tagF && (
+      {post.tagF && post.tagF !== "" && (
         <button
           disabled={disabled}
           onClick={() => clickTag(post.tagF)}
@@ -36,7 +43,7 @@ export default function TagList({ post, disabled }) {
           #{post.tagF}
         </button>
       )}
-      {post.tagS && (
+      {post.tagS && post.tagS !== "" && (
         <button
           disabled={disabled}
           onClick={() => clickTag(post.tagS)}
@@ -48,7 +55,7 @@ export default function TagList({ post, disabled }) {
           #{post.tagS}
         </button>
       )}
-      {post.tagT && (
+      {post.tagT && post.tagT !== "" && (
         <button
           disabled={disabled}
           onClick={() => clickTag(post.tagT)}

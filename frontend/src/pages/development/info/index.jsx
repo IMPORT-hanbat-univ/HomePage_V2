@@ -17,7 +17,7 @@ export default function DevelopmentInfo() {
   const { category, tag, order, search } = Object.fromEntries(searchParams.entries());
   const seletedCategory = category || "";
   const seletedTagList = tag ? tag.split("+") : "";
-  const seletedOrder = order || "latest";
+  const selectedOrder = order || "latest";
   const currentSearch = search || "";
 
   const info = useInformationApi();
@@ -26,7 +26,7 @@ export default function DevelopmentInfo() {
   const filteredData = getFilteredData(
     data,
     { category: seletedCategory, tag: seletedTagList, search: currentSearch },
-    seletedOrder
+    selectedOrder
   );
 
   return (
@@ -46,7 +46,7 @@ export default function DevelopmentInfo() {
         </div>
         <div className="box-content border-b pb-3">
           <OrderCategory
-            seleted={seletedOrder}
+            seleted={selectedOrder}
             orderArray={[
               { order: "latest", name: "최신순" },
               { order: "oldest", name: "오래된순" },
