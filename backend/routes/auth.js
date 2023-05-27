@@ -48,26 +48,64 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     })(req,res,next);
 });
 */
-router.get('/logout', authenticationToken, (req,res) => {
+router.options('/logout', authenticationToken, async (req,res) => {
+
+    const accessToken = req.headers['accesstoken'];
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
     try{
-    
-        req.logout(function(err) {
-            if (err) { 
-                console.log(err);
-                return res.sendStatus(401)
-             }
-            
-            req.session.destroy();
-             return res.sendStatus(200)
-          });
-       
-        //refresh, access 삭제
-       
+        await User.update(
+            {
+            refreshToken:null,
+            },
+            {where:{
+                id:{[Op.eq]:decoded.userId}
+                }
+
+            });
+        console.log("refreshToken delete");
+
+        res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
+        res.sendStatus(200);
+
     }catch(err){
         console.log(err);
-    
+        res.sendStatus(400)
+
     }
-   
+
+
+});
+
+router.get('/logout', authenticationToken, async (req,res) => {
+
+    const accessToken = req.headers['accesstoken'];
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+    try{
+        await User.update(
+            {
+                refreshToken:null,
+            },
+            {where:{
+                    id:{[Op.eq]:decoded.userId}
+                }
+
+            });
+        console.log("refreshToken delete");
+
+        res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
+        res.sendStatus(200);
+
+    }catch(err){
+        console.log(err);
+        res.sendStatus(400)
+
+    }
+
+
 });
 
 router.get('/kakao', passport.authenticate('kakao'));
@@ -92,7 +130,7 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
         nick_name: loggedInUser[0].nick_name,
         rank: loggedInUser[0].rank,
     }, process.env.ACCESS_TOKEN_SECRET,{
-        expiresIn: '10m', //기간 10분
+        expiresIn: '1h', //기간 10분
     });
 
     const refreshToken = jwt.sign({
@@ -107,8 +145,10 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
     console.log("token: " + accessToken);
     console.log("refresh: " + refreshToken);
 
-    res.cookie('accessToken',accessToken,{maxAge:60*10*1000}); //쿠키 만료 10분
-    res.cookie('refreshToken',refreshToken,{maxAge:60*60*12*1000}); //쿠키 만료 12시간
+    res.cookie('accessToken',accessToken,{maxAge:60*59*1000}); //쿠키 만료 10분
+    res.cookie('refreshToken',refreshToken,{maxAge:60*59*12*1000}); //쿠키 만료 12시간
+
+
 
     try {
         await User.update(

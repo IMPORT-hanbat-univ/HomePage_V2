@@ -32,7 +32,7 @@ exports.verifyToken = async (req, res, next) => {
     if (accessToken) {
         try {
             const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-            console.log("accessToken success");
+            console.log("accessToken success!");
             req.user = decoded;
             return next();
         } catch (err) {
@@ -49,7 +49,7 @@ exports.verifyToken = async (req, res, next) => {
                     })
 
 
-                    const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+                    const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
                     const refresh = uuidv4();
                     const newRefreshToken = jwt.sign({refresh}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '12h' });
 
@@ -66,10 +66,11 @@ exports.verifyToken = async (req, res, next) => {
                         res.sendStatus(500);
                         return;
                     }
-                    res.cookie('accessToken', newAccessToken, { httpOnly: 'http://localhost:3000/' ,maxAge:60*10*1000});
-                    res.cookie('refreshToken', newRefreshToken, { httpOnly: 'http://localhost:3000/' ,maxAge:60*60*12*1000});
-
+                    res.cookie('accessToken', newAccessToken, { maxAge:60*59*1000});
+                    res.cookie('refreshToken', newRefreshToken, { maxAge:60*59*12*1000});
+                    console.log("accessToken failure, refreshToken success , cookie success");
                     req.user = user;
+                    res.status(200).send('Success')
                     return next();
                 } catch (err) {
                     console.error(err);
@@ -90,7 +91,7 @@ exports.verifyToken = async (req, res, next) => {
                     refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                 }
             });
-            const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+            const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
             const refresh = uuidv4();
             const newRefreshToken = jwt.sign({refresh}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '12h' });
             try {
@@ -100,15 +101,17 @@ exports.verifyToken = async (req, res, next) => {
                             refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                         } }
                 );
+                console.log("refreshToken 재발급");
+                console.log("accessToken None, refreshToken success");
+                res.cookie('accessToken', newAccessToken, { maxAge:60*59*1000 });
+                res.cookie('refreshToken', newRefreshToken, {maxAge:60*59*12*1000});
+                res.status(200).send('Success')
 
             } catch (error) {
                 console.error("Error occurred while updating refreshToken:", error);
                 res.sendStatus(500);
                 return;
             }
-            console.log("accessToken None, refreshToken success");
-            res.cookie('accessToken', newAccessToken, { httpOnly: 'http://localhost:3000/',maxAge:60*10*1000 });
-            res.cookie('refreshToken', newRefreshToken, { httpOnly: 'http://localhost:3000/' ,maxAge:60*60*12*1000});
 
             return next();
         } catch (err) {
@@ -121,15 +124,16 @@ exports.verifyToken = async (req, res, next) => {
 };
 
 // 토큰이 새롭게 발급되는 부분이 제거된 미들웨어
-exports.authenticationToken = async (req, res, next) => {
-    const accessToken = req.headers["accesstoken"];
+exports.authenticationToken  = async (req, res, next) => {
 
-    const refreshToken = req.headers["refreshtoken"];
-    console.log("authen", accessToken, refreshToken)
+    const accessToken = req.headers['accesstoken'];
+    const refreshToken = req.headers['refreshtoken'];
+    console.log("verifytoken", accessToken, refreshToken);
     // Access token이 있는 경우 검증
     if (accessToken) {
         try {
             const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+            console.log("accessToken success!");
             req.user = decoded;
             return next();
         } catch (err) {
@@ -137,15 +141,15 @@ exports.authenticationToken = async (req, res, next) => {
             if (err.name === 'TokenExpiredError' && refreshToken) {
                 try {
                     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-                    user = await User.findAll({
+                    const user = await User.findAll({
                         raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
                         attributes:['id','nick_name','rank','kakaoId'],
                         where:{
                             refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                         }
                     })
+                    req.user.userId=user.id;
 
-                    req.user = user;
                     return next();
                 } catch (err) {
                     console.error(err);
@@ -153,7 +157,7 @@ exports.authenticationToken = async (req, res, next) => {
                 }
             } else {
                 console.error(err);
-                return res.sendStatus(401);
+                return res.sendStatus(402);
             }
         }
     } else if (refreshToken) { // Access token이 없는 경우 Refresh token 검증
@@ -167,15 +171,20 @@ exports.authenticationToken = async (req, res, next) => {
                 }
             });
 
+            console.log("accessToken None, refreshToken success");
+
             return next();
         } catch (err) {
             console.error(err);
-            return res.sendStatus(401);
+            return res.sendStatus(403);
         }
     } else { // Access token, Refresh token 모두 없는 경우
-        return res.sendStatus(401);
+        return res.sendStatus(404);
     }
 };
+
+//
+
 
 //랭크 확인 미들웨어
 
