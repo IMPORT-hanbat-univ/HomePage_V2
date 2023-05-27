@@ -24,16 +24,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ReactQuery>
               {!isEdit && (
                 <>
-                  <div className="hidden  lg:block">
+                  <div className="hidden z-10  lg:block">
                     <DesktopHeader />
                   </div>
-                  <div className="block">
+                  <div className="block z-10 fixed">
                     <MobileHeader />
                   </div>
                 </>
               )}
 
-              <div className={`${isEdit ? "" : "pt-[60px]"}`}>{children}</div>
+              <div className={`${isEdit ? "z-0 relative" : "pt-[60px] z-0 relative"}`}>{children}</div>
             </ReactQuery>
           </Recoil>
         </div>

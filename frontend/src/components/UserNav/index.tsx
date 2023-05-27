@@ -14,12 +14,12 @@ const UserNav = AsSyncComponent(async function () {
   console.log("decode", decodeUser, "error", error);
 
   return (
-    <>
+    <div className="flex items-center justify-between w-full lg:w-60">
       {decodeUser && decodeUser?.nick_name ? (
-        <div className="flex items-center justify-between w-full lg:w-60">
+        <>
           <div className="mr-3 inline-block">{decodeUser?.nick_name}</div>
           <LogoutButton />
-        </div>
+        </>
       ) : (
         <Link
           href={"http://localhost:4000/auth/kakao"}
@@ -28,7 +28,7 @@ const UserNav = AsSyncComponent(async function () {
           Log in
         </Link>
       )}
-    </>
+    </div>
   );
 });
 

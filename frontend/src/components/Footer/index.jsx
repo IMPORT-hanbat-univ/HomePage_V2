@@ -5,7 +5,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="w-full mt-8  overflow-x-hidden bg-black h-[346px] flex flex-col items-center opacity-80 ">
+    <footer className="w-full mt-8  overflow-x-hidden relative bg-black h-[346px] flex flex-col items-center opacity-80 -z-10">
       <Link href="/" className="mt-[26px]">
         <Image width={90} height={60} src={"/images/import_logo.png"} alt="import_logo" />
       </Link>
