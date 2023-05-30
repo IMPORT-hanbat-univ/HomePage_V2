@@ -1,12 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import MarkdownEditor from "../MarkdownEditor";
 import CommentItem from "../CommentItem";
 import getCommentGroupValue from "@/util/getCommentGroupValue";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useParams, useRouter } from "next/navigation";
 import Pagination from "../Pagination";
 import usePagination from "@/hooks/usePagination";
 import { PostDetailType } from "@/util/type";
+import getClientCookie from "@/util/getClientCookie";
+import { createNoticeComment } from "@/api/notice";
 
 export default function CommentContent({
   comments,
@@ -18,9 +20,11 @@ export default function CommentContent({
   category: string;
 }) {
   const searchParams = useSearchParams();
+  const params = useParams();
+  const [isPending, startTrasition] = useTransition();
   const nowPage = searchParams?.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
-
+  const router = useRouter();
   const { page, pageData: pageComments, pageRangeArray } = usePagination(comments, currentPage);
   const [parentCommentText, setParentCommentTeXt] = useState("");
   const [newGroupValue, setNewGroupValue] = useState(null);
@@ -29,19 +33,42 @@ export default function CommentContent({
     setNewGroupValue(getCommentGroupValue(comments));
   }, [comments]);
 
-  const submitComment = (e: React.FormEvent) => {
+  const submitComment = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (parentCommentText.trim() === "") {
       return;
     }
+    if (!getClientCookie("accessToken") && !getClientCookie("refreshToken")) {
+      alert("로그인을 해주세요");
+
+      return;
+    }
     // 로그인여부도 추가를 해야겠지요를레히요
-    console.log({
+    const post = {
       group: newGroupValue,
       category: category,
       sequence: null,
       content: parentCommentText,
-    });
+    };
+    const id = (params?.id as string) || "";
+    let result: any | string;
+    switch (category) {
+      case "notice": {
+        result = await createNoticeComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"), id);
+        console.log("result", result);
+      }
+    }
+    if (typeof result === "string") {
+      alert({ notificationType: "Warning", message: result, type: "warning" });
+
+      return;
+    } else {
+      console.log("result", result);
+      startTrasition(() => {
+        router.refresh();
+      });
+    }
   };
   return (
     <div>

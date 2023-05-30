@@ -60,3 +60,10 @@ export interface CreatePost {
   tagT?: string;
   nick_name: string;
 }
+
+export interface CreateComment {
+  group: null | number;
+  category: string;
+  sequence: null;
+  content: string | number;
+}

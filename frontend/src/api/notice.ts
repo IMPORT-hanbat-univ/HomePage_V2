@@ -1,4 +1,4 @@
-import { CreatePost, Notice, PostDetailType } from "@/util/type";
+import { CreateComment, CreatePost, Notice, PostDetailType } from "@/util/type";
 
 export async function getNoticeList(): Promise<Notice[] | string | null> {
   try {
@@ -34,7 +34,7 @@ export async function getNoticeDetail(id: number) {
     } else {
       data = await result.text();
     }
-    console.log("data", data);
+
     return (data as PostDetailType | []) || (data as string);
   } catch (err: any) {
     console.log(err);
@@ -117,5 +117,34 @@ export async function updateNotice(
   } catch (err: any) {
     console.log(err);
     return "글 수정 과정에서 오류가 발생했습니다.";
+  }
+}
+
+export async function createNoticeComment(
+  post: CreateComment,
+  accessToken: string,
+  refreshToken: string,
+  postId: string
+): Promise<boolean | string> {
+  try {
+    console.log("createNotice", post);
+    const result = await fetch(`http://localhost:4000/about/notice/comment/${postId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+        refreshToken,
+      },
+      body: JSON.stringify(post),
+    });
+
+    if (result.ok) {
+      return result.json();
+    } else {
+      throw new Error("result ok false");
+    }
+  } catch (err: any) {
+    console.log(err);
+    return "댓글 저장 과정에서 오류가 발생했습니다.";
   }
 }
