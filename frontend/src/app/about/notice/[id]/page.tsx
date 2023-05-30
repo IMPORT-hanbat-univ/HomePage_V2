@@ -23,7 +23,7 @@ export default async function NoticePage({ params: { id } }: Props) {
   } else {
     return (
       <>
-        <PostDetail data={data} user={decodeUser} />
+        <PostDetail data={data} user={decodeUser} category="notice" />
       </>
     );
   }

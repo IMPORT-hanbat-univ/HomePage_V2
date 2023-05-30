@@ -8,7 +8,15 @@ import Pagination from "../Pagination";
 import usePagination from "@/hooks/usePagination";
 import { PostDetailType } from "@/util/type";
 
-export default function CommentContent({ comments, user }: { comments: PostDetailType["comment"]; user: any }) {
+export default function CommentContent({
+  comments,
+  user,
+  category,
+}: {
+  comments: PostDetailType["comment"];
+  user: any;
+  category: string;
+}) {
   const searchParams = useSearchParams();
   const nowPage = searchParams?.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
@@ -30,6 +38,7 @@ export default function CommentContent({ comments, user }: { comments: PostDetai
     // 로그인여부도 추가를 해야겠지요를레히요
     console.log({
       group: newGroupValue,
+      category: category,
       sequence: null,
       content: parentCommentText,
     });
