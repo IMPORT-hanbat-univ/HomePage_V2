@@ -15,6 +15,10 @@ module.exports = class ListPost extends Sequelize.Model{
                 type: Sequelize.STRING(50),
                 allowNull: false,
             },
+            topic: {
+                type: Sequelize.STRING(50),
+                allowNull: false,
+            },
             file: {
                 type: Sequelize.STRING(1000),
                 allowNull: true,
