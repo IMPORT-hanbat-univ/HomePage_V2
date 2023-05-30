@@ -39,8 +39,7 @@ router.get("/", async function (req, res) {
       delete obj["User.nick_name"];
     });
 
-    console.log(posts);
-
+    console.log({ item: posts });
     res.json({ item: posts }); //배열 안에 내용이 없을때 {item: []} 로 보내짐
   } catch (error) {
     console.error(error);
@@ -51,20 +50,7 @@ router.get("/", async function (req, res) {
 router.get("/:id", async (req, res) => {
   try {
     const post = await RootPost.findAll({
-      attributes: [
-        "id",
-        "title",
-        "content",
-        "tagF",
-        "tagS",
-        "tagT",
-        "category",
-        "file",
-        "createdAt",
-        "updatedAt",
-        "deletedAt",
-        "UserId",
-      ], //닉네임추가,카카오 id
+      attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "deletedAt", "UserId"], //닉네임추가,카카오 id
       where: {
         id: { [Op.eq]: req.params.id },
       },
@@ -76,22 +62,37 @@ router.get("/:id", async (req, res) => {
         },
       ],
     });
-    const user = {
-      nick_name: post[0]["User.nick_name"],
-      rank: post[0]["User.rank"],
-    };
-
-    delete post[0]["User.nick_name"];
-    delete post[0]["User.rank"];
-
-    const data = { ...post[0], ...user };
-    console.log(data);
+    post.forEach((obj) => {
+      obj.rank = obj["User.rank"];
+      obj.nick_name = obj["User.nick_name"];
+      delete obj["User.rank"];
+      delete obj["User.nick_name"];
+    });
 
     if (!post) {
       return res.status(404).send("Post not found");
     }
-    console.log({ content: data });
-    res.json({ content: data });
+    const comments = await RootComment.findAll({
+      attributes:["id","content", "sequence", "group", "createdAt", "UserId","RootPostId"],
+      raw:true,
+      where: {
+        RootPostId: { [Op.eq]: req.params.id },
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["nick_name", "rank"],
+        },
+      ],
+    })
+    comments.forEach((obj) => {
+      obj.rank = obj["User.rank"];
+      obj.nick_name = obj["User.nick_name"];
+      delete obj["User.rank"];
+      delete obj["User.nick_name"];
+    });
+    console.log({ content: post[0],comment:comments });
+    res.json({ content: post[0] ,comment:comments});
   } catch (error) {
     console.error(error);
   }
@@ -101,7 +102,6 @@ router.get("/:id", async (req, res) => {
 router.post("/post", verifyToken, async (req, res) => {
   const body = req.body;
   const user = req.user;
-  console.log(req.user);
 
   try {
     const newPost = await RootPost.create({
@@ -116,33 +116,26 @@ router.post("/post", verifyToken, async (req, res) => {
     });
 
     const nowPost = await RootPost.findAll({
-      attributes: [
-        "id",
-        "title",
-        "content",
-        "tagF",
-        "tagS",
-        "tagT",
-        "category",
-        "file",
-        "createdAt",
-        "updatedAt",
-        "UserId",
-      ],
+      attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "UserId"],
       where: {
         id: { [Op.eq]: newPost.id },
       },
       raw: true,
+      include: [
+        {
+          model: User,
+          attributes: ["nick_name", "rank"],
+        },
+      ],
     });
-
-    JSON.stringify(nowPost);
-    console.log(nowPost);
-
-    const data = { ...nowPost[0], ...{ nick_name: user.nick_name }, ...{ rank: user.rank } };
-    JSON.stringify(data);
-    console.log(data);
-
-    return res.json({ content: data });
+    nowPost.forEach((obj) => {
+      obj.rank = obj["User.rank"];
+      obj.nick_name = obj["User.nick_name"];
+      delete obj["User.rank"];
+      delete obj["User.nick_name"];
+    });
+    console.log({ content: nowPost[0] });
+    return res.json({ content: nowPost[0] });
   } catch (error) {
     console.error(error);
     return res.sendStatus(401);
@@ -153,9 +146,7 @@ router.post("/post", verifyToken, async (req, res) => {
 router.post("/post/:postId", verifyToken, async (req, res) => {
   try {
     const body = req.body;
-    console.log(body);
     const user = req.user;
-    console.log(req.user);
 
     await RootPost.update(
       {
@@ -176,33 +167,26 @@ router.post("/post/:postId", verifyToken, async (req, res) => {
     );
 
     const updatedPost = await RootPost.findAll({
-      attributes: [
-        "id",
-        "title",
-        "content",
-        "tagF",
-        "tagS",
-        "tagT",
-        "category",
-        "file",
-        "createdAt",
-        "updatedAt",
-        "UserId",
-      ],
+      attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "UserId"],
       where: {
-        id: { [Op.eq]: req.params.id },
+        id: { [Op.eq]: req.params.postId },
       },
       raw: true,
+      include: [
+        {
+          model: User,
+          attributes: ["nick_name", "rank"],
+        },
+      ],
     });
-
-    JSON.stringify(updatedPost);
-    console.log(updatedPost);
-
-    const data = { ...updatedPost[0], ...{ nick_name: user.nick_name }, ...{ rank: user.rank } };
-    JSON.stringify(data);
-    console.log(data);
-
-    return res.json({ content: data });
+    updatedPost.forEach((obj) => {
+      obj.rank = obj["User.rank"];
+      obj.nick_name = obj["User.nick_name"];
+      delete obj["User.rank"];
+      delete obj["User.nick_name"];
+    });
+    console.log({ content: updatedPost[0] });
+    return res.json({ content: updatedPost[0] });
   } catch (error) {
     console.error(error);
     return res.sendStatus(401);
@@ -213,6 +197,7 @@ router.post("/comment/:id", verifyToken, async (req, res) => {
 
   const body = req.body;
   const user = req.user;
+  console.log(req.body);
   console.log(req.user);
   let maxSequence = 0;
   try {
@@ -232,7 +217,7 @@ router.post("/comment/:id", verifyToken, async (req, res) => {
       group: body.group,
       sequence: maxSequence + 1,
       UserId: user.userId,
-      RootPostId: body.id,
+      RootPostId: req.params.id,
     });
 
     const nowcomment = await RootComment.findAll({
@@ -241,16 +226,21 @@ router.post("/comment/:id", verifyToken, async (req, res) => {
         id: { [Op.eq]: newcomment.id },
       },
       raw: true,
+      include: [
+        {
+          model: User,
+          attributes: ["nick_name", "rank"],
+        },
+      ],
     });
-
-    JSON.stringify(nowcomment);
-    console.log(nowcomment);
-
-    const data = { ...nowcomment[0], ...{ nick_name: user.nick_name }, ...{ rank: user.rank } };
-    JSON.stringify(data);
-    console.log(data);
-
-    return res.json({ content: data });
+    nowcomment.forEach((obj) => {
+      obj.rank = obj["User.rank"];
+      obj.nick_name = obj["User.nick_name"];
+      delete obj["User.rank"];
+      delete obj["User.nick_name"];
+    });
+    console.log({ content: nowcomment[0] });
+    return res.json({ content: nowcomment[0] });
   } catch (error) {
     console.error(error);
     return res.sendStatus(401);
