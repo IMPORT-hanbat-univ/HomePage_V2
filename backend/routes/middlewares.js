@@ -2,6 +2,7 @@ const {User} = require("../models");
 const {Op} = require("sequelize");
 const jwt = require("jsonwebtoken")
 const {v4:uuidv4} = require("uuid")
+const e = require("express");
 exports.isLoggedIn =  (req, res, next) => {
     if (req.isAuthenticated()) {
         next();
@@ -176,6 +177,28 @@ exports.authenticationToken = async (req, res, next) => {
         return res.sendStatus(401);
     }
 };
+exports.imageFilter = (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return cb(new Error("Only image files are allowed!"));
+    }
+    cb(null, true);
+};
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        // 서버에 저장될 위치
+        cb(null, __basedir + "/app/static/assets/");
+    },
+    filename: (req, file, cb) => {
+        // 서버에 저장될 때 파일 이름
+        cb(null, `${Date.now()}-bezkoder-${file.originalname}`);
+    }
+});
+
+var uploadFile = multer({ storage: storage, fileFilter: imageFilter }).single(
+    // 프론트에서 넘겨울 params key 값, 오른쪽 같이 넘겨줘야함-> {photo: binary}
+    "photo"
+);
 
 //랭크 확인 미들웨어
 
