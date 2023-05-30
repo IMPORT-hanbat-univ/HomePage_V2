@@ -6,7 +6,7 @@ export default function usePagination(data: any[], nowPage: number, pageDataCoun
   const [pageData, setPageData] = useState<any[]>([]);
   const [pageRangeArray, setPageRangeArray] = useState<number[]>([]);
   const memoizedData = useMemo(() => JSON.stringify(data), [data]);
-  console.log("data", data);
+
   useEffect(() => {
     if (data && data.length > 0) {
       const totalPage = Math.ceil(data.length / pageDataCount);

@@ -9,22 +9,26 @@ import React from "react";
 type Props = {
   data: PostDetailType;
   user: any;
+  category: string;
 };
 
-export default function PostDetail({ data, user }: Props) {
+const categoryPath = {
+  notice: [{ name: "About" }, { name: "Notice", link: "/about/notice" }],
+};
+
+export default function PostDetail({ data, user, category }: Props) {
+  const pathArray = categoryPath[category as keyof typeof categoryPath] || [{ name: category }];
   return (
     <div className="flex justify-center">
       <div className="max-w-[980px] w-full px-3 ">
         {data?.content && (
-          <PostContent
-            user={user}
-            content={data.content}
-            pathArray={[{ name: "About" }, { name: "Notice", link: "/about/notice" }]}
-          >
+          <PostContent user={user} content={data.content} pathArray={pathArray}>
             <MarkdownViewer text={data.content.content} />
           </PostContent>
         )}
-        <div className="my-[90px]">{data?.comment && <CommentContent user={user} comments={data.comment} />}</div>
+        <div className="my-[90px]">
+          <CommentContent user={user} comments={data.comment} category={category} />
+        </div>
       </div>
     </div>
   );
