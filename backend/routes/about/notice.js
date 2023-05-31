@@ -10,19 +10,7 @@ const { Op } = require("sequelize");
 router.get("/", async function (req, res) {
   try {
     const posts = await RootPost.findAll({
-      attributes: [
-        "id",
-        "title",
-        "content",
-        "tagF",
-        "tagS",
-        "tagT",
-        "category",
-        "file",
-        "createdAt",
-        "updatedAt",
-        "deletedAt",
-      ],
+      attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "deletedAt",],
       raw: true,
       include: [
         {
@@ -72,6 +60,7 @@ router.get("/:id", async (req, res) => {
     if (!post) {
       return res.status(404).send("Post not found");
     }
+    //댓글
     const comments = await RootComment.findAll({
       attributes:["id","content", "sequence", "group", "createdAt", "UserId","RootPostId"],
       raw:true,
@@ -199,13 +188,13 @@ router.post("/comment/:id", verifyToken, async (req, res) => {
   const user = req.user;
   console.log(req.body);
   console.log(req.user);
-  let maxSequence = 0;
+  let maxSequence = -1;
   try {
     RootComment.findOne({
       attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "UNSIGNED")), "max_sequence"]],
     })
       .then((result) => {
-        maxSequence = result.get("max_sequence") || 0;
+        maxSequence = result.get("max_sequence") || -1;
         console.log("가장 큰 숫자:", maxSequence);
       })
       .catch((error) => {
@@ -247,11 +236,18 @@ router.post("/comment/:id", verifyToken, async (req, res) => {
   }
 });
 router.delete("/post/:postId", verifyToken, async (req, res) => {
-  await RootPost.destroy({
-    where: {
-      id: { [Op.eq]: req.params.postId },
-    },
-  });
+  try{
+    await RootPost.destroy({
+      where: {
+        id: { [Op.eq]: req.params.postId },
+      },
+    });
+    return res.sendStatus(200);
+  }catch (error){
+    console.error(error);
+    return res.sendStatus(401);
+  }
+
   //삭제하기
 });
 
