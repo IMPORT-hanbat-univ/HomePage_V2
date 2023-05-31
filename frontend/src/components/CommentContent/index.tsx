@@ -26,7 +26,7 @@ export default function CommentContent({
   const currentPage = nowPage ? parseInt(nowPage) : 1;
   const router = useRouter();
   const { page, pageData: pageComments, pageRangeArray } = usePagination(comments, currentPage);
-  const [parentCommentText, setParentCommentTeXt] = useState("");
+  const [parentCommentText, setParentCommentText] = useState("");
   const [newGroupValue, setNewGroupValue] = useState(null);
 
   useEffect(() => {
@@ -66,6 +66,7 @@ export default function CommentContent({
     } else {
       console.log("result", result);
       startTrasition(() => {
+        setParentCommentText("");
         router.refresh();
       });
     }
@@ -77,7 +78,7 @@ export default function CommentContent({
           <h2 className="text-2xl font-extrabold leading-6 tracking-[-0.15em] ml-2">댓글</h2>
           <form onSubmit={submitComment}>
             <div className="mt-[14px] border h-40 rounded-md">
-              <MarkdownEditor text={parentCommentText} setText={setParentCommentTeXt} hideToolbar={true} />
+              <MarkdownEditor text={parentCommentText} setText={setParentCommentText} hideToolbar={true} />
             </div>
             <div className="flex items-center justify-end mt-3">
               <button
