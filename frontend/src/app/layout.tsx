@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <div className="hidden z-10  lg:block">
                     <DesktopHeader />
                   </div>
-                  <div className="block z-10 fixed">
+                  <div className="block z-10 fixed lg:hidden">
                     <MobileHeader />
                   </div>
                 </>
