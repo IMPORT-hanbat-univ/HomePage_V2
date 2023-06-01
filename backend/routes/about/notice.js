@@ -251,14 +251,15 @@ router.delete("/post/:postId", verifyToken, async (req, res) => {
 
   //삭제하기
 });
+
 router.post('/image',upload.single('fileupload'),function (req,res){
   console.log("post")
   console.log(req.file)
   console.log(req.file.path)
   console.log(upload)
   console.log(upload.storage.getFilename)
-  res.redirect('/');
 
+  res.redirect('/');
 })
 
 module.exports = router;

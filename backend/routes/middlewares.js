@@ -2,7 +2,6 @@ const {User} = require("../models");
 const {Op} = require("sequelize");
 const jwt = require("jsonwebtoken")
 const {v4:uuidv4} = require("uuid")
-const express = require("express");
 const multer = require('multer');
 exports.isLoggedIn =  (req, res, next) => {
     if (req.isAuthenticated()) {
