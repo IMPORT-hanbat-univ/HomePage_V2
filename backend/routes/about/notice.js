@@ -1,10 +1,11 @@
 const { RootPost, RootComment, User } = require("../../models");
 const sequelize = require("sequelize");
-const { verifyToken } = require("../middlewares");
+const { verifyToken,upload } = require("../middlewares");
 const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
+const multer = require('multer');
 
 //목록
 router.get("/", async function (req, res) {
@@ -250,5 +251,14 @@ router.delete("/post/:postId", verifyToken, async (req, res) => {
 
   //삭제하기
 });
+router.post('/image',upload.single('fileupload'),function (req,res){
+  console.log("post")
+  console.log(req.file)
+  console.log(req.file.path)
+  console.log(upload)
+  console.log(upload.storage.getFilename)
+  res.redirect('/');
+
+})
 
 module.exports = router;

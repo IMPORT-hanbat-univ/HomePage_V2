@@ -10,5 +10,22 @@
 <a href="/auth/kakao" methods="post">
   <button>회원가입</button>
 </a>
+<div class="container">
+  <div class="jumbotron">
+    <h1>파일업로드</h1>
+    <p> </p>
+  </div>
+</div>
+<br>
+<br>
+<div class="container">
+  <form action="/about/notice/image" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label >파일업로드</label>
+      <input type="file" class="form-control-file" id="fileupload" name="fileupload">
+    </div>
+    <input type="submit" value="올리기">
+  </form>
+</div>
 </body>
 </html>

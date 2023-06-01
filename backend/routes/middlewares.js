@@ -2,7 +2,8 @@ const {User} = require("../models");
 const {Op} = require("sequelize");
 const jwt = require("jsonwebtoken")
 const {v4:uuidv4} = require("uuid")
-const e = require("express");
+const express = require("express");
+const multer = require('multer');
 exports.isLoggedIn =  (req, res, next) => {
     if (req.isAuthenticated()) {
         next();
@@ -177,7 +178,7 @@ exports.authenticationToken = async (req, res, next) => {
         return res.sendStatus(401);
     }
 };
-exports.imageFilter = (req, file, cb) => {
+var imageFilter = (req, file, cb) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
         return cb(new Error("Only image files are allowed!"));
     }
@@ -187,18 +188,16 @@ exports.imageFilter = (req, file, cb) => {
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
         // 서버에 저장될 위치
-        cb(null, __basedir + "/app/static/assets/");
+        cb(null, "./image");
     },
     filename: (req, file, cb) => {
         // 서버에 저장될 때 파일 이름
-        cb(null, `${Date.now()}-bezkoder-${file.originalname}`);
+        cb(null, Date.now() + "-" +uuidv4());
+        // console.log("file.origianlname"+ file.originalname);
     }
 });
+exports.upload = multer({ storage: storage, fileFilter: imageFilter })
 
-var uploadFile = multer({ storage: storage, fileFilter: imageFilter }).single(
-    // 프론트에서 넘겨울 params key 값, 오른쪽 같이 넘겨줘야함-> {photo: binary}
-    "photo"
-);
 
 //랭크 확인 미들웨어
 
