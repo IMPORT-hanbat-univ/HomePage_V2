@@ -47,6 +47,7 @@ export interface PostDetailType {
     sequence: number; //대댓글속 순서, 0부터, 모댓글은 이 값을 널값으로 갖는다.,
     userKakaoId: number;
     createdAt: Date;
+    nick_name: string;
     updatedAt: Date;
   }[];
 }
