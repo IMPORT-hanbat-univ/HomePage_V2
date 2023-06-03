@@ -1,6 +1,6 @@
 const { RootPost, RootComment, User } = require("../../models");
 const sequelize = require("sequelize");
-const { upload,tokenValidationMiddleware, authenticationToken} = require("../middlewares");
+const { upload,tokenValidationMiddleware, authenticationToken, verifyToken} = require("../middlewares");
 const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
@@ -36,7 +36,7 @@ router.get("/",async function (req, res) {
 });
 
 //상세보기 데이터가 없을때는 빈 배열을 보낸다.
-router.get("/:id", authenticationToken,async (req, res) => {
+router.get("/:id",async (req, res) => {
   try {
     const post = await RootPost.findAll({
       attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "deletedAt", "UserId"],
@@ -89,7 +89,7 @@ router.get("/:id", authenticationToken,async (req, res) => {
 });
 
 //create
-router.post("/post", async (req, res) => {
+router.post("/post",verifyToken, async (req, res) => {
   const body = req.body;
   const user = req.user;
 
@@ -133,7 +133,7 @@ router.post("/post", async (req, res) => {
 });
 
 //update
-router.post("/post/:postId", async (req, res) => {
+router.post("/post/:postId", verifyToken,async (req, res) => {
   try {
     const body = req.body;
     const user = req.user;
@@ -182,7 +182,7 @@ router.post("/post/:postId", async (req, res) => {
     return res.sendStatus(401);
   }
 });
-router.post("/comment/:id", async (req, res) => {
+router.post("/comment/:id", verifyToken,async (req, res) => {
   //댓글 작성
 
   const body = req.body;
