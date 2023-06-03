@@ -1,6 +1,6 @@
 const { RootPost, RootComment, User } = require("../../models");
 const sequelize = require("sequelize");
-const { verifyToken,upload } = require("../middlewares");
+const { upload,tokenValidationMiddleware, authenticationToken} = require("../middlewares");
 const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
@@ -8,7 +8,7 @@ const { Op } = require("sequelize");
 const multer = require('multer');
 
 //목록
-router.get("/", async function (req, res) {
+router.get("/",async function (req, res) {
   try {
     const posts = await RootPost.findAll({
       attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "deletedAt",],
@@ -36,15 +36,15 @@ router.get("/", async function (req, res) {
 });
 
 //상세보기 데이터가 없을때는 빈 배열을 보낸다.
-router.get("/:id", async (req, res) => {
+router.get("/:id", authenticationToken,async (req, res) => {
   try {
     const post = await RootPost.findAll({
-      attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "deletedAt", "UserId"], //닉네임추가,카카오 id
+      attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "deletedAt", "UserId"],
       where: {
         id: { [Op.eq]: req.params.id },
       },
       raw: true,
-      include: [
+      include: [ //조인
         {
           model: User,
           attributes: ["nick_name", "rank"],
@@ -68,7 +68,7 @@ router.get("/:id", async (req, res) => {
       where: {
         RootPostId: { [Op.eq]: req.params.id },
       },
-      include: [
+      include: [//조인
         {
           model: User,
           attributes: ["nick_name", "rank"],
@@ -89,7 +89,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //create
-router.post("/post", verifyToken, async (req, res) => {
+router.post("/post", async (req, res) => {
   const body = req.body;
   const user = req.user;
 
@@ -111,7 +111,7 @@ router.post("/post", verifyToken, async (req, res) => {
         id: { [Op.eq]: newPost.id },
       },
       raw: true,
-      include: [
+      include: [//조인
         {
           model: User,
           attributes: ["nick_name", "rank"],
@@ -133,7 +133,7 @@ router.post("/post", verifyToken, async (req, res) => {
 });
 
 //update
-router.post("/post/:postId", verifyToken, async (req, res) => {
+router.post("/post/:postId", async (req, res) => {
   try {
     const body = req.body;
     const user = req.user;
@@ -162,7 +162,7 @@ router.post("/post/:postId", verifyToken, async (req, res) => {
         id: { [Op.eq]: req.params.postId },
       },
       raw: true,
-      include: [
+      include: [ //조인
         {
           model: User,
           attributes: ["nick_name", "rank"],
@@ -182,7 +182,7 @@ router.post("/post/:postId", verifyToken, async (req, res) => {
     return res.sendStatus(401);
   }
 });
-router.post("/comment/:id", verifyToken, async (req, res) => {
+router.post("/comment/:id", async (req, res) => {
   //댓글 작성
 
   const body = req.body;
@@ -236,7 +236,66 @@ router.post("/comment/:id", verifyToken, async (req, res) => {
     return res.sendStatus(401);
   }
 });
-router.delete("/post/:postId", verifyToken, async (req, res) => {
+router.post("/comment/:id/:commentId", async (req, res) => {
+  //댓글 작성
+
+  const body = req.body;
+  try {
+
+
+    const newcomment = await RootComment.update(
+        {
+          content: body.content
+        },
+        {
+          where: {
+            id: { [Op.eq]: req.params.commentId },
+          },
+        }
+        );
+
+    const nowcomment = await RootComment.findAll({
+      attributes: ["content", "sequence", "group", "createdAt", "UserId"],
+      where: {
+        id: { [Op.eq]: newcomment.id },
+      },
+      raw: true,
+      include: [
+        {
+          model: User,
+          attributes: ["nick_name", "rank"],
+        },
+      ],
+    });
+    nowcomment.forEach((obj) => {
+      obj.rank = obj["User.rank"];
+      obj.nick_name = obj["User.nick_name"];
+      delete obj["User.rank"];
+      delete obj["User.nick_name"];
+    });
+    console.log({ content: nowcomment[0] });
+    return res.json({ content: nowcomment[0] });
+  } catch (error) {
+    console.error(error);
+    return res.sendStatus(401);
+  }
+});
+router.delete("/post/:id/:commentId", async (req, res) => {
+  try{
+    await RootComment.destroy({
+      where: {
+        id: { [Op.eq]: req.params.commentId },
+      },
+    });
+    return res.sendStatus(200);
+  }catch (error){
+    console.error(error);
+    return res.sendStatus(401);
+  }
+
+  //삭제하기
+});
+router.delete("/post/:postId", async (req, res) => {
   try{
     await RootPost.destroy({
       where: {
