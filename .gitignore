@@ -15,5 +15,5 @@ doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
 
 
 /node_modules
-./backend/node_modules
-./mariadb/data
+/backend/node_modules
+/mariadb/data
