@@ -187,25 +187,26 @@ router.post("/comment/:id", verifyToken,async (req, res) => {
 
   const body = req.body;
   const user = req.user;
-  console.log(req.body);
-  console.log(req.user);
-  let maxSequence = -1;
+
   try {
-    RootComment.findOne({
-      attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "UNSIGNED")), "max_sequence"]],
-    })
-      .then((result) => {
-        maxSequence = result.get("max_sequence") || -1;
-        console.log("가장 큰 숫자:", maxSequence);
-      })
-      .catch((error) => {
-        console.error("오류 발생:", error);
-      });
+    const result = await RootComment.findOne({
+      attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "INTEGER")), "max_sequence"]],
+      where: {
+        group: body.group,
+        RootPostId: req.params.id ,
+      },
+    });
+
+
+    const maxSequence = result.get("max_sequence")|| -1;
+    const sequence = Number(maxSequence)+1;
+
+    console.log("가장 큰 숫자:", maxSequence);
 
     const newcomment = await RootComment.create({
       content: body.content,
       group: body.group,
-      sequence: maxSequence + 1,
+      sequence: sequence,
       UserId: user.userId,
       RootPostId: req.params.id,
     });
@@ -237,7 +238,7 @@ router.post("/comment/:id", verifyToken,async (req, res) => {
   }
 });
 router.post("/comment/:id/:commentId", async (req, res) => {
-  //댓글 작성
+  //댓글 수정
 
   const body = req.body;
   try {
