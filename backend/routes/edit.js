@@ -9,6 +9,7 @@ const { Op } = require("sequelize");
 //create
 router.post("/",verifyToken, async (req, res) => {
     const body = req.body;
+    body.tableCategory= "notice";
     const user = req.user;
     let table;
     let postId;
@@ -19,7 +20,7 @@ router.post("/",verifyToken, async (req, res) => {
     3. 다시 nowPost에 지금 해당 데이터 담아서 리턴
     * */
     try {
-        switch (body.category){
+        switch (body.tableCategory){
             case 'notice':
                 const notice = await RootPost.create({
                     title: body.title,
@@ -48,6 +49,20 @@ router.post("/",verifyToken, async (req, res) => {
                 table = ListPost;
                 postId = qna.id;
                 break
+            case 'information':
+                const information = await RootPost.create({
+                    title: body.title,
+                    content: body.content,
+                    tagF: body.tagF,
+                    tagS: body.tagS,
+                    tagT: body.tagT,
+                    category: body.category,
+                    file: "",
+                    UserId: user.userId,
+                });
+                table = RootPost;
+                postId = information.id;
+                break
             case 'project':
 
                 const project = await Project.create({
@@ -58,6 +73,8 @@ router.post("/",verifyToken, async (req, res) => {
                     tagT: body.tagT,
                     category: body.category,
                     file: "",
+                    leader:user.userId,
+                    member:body.member,
                     UserId: user.userId,
                 });
                 table = Project;
@@ -67,9 +84,6 @@ router.post("/",verifyToken, async (req, res) => {
                 const patch = await PatchNote.create({
                     title: body.title,
                     content: body.content,
-                    tagF: body.tagF,
-                    tagS: body.tagS,
-                    tagT: body.tagT,
                     category: body.category,
                     file: "",
                     UserId: user.userId,
@@ -102,7 +116,7 @@ router.post("/",verifyToken, async (req, res) => {
         return res.json({ content: nowPost[0] });
 
     }catch (err){
-        console.error(error);
+        console.error(err);
         return res.sendStatus(401);
     }
 
