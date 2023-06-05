@@ -65,6 +65,6 @@ export interface CreatePost {
 export interface CreateComment {
   group: null | number;
   category: string;
-  sequence: null;
+  sequence: number;
   content: string | number;
 }

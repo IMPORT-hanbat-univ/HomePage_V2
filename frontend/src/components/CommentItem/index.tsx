@@ -1,27 +1,34 @@
 "use client";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import cls from "classnames";
 import MarkdownViewer from "../MarkdownViewer";
 import { BsArrowReturnRight } from "react-icons/bs";
 import MarkdownEditor from "../MarkdownEditor";
 import getCommentSequenceValue from "@/util/getCommentSequenceValue";
 import { PostDetailType } from "@/util/type";
+import getClientCookie from "@/util/getClientCookie";
+import { useParams, useRouter } from "next/navigation";
+import { createNoticeComment } from "@/api/notice";
 export default function CommentItem({
   comment,
   comments,
   user,
+  category,
 }: {
   comment: PostDetailType["comment"][0];
   comments: PostDetailType["comment"];
   user: any;
+  category: string;
 }) {
   const [replyText, setReplyText] = useState("");
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [newSequenceValue, setNewSequenceValue] = useState(0);
   const [modifyText, setModifyText] = useState(comment?.content ?? "");
   const [isModify, setIsModify] = useState(false);
-
+  const params = useParams();
+  const [isPending, startTrasition] = useTransition();
+  const router = useRouter();
   useEffect(() => {
     setNewSequenceValue(getCommentSequenceValue(comments, comment.group));
   }, [comments, comment]);
@@ -34,24 +41,49 @@ export default function CommentItem({
     setIsModify((prev) => !prev);
   };
 
-  const submitComment = (e: React.FormEvent) => {
+  const submitComment = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (replyText.trim() === "") {
+      return;
+    }
+    if (!getClientCookie("accessToken") && !getClientCookie("refreshToken")) {
+      alert("로그인을 해주세요");
       return;
     }
 
     if (isNaN(newSequenceValue)) {
       return;
     }
-    // 로그인여부도 추가를 해야겠지요를레히요
-    console.log({
+    const post = {
       group: comment.group,
+      category,
       sequence: newSequenceValue,
       content: replyText,
-    });
+    };
+    const id = (params?.id as string) || "";
+    let result: any | string;
+    switch (category) {
+      case "notice": {
+        console.log("post", post);
+        result = await createNoticeComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"), id);
+        console.log("result", result);
+      }
+    }
+    if (typeof result === "string") {
+      alert({ notificationType: "Warning", message: result, type: "warning" });
+
+      return;
+    } else {
+      console.log("result", result);
+      startTrasition(() => {
+        setReplyText("");
+        setShowReplyInput(false);
+        router.refresh();
+      });
+    }
   };
-  console.log("sequence", comment.sequence, typeof comment.sequence);
+
   return (
     <div className={cls(" px-2 py-4", { "border-t": comment.sequence === 0 })}>
       <div className="flex items-center justify-between">
@@ -101,7 +133,7 @@ export default function CommentItem({
           </div>
         )}
       </div>
-      {comment.sequence === 0 && !isModify && (
+      {comment.sequence === 0 && !isModify && user && Object.keys(user).length > 0 && (
         <div className="flex items-center justify-end">
           <button
             className="text-base leading-6 tracking-[-0.015em] font-normal text-import-color opacity-80"
