@@ -10,9 +10,11 @@ import { PostDetailType } from "@/util/type";
 export default function CommentItem({
   comment,
   comments,
+  user,
 }: {
   comment: PostDetailType["comment"][0];
   comments: PostDetailType["comment"];
+  user: any;
 }) {
   const [replyText, setReplyText] = useState("");
   const [showReplyInput, setShowReplyInput] = useState(false);

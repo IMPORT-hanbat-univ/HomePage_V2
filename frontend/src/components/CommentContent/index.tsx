@@ -95,7 +95,9 @@ export default function CommentContent({
       <div className="mt-5" id="commentContent">
         {pageComments &&
           pageComments.length > 0 &&
-          pageComments.map((comment: any) => <CommentItem key={comment.id} comment={comment} comments={comments} />)}
+          pageComments.map((comment: any) => (
+            <CommentItem key={comment.id} comment={comment} user={user} comments={comments} />
+          ))}
       </div>
       <Pagination nowPage={currentPage} page={page} pageRangeArray={pageRangeArray} id={"commentContent"} />
     </div>
