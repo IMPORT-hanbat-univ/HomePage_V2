@@ -49,6 +49,7 @@ export interface PostDetailType {
     createdAt: Date;
     nick_name: string;
     updatedAt: Date;
+    UserId: number;
   }[];
 }
 
