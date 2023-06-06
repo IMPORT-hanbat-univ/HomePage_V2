@@ -57,6 +57,7 @@ router.get("/", async function (req, res) {
     }
 });
 
+
 //create
 router.post("/edit",verifyToken, async (req, res) => {
     const body = req.body;
@@ -173,8 +174,8 @@ router.post("/edit",verifyToken, async (req, res) => {
 
 
 });
+
 //상세조회
-/*
 router.get("/:id",async (req, res) => {
     const body = req.body;
     body.tableCategory= "notice";
@@ -186,27 +187,27 @@ router.get("/:id",async (req, res) => {
             case 'notice':
                 table = RootPost;
                 tableComment = RootComment;
-                tableId=RootPostId;
+                tableId="RootPostId";
                 break
             case 'qna':
                 table = ListPost;
                 tableComment = ListPostComment;
-                tableId = ListPostId;
+                tableId = "ListPostId";
                 break
             case 'information':
                 table = CardPost;
                 tableComment = CardPostComment;
-                tableId= CardPostId;
+                tableId= "CardPostId";
                 break
             case 'project':
                 table = Project;
                 tableComment = ProjectComment;
-                tableId = ProjectId
+                tableId = "ProjectId"
                 break
             case 'patch':
                 table = PatchNote;
                 tableComment = PatchNoteComment;
-                tableId=PatchNoteId;
+                tableId="PatchNoteId";
                 break
             default:
                 throw new Error('테이블을 불러오지 못했습니다.');
@@ -236,10 +237,9 @@ router.get("/:id",async (req, res) => {
         }
         //댓글
         const comments = await tableComment.findAll({
-            attributes:["id","content", "sequence", "group", "createdAt", "UserId","RootPostId"],
             raw:true,
             where: {
-                tableId: { [Op.eq]: req.params.id },
+                [tableId]: { [Op.eq]: req.params.id },
             },
             include: [//조인
                 {
@@ -259,4 +259,373 @@ router.get("/:id",async (req, res) => {
     } catch (error) {
         console.error(error);
     }
-});*/
+});
+
+//업데이트
+router.post("/edit/:id", verifyToken,async (req, res) => {
+    const body = req.body;
+    body.tableCategory= "notice";
+    const user = req.user;
+    let table;
+    let postId;
+    try {
+        switch (body.tableCategory){
+            case 'notice':
+                const notice = await RootPost.update({
+                    title: body.title,
+                    content: body.content,
+                    tagF: body.tagF,
+                    tagS: body.tagS,
+                    tagT: body.tagT,
+                    category: body.category,
+                    file: "",
+                    UserId: user.userId,
+                },
+                    {
+                        where: {
+                            id: { [Op.eq]: req.params.id },
+                        },
+                    });
+                table = RootPost;
+                postId = notice.id;
+                break
+            case 'qna':
+                const qna = await ListPost.update({
+                    title: body.title,
+                    content: body.content,
+                    tagF: body.tagF,
+                    tagS: body.tagS,
+                    tagT: body.tagT,
+                    category: body.category,
+                    file: "",
+                    UserId: user.userId,
+                },
+                    {
+                        where: {
+                            id: { [Op.eq]: req.params.id },
+                        },
+                    });
+                table = ListPost;
+                postId = qna.id;
+                break
+            case 'information':
+                const information = await CardPost.update({
+                    title: body.title,
+                    content: body.content,
+                    tagF: body.tagF,
+                    tagS: body.tagS,
+                    tagT: body.tagT,
+                    category: body.category,
+                    file: "",
+                    UserId: user.userId,
+                });
+                table = RootPost;
+                postId = information.id;
+                break
+            case 'project':
+
+                const project = await Project.update({
+                    title: body.title,
+                    content: body.content,
+                    tagF: body.tagF,
+                    tagS: body.tagS,
+                    tagT: body.tagT,
+                    category: body.category,
+                    file: "",
+                    leader:user.userId,
+                    member:body.member,
+                    UserId: user.userId,
+                },
+                    {
+                        where: {
+                            id: { [Op.eq]: req.params.id },
+                        },
+                    });
+                table = Project;
+                postId = project.id;
+                break
+            case 'patch':
+                const patch = await PatchNote.update({
+                    title: body.title,
+                    content: body.content,
+                    category: body.category,
+                    file: "",
+                    UserId: user.userId,
+                },
+                    {
+                        where: {
+                            id: { [Op.eq]: req.params.id },
+                        },
+                    });
+                table = PatchNote;
+                postId = patch.id;
+                break
+            default:
+                throw new Error('데이터를 수정하지 못했습니다.');
+        }
+
+        const updatedPost = await RootPost.findAll({
+             where: {
+                id: { [Op.eq]: req.params.id },
+            },
+            raw: true,
+            include: [ //조인
+                {
+                    model: User,
+                    attributes: ["nick_name", "rank"],
+                },
+            ],
+        });
+        updatedPost.forEach((obj) => {
+            obj.rank = obj["User.rank"];
+            obj.nick_name = obj["User.nick_name"];
+            delete obj["User.rank"];
+            delete obj["User.nick_name"];
+        });
+        console.log({ content: updatedPost[0] });
+        return res.json({ content: updatedPost[0] });
+    } catch (error) {
+        console.error(error);
+        return res.sendStatus(401);
+    }
+});
+
+//글 삭제
+router.delete("/:id", async (req, res) => {
+    const body = req.body;
+    body.tableCategory= "notice";
+    let table;
+    try{
+        switch (body.tableCategory){
+            case 'notice':
+                table = RootPost;
+                break
+            case 'qna':
+                table = ListPost;
+                break
+            case 'information':
+                table = CardPost;
+                break
+            case 'project':
+                table = Project;
+                break
+            case 'patch':
+                table = PatchNote;
+                break
+            default:
+                throw new Error('테이블을 불러오지 못했습니다.');
+        }
+        await table.destroy({
+            where: {
+                id: { [Op.eq]: req.params.id },
+            },
+        });
+        return res.sendStatus(200);
+    }catch (error){
+        console.error(error);
+        return res.sendStatus(401);
+    }
+
+    //삭제하기
+});
+
+//댓글 작성
+router.post("/comment/:id", verifyToken,async (req, res) => {
+
+    const body = req.body;
+    const user = req.user;
+    body.tableCategory= "notice";
+    let table,tableId;
+    let tableComment;
+    try {
+        switch (body.tableCategory){
+            case 'notice':
+                table = RootPost;
+                tableComment = RootComment;
+                tableId="RootPostId";
+                break
+            case 'qna':
+                table = ListPost;
+                tableComment = ListPostComment;
+                tableId = "ListPostId";
+                break
+            case 'information':
+                table = CardPost;
+                tableComment = CardPostComment;
+                tableId= "CardPostId";
+                break
+            case 'project':
+                table = Project;
+                tableComment = ProjectComment;
+                tableId = "ProjectId"
+                break
+            case 'patch':
+                table = PatchNote;
+                tableComment = PatchNoteComment;
+                tableId="PatchNoteId";
+                break
+            default:
+                throw new Error('테이블을 불러오지 못했습니다.');
+        }
+
+        const result = await tableComment.findOne({
+            attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "INTEGER")), "max_sequence"]],
+            where: {
+                group: body.group,
+                [tableId]: req.params.id ,
+            },
+        });
+
+
+        const maxSequence = result.get("max_sequence")|| -1;
+        const sequence = Number(maxSequence)+1;
+
+        console.log("가장 큰 숫자:", maxSequence);
+
+        const newcomment = await tableComment.create({
+            content: body.content,
+            group: body.group,
+            sequence: sequence,
+            UserId: user.userId,
+            [tableId]: req.params.id,
+        });
+
+        const nowcomment = await tableComment.findAll({
+            attributes: ["content", "sequence", "group", "createdAt", "UserId"],
+            where: {
+                id: { [Op.eq]: newcomment.id },
+            },
+            raw: true,
+            include: [
+                {
+                    model: User,
+                    attributes: ["nick_name", "rank"],
+                },
+            ],
+        });
+        nowcomment.forEach((obj) => {
+            obj.rank = obj["User.rank"];
+            obj.nick_name = obj["User.nick_name"];
+            delete obj["User.rank"];
+            delete obj["User.nick_name"];
+        });
+        console.log({ content: nowcomment[0] });
+        return res.json({ content: nowcomment[0] });
+    } catch (error) {
+        console.error(error);
+        return res.sendStatus(401);
+    }
+});
+router.post("/comment/:id/:commentId", verifyToken,async (req, res) => {
+
+    const body = req.body;
+    const user = req.user;
+    body.tableCategory= "notice";
+    let table,tableId;
+    let tableComment;
+    try {
+        switch (body.tableCategory){
+            case 'notice':
+                table = RootPost;
+                tableComment = RootComment;
+                tableId="RootPostId";
+                break
+            case 'qna':
+                table = ListPost;
+                tableComment = ListPostComment;
+                tableId = "ListPostId";
+                break
+            case 'information':
+                table = CardPost;
+                tableComment = CardPostComment;
+                tableId= "CardPostId";
+                break
+            case 'project':
+                table = Project;
+                tableComment = ProjectComment;
+                tableId = "ProjectId"
+                break
+            case 'patch':
+                table = PatchNote;
+                tableComment = PatchNoteComment;
+                tableId="PatchNoteId";
+                break
+            default:
+                throw new Error('테이블을 불러오지 못했습니다.');
+        }
+
+        const newcomment = await tableComment.update({
+            content: body.content,
+            UserId: user.userId,
+            [tableId]: req.params.id,
+        },
+            {
+                where: {
+                    id: { [Op.eq]: req.params.commentId },
+                },
+            });
+
+        const nowcomment = await tableComment.findAll({
+            attributes: ["content", "sequence", "group", "createdAt", "UserId"],
+            where: {
+                id: { [Op.eq]: newcomment.id },
+            },
+            raw: true,
+            include: [
+                {
+                    model: User,
+                    attributes: ["nick_name", "rank"],
+                },
+            ],
+        });
+        nowcomment.forEach((obj) => {
+            obj.rank = obj["User.rank"];
+            obj.nick_name = obj["User.nick_name"];
+            delete obj["User.rank"];
+            delete obj["User.nick_name"];
+        });
+        console.log({ content: nowcomment[0] });
+        return res.json({ content: nowcomment[0] });
+    } catch (error) {
+        console.error(error);
+        return res.sendStatus(401);
+    }
+});
+router.delete("/:id/:commentId", async (req, res) => {
+    const body = req.body;
+    body.tableCategory= "notice";
+    let tableComment;
+    try{
+        switch (body.tableCategory){
+            case 'notice':
+                tableComment = RootComment;
+                break
+            case 'qna':
+                tableComment = ListPostComment;
+                break
+            case 'information':
+                tableComment = CardPostComment;
+                break
+            case 'project':
+                tableComment = ProjectComment;
+                break
+            case 'patch':
+                tableComment = PatchNoteComment;
+                break
+            default:
+                throw new Error('테이블을 불러오지 못했습니다.');
+        }
+        await tableComment.destroy({
+            where: {
+                id: { [Op.eq]: req.params.commentId },
+            },
+        });
+        return res.sendStatus(200);
+    }catch (error){
+        console.error(error);
+        return res.sendStatus(401);
+    }
+
+    //삭제하기
+});
+module.exports = router;
