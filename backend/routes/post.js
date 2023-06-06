@@ -57,7 +57,6 @@ router.get("/", async function (req, res) {
     }
 });
 
-
 //create
 router.post("/edit",verifyToken, async (req, res) => {
     const body = req.body;
@@ -516,6 +515,8 @@ router.post("/comment/:id", verifyToken,async (req, res) => {
         return res.sendStatus(401);
     }
 });
+
+//댓글 수정
 router.post("/comment/:id/:commentId", verifyToken,async (req, res) => {
 
     const body = req.body;
@@ -591,6 +592,8 @@ router.post("/comment/:id/:commentId", verifyToken,async (req, res) => {
         return res.sendStatus(401);
     }
 });
+
+//댓글 삭제
 router.delete("/:id/:commentId", async (req, res) => {
     const body = req.body;
     body.tableCategory= "notice";
@@ -628,4 +631,5 @@ router.delete("/:id/:commentId", async (req, res) => {
 
     //삭제하기
 });
+
 module.exports = router;
