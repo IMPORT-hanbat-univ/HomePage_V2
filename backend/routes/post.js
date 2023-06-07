@@ -631,5 +631,14 @@ router.delete("/:id/:commentId", async (req, res) => {
 
     //삭제하기
 });
+router.post('/file',upload.single('fileupload'),function (req,res){
+    console.log("post")
+    console.log(req.file)
+    console.log(req.file.path)
+    console.log(upload)
+    console.log(upload.storage.getFilename)
+
+    res.redirect('/');
+})
 
 module.exports = router;
