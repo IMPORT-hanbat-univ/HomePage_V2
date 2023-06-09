@@ -5,33 +5,51 @@ const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
+// Helper function to get table and tableComment based on tableCategory
+const getTables = (tableCategory) => {
+    let table, tableComment, tableId;
+
+    switch (tableCategory) {
+        case 'notice':
+            table = RootPost;
+            tableComment = RootComment;
+            tableId = "RootPostId";
+            break;
+        case 'qna':
+            table = ListPost;
+            tableComment = ListPostComment;
+            tableId = "ListPostId";
+            break;
+        case 'information':
+            table = CardPost;
+            tableComment = CardPostComment;
+            tableId = "CardPostId";
+            break;
+        case 'project':
+            table = Project;
+            tableComment = ProjectComment;
+            tableId = "ProjectId";
+            break;
+        case 'patch':
+            table = PatchNote;
+            tableComment = PatchNoteComment;
+            tableId = "PatchNoteId";
+            break;
+        default:
+            throw new Error('테이블을 불러오지 못했습니다.');
+    }
+
+    return { table, tableComment, tableId };
+};
+
 
 //목록
 router.get("/", async function (req, res) {
     const body = req.body;
-    let table;
-    body.tableCategory ="notice";
+    const user = req.user;
+    body.tableCategory = "notice";
     try {
-
-        switch (body.tableCategory){
-            case 'notice':
-                table = RootPost;
-                break
-            case 'qna':
-                table = ListPost;
-                break
-            case 'information':
-                table = CardPost;
-                break
-            case 'project':
-                table = Project;
-                break
-            case 'patch':
-                table = PatchNote;
-                break
-            default:
-                throw new Error('테이블을 불러오지 못했습니다.');
-        }
+        const { table, tableComment, tableId } = getTables(body.tableCategory);
 
         const posts = await table.findAll({
             raw: true,
@@ -60,10 +78,8 @@ router.get("/", async function (req, res) {
 //create
 router.post("/edit",verifyToken, async (req, res) => {
     const body = req.body;
-    body.tableCategory= "notice";
     const user = req.user;
-    let table;
-    let postId;
+    body.tableCategory = "notice";
 
     /*
     1. 큰 카테고리(카테고리-테이블명 / notice-RootPost, QnA-ListPost, information(개발정보)-CardPost,project-Project, patch-PatchNote)
@@ -177,41 +193,11 @@ router.post("/edit",verifyToken, async (req, res) => {
 //상세조회
 router.get("/:id",async (req, res) => {
     const body = req.body;
-    body.tableCategory= "notice";
-    let table,tableId;
-    let tableComment;
-
+    const user = req.user;
+    body.tableCategory = "notice";
     try {
-        switch (body.tableCategory){
-            case 'notice':
-                table = RootPost;
-                tableComment = RootComment;
-                tableId="RootPostId";
-                break
-            case 'qna':
-                table = ListPost;
-                tableComment = ListPostComment;
-                tableId = "ListPostId";
-                break
-            case 'information':
-                table = CardPost;
-                tableComment = CardPostComment;
-                tableId= "CardPostId";
-                break
-            case 'project':
-                table = Project;
-                tableComment = ProjectComment;
-                tableId = "ProjectId"
-                break
-            case 'patch':
-                table = PatchNote;
-                tableComment = PatchNoteComment;
-                tableId="PatchNoteId";
-                break
-            default:
-                throw new Error('테이블을 불러오지 못했습니다.');
-        }
-        const post = await RootPost.findAll({
+    const { table, tableComment, tableId } = getTables(body.tableCategory);
+        const post = await table.findAll({
             attributes: ["id", "title", "content", "tagF", "tagS", "tagT", "category", "file", "createdAt", "updatedAt", "deletedAt", "UserId"],
             where: {
                 id: { [Op.eq]: req.params.id },
@@ -263,10 +249,8 @@ router.get("/:id",async (req, res) => {
 //업데이트
 router.post("/edit/:id", verifyToken,async (req, res) => {
     const body = req.body;
-    body.tableCategory= "notice";
     const user = req.user;
-    let table;
-    let postId;
+    body.tableCategory = "notice";
     try {
         switch (body.tableCategory){
             case 'notice':
@@ -392,28 +376,10 @@ router.post("/edit/:id", verifyToken,async (req, res) => {
 //글 삭제
 router.delete("/:id", async (req, res) => {
     const body = req.body;
-    body.tableCategory= "notice";
-    let table;
+    //const user = req.user;
+    body.tableCategory = "notice";
     try{
-        switch (body.tableCategory){
-            case 'notice':
-                table = RootPost;
-                break
-            case 'qna':
-                table = ListPost;
-                break
-            case 'information':
-                table = CardPost;
-                break
-            case 'project':
-                table = Project;
-                break
-            case 'patch':
-                table = PatchNote;
-                break
-            default:
-                throw new Error('테이블을 불러오지 못했습니다.');
-        }
+        const { table, tableComment, tableId } = getTables(body.tableCategory);
         await table.destroy({
             where: {
                 id: { [Op.eq]: req.params.id },
@@ -433,39 +399,9 @@ router.post("/comment/:id", verifyToken,async (req, res) => {
 
     const body = req.body;
     const user = req.user;
-    body.tableCategory= "notice";
-    let table,tableId;
-    let tableComment;
+    body.tableCategory = "notice";
     try {
-        switch (body.tableCategory){
-            case 'notice':
-                table = RootPost;
-                tableComment = RootComment;
-                tableId="RootPostId";
-                break
-            case 'qna':
-                table = ListPost;
-                tableComment = ListPostComment;
-                tableId = "ListPostId";
-                break
-            case 'information':
-                table = CardPost;
-                tableComment = CardPostComment;
-                tableId= "CardPostId";
-                break
-            case 'project':
-                table = Project;
-                tableComment = ProjectComment;
-                tableId = "ProjectId"
-                break
-            case 'patch':
-                table = PatchNote;
-                tableComment = PatchNoteComment;
-                tableId="PatchNoteId";
-                break
-            default:
-                throw new Error('테이블을 불러오지 못했습니다.');
-        }
+        const { table, tableComment, tableId } = getTables(body.tableCategory);
 
         const result = await tableComment.findOne({
             attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "INTEGER")), "max_sequence"]],
@@ -521,39 +457,9 @@ router.post("/comment/:id/:commentId", verifyToken,async (req, res) => {
 
     const body = req.body;
     const user = req.user;
-    body.tableCategory= "notice";
-    let table,tableId;
-    let tableComment;
+    body.tableCategory = "notice";
     try {
-        switch (body.tableCategory){
-            case 'notice':
-                table = RootPost;
-                tableComment = RootComment;
-                tableId="RootPostId";
-                break
-            case 'qna':
-                table = ListPost;
-                tableComment = ListPostComment;
-                tableId = "ListPostId";
-                break
-            case 'information':
-                table = CardPost;
-                tableComment = CardPostComment;
-                tableId= "CardPostId";
-                break
-            case 'project':
-                table = Project;
-                tableComment = ProjectComment;
-                tableId = "ProjectId"
-                break
-            case 'patch':
-                table = PatchNote;
-                tableComment = PatchNoteComment;
-                tableId="PatchNoteId";
-                break
-            default:
-                throw new Error('테이블을 불러오지 못했습니다.');
-        }
+        const { table, tableComment, tableId } = getTables(body.tableCategory);
 
         const newcomment = await tableComment.update({
             content: body.content,
@@ -594,30 +500,12 @@ router.post("/comment/:id/:commentId", verifyToken,async (req, res) => {
 });
 
 //댓글 삭제
-router.delete("/:id/:commentId", async (req, res) => {
+router.delete("/:id/:commentId",verifyToken, async (req, res) => {
     const body = req.body;
-    body.tableCategory= "notice";
-    let tableComment;
+    const user = req.user;
+    body.tableCategory = "notice";
     try{
-        switch (body.tableCategory){
-            case 'notice':
-                tableComment = RootComment;
-                break
-            case 'qna':
-                tableComment = ListPostComment;
-                break
-            case 'information':
-                tableComment = CardPostComment;
-                break
-            case 'project':
-                tableComment = ProjectComment;
-                break
-            case 'patch':
-                tableComment = PatchNoteComment;
-                break
-            default:
-                throw new Error('테이블을 불러오지 못했습니다.');
-        }
+        const { table, tableComment, tableId } = getTables(body.tableCategory);
         await tableComment.destroy({
             where: {
                 id: { [Op.eq]: req.params.commentId },
@@ -631,12 +519,16 @@ router.delete("/:id/:commentId", async (req, res) => {
 
     //삭제하기
 });
-router.post('/file',upload.single('fileupload'),function (req,res){
+
+//file upload
+router.post('/file',upload.single('fileupload'),verifyToken,function (req,res){
     console.log("post")
     console.log(req.file)
     console.log(req.file.path)
     console.log(upload)
     console.log(upload.storage.getFilename)
+
+    return res.send(req.file.path)
 
     res.redirect('/');
 })
