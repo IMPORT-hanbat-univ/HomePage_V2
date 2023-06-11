@@ -41,6 +41,7 @@ const getTables = (tableCategory) => {
 
     return { table, tableComment, relatedTableId };
 };
+
 const getdata = async (table,column, dataId) =>{
     const data = await table.findAll({
         where: {
@@ -63,6 +64,16 @@ const getdata = async (table,column, dataId) =>{
     return data;
 
 };
+const maxnumber = async (tableComment,relatedTableId)=>{
+    const result = await tableComment.findOne({
+        attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "INTEGER")), "max_sequence"]],
+        where: {
+            group: body.group,
+            [relatedTableId]: req.params.id ,
+        },
+    });
+    return result;
+}
 
 //목록
 router.get("/", async function (req, res) {
@@ -191,8 +202,6 @@ router.post("/edit",verifyToken, async (req, res) => {
         console.error(err);
         return res.sendStatus(401);
     }
-
-
 });
 
 //상세조회
@@ -344,7 +353,6 @@ router.delete("/deleted/:id", async (req, res) => {
         console.error(error);
         return res.sendStatus(401);
     }
-
     //삭제하기
 });
 
@@ -357,14 +365,7 @@ router.post("/comment/:id", verifyToken,async (req, res) => {
     try {
         const { table, tableComment, relatedTableId } = getTables(body.tableCategory);
 
-        const result = await tableComment.findOne({
-            attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "INTEGER")), "max_sequence"]],
-            where: {
-                group: body.group,
-                [relatedTableId]: req.params.id ,
-            },
-        });
-
+        const result = maxnumber(tableComment,relatedTableId);
 
         const maxSequence = result.get("max_sequence")|| -1;
         const sequence = Number(maxSequence)+1;
@@ -446,9 +447,8 @@ router.post('/file',upload.single('fileupload'),verifyToken,function (req,res){
     console.log(upload)
     console.log(upload.storage.getFilename)
 
-    //return res.send(req.file.path)
+    return res.send(req.file.path)
 
-    res.redirect('/');
 })
 
 module.exports = router;
