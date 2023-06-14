@@ -6,6 +6,7 @@ const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 // Helper function to get table and tableComment based on tableCategory
+//table 설정
 const getTables = (tableCategory) => {
     let table, tableComment, relatedTableId;
 
@@ -41,7 +42,7 @@ const getTables = (tableCategory) => {
 
     return { table, tableComment, relatedTableId };
 };
-
+//상세 보기
 const getdata = async (table,column, dataId) =>{
     const data = await table.findAll({
         where: {
@@ -64,15 +65,39 @@ const getdata = async (table,column, dataId) =>{
     return data;
 
 };
-const maxnumber = async (tableComment,relatedTableId)=>{
+//목록
+const getdatas = async (table) =>{
+    const datas = await table.findAll({
+        raw: true,
+        include: [
+            {
+                model: User,
+                attributes: ["rank", "nick_name"],
+                raw: true,
+            },
+        ],
+    });
+    datas.forEach((obj) => {
+        obj.rank = obj["User.rank"];
+        obj.nick_name = obj["User.nick_name"];
+        delete obj["User.rank"];
+        delete obj["User.nick_name"];
+    });
+    return datas;
+}
+
+const maxnumber = async (tableComment,relatedTableId,group,id)=>{
     const result = await tableComment.findOne({
         attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "INTEGER")), "max_sequence"]],
         where: {
-            group: body.group,
-            [relatedTableId]: req.params.id ,
+            group: group,
+            [relatedTableId]: id ,
         },
     });
-    return result;
+    const maxSequence = result.get("max_sequence")|| -1;
+    const sequence = Number(maxSequence)+1;
+
+    return sequence;
 }
 
 //목록
@@ -82,22 +107,7 @@ router.get("/", async function (req, res) {
     try {
         const { table, tableComment, relatedTableId } = getTables(body.tableCategory);
 
-        const posts = await table.findAll({
-            raw: true,
-            include: [
-                {
-                    model: User,
-                    attributes: ["rank", "nick_name"],
-                    raw: true,
-                },
-            ],
-        });
-        posts.forEach((obj) => {
-            obj.rank = obj["User.rank"];
-            obj.nick_name = obj["User.nick_name"];
-            delete obj["User.rank"];
-            delete obj["User.nick_name"];
-        });
+        const posts = await getdatas(table);
 
         console.log({ item: posts });
         res.json({ item: posts }); //배열 안에 내용이 없을때 {item: []} 로 보내짐
@@ -365,8 +375,13 @@ router.post("/comment/:id", verifyToken,async (req, res) => {
     try {
         const { table, tableComment, relatedTableId } = getTables(body.tableCategory);
 
-        const result = maxnumber(tableComment,relatedTableId);
-
+        const result = await tableComment.findOne({
+            attributes: [[sequelize.fn("MAX", sequelize.cast(sequelize.col("sequence"), "INTEGER")), "max_sequence"]],
+            where: {
+                group: body.group,
+                [relatedTableId]: req.params.id ,
+            },
+        });
         const maxSequence = result.get("max_sequence")|| -1;
         const sequence = Number(maxSequence)+1;
 
