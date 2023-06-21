@@ -23,7 +23,7 @@ export type Notice = {
   tagS: string;
   tagT: string;
   nick_name: string;
-  createAt: Date | string;
+  createdAt: Date | string;
 };
 
 export interface PostDetailType {

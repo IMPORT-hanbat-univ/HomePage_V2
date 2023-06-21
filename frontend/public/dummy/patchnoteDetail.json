@@ -15,7 +15,7 @@
       "sequence": null,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 2,
@@ -24,7 +24,7 @@
       "sequence": null,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 3,
@@ -33,7 +33,7 @@
       "sequence": 0,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 4,
@@ -42,7 +42,7 @@
       "sequence": 1,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 5,
@@ -51,7 +51,7 @@
       "sequence": null,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 6,
@@ -60,7 +60,7 @@
       "sequence": 0,
       "userId": 1,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 7,
@@ -69,7 +69,7 @@
       "sequence": null,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 8,
@@ -78,7 +78,7 @@
       "sequence": null,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 9,
@@ -87,7 +87,7 @@
       "sequence": 0,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 10,
@@ -96,7 +96,7 @@
       "sequence": 1,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 11,
@@ -105,7 +105,7 @@
       "sequence": 2,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     },
     {
       "id": 12,
@@ -114,7 +114,7 @@
       "sequence": 3,
       "userId": 2,
       "nick_name": "키보드",
-      "createAt": "2023-03-15 08:20:00"
+      "createdAt": "2023-03-15 08:20:00"
     }
   ]
 }

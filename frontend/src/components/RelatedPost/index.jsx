@@ -23,7 +23,7 @@ export default function RelatedPost({ relatedList }) {
                   </span>
                   <div className="flex items-center justify-between text-xs font-thin text-light-gray">
                     <span>{post.nick_name}</span>
-                    <span> {dayjs(post.createAt).format("YYYY년 M월 D일")}</span>
+                    <span> {dayjs(post.createdAt).format("YYYY년 M월 D일")}</span>
                   </div>
                 </Link>
               </li>
