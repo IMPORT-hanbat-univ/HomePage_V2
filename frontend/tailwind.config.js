@@ -6,9 +6,9 @@ module.exports = {
       colors: {
         "light-gray": "#868e96",
         "preview-gray": "#495057",
-        "import-color": "#001BFF",
-        "tag-text": "#6B6A9B",
-        "tag-bg-color": "#454493",
+        "import-color": "#14D476",
+        "tag-text": "#1d211f",
+        "tag-bg-color": "#00904B",
       },
       boxShadow: {
         active: "rgb(255, 255, 255) 0px 0px 0px 4px",
