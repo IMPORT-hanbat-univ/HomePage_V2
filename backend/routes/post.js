@@ -62,8 +62,8 @@ const getdata = async (table,column, dataId) =>{
         delete obj["User.rank"];
         delete obj["User.nick_name"];
     });
-    return data;
 
+    return data;
 };
 //목록
 const getdatas = async (table) =>{
@@ -98,6 +98,28 @@ const maxnumber = async (tableComment,relatedTableId,group,id)=>{
     const sequence = Number(maxSequence)+1;
 
     return sequence;
+}
+const getMemberdatas = (member) =>{
+
+    /*1. member 라는 배열안에 유저 아이디가 저장되어있다.
+    2. 유저 아이디를 통해 유저 정보인 nick_name, email, rank 값을 가져온다.
+    3. 이 결과는 {{userId:"1", nick_name:"slkdfjlkj",email:"lsdkjfsldkfj", rank: 1},{userId:"2", nick_name:"slkdfjlkj",email:"lsdkjfsldkfj", rank: 1},{userId:"3", nick_name:"slkdfjlkj",email:"lsdkjfsldkfj", rank: 1}} 이런 형식으로 리턴된다.
+*/
+    let memberdatas;
+    member.forEach(async (userId) => {
+        const memberdata = await User.findOne({
+            attributes: ['userId', 'nick_name', 'email', 'rank'],
+            raw: true,
+            where: {
+                userId: userId,
+            },
+        });
+
+        if (memberdata) {
+            memberdatas.push(memberdata);
+        }
+    });
+    return memberdatas;
 }
 
 //목록
@@ -185,6 +207,8 @@ router.post("/edit",verifyToken, async (req, res) => {
                     leader:user.userId,
                     member:body.member,
                     UserId: user.userId,
+                    leader: body.leader,
+                    member: body.member,
                 });
                 table = Project;
                 postId = project.id;
@@ -220,14 +244,25 @@ router.get("/:id",async (req, res) => {
 
     body.tableCategory = "notice";
     try {
+
         const { table, tableComment, relatedTableId } = getTables(body.tableCategory);
+
         const post = await getdata(table,"id",req.params.id);
         if (!post) {
             return res.status(404).send("Post not found");
         }
+
+
         //댓글
         const comments = await getdata(tableComment,relatedTableId,req.params.id);
-
+        if(body.tableCategory=="projet"){
+            const members = getMemberdatas();
+            console.log(members);
+            const data = {};
+            data.post = post[0];
+            data.member = members;
+            data.comment = comments;
+        }
         console.log({ content: post[0],comment:comments });
         res.json({ content: post[0] ,comment:comments});
     } catch (error) {
@@ -465,5 +500,6 @@ router.post('/file',upload.single('fileupload'),verifyToken,function (req,res){
     return res.send(req.file.path)
 
 })
+
 
 module.exports = router;
