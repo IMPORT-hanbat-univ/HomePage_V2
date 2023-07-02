@@ -4,12 +4,15 @@ const jwt = require("jsonwebtoken")
 const {v4:uuidv4} = require("uuid")
 const multer = require('multer');
 exports.isLoggedIn =  (req, res, next) => {
+    console.log(req);
+    console.log(req.isAuthenticated());
     if (req.isAuthenticated()) {
         next();
     } else {
         res.status(403).send('로그인 필요');
     }
 };
+
 
 exports.isNotLoggedIn = (req, res, next) => {
     if(!req.isAuthenticated()) {
@@ -190,12 +193,33 @@ var storage = multer.diskStorage({
         cb(null, "./image");
     },
     filename: (req, file, cb) => {
+        var mimeType;
+
+        switch (file.mimetype) {
+            case "image/jpeg":
+                mimeType = "jpg";
+                break;
+            case "image/jpg":
+                mimeType = "jpg";
+                break;
+            default:
+                mimeType = "png";
+                break;
+        }
+
         // 서버에 저장될 때 파일 이름
-        cb(null, Date.now() + "-" +uuidv4());
+        cb(null, Date.now() + "-" +uuidv4()+"."+mimeType);
         // console.log("file.origianlname"+ file.originalname);
     }
 });
-exports.upload = multer({ storage: storage, fileFilter: imageFilter })
+exports.upload = multer({ storage: storage, fileFilter: imageFilter });
+
+exports.logout = (req, res) => {
+    req.logout(() => {
+        res.redirect('/');
+    });
+};
+
 
 
 //랭크 확인 미들웨어

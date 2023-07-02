@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const jwt =require("jsonwebtoken")
-const { verifyToken,authenticationToken} = require('./middlewares');
+const { verifyToken,authenticationToken,logout,isLoggedIn} = require('./middlewares');
 const { User } = require('../models');
 const { v4: uuidv4 } = require('uuid');
 const {Op} = require("sequelize");
@@ -48,7 +48,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     })(req,res,next);
 });
 */
-router.get('/logout', authenticationToken, (req,res) => {
+/*router.get('/logout', authenticationToken, (req,res) => {
     try{
     
         req.logout(function(err) {
@@ -68,7 +68,8 @@ router.get('/logout', authenticationToken, (req,res) => {
     
     }
    
-});
+});*/
+router.get('/logout',isLoggedIn,logout);
 
 router.get('/kakao', passport.authenticate('kakao'));
 
@@ -76,6 +77,7 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
     failureRedirect: 'http://localhost:4000',
     failureMessage: true,
 }),async (req, res) => {
+    console.log(req);
     const kakao = Number(req.user.kakaoId);
 
     const loggedInUser= await User.findAll({
@@ -101,11 +103,12 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
             expiresIn: '12h', //기간 12시간
         }
     );
+    console.log(req.isAuthenticated());
 
 
 
-    console.log("token: " + accessToken);
-    console.log("refresh: " + refreshToken);
+    //console.log("token: " + accessToken);
+    //console.log("refresh: " + refreshToken);
 
     res.cookie('accessToken',accessToken,{maxAge:60*10*1000}); //쿠키 만료 10분
     res.cookie('refreshToken',refreshToken,{maxAge:60*60*12*1000}); //쿠키 만료 12시간
