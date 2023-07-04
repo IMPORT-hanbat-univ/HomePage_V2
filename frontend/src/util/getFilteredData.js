@@ -7,30 +7,20 @@ export default function getFilteredData(data, filter, sort = "latest") {
     return queryKeys.every((key) => {
       if (key === "tag") {
         const tagList = filter[key];
-        return tagList.every(
-          (tag) =>
-            item["tagF"] === tag ||
-            item["tagS"] === tag ||
-            item["tagT"] === tag
-        );
+        return tagList.every((tag) => item["tagF"] === tag || item["tagS"] === tag || item["tagT"] === tag);
       } else if (key === "search") {
         const searchValue = filter[key].toLowerCase().trim();
         return (
           item["content"].toLowerCase().trim().includes(searchValue) ||
           item["title"].toLowerCase().trim().includes(searchValue)
         );
-      }else {
+      } else {
         return item[key] === filter[key];
       }
     });
   });
 
-  const sortedData = [...filteredData].sort(
-    (a, b) => new Date(b.createAt) - new Date(a.createAt)
-  );
-  
+  const sortedData = [...filteredData].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return sort === "oldest" ? sortedData.reverse() : sortedData;
-
 }
-
-

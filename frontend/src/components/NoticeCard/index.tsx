@@ -4,9 +4,9 @@ import cls from "classnames";
 import { Notice } from "@/util/type";
 import Link from "next/link";
 import TagList from "../TagList";
-export default function NoticeCard({ post, order }: { post: Notice; order: number }) {
+export default function NoticeCard({ post, index }: { post: Notice; index: number }) {
   return (
-    <article className={cls("p-4 flex", { "border-t border-t-gray-400": order !== 0 })}>
+    <article className={cls("p-4 flex", { "border-t ": index !== 0 })}>
       <Link
         prefetch={false}
         href={`/about/notice/${post.id}`}
