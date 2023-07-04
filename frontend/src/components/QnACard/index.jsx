@@ -28,7 +28,7 @@ export default function QnACard({ post }) {
               <div className="flex-auto w-0 max-w-[520px] min-w-0 flex items-center">
                 <span className="shrink overflow-ellipsis whitespace-nowrap inline-block">{post.nick_name}</span>
                 <span className=" shrink-0 inline-block">&nbsp;·&nbsp;</span>
-                <span className=" shrink-0 inline-block">{dayjs(post.createAt).format("YYYY년MM월DD일")}</span>
+                <span className=" shrink-0 inline-block">{dayjs(post.createdAt).format("YYYY년MM월DD일")}</span>
                 <span className=" shrink-0 md:inline-block hidden">&nbsp;·&nbsp;</span>
                 <span className=" shrink-0 md:inline-block hidden">{post.category}</span>
               </div>

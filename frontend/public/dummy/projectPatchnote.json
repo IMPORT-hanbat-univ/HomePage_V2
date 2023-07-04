@@ -2,7 +2,7 @@
   "project": {
     "id": 1,
     "title": "프로젝트의 제목",
-    "createAt": "2022-10-15 08:00:00",
+    "createdAt": "2022-10-15 08:00:00",
     "userId": 1,
     "nick_name": "프로젝트"
   },
@@ -10,151 +10,151 @@
     {
       "id": 1,
       "title": "프로젝트의 시작ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-      "createAt": "2022-10-16 09:00:00",
+      "createdAt": "2022-10-16 09:00:00",
       "userId": 1
     },
     {
       "id": 2,
       "title": "프로젝트의 두번째",
-      "createAt": "2022-10-18 09:00:00",
+      "createdAt": "2022-10-18 09:00:00",
       "userId": 1
     },
     {
       "id": 3,
       "title": "프로젝트의 세번째",
-      "createAt": "2022-10-23 10:00:00",
+      "createdAt": "2022-10-23 10:00:00",
       "userId": 1
     },
     {
       "id": 4,
       "title": "프로젝트의 첫번째 위기..",
-      "createAt": "2022-10-30 09:00:00",
+      "createdAt": "2022-10-30 09:00:00",
       "userId": 1
     },
     {
       "id": 5,
       "title": "프로젝트의 다섯번째",
-      "createAt": "2022-11-03 09:00:00",
+      "createdAt": "2022-11-03 09:00:00",
       "userId": 1
     },
     {
       "id": 6,
       "title": "프로젝트의 여섯번째",
-      "createAt": "2022-11-10 09:00:00",
+      "createdAt": "2022-11-10 09:00:00",
       "userId": 1
     },
     {
       "id": 7,
       "title": "프로젝트의 일곱번째",
-      "createAt": "2022-11-16 09:00:00",
+      "createdAt": "2022-11-16 09:00:00",
       "userId": 1
     },
     {
       "id": 8,
       "title": "프로젝트의 여덟번째",
-      "createAt": "2022-12-03 09:00:00",
+      "createdAt": "2022-12-03 09:00:00",
       "userId": 1
     },
     {
       "id": 9,
       "title": "프로젝트의 아홉번째",
-      "createAt": "2022-12-09 09:00:00",
+      "createdAt": "2022-12-09 09:00:00",
       "userId": 1
     },
     {
       "id": 10,
       "title": "프로젝트의 열번째",
-      "createAt": "2022-12-16 09:00:00",
+      "createdAt": "2022-12-16 09:00:00",
       "userId": 1
     },
     {
       "id": 11,
       "title": "프로젝트의 두번째 위기..",
-      "createAt": "2022-12-25 09:00:00",
+      "createdAt": "2022-12-25 09:00:00",
       "userId": 1
     },
     {
       "id": 12,
       "title": "새해다!!",
-      "createAt": "2023-01-01 09:00:00",
+      "createdAt": "2023-01-01 09:00:00",
       "userId": 1
     },
     {
       "id": 13,
       "title": "프로젝트의 열세번째",
-      "createAt": "2023-01-10 09:00:00",
+      "createdAt": "2023-01-10 09:00:00",
       "userId": 1
     },
     {
       "id": 14,
       "title": "프로젝트의 열네번째",
-      "createAt": "2023-01-16 09:00:00",
+      "createdAt": "2023-01-16 09:00:00",
       "userId": 1
     },
     {
       "id": 15,
       "title": "프로젝트의 열다섯번째",
-      "createAt": "2023-01-20 09:00:00",
+      "createdAt": "2023-01-20 09:00:00",
       "userId": 1
     },
     {
       "id": 16,
       "title": "프로젝트의 열여섯번째",
-      "createAt": "2023-01-26 09:00:00",
+      "createdAt": "2023-01-26 09:00:00",
       "userId": 1
     },
     {
       "id": 17,
       "title": "프로젝트의 열일곱번째",
-      "createAt": "2023-01-29 09:00:00",
+      "createdAt": "2023-01-29 09:00:00",
       "userId": 1
     },
     {
       "id": 18,
       "title": "프로젝트의 열여덟번째",
-      "createAt": "2023-02-02 09:00:00",
+      "createdAt": "2023-02-02 09:00:00",
       "userId": 1
     },
     {
       "id": 19,
       "title": "프로젝트의 열아홉번째",
-      "createAt": "2023-02-05 09:00:00",
+      "createdAt": "2023-02-05 09:00:00",
       "userId": 1
     },
     {
       "id": 20,
       "title": "프로젝트의 스물",
-      "createAt": "2023-02-16 09:00:00",
+      "createdAt": "2023-02-16 09:00:00",
       "userId": 1
     },
     {
       "id": 21,
       "title": "프로젝트의 스물하나",
-      "createAt": "2023-02-26 09:00:00",
+      "createdAt": "2023-02-26 09:00:00",
       "userId": 1
     },
     {
       "id": 22,
       "title": "프로젝트의 스물둘",
-      "createAt": "2023-04-16 09:00:00",
+      "createdAt": "2023-04-16 09:00:00",
       "userId": 1
     },
     {
       "id": 23,
       "title": "프로젝트의 스물셋",
-      "createAt": "2023-04-20 09:00:00",
+      "createdAt": "2023-04-20 09:00:00",
       "userId": 1
     },
     {
       "id": 24,
       "title": "프로젝트의 스물넷",
-      "createAt": "2023-05-24 09:00:00",
+      "createdAt": "2023-05-24 09:00:00",
       "userId": 1
     },
     {
       "id": 25,
       "title": "프로젝트의 스물다섯",
-      "createAt": "2023-05-26 09:00:00",
+      "createdAt": "2023-05-26 09:00:00",
       "userId": 1
     }
   ]

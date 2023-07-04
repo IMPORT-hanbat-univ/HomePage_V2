@@ -12,8 +12,8 @@ export default function usePatchnoteList(data) {
       let targetMonth = dayjs(month.replace(".", "-"), "YYYY-MM").month();
       if (month.trim() === "") {
         const latestDate = data.reduce((prev, current) => {
-          return new Date(prev.createAt) > new Date(current.createAt) ? prev : current;
-        }).createAt;
+          return new Date(prev.createdAt) > new Date(current.createdAt) ? prev : current;
+        }).createdAt;
         const latestMonth = dayjs(latestDate).format("YYYY.MM");
         setMonth(latestMonth);
         targetYear = dayjs(latestDate.replace(".", "-"), "YYYY-MM").year();
@@ -22,11 +22,11 @@ export default function usePatchnoteList(data) {
       console.log("target", targetYear, targetMonth);
       const { monthArray, monthDataArray } = data.reduce(
         (acc, item) => {
-          const dateString = dayjs(item.createAt).format("YYYY.MM");
+          const dateString = dayjs(item.createdAt).format("YYYY.MM");
           if (!acc.monthArray.includes(dateString)) {
             acc.monthArray.push(dateString);
           }
-          const date = dayjs(item.createAt);
+          const date = dayjs(item.createdAt);
           const year = date.year();
           const month = date.month();
           if (year === targetYear && month === targetMonth) {

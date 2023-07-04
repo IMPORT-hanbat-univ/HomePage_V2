@@ -9,6 +9,8 @@ import usePagination from "@/hooks/usePagination";
 import { PostDetailType } from "@/util/type";
 import getClientCookie from "@/util/getClientCookie";
 import { createNoticeComment } from "@/api/notice";
+import useCommentList from "@/hooks/useCommentList";
+import DeleteCommentItem from "../DeleteCommentItem";
 
 export default function CommentContent({
   comments,
@@ -25,7 +27,9 @@ export default function CommentContent({
   const nowPage = searchParams?.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
   const router = useRouter();
-  const { page, pageData: pageComments, pageRangeArray } = usePagination(comments, currentPage);
+  const { page, pageData, pageRangeArray } = usePagination(comments, currentPage);
+  const pageComments = useCommentList(pageData);
+  console.log(pageComments);
   const [parentCommentText, setParentCommentText] = useState("");
   const [newGroupValue, setNewGroupValue] = useState(null);
 
@@ -71,6 +75,7 @@ export default function CommentContent({
       });
     }
   };
+
   return (
     <div>
       {user && Object.keys(user).length > 0 && (
@@ -95,9 +100,13 @@ export default function CommentContent({
       <div className="mt-5" id="commentContent">
         {pageComments &&
           pageComments.length > 0 &&
-          pageComments.map((comment: any) => (
-            <CommentItem key={comment.id} comment={comment} category={category} user={user} comments={comments} />
-          ))}
+          pageComments.map((comment) =>
+            comment.UserId ? (
+              <CommentItem key={comment.id} comment={comment} category={category} user={user} comments={comments} />
+            ) : (
+              <DeleteCommentItem key={comment.id} comment={comment} />
+            )
+          )}
       </div>
       <Pagination nowPage={currentPage} page={page} pageRangeArray={pageRangeArray} id={"commentContent"} />
     </div>

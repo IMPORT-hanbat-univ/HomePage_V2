@@ -54,7 +54,7 @@ const NoticeList = ({ user }: { user: any }) => {
         {pageData &&
           typeof pageData !== "string" &&
           pageData.length > 0 &&
-          pageData.map((post, index) => <NoticeCard order={index} post={post} key={post?.id} />)}
+          pageData.map((post, index) => <NoticeCard index={index} post={post} key={post?.id} />)}
       </div>
       <Pagination nowPage={currentPage} pageRangeArray={pageRangeArray} page={page} id={null} />
     </div>

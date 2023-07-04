@@ -6,7 +6,7 @@ import MarkdownViewer from "../MarkdownViewer";
 import { BsArrowReturnRight } from "react-icons/bs";
 import MarkdownEditor from "../MarkdownEditor";
 import getCommentSequenceValue from "@/util/getCommentSequenceValue";
-import { PostDetailType } from "@/util/type";
+import { Comment, PostDetailType } from "@/util/type";
 import getClientCookie from "@/util/getClientCookie";
 import { useParams, useRouter } from "next/navigation";
 import { createNoticeComment, deleteNoticeComment, updateNoticeComment } from "@/api/notice";
@@ -16,8 +16,8 @@ export default function CommentItem({
   user,
   category,
 }: {
-  comment: PostDetailType["comment"][0];
-  comments: PostDetailType["comment"];
+  comment: Comment;
+  comments: Comment[];
   user: any;
   category: string;
 }) {
@@ -74,7 +74,7 @@ export default function CommentItem({
             getClientCookie("accessToken"),
             getClientCookie("refreshToken"),
             id,
-            comment.id
+            comment.id as number
           );
         } else {
           result = await createNoticeComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"), id);
@@ -110,7 +110,7 @@ export default function CommentItem({
         if (!isRemove) {
           return;
         }
-        const result: string | boolean = await deleteNoticeComment(id, comment.id, accessToken, refreshToken);
+        const result: string | boolean = await deleteNoticeComment(id, comment.id as number, accessToken, refreshToken);
         if (typeof result === "string") {
           alert(result);
           return;
