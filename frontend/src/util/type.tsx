@@ -40,17 +40,7 @@ export interface PostDetailType {
     createdAt: Date;
     updatedAt: Date;
   };
-  comment: {
-    id: number;
-    content: string;
-    group: number; //모댓글의 순서, 0부터
-    sequence: number; //대댓글속 순서, 0부터, 모댓글은 이 값을 널값으로 갖는다.,
-    userKakaoId: number;
-    createdAt: Date;
-    nick_name: string;
-    updatedAt: Date;
-    UserId: number;
-  }[];
+  comment: Comment[];
 }
 
 export interface CreatePost {
@@ -69,3 +59,15 @@ export interface CreateComment {
   sequence: number;
   content: string | number;
 }
+
+export type Comment = {
+  id: number | string;
+  content: string;
+  group: number; //모댓글의 순서, 0부터
+  sequence: number; //대댓글속 순서, 0부터, 모댓글은 이 값을 널값으로 갖는다.,
+  userKakaoId?: number;
+  createdAt?: Date;
+  nick_name?: string;
+  updatedAt?: Date;
+  UserId?: number;
+};
