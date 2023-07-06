@@ -1,3 +1,4 @@
+import { getCookie, getCookies } from "cookies-next";
 import jwt from "jsonwebtoken";
 
 export async function logout(accessToken: string, refreshToken: string) {
@@ -23,20 +24,22 @@ export async function checkUser(accessToken: string, refreshToken: string) {
   // console.log("cookie", cookie);
 
   try {
-    const res = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/auth/tokenverification`, {
-      method: "GET",
-      headers: {
-        accessToken: accessToken || "",
-        refreshToken: refreshToken || "",
-      },
-      next: {
-        revalidate: 0,
-      },
-    });
+    const res = await fetch(
+      `http://${process.env.NETWORK_BACK_NODE_ADRESS ?? "localhost"}:4000/auth/tokenverification`,
+      {
+        method: "GET",
+        headers: {
+          accessToken: accessToken || "",
+          refreshToken: refreshToken || "",
+        },
+      }
+    );
     //console.log("res", res);
     if (res.ok) {
-      const token = res.headers.get("accessToken") || "";
-      const user = jwt.decode(token);
+      console.log("result", res);
+      const user = await res.json();
+      console.log("result", res, user);
+
       if (user && Object.keys(user).length > 0) {
         decodeUser = user;
       } else {

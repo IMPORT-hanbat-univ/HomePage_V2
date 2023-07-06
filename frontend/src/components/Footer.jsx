@@ -1,9 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isEdit = pathname?.includes("edit");
+  if (isEdit) {
+    return null;
+  }
   return (
     <footer className="w-full mt-8  overflow-x-hidden relative bg-black h-[346px] flex flex-col items-center opacity-80 -z-10">
       <Link href="/" className="mt-[26px]">

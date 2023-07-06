@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import DesktopHeader from "@/components/DesktopHeader";
 import MobileHeader from "@/components/MobileHeader";
 import { headers } from "next/headers";
+import Header from "@/components/Header";
 
 export const metadata = {
   title: "Next.js",
@@ -12,32 +13,23 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const headersList = headers();
-  const header_url = headersList.get("x-url") || "";
-  const isEdit = header_url.split("/").includes("edit");
-  console.log("isEdit", isEdit);
+  // const headersList = headers();
+  // const header_url = headersList.get("x-url") || "";
+  // const isEdit = header_url.split("/").includes("edit");
+  // console.log("isEdit", isEdit);
   return (
     <html lang="ko">
       <body>
-        <div className="min-h-screen">
+        <div className="min-h-screen relative">
           <Recoil>
             <ReactQuery>
-              {!isEdit && (
-                <>
-                  <div className="hidden z-10  lg:block">
-                    <DesktopHeader />
-                  </div>
-                  <div className="block z-10 fixed lg:hidden">
-                    <MobileHeader />
-                  </div>
-                </>
-              )}
+              <Header />
 
-              <div className={`${isEdit ? "z-0 relative" : "pt-[60px] z-0 relative"}`}>{children}</div>
+              <div className=" z-0 relative">{children}</div>
             </ReactQuery>
           </Recoil>
         </div>
-        {!isEdit && <Footer />}
+        <Footer />
       </body>
     </html>
   );

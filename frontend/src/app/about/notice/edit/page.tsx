@@ -15,7 +15,7 @@ export default async function EditPage() {
     redirect("/");
   }
   return (
-    <div>
+    <div className="fixed z-20 inset-0 ">
       <EditorWithPreview type={"createNotice"} nick_name={decodeUser?.nick_name} data={null} />
     </div>
   );
