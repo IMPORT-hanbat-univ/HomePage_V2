@@ -25,7 +25,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ReactQuery>
               <Header />
 
-              <div className=" z-0 relative">{children}</div>
+              <div className=" z-0 relative ">{children}</div>
+              <div id="edit-modal"></div>
             </ReactQuery>
           </Recoil>
         </div>

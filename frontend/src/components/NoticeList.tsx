@@ -1,16 +1,16 @@
 "use client";
 import React, { useEffect } from "react";
 
-import NoticeCard from "../NoticeCard";
+import NoticeCard from "./NoticeCard";
 import usePagination from "@/hooks/usePagination";
 import { useSearchParams } from "next/navigation";
-import Pagination from "../Pagination";
+import Pagination from "./Pagination";
 import { Notice } from "@/util/type";
 
 import Link from "next/link";
 import { useQuery } from "react-query";
 import { getNoticeList } from "@/api/notice";
-import OrderCategory from "../OrderCategory";
+import OrderCategory from "./OrderCategory";
 import getFilteredData from "@/util/getFilteredData";
 
 const NoticeList = ({ user }: { user: any }) => {
@@ -44,7 +44,7 @@ const NoticeList = ({ user }: { user: any }) => {
           {user && Object.keys(user).length > 0 && (
             <Link
               prefetch={false}
-              href="/about/notice/edit"
+              href="/about/edit?category=notice"
               className="py-1 px-3 rounded w-auto  text-white border-none outline-none bg-import-color "
             >
               글쓰기

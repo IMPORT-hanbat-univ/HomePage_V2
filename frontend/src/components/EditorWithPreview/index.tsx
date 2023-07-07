@@ -17,7 +17,6 @@ import Notification from "../Notification";
 import { ClipLoader } from "react-spinners";
 
 export default function EditorWithPreview({
-  type,
   nick_name,
   data,
 }: {
@@ -71,96 +70,96 @@ export default function EditorWithPreview({
     setTagList((prev) => prev.filter((prevTag) => prevTag !== tag));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
 
-    const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
-    const [tagF = "", tagS = "", tagT = ""] = tagList;
-    if (!nick_name) {
-      alert("작성 권한이 없습니다.");
-      return;
-    }
-    if (title.trim() === "") {
-      setNotification({ notificationType: "Warning", message: "제목은 비워둘 수 없습니다.", type: "warning" });
-      return;
-    } else if (content.trim() === "") {
-      setNotification({ notificationType: "Warning", message: "내용은 비워둘 수 없습니다.", type: "warning" });
-      return;
-    }
-    let result: any | string;
-    try {
-      switch (type) {
-        case "createNotice": {
-          result = await createNotice(
-            {
-              title,
-              content,
-              tagF,
-              tagS,
-              tagT,
-              category: "notice",
-              nick_name,
-            },
-            accessToken,
-            refreshToken
-          );
-          break;
-        }
-        case "updateNotice": {
-          console.log("update", {
-            title,
-            content,
-            tagF,
-            tagS,
-            tagT,
-            category: "notice",
-            nick_name,
-          });
-          if (!data?.id) {
-            result = "해당 공지사항을 찾을 수 없습니다.";
-          } else {
-            result = await updateNotice(
-              {
-                title,
-                content,
-                tagF,
-                tagS,
-                tagT,
-                category: "notice",
-                nick_name,
-              },
-              data.id,
-              accessToken,
-              refreshToken
-            );
-          }
-          break;
-        }
-        default:
-          result = "올바른 경로가 아닙니다.";
-          break;
-      }
+  //   const accessToken: string = getClientCookie("accessToken") || "";
+  //   const refreshToken: string = getClientCookie("refreshToken") || "";
+  //   const [tagF = "", tagS = "", tagT = ""] = tagList;
+  //   if (!nick_name) {
+  //     alert("작성 권한이 없습니다.");
+  //     return;
+  //   }
+  //   if (title.trim() === "") {
+  //     setNotification({ notificationType: "Warning", message: "제목은 비워둘 수 없습니다.", type: "warning" });
+  //     return;
+  //   } else if (content.trim() === "") {
+  //     setNotification({ notificationType: "Warning", message: "내용은 비워둘 수 없습니다.", type: "warning" });
+  //     return;
+  //   }
+  //   let result: any | string;
+  //   try {
+  //     switch (type) {
+  //       case "createNotice": {
+  //         result = await createNotice(
+  //           {
+  //             title,
+  //             content,
+  //             tagF,
+  //             tagS,
+  //             tagT,
+  //             category: "notice",
+  //             nick_name,
+  //           },
+  //           accessToken,
+  //           refreshToken
+  //         );
+  //         break;
+  //       }
+  //       case "updateNotice": {
+  //         console.log("update", {
+  //           title,
+  //           content,
+  //           tagF,
+  //           tagS,
+  //           tagT,
+  //           category: "notice",
+  //           nick_name,
+  //         });
+  //         if (!data?.id) {
+  //           result = "해당 공지사항을 찾을 수 없습니다.";
+  //         } else {
+  //           result = await updateNotice(
+  //             {
+  //               title,
+  //               content,
+  //               tagF,
+  //               tagS,
+  //               tagT,
+  //               category: "notice",
+  //               nick_name,
+  //             },
+  //             data.id,
+  //             accessToken,
+  //             refreshToken
+  //           );
+  //         }
+  //         break;
+  //       }
+  //       default:
+  //         result = "올바른 경로가 아닙니다.";
+  //         break;
+  //     }
 
-      if (typeof result === "string") {
-        setNotification({ notificationType: "Warning", message: result, type: "warning" });
+  //     if (typeof result === "string") {
+  //       setNotification({ notificationType: "Warning", message: result, type: "warning" });
 
-        return;
-      } else {
-        console.log("result", result);
-        startTrasition(() => {
-          router.replace(`/about/notice/${result?.content?.id}`);
-        });
-      }
-    } catch (err) {
-      console.log(err);
-      setNotification({
-        notificationType: "Warning",
-        message: "글 저장 과정에서 에러가 발생했습니다.",
-        type: "warning",
-      });
-    }
-  };
+  //       return;
+  //     } else {
+  //       console.log("result", result);
+  //       startTrasition(() => {
+  //         router.replace(`/about/notice/${result?.content?.id}`);
+  //       });
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     setNotification({
+  //       notificationType: "Warning",
+  //       message: "글 저장 과정에서 에러가 발생했습니다.",
+  //       type: "warning",
+  //     });
+  //   }
+  // };
 
   return (
     <div className="flex">
@@ -200,7 +199,7 @@ export default function EditorWithPreview({
             <BiArrowBack className="mr-1" />
             나가기
           </button>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={() => {}}>
             {isPending ? (
               <div className="h-10 text-lg inline-flex items-center justify-center font-bold outline-none border-none px-5 bg-green-300 text-white rounded-sm ">
                 <ClipLoader size={20} className="mr-1" /> 저장하기

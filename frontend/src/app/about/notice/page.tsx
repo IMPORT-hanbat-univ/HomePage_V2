@@ -1,5 +1,5 @@
 import React from "react";
-import NoticeList from "@/components/NoticeList";
+import NoticeList from "@/components";
 import { notFound } from "next/navigation";
 import { getNoticeList } from "@/api/notice";
 import { cookies } from "next/headers";
