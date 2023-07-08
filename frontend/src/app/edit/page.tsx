@@ -3,8 +3,13 @@ import EditorWithPreview from "@/components/EditorWithPreview";
 import { checkUser } from "@/api/auth";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+type Props = {
+  searchParams: {
+    category?: string | undefined;
+  };
+};
 
-export default async function EditPage() {
+export default async function EditPage({ searchParams: { category } }: Props) {
   const cookieObj = cookies();
   const { decodeUser, error } = await checkUser(
     cookieObj.get("accessToken")?.value || "",
@@ -16,7 +21,7 @@ export default async function EditPage() {
   }
   return (
     <div className="fixed z-20 inset-0 ">
-      <EditorWithPreview type={"createNotice"} nick_name={decodeUser?.nick_name} data={null} />
+      <EditorWithPreview nick_name={decodeUser?.nick_name} />
     </div>
   );
 }

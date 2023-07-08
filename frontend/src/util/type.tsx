@@ -31,9 +31,9 @@ export interface PostDetailType {
     id: number;
     title: string;
     content: string;
-    tagF?: string;
-    tagS?: string;
-    tagT?: string;
+    tagF: string;
+    tagS: string;
+    tagT: string;
     nick_name: string;
     UserId: number;
     rank?: number;

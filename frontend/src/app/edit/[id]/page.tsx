@@ -3,30 +3,46 @@ import EditorWithPreview from "@/components/EditorWithPreview";
 import { checkUser } from "@/api/auth";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { getNoticeDetail } from "@/api/notice";
+import { getPostDetail } from "@/api/post";
 
 type Props = {
   params: {
     id: string;
   };
+  searchParams: {
+    category?: string | undefined;
+  };
 };
-export default async function NoticeModifyPage({ params: { id } }: Props) {
-  const dataPromise = getNoticeDetail(parseInt(id));
+export default async function NoticeModifyPage({ params: { id }, searchParams: { category } }: Props) {
+  if (!category) {
+    alert("카테고리를 못찾았습니다.");
+    redirect("/");
+  }
+  const dataPromise = getPostDetail(category, parseInt(id));
   const cookieObj = cookies();
   const userPromise = checkUser(cookieObj.get("accessToken")?.value || "", cookieObj.get("refreshToken")?.value || "");
-  const [data, { decodeUser, error }] = await Promise.all([dataPromise, userPromise]);
-  console.log("modify", data);
-  if (!decodeUser || Object.keys(decodeUser).length === 0) {
+  const [{ data, error: postError, path }, { decodeUser, error: decodeUserError }] = await Promise.all([
+    dataPromise,
+    userPromise,
+  ]);
+
+  if (!decodeUser || Object.keys(decodeUser).length === 0 || decodeUserError) {
     redirect("/");
-  } else if (typeof data === "string" || Array.isArray(data)) {
-    redirect(`/about/notice`);
+  } else if (typeof data === "string" || postError) {
+    console.log(postError, data);
+    redirect(`/${path}`);
   }
-  // else if (decodeUser.nick_name !== data.content.nick_name) {
-  // redirect(`/about/notice/${id}`);
-  // }
+  const { content, title, tagF, tagS, tagT } = data.content;
+  const tagList = [tagF, tagS, tagT].filter((tag) => tag.trim() !== "");
+  console.log("tagList", tagList);
   return (
     <div>
-      <EditorWithPreview type={"updateNotice"} nick_name={decodeUser?.nick_name} data={data.content} />
+      <EditorWithPreview
+        nick_name={decodeUser?.nick_name}
+        initContent={content}
+        initTagList={tagList}
+        initTitle={title}
+      />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React from "react";
-import NoticeList from "@/components";
-import { notFound } from "next/navigation";
-import { getNoticeList } from "@/api/notice";
+import NoticeList from "@/components/NoticeList";
+
 import { cookies } from "next/headers";
 import { checkUser } from "@/api/auth";
 

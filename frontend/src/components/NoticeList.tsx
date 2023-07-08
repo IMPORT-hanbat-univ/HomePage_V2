@@ -44,7 +44,7 @@ const NoticeList = ({ user }: { user: any }) => {
           {user && Object.keys(user).length > 0 && (
             <Link
               prefetch={false}
-              href="/about/edit?category=notice"
+              href="/edit?category=notice"
               className="py-1 px-3 rounded w-auto  text-white border-none outline-none bg-import-color "
             >
               글쓰기

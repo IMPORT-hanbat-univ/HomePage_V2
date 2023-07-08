@@ -17,8 +17,8 @@ export default function MarkdownViewer({ text }: { text: string }) {
         components={{
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
-            return !inline && match ? (
-              <SyntaxHighlighter language={match[1]} PreTag="code" wrapLines={true} {...props} style={vscDarkPlus}>
+            return !inline ? (
+              <SyntaxHighlighter language={"javascript"} PreTag="code" wrapLines={true} {...props} style={vscDarkPlus}>
                 {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
             ) : (

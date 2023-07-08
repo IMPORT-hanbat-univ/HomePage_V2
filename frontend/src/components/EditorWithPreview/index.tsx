@@ -16,19 +16,19 @@ import { notificationAtom } from "@/recoil/notification";
 import Notification from "../Notification";
 import { ClipLoader } from "react-spinners";
 
-export default function EditorWithPreview({
-  nick_name,
-  data,
-}: {
-  type: string;
-  nick_name: string | null;
-  data: PostDetailType["content"] | null;
-}) {
+type Props = {
+  nick_name: string;
+  initTitle?: string;
+  initContent?: string;
+  initTagList?: string[];
+};
+
+export default function EditorWithPreview({ nick_name, initContent, initTitle, initTagList }: Props) {
   const tags: Array<keyof PostDetailType["content"]> = ["tagF", "tagS", "tagT"];
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState(initTitle ?? "");
+  const [content, setContent] = useState(initContent ?? "");
   const [tagText, setTagText] = useState("");
-  const [tagList, setTagList] = useState<string[]>([]);
+  const [tagList, setTagList] = useState<string[]>(initTagList ?? []);
 
   const [isPending, startTrasition] = useTransition();
   // const [notification, setNotification] = useState<string>("")
@@ -51,14 +51,6 @@ export default function EditorWithPreview({
       }
     }
   };
-
-  useEffect(() => {
-    setTitle(data ? data.title : "");
-    setContent(data ? data.content : "");
-    setTagList(
-      data ? tags.filter((tag) => data.hasOwnProperty(tag) && data[tag] !== "").map((tag) => data[tag] as string) : []
-    );
-  }, [data]);
 
   useEffect(() => {
     if (markdownRef.current) {
