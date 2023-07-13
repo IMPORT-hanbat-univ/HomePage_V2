@@ -16,31 +16,6 @@ export async function getNoticeList(): Promise<Notice[] | string | null> {
   }
 }
 
-export async function getNoticeDetail(id: number) {
-  try {
-    console.log(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/about/notice/${id}`);
-    console.log("123");
-    const result = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/about/notice/${id}`, {
-      method: "GET",
-      next: {
-        revalidate: 0,
-      },
-      cache: "no-store",
-    });
-    let data: any;
-    const contentType = result.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      data = await result.json();
-    } else {
-      data = await result.text();
-    }
-
-    return (data as PostDetailType | []) || (data as string);
-  } catch (err: any) {
-    console.log(err);
-    return "공지사항 글을 가져오는 도중 발생한 에러!";
-  }
-}
 
 export async function createNotice(
   post: CreatePost,
