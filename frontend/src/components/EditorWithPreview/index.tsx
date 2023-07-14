@@ -23,7 +23,6 @@ type Props = {
 };
 
 export default function EditorWithPreview({ nick_name, initContent, initTitle, initTagList }: Props) {
-  const tags: Array<keyof PostDetailType["content"]> = ["tagF", "tagS", "tagT"];
   const [title, setTitle] = useState(initTitle ?? "");
   const [content, setContent] = useState(initContent ?? "");
   const [tagText, setTagText] = useState("");
@@ -63,6 +62,17 @@ export default function EditorWithPreview({ nick_name, initContent, initTitle, i
   };
 
   const handleOpenModal = () => {
+    if (!nick_name) {
+      alert("작성 권한이 없습니다.");
+      return;
+    }
+    if (title.trim() === "") {
+      setNotification({ notificationType: "Warning", message: "제목은 비워둘 수 없습니다.", type: "warning" });
+      return;
+    } else if (content.trim() === "") {
+      setNotification({ notificationType: "Warning", message: "내용은 비워둘 수 없습니다.", type: "warning" });
+      return;
+    }
     setModal(true);
   };
 
@@ -225,8 +235,8 @@ export default function EditorWithPreview({ nick_name, initContent, initTitle, i
       </div>
       {modal && (
         <EditModalPortal>
-          <EditModalContainer onClose={() => setModal(false)}>
-            <EditModal />
+          <EditModalContainer>
+            <EditModal onClose={() => setModal(false)} title={title} tagList={tagList} content={content} />
           </EditModalContainer>
         </EditModalPortal>
       )}
