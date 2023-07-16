@@ -37,6 +37,7 @@ export interface PostDetailType {
     nick_name: string;
     UserId: number;
     rank?: number;
+    topic?: string;
     createdAt: Date;
     updatedAt: Date;
   };
@@ -50,7 +51,7 @@ export interface CreatePost {
   tagS?: string;
   category: string;
   tagT?: string;
-  nick_name: string;
+  topic: string;
 }
 
 export interface CreateComment {

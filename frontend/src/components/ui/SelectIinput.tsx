@@ -1,14 +1,15 @@
 import React from "react";
 
 type Props = {
+  id?: string;
   valueList: { name: string; value: string | undefined }[];
   currentValue: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-export default function SelectIinput({ onChange, valueList, currentValue }: Props) {
+export default function SelectIinput({ id, onChange, valueList, currentValue }: Props) {
   return (
-    <select onChange={onChange} className="shadow-select leading-6" value={currentValue}>
+    <select id={id} onChange={onChange} className="shadow-select leading-6" value={currentValue}>
       {valueList.map(({ value, name }) => (
         <option key={value} value={value}>
           {name}

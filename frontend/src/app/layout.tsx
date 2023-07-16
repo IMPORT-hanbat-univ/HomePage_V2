@@ -6,6 +6,7 @@ import DesktopHeader from "@/components/DesktopHeader";
 import MobileHeader from "@/components/MobileHeader";
 import { headers } from "next/headers";
 import Header from "@/components/Header";
+import Notification from "@/components/Notification";
 
 export const metadata = {
   title: "Next.js",
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Recoil>
             <ReactQuery>
               <Header />
-
+              <Notification />
               <div className=" z-0 relative ">{children}</div>
               <div id="edit-modal"></div>
             </ReactQuery>

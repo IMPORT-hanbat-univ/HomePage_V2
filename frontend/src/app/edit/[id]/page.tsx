@@ -21,7 +21,7 @@ export default async function NoticeModifyPage({ params: { id }, searchParams: {
   const dataPromise = getPostDetail(category, parseInt(id));
   const cookieObj = cookies();
   const userPromise = checkUser(cookieObj.get("accessToken")?.value || "", cookieObj.get("refreshToken")?.value || "");
-  const [{ data, error: postError, path }, { decodeUser, error: decodeUserError }] = await Promise.all([
+  const [{ data, error: postError }, { decodeUser, error: decodeUserError }] = await Promise.all([
     dataPromise,
     userPromise,
   ]);
@@ -30,7 +30,7 @@ export default async function NoticeModifyPage({ params: { id }, searchParams: {
     redirect("/");
   } else if (typeof data === "string" || postError) {
     console.log(postError, data);
-    redirect(`/${path}`);
+    redirect("/");
   }
   const { content, title, tagF, tagS, tagT } = data.content;
   const tagList = [tagF, tagS, tagT].filter((tag) => tag.trim() !== "");
