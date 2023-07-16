@@ -12,6 +12,7 @@ module.exports = {
       },
       boxShadow: {
         active: "rgb(255, 255, 255) 0px 0px 0px 4px",
+        select: "inset rgba(0, 0, 0, 0.03) 0px 0px 4px 0px",
       },
       keyframes: {
         "slide-down": {

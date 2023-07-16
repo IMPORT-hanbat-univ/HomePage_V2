@@ -37,7 +37,7 @@ export default function Notification() {
     <>
       {typeof notificationType === "string" && typeof message === "string" && (
         <>
-          <ReactNotifications />
+          <ReactNotifications className="z-[1000]" />
         </>
       )}
     </>
