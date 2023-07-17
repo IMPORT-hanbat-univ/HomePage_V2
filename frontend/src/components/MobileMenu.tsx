@@ -60,8 +60,8 @@ export default function MobileMenu({ children }: { children: ReactNode }) {
                 <MobileDetailMenu
                   header={"Community"}
                   menuArray={[
-                    { title: "QnA", link: "/qna" },
-                    { title: "Information", link: "/" },
+                    { title: "QnA", link: "/community/qna" },
+                    { title: "Information", link: "/community/information" },
                   ]}
                 />
                 <div className="w-full pl-6 pr-3 text-ellipsis text-left border-none h-14 overflow-hidden font-semibold text-lg flex items-center">

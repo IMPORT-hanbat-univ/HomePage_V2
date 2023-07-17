@@ -5,7 +5,7 @@ import { useSearchParams, useRouter, useParams } from "next/navigation";
 import NoticeEditTopic from "./ui/NoticeEditTopic";
 import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
-import { createPost, updateNotice } from "@/api/post";
+import { createPost, updatePost } from "@/api/post";
 import Notification from "./Notification";
 import { ClipLoader } from "react-spinners";
 import { BiArrowBack } from "react-icons/bi";
@@ -103,7 +103,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
       };
       const postId = params?.id;
       if (postId) {
-        result = await updateNotice(post, postId as string);
+        result = await updatePost(post, postId as string);
       } else {
         result = await createPost(post);
       }

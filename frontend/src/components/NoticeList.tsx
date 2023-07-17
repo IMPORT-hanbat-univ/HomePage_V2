@@ -5,13 +5,13 @@ import NoticeCard from "./NoticeCard";
 import usePagination from "@/hooks/usePagination";
 import { useSearchParams } from "next/navigation";
 import Pagination from "./Pagination";
-import { Notice } from "@/util/type";
+import { SimplePost } from "@/util/type";
 
 import Link from "next/link";
-import { useQuery } from "react-query";
-import { getNoticeList } from "@/api/notice";
+
 import OrderCategory from "./OrderCategory";
 import getFilteredData from "@/util/getFilteredData";
+import usePosts from "@/hooks/usePosts";
 
 const NoticeList = ({ user }: { user: any }) => {
   const searchParams = useSearchParams();
@@ -19,17 +19,19 @@ const NoticeList = ({ user }: { user: any }) => {
   const order = searchParams?.get("order");
   const selectedOrder = order || "latest";
   const nowPage: string | null | undefined = searchParams?.get("nowPage");
-
+  const { data: notices, isLoading } = usePosts("notice");
+  console.log("data", notices);
   const currentPage = nowPage ? parseInt(nowPage) : 1;
-  const { data: notices, isLoading, error } = useQuery(["noticeList"], async () => await getNoticeList());
+
   const filteredData = getFilteredData(notices, { category: "", tag: "", search: "" }, selectedOrder);
   const {
     page,
     pageData = [],
     pageRangeArray,
-  }: { page: number; pageData: Notice[] | []; pageRangeArray: number[] } = usePagination(filteredData, currentPage);
+  }: { page: number; pageData: SimplePost[] | []; pageRangeArray: number[] } = usePagination(filteredData, currentPage);
 
-  console.log("pageData", pageData);
+  console.log("pageData", pageData, pageRangeArray);
+
   return (
     <div className="p-3 flex-shrink basis-0 grow max-w-[980px]">
       <div className="mb-[32px]">

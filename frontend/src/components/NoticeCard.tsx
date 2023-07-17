@@ -1,10 +1,10 @@
 import dayjs from "dayjs";
 import React from "react";
 import cls from "classnames";
-import { Notice } from "@/util/type";
+import { SimplePost } from "@/util/type";
 import Link from "next/link";
 import TagList from "./TagList";
-export default function NoticeCard({ post, index }: { post: Notice; index: number }) {
+export default function NoticeCard({ post, index }: { post: SimplePost; index: number }) {
   return (
     <article className={cls("p-4 flex", { "border-t ": index !== 0 })}>
       <Link

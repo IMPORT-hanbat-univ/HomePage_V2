@@ -2,7 +2,7 @@
 import React from "react";
 import QnAList from "@/components/QnAList";
 import { useQuery } from "react-query";
-import { useQnAApi } from "../../recoil/qna";
+import { useQnAApi } from "../../../recoil/qna";
 import PopularTag from "@/components/PopularTag";
 import CategoryNav from "@/components/CategoryNav";
 import getFilteredData from "@/util/getFilteredData";

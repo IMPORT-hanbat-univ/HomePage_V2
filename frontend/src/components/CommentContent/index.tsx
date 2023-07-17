@@ -8,9 +8,9 @@ import Pagination from "../Pagination";
 import usePagination from "@/hooks/usePagination";
 import { PostDetailType } from "@/util/type";
 import getClientCookie from "@/util/getClientCookie";
-import { createNoticeComment } from "@/api/notice";
 import useCommentList from "@/hooks/useCommentList";
 import DeleteCommentItem from "../DeleteCommentItem";
+import usePost from "@/hooks/usePost";
 
 export default function CommentContent({
   comments,
@@ -32,11 +32,12 @@ export default function CommentContent({
   console.log(pageComments);
   const [parentCommentText, setParentCommentText] = useState("");
   const [newGroupValue, setNewGroupValue] = useState(null);
-
+  const id = (params?.id as string) || "";
+  const { createComment } = usePost(category, id);
   useEffect(() => {
     setNewGroupValue(getCommentGroupValue(comments));
   }, [comments]);
-
+  console.log("comments", comments);
   const submitComment = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -55,25 +56,13 @@ export default function CommentContent({
       sequence: 0,
       content: parentCommentText,
     };
-    const id = (params?.id as string) || "";
-    let result: any | string;
-    switch (category) {
-      case "notice": {
-        result = await createNoticeComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"), id);
-        console.log("result", result);
-      }
-    }
-    if (typeof result === "string") {
-      alert({ notificationType: "Warning", message: result, type: "warning" });
 
-      return;
-    } else {
-      console.log("result", result);
-      startTrasition(() => {
-        setParentCommentText("");
-        router.refresh();
-      });
-    }
+    let result: any | string;
+
+    startTrasition(() => {
+      createComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"));
+      setParentCommentText("");
+    });
   };
 
   return (

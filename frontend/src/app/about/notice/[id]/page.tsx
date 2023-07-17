@@ -16,13 +16,13 @@ export default async function NoticePage({ params: { id } }: Props) {
   const cookieObj = cookies();
   const userPromise = checkUser(cookieObj.get("accessToken")?.value || "", cookieObj.get("refreshToken")?.value || "");
   const [{ data }, { decodeUser, error }] = await Promise.all([dataPromise, userPromise]);
-  console.log("id", data);
+
   if (typeof data === "string" || Array.isArray(data)) {
     notFound();
   } else {
     return (
       <>
-        <PostDetail data={data} user={decodeUser} category="notice" />
+        <PostDetail user={decodeUser} category="notice" />
       </>
     );
   }

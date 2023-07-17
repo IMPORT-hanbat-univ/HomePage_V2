@@ -16,14 +16,18 @@ export type DecodeUser = {
   nick_name: string;
 };
 
-export type Notice = {
+export type SimplePost = {
   id: number;
   title: string;
+  nick_name: string;
+  order?: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
   tagF: string;
   tagS: string;
   tagT: string;
-  nick_name: string;
-  createdAt: Date | string;
+  topic?: string;
 };
 
 export interface PostDetailType {
@@ -35,7 +39,7 @@ export interface PostDetailType {
     tagS: string;
     tagT: string;
     nick_name: string;
-    UserId: number;
+    userId: number;
     rank?: number;
     topic?: string;
     createdAt: Date;
@@ -70,5 +74,5 @@ export type Comment = {
   createdAt?: Date;
   nick_name?: string;
   updatedAt?: Date;
-  UserId?: number;
+  userId?: number;
 };

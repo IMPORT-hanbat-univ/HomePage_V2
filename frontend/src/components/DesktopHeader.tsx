@@ -1,7 +1,7 @@
 import React from "react";
-import UserNav from "../UserNav";
+import UserNav from "./UserNav";
 import Link from "next/link";
-import HeaderLogoSvg from "../HeaderLogoSvg";
+import HeaderLogoSvg from "./HeaderLogoSvg";
 import Image from "next/image";
 import { Poppins } from "next/font/google";
 import { usePathname } from "next/navigation";
@@ -44,10 +44,10 @@ export default function DesktopHeader() {
             <span className="relative group-hover:text-import-color">Community</span>
             <div className="absolute hidden group-hover:block top-14 bg-white z-20 hover:block shadow-md p-4 border h-auto w-36">
               <div className="gap-y-4 flex flex-col justify-center">
-                <Link href="/qna" className="hover:text-import-color">
+                <Link href="/community/qna" className="hover:text-import-color">
                   QnA
                 </Link>
-                <Link href="/development" className="hover:text-import-color">
+                <Link href="/community/information" className="hover:text-import-color">
                   Information
                 </Link>
               </div>
