@@ -7,11 +7,14 @@ export default function SearchTag() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const tag = searchParams.get("tag");
-  const [tagText, setTagText] = useState( "");
-  const [tagList, setTagList] = useState(tag ? tag.split("+") : []);
+  const [tagText, setTagText] = useState("");
+  const [tagList, setTagList] = useState([]);
 
-  console.log(tagList, tag);
- 
+  useEffect(() => {
+    if (tag) {
+      setTagList(tag.split("+"));
+    }
+  }, [tag]);
 
   const pressTagInput = (e) => {
     let queryString = "";
@@ -29,7 +32,7 @@ export default function SearchTag() {
         }
 
         setTagText("");
-  
+
         router.push(`${pathname}?${queryString}`);
       }
     }
@@ -53,6 +56,7 @@ export default function SearchTag() {
 
   const removeAllTag = () => {
     setTagList([]);
+    router.push(`${pathname}`);
   };
 
   return (

@@ -5,7 +5,7 @@ import NoticeCard from "./NoticeCard";
 import usePagination from "@/hooks/usePagination";
 import { useSearchParams } from "next/navigation";
 import Pagination from "./Pagination";
-import { SimplePost } from "@/util/type";
+import { DecodeUser, SimplePost } from "@/util/type";
 
 import Link from "next/link";
 
@@ -13,14 +13,16 @@ import OrderCategory from "./OrderCategory";
 import getFilteredData from "@/util/getFilteredData";
 import usePosts from "@/hooks/usePosts";
 
-const NoticeList = ({ user }: { user: any }) => {
+type Props = { user: DecodeUser | {} };
+
+const NoticeList = ({ user }: Props) => {
   const searchParams = useSearchParams();
 
   const order = searchParams?.get("order");
   const selectedOrder = order || "latest";
   const nowPage: string | null | undefined = searchParams?.get("nowPage");
   const { data: notices, isLoading } = usePosts("notice");
-  console.log("data", notices);
+  console.log("data", user);
   const currentPage = nowPage ? parseInt(nowPage) : 1;
 
   const filteredData = getFilteredData(notices, { category: "", tag: "", search: "" }, selectedOrder);
