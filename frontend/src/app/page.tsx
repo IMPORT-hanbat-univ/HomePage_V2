@@ -23,10 +23,10 @@ export default async function Home() {
         </Link>
         <Link
           prefetch={false}
-          href={"/development/info"}
+          href={"/community/information"}
           className="p-3 border rounded bg-import-color text-white mr-3"
         >
-          개발 정보
+          정보
         </Link>
         <Link
           prefetch={false}
@@ -49,7 +49,6 @@ export default async function Home() {
         >
           패치노트 디테일
         </Link>
-
       </div>
     </>
   );

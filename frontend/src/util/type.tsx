@@ -14,16 +14,22 @@ export type NotificationType = {
 
 export type DecodeUser = {
   nick_name: string;
+  rank: number;
+  kakaoId: string;
 };
 
-export type Notice = {
+export type SimplePost = {
   id: number;
   title: string;
+  nick_name: string;
+  order?: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
   tagF: string;
   tagS: string;
   tagT: string;
-  nick_name: string;
-  createAt: Date | string;
+  topic?: string;
 };
 
 export interface PostDetailType {
@@ -31,25 +37,17 @@ export interface PostDetailType {
     id: number;
     title: string;
     content: string;
-    tagF?: string;
-    tagS?: string;
-    tagT?: string;
+    tagF: string;
+    tagS: string;
+    tagT: string;
     nick_name: string;
-    UserId: number;
+    userId: number;
     rank?: number;
+    topic?: string;
     createdAt: Date;
     updatedAt: Date;
   };
-  comment: {
-    id: number;
-    content: string;
-    group: number; //모댓글의 순서, 0부터
-    sequence: number; //대댓글속 순서, 0부터, 모댓글은 이 값을 널값으로 갖는다.,
-    userKakaoId: number;
-    createdAt: Date;
-    nick_name: string;
-    updatedAt: Date;
-  }[];
+  comment: Comment[];
 }
 
 export interface CreatePost {
@@ -59,7 +57,7 @@ export interface CreatePost {
   tagS?: string;
   category: string;
   tagT?: string;
-  nick_name: string;
+  topic: string;
 }
 
 export interface CreateComment {
@@ -68,3 +66,15 @@ export interface CreateComment {
   sequence: number;
   content: string | number;
 }
+
+export type Comment = {
+  id: number | string;
+  content: string;
+  group: number; //모댓글의 순서, 0부터
+  sequence: number; //대댓글속 순서, 0부터, 모댓글은 이 값을 널값으로 갖는다.,
+  userKakaoId?: number;
+  createdAt?: Date;
+  nick_name?: string;
+  updatedAt?: Date;
+  userId?: number;
+};

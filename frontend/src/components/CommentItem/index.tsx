@@ -6,18 +6,19 @@ import MarkdownViewer from "../MarkdownViewer";
 import { BsArrowReturnRight } from "react-icons/bs";
 import MarkdownEditor from "../MarkdownEditor";
 import getCommentSequenceValue from "@/util/getCommentSequenceValue";
-import { PostDetailType } from "@/util/type";
+import { Comment } from "@/util/type";
 import getClientCookie from "@/util/getClientCookie";
-import { useParams, useRouter } from "next/navigation";
-import { createNoticeComment } from "@/api/notice";
+import { useParams } from "next/navigation";
+import usePost from "@/hooks/usePost";
+
 export default function CommentItem({
   comment,
   comments,
   user,
   category,
 }: {
-  comment: PostDetailType["comment"][0];
-  comments: PostDetailType["comment"];
+  comment: Comment;
+  comments: Comment[];
   user: any;
   category: string;
 }) {
@@ -27,8 +28,10 @@ export default function CommentItem({
   const [modifyText, setModifyText] = useState(comment?.content ?? "");
   const [isModify, setIsModify] = useState(false);
   const params = useParams();
+  const id = (params?.id as string) || "";
   const [isPending, startTrasition] = useTransition();
-  const router = useRouter();
+
+  const { createComment, deleteComment, updateComment } = usePost(category, id);
   useEffect(() => {
     setNewSequenceValue(getCommentSequenceValue(comments, comment.group));
   }, [comments, comment]);
@@ -43,10 +46,11 @@ export default function CommentItem({
 
   const submitComment = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (replyText.trim() === "") {
+    console.log("123123123123123");
+    if ((!isModify && replyText.trim() === "") || (isModify && modifyText.trim() === "")) {
       return;
     }
+
     if (!getClientCookie("accessToken") && !getClientCookie("refreshToken")) {
       alert("로그인을 해주세요");
       return;
@@ -59,28 +63,38 @@ export default function CommentItem({
       group: comment.group,
       category,
       sequence: newSequenceValue,
-      content: replyText,
+      content: isModify ? modifyText : replyText,
     };
-    const id = (params?.id as string) || "";
-    let result: any | string;
-    switch (category) {
-      case "notice": {
-        console.log("post", post);
-        result = await createNoticeComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"), id);
-        console.log("result", result);
-      }
-    }
-    if (typeof result === "string") {
-      alert({ notificationType: "Warning", message: result, type: "warning" });
 
+    if (isModify) {
+      updateComment(comment.id, post, getClientCookie("accessToken"), getClientCookie("refreshToken"));
+    } else {
+      createComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"));
+    }
+
+    startTrasition(() => {
+      setReplyText("");
+      setIsModify(false);
+      setModifyText("");
+      setShowReplyInput(false);
+    });
+  };
+
+  const handleRemove = async () => {
+    if (!comment.id) {
+      return;
+    } else if (!user || Object.keys(user).length === 0 || user.userId !== comment.userId) {
       return;
     } else {
-      console.log("result", result);
-      startTrasition(() => {
-        setReplyText("");
-        setShowReplyInput(false);
-        router.refresh();
-      });
+      const accessToken: string = getClientCookie("accessToken") || "";
+      const refreshToken: string = getClientCookie("refreshToken") || "";
+      try {
+        deleteComment(comment.id, accessToken, refreshToken);
+      } catch (err: any) {
+        console.log(err);
+        alert("삭제 과정에서 에러가 발생했습니다.");
+        return;
+      }
     }
   };
 
@@ -94,26 +108,29 @@ export default function CommentItem({
             {dayjs(comment.createdAt).format("YYYY년 M월 D일 H시 m분")}
           </span>
         </div>
-        {isModify ? (
-          <div className="flex items-center">
-            <button
-              onClick={handleModify}
-              className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2"
-            >
-              취소
-            </button>
-          </div>
-        ) : (
-          <div className="flex items-center">
-            <button
-              onClick={handleModify}
-              className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2"
-            >
-              수정
-            </button>
-            <button className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">삭제</button>
-          </div>
-        )}
+        {user?.userId === comment.userId &&
+          (isModify ? (
+            <div className="flex items-center">
+              <button
+                onClick={handleModify}
+                className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2"
+              >
+                취소
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <button
+                onClick={handleModify}
+                className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2"
+              >
+                수정
+              </button>
+              <button onClick={handleRemove} className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">
+                삭제
+              </button>
+            </div>
+          ))}
       </div>
       <div className={cls("mt-2 ", { "pl-6": comment.sequence !== 0 })}>
         {isModify ? (
@@ -123,7 +140,7 @@ export default function CommentItem({
             </div>
             <div className="flex items-center justify-end mt-3">
               <button className="rounded-md bg-import-color text-sm leading-6 tracking-[-0.15em] text-white py-2 px-4">
-                답글 작성
+                수정하기
               </button>
             </div>
           </form>

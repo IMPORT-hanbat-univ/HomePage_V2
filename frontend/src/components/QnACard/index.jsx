@@ -4,6 +4,8 @@ import { FaComment } from "react-icons/fa";
 import TagList from "../TagList";
 
 export default function QnACard({ post }) {
+  const { tagF, tagS, tagT } = post;
+  console.log(post, !(tagF.trim() === "" && tagS.trim() === "" && tagT.trim() === ""));
   return (
     <li className="max-w-[980px] border-b border-b-zinc-400 hover:bg-gray-100">
       <a className="cursor-pointer ">
@@ -20,15 +22,17 @@ export default function QnACard({ post }) {
             <p className="h-[24px] overflow-hidden text-ellipsis whitespace-normal leading-6 max-h-6 text-left break-all box line-clamp-1 text-xs">
               {post.content}
             </p>
-            <div className=" mt-[4px] md:mt-[8px]">
-              <TagList post={post} disabled={false} />
-            </div>
+            {!(tagF.trim() === "" && tagS.trim() === "" && tagT.trim() === "") && (
+              <div className=" mt-[4px] md:mt-[8px]">
+                <TagList post={post} disabled={false} />
+              </div>
+            )}
 
             <div className="!flex overflow-hidden line-clamp-1 whitespace-nowrap mt-1 md:mt-4 justify-between text-[12px] font-normal text-light-gray">
               <div className="flex-auto w-0 max-w-[520px] min-w-0 flex items-center">
                 <span className="shrink overflow-ellipsis whitespace-nowrap inline-block">{post.nick_name}</span>
                 <span className=" shrink-0 inline-block">&nbsp;·&nbsp;</span>
-                <span className=" shrink-0 inline-block">{dayjs(post.createAt).format("YYYY년MM월DD일")}</span>
+                <span className=" shrink-0 inline-block">{dayjs(post.createdAt).format("YYYY년MM월DD일")}</span>
                 <span className=" shrink-0 md:inline-block hidden">&nbsp;·&nbsp;</span>
                 <span className=" shrink-0 md:inline-block hidden">{post.category}</span>
               </div>

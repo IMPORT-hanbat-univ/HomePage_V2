@@ -8,7 +8,9 @@ import Pagination from "../Pagination";
 import usePagination from "@/hooks/usePagination";
 import { PostDetailType } from "@/util/type";
 import getClientCookie from "@/util/getClientCookie";
-import { createNoticeComment } from "@/api/notice";
+import useCommentList from "@/hooks/useCommentList";
+import DeleteCommentItem from "../DeleteCommentItem";
+import usePost from "@/hooks/usePost";
 
 export default function CommentContent({
   comments,
@@ -25,14 +27,17 @@ export default function CommentContent({
   const nowPage = searchParams?.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
   const router = useRouter();
-  const { page, pageData: pageComments, pageRangeArray } = usePagination(comments, currentPage);
+  const { page, pageData, pageRangeArray } = usePagination(comments, currentPage);
+  const pageComments = useCommentList(pageData);
+  console.log(pageComments);
   const [parentCommentText, setParentCommentText] = useState("");
   const [newGroupValue, setNewGroupValue] = useState(null);
-
+  const id = (params?.id as string) || "";
+  const { createComment } = usePost(category, id);
   useEffect(() => {
     setNewGroupValue(getCommentGroupValue(comments));
   }, [comments]);
-
+  console.log("comments", comments);
   const submitComment = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -51,26 +56,15 @@ export default function CommentContent({
       sequence: 0,
       content: parentCommentText,
     };
-    const id = (params?.id as string) || "";
-    let result: any | string;
-    switch (category) {
-      case "notice": {
-        result = await createNoticeComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"), id);
-        console.log("result", result);
-      }
-    }
-    if (typeof result === "string") {
-      alert({ notificationType: "Warning", message: result, type: "warning" });
 
-      return;
-    } else {
-      console.log("result", result);
-      startTrasition(() => {
-        setParentCommentText("");
-        router.refresh();
-      });
-    }
+    let result: any | string;
+
+    startTrasition(() => {
+      createComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"));
+      setParentCommentText("");
+    });
   };
+
   return (
     <div>
       {user && Object.keys(user).length > 0 && (
@@ -95,9 +89,13 @@ export default function CommentContent({
       <div className="mt-5" id="commentContent">
         {pageComments &&
           pageComments.length > 0 &&
-          pageComments.map((comment: any) => (
-            <CommentItem key={comment.id} comment={comment} category={category} user={user} comments={comments} />
-          ))}
+          pageComments.map((comment) =>
+            comment.UserId ? (
+              <CommentItem key={comment.id} comment={comment} category={category} user={user} comments={comments} />
+            ) : (
+              <DeleteCommentItem key={comment.id} comment={comment} />
+            )
+          )}
       </div>
       <Pagination nowPage={currentPage} page={page} pageRangeArray={pageRangeArray} id={"commentContent"} />
     </div>

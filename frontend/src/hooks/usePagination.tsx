@@ -14,8 +14,8 @@ export default function usePagination(data: any[], nowPage: number, pageDataCoun
       const startIndex = pageDataCount * (nowPage - 1);
       const endIndex = nowPage === totalPage ? data.length : startIndex + pageDataCount;
       setPageData(data.slice(startIndex, endIndex));
-      const currentStartPage = ((nowPage - 1) / 10) * 10 + 1;
-      const currentLastPage = currentStartPage + 9 > totalPage ? totalPage : currentStartPage + 9;
+      const currentStartPage = Math.floor((nowPage - 1) / 10) * 10 + 1;
+      const currentLastPage = Math.min(currentStartPage + 9, totalPage);
       setPageRangeArray(Array.from({ length: currentLastPage - currentStartPage + 1 }, (_, i) => i + currentStartPage));
     } else {
       setPageData([]);

@@ -10,9 +10,8 @@
   border: none;
   font-weight: bold;
   color: var(--text1);
-  @media(max-width: 767px) {
+  @media (max-width: 767px) {
     font-size: 1.8rem;
-
   }
 }
 
@@ -26,6 +25,7 @@
 }
 
 .tag_input {
+  width: 100%;
   background: transparent;
   display: inline-flex;
   outline: none;
@@ -35,7 +35,7 @@
   margin-bottom: 0.75rem;
   min-width: 8rem;
   border: none;
-  @media(max-width: 767px) {
+  @media (max-width: 767px) {
     font-size: 1rem;
   }
 }

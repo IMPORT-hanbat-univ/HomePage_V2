@@ -27,7 +27,7 @@ export default function PopularTag({ data }) {
   };
 
   return (
-    <div className="mb-3 w-full">
+    <div className={`mb-3 w-full ${!data || data.length === 0 ? "hidden" : "block"}`}>
       <div className="py-4 px-5 border rounded-sm">
         <h2 className="mb-3 text-sm font-bold">인기 태그</h2>
         <ul className="grid grid-cols-2  -mb-2">

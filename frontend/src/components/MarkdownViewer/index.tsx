@@ -2,7 +2,7 @@
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
-import { atomDark, vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Image from "next/image";
 import styles from "./MarkdownViewer.module.scss";
 import ReactMarkdown from "react-markdown";
@@ -17,8 +17,14 @@ export default function MarkdownViewer({ text }: { text: string }) {
         components={{
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
-            return !inline && match ? (
-              <SyntaxHighlighter language={match[1]} PreTag="code" wrapLines={true} {...props} style={vscDarkPlus}>
+            return !inline ? (
+              <SyntaxHighlighter
+                language={`${match ? match[1] : "python"}`}
+                PreTag="code"
+                wrapLines={true}
+                {...props}
+                style={vscDarkPlus}
+              >
                 {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
             ) : (

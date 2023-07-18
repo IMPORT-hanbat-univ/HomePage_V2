@@ -6,21 +6,24 @@ import { MdArrowForwardIos } from "react-icons/md";
 import TagList from "../TagList";
 import Link from "next/link";
 import getClientCookie from "@/util/getClientCookie";
-import { deleteNotice } from "@/api/notice";
+
 import { PostDetailType } from "@/util/type";
 
 import { useRouter } from "next/navigation";
+import { deletePost } from "@/api/post";
 
 export default function PostContent({
   content,
   pathArray,
   children,
   user,
+  category,
 }: {
   content: PostDetailType["content"];
   pathArray: { name: string; link?: string }[];
   children: React.ReactNode;
   user: any;
+  category: string;
 }) {
   const router = useRouter();
   const handleRemove = async () => {
@@ -36,7 +39,7 @@ export default function PostContent({
         if (!isRemove) {
           return;
         }
-        const result: string | boolean = await deleteNotice(content?.id as number, accessToken, refreshToken);
+        const result: string | boolean = await deletePost(content?.id as number, accessToken, refreshToken);
         if (typeof result === "string") {
           alert(result);
           return;
@@ -86,10 +89,10 @@ export default function PostContent({
           post={{ tagF: content?.tagF || "", tagS: content?.tagS || "", tagT: content?.tagT || "" }}
           disabled={true}
         />
-        {(user.userId === content.UserId || user.rank >= 4) && (
+        {(user.userId === content.userId || user.rank >= 4) && (
           <div className="flex items-center">
             <Link
-              href={`/about/notice/edit/${content.id}`}
+              href={`/edit/${content.id}?category=${category}`}
               className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2"
             >
               수정

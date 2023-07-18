@@ -38,7 +38,7 @@ export default function PatchnoteTree({ monthList, monthDataList, month, setMont
             className="hover:text-light-gray cursor-pointer"
           >
             <h3 className="mb-1 text-base font-bold leading-5 text-light-gray">
-              {dayjs(monthData.createAt).format("YYYY.MM.DD")}
+              {dayjs(monthData.createdAt).format("YYYY.MM.DD")}
             </h3>
             <h3 className="mb-8 text-base font-semibold leading-6 whitespace-nowrap  overflow-hidden  text-ellipsis">
               {monthData.title}
