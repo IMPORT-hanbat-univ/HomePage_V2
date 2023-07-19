@@ -37,7 +37,7 @@ export default function DevelopmentInfo({ user }: Props) {
     <section className="flex justify-center px-[32px] mt-20 ">
       <section className="hidden lg:block lg:w-3/12   mt-[32px] ml-[40px] max-w-[200px]">
         <div className="fixed">
-          <TopicNav topicList={["frontend", "backend", "Mobile", "Bigdata", "AI"]} selectedTopic={seletedTopic} />
+          <TopicNav topicList={["전체", "동아리", "기술", "기타"]} selectedTopic={seletedTopic} />
         </div>
       </section>
       <section className="w-full lg:w-9/12 max-w-[980px]">

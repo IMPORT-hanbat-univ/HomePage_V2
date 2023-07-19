@@ -3,21 +3,31 @@ import React from "react";
 type Props = {
   topic: string;
   onChange: (value: string) => void;
+  category: "qna" | "information";
 };
 
-const valueList = [
-  { value: "club", title: "동아리" },
-  { value: "technology", title: "기술" },
+const qnaTopicList = [
+  { value: "동아리" },
+  { value: "기술" },
   {
-    value: "etc",
-    title: "기타",
+    value: "기타",
   },
 ];
 
-export default function NoticeEditTopic({ topic, onChange }: Props) {
+const informationTopicList = [
+  { value: "전체" },
+  { value: "동아리" },
+  { value: "기술" },
+  {
+    value: "기타",
+  },
+];
+
+export default function EditTopic({ topic, onChange, category }: Props) {
+  const valueList = category === "qna" ? qnaTopicList : informationTopicList;
   return (
     <div className="flex w-full items-cetner justify-around">
-      {valueList.map(({ value, title }) => (
+      {valueList.map(({ value }) => (
         <button
           type="button"
           onClick={() => onChange(value)}
@@ -25,7 +35,7 @@ export default function NoticeEditTopic({ topic, onChange }: Props) {
             topic === value ? "bg-import-color text-white" : "bg-white"
           }  text-lg`}
         >
-          {title}
+          {value}
         </button>
       ))}
     </div>

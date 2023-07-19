@@ -2,7 +2,7 @@
 import React, { useState, useTransition } from "react";
 import SelectIinput from "./ui/SelectIinput";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
-import NoticeEditTopic from "./ui/NoticeEditTopic";
+import EditTopic from "./ui/EditTopic";
 import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
 import { createPost, updatePost } from "@/api/post";
@@ -168,12 +168,13 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
           />
         </div>
       )}
-      {category === "qna" && (
+      {(category === "qna" || category === "information") && (
         <div className="py-4 border-y">
           <label htmlFor="detail-category" className="block mb-2">
             토픽
           </label>
-          <NoticeEditTopic topic={topic} onChange={handleTopic} />
+          {category === "qna" && <EditTopic category={category} topic={topic} onChange={handleTopic} />}
+          {category === "information" && <EditTopic category={category} topic={topic} onChange={handleTopic} />}
         </div>
       )}
       <div className="flex items-center justify-between mt-4">
