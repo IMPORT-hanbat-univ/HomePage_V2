@@ -18,6 +18,7 @@ const noticeRouter = require('./routes/about/notice');
 const postRouter = require('./routes/post');
 
 
+
 var app = express();
 sequelize.sync();
 passportConfig(passport);
@@ -35,15 +36,6 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
-  cookie: {
-    httpOnly: 'http://localhost:3000/',
-    sameSite:'none',
-    //maxAge:60*60*1000, 쿠키가 언제 동안 보관될지 시간 설정
-    secure: true,
-    credentials:true,
-    domain:'localhost',
-
-  },
 }));
 app.use(cors({
   origin:true,
@@ -57,6 +49,8 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/about/notice', noticeRouter);
 app.use('/post',postRouter);
+app.use('/image', express.static(path.join(__dirname, 'image')));
+
 
 
 
