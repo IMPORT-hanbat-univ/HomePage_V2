@@ -12,67 +12,8 @@ const corsOptions = {
     origin: 'http://localhost:4000',
   };
 
-const router = express.Router();/*
-router.post('/join', isNotLoggedIn ,async (req, res, next) => {
-    const {email, nick_name, password} =req.body;
-    try {
-        const exUser = await User.findOne({where: {email}});
-        if (exUser) {
-            return res.redirect('/join');
-        }
-        const hash = await bcrypt.hash(password,12);
-        await User.create({
-            email,
-            nick_name,
-            password: hash,
-        });
-        return res.redirect('/');
-    } catch (error) {
-        console.error(error);
-        return next(error);
-    }
-});
+const router = express.Router();
 
-router.post('/login', isNotLoggedIn, (req, res, next) => {
-    passport.authenticate('local',(authError, user, info) => {
-        if(authError) {
-            console.error(authError);
-            return next(authError);
-        }
-        if (!user) {
-            return res.redirect('/');
-        }
-        return req.login(user, (loginError) => {
-            if(loginError) {
-                console.error(loginError);
-                return next(loginError);
-            }
-            return res.redirect('/');
-        });
-    })(req,res,next);
-});
-*/
-// router.get('/logout', authenticationToken, (req,res) => {
-//     try{
-    
-//         req.logout(function(err) {
-//             if (err) { 
-//                 console.log(err);
-//                 return res.sendStatus(401)
-//              }
-            
-//             req.session.destroy();
-//              return res.sendStatus(200)
-//           });
-       
-//         //refresh, access 삭제
-       
-//     }catch(err){
-//         console.log(err);
-    
-//     }
-   
-// });
 router.get('/logout',async(req,res)=>{
     // https://kapi.kakao/com/v1/user/logout
     const accessToken = req.headers['accesstoken'];
@@ -172,55 +113,26 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
 
 });
 
-router.get("/tokenverification",verifyToken, async (req, res) => {
-    //userid 추가하기
+router.get("/tokenverification",verifyToken, (req, res) => {
     console.log("123123");
     const accessToken = req.headers["accesstoken"] || req.cookies.accessToken;
     const refreshToken = req.headers["refreshtoken"] || req.cookies.refreshToken;
     console.log("accessToken", accessToken);
     console.log("refreshtoken", refreshToken);
     if (!accessToken ) {
-        if (refreshToken) { // Access token이 없는 경우 Refresh token 검증
-            try {
-                const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-                const user = User.findAll({
-                    raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
-                    attributes:['id','nick_name','rank','kakaoId'],
-                    where:{
-                        refreshToken:{ [Op.eq]:decoded.refreshToken } ,
-                    }
-                });
-                const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
-                const refresh = "updated";
-                const newRefreshToken = jwt.sign({refresh}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '12h' });
-                try {
-                    await User.update(
-                        { refreshToken: refresh },
-                        { where:{
-                                refreshToken:{ [Op.eq]:decoded.refreshToken } ,
-                            } }
-                    );
-
-                } catch (error) {
-                    console.error("Error occurred while updating refreshToken:", error);
-                    res.sendStatus(500);
-                    return;
-                }
-                console.log("accessToken None, refreshToken success");
-                res.cookie('accessToken', newAccessToken, { httpOnly: 'http://localhost:3000/',maxAge:60*10*1000 });
-                res.cookie('refreshToken', newRefreshToken, { httpOnly: 'http://localhost:3000/' ,maxAge:60*60*12*1000});
-
-                return next();
-            } catch (err) {
-                console.error(err);
-                return res.sendStatus(403);
-            }
-        } else { // Access token, Refresh token 모두 없는 경우
-            return res.sendStatus(404);
-        }
+        return res.sendStatus(400); // Bad Request
     }
     res.setHeader("accesstoken", accessToken);
     res.setHeader("refreshtoken", refreshToken);
+    const user = {
+        nick_name: req.user.nick_name,
+        userId: req.user.userId,
+        kakaoId: req.user.kakaoId,
+        rank: req.user.rank,
+      };
+      console.log(user);
+    res.json(user);
+    
     return res.sendStatus(200); // Success
 });
 module.exports = router;

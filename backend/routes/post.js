@@ -129,7 +129,7 @@ router.get("/", async function (req, res) {
 router.post("/edit",verifyToken, async (req, res) => {
     const body = req.body;
     const user = req.user;
-    const category = req.query.category
+
     let table, postId;
 
     /*
@@ -138,7 +138,7 @@ router.post("/edit",verifyToken, async (req, res) => {
     3. 다시 nowPost에 지금 해당 데이터 담아서 리턴
     * */
     try {
-        switch (category){
+        switch (body.category){
             case 'notice':
                 const notice = await RootPost.create({
                     title: body.title,
@@ -227,10 +227,10 @@ router.post("/edit",verifyToken, async (req, res) => {
 //상세조회
 router.get("/:id",async (req, res) => {
     const body = req.body;
-
-    body.category = "notice";
+    const category = req.query.category;
+    //body.category = "notice";
     try {
-        const { table, tableComment, relatedTableId } = getTables(body.category);
+        const { table, tableComment, relatedTableId } = getTables(category);
         const post = await getdata(table,"id",req.params.id);
         if (!post) {
             return res.status(404).send("Post not found");
@@ -250,6 +250,7 @@ router.post("/edit/:id", verifyToken,async (req, res) => {
     const body = req.body;
     const user = req.user;
     let table, postId;
+    
     // body.category = "notice";
     try {
         switch (body.category){
@@ -362,6 +363,7 @@ router.delete("/deleted/:id", async (req, res) => {
     const body = req.body;
     //const user = req.user;
     //body.category = "notice";
+    const category = req.query.category;
     try{
         const { table, tableComment, relatedTableId } = getTables(body.category);
         await table.destroy({
