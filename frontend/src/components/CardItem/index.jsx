@@ -2,12 +2,13 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import React from "react";
 import TagList from "../TagList";
-
+import import_image from "../../../public/images/import_image.jpg";
 export default function CardItem({ post }) {
+  console.log("post", post);
   return (
     <article className="w-full py-1">
       <Image
-        src={post.image}
+        src={post.file.trim() === "" ? import_image : post.file}
         className="rounded w-full"
         width={300}
         height={200}

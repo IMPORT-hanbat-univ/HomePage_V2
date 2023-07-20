@@ -17,6 +17,7 @@ type Props = {
   initTopic?: string;
   onClose: () => void;
   nick_name: string;
+  file?: string;
 };
 
 const aboutList = [
@@ -50,7 +51,7 @@ const selectCategoryList = [
   { category: "patchnote", path: "project", categoryList: projectList },
 ];
 
-export default function EditModal({ title, initTopic, tagList, content, onClose, nick_name }: Props) {
+export default function EditModal({ title, file, initTopic, tagList, content, onClose, nick_name }: Props) {
   const searchParams = useSearchParams();
   const params = useParams();
   const categoryQuery = searchParams?.get("category");
@@ -98,21 +99,23 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
         tagF,
         tagS,
         tagT,
+        file,
         category,
         topic,
       };
+      console.log("check", post);
       const postId = params?.id;
       if (postId) {
         result = await updatePost(post, postId as string);
       } else {
         result = await createPost(post);
       }
+      console.log("result", result);
       if (!result.content || typeof result === "string") {
         setNotification({ notificationType: "Warning", message: result, type: "warning" });
 
         return;
       } else {
-        console.log("result", result);
         const content = result.content;
         startTrasition(() => {
           if (category === "project") {
