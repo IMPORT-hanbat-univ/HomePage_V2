@@ -44,9 +44,14 @@ export async function getPostDetail(category: string, id: number) {
   }
 }
 
-export async function deletePost(postId: number, accessToken: string, refreshToken: string): Promise<boolean | string> {
+export async function deletePost(
+  category: string,
+  postId: number,
+  accessToken: string,
+  refreshToken: string
+): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000/post/deleted/${postId}`, {
+    const result = await fetch(`http://localhost:4000/post/deleted/${postId}?category=${category}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

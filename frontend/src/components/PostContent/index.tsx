@@ -26,7 +26,7 @@ export default function PostContent({
   category: string;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "/";
   console.log("check", user, content.userId);
   const handleRemove = async () => {
     if (!content?.id) {
@@ -41,12 +41,13 @@ export default function PostContent({
         if (!isRemove) {
           return;
         }
-        const result: string | boolean = await deletePost(content?.id as number, accessToken, refreshToken);
+        const result: string | boolean = await deletePost(category, content?.id as number, accessToken, refreshToken);
         if (typeof result === "string") {
           alert(result);
           return;
         } else {
-          return router.replace(pathname ?? "/");
+          const listPath = pathname.substring(0, pathname.lastIndexOf("/"));
+          return router.replace(listPath.trim() === "" ? "/" : listPath);
         }
       } catch (err: any) {
         console.log(err);
