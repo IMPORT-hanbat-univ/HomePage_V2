@@ -2,13 +2,14 @@
 import React, { useState, useTransition } from "react";
 import SelectIinput from "./ui/SelectIinput";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
-import NoticeEditTopic from "./ui/NoticeEditTopic";
+import EditTopic from "./ui/EditTopic";
 import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
 import { createPost, updatePost } from "@/api/post";
 import Notification from "./Notification";
 import { ClipLoader } from "react-spinners";
 import { BiArrowBack } from "react-icons/bi";
+import getFirstFile from "@/util/getFirstFile";
 
 type Props = {
   title: string;
@@ -61,6 +62,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
   const [path, setPath] = useState<string>(selectCategory?.path ?? "");
   const [category, setCategory] = useState<string>(categoryQuery ?? "");
   const [topic, setTopic] = useState(initTopic ?? "");
+
   const setNotification = useSetRecoilState(notificationAtom);
   const [isPending, startTrasition] = useTransition();
   const router = useRouter();
@@ -92,27 +94,30 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
 
     let result: any | string;
     try {
+      const file = getFirstFile(content);
       const post = {
         title,
         content,
         tagF,
         tagS,
         tagT,
+        file,
         category,
         topic,
       };
+      console.log("check", post);
       const postId = params?.id;
       if (postId) {
         result = await updatePost(post, postId as string);
       } else {
         result = await createPost(post);
       }
+      console.log("result", result);
       if (!result.content || typeof result === "string") {
         setNotification({ notificationType: "Warning", message: result, type: "warning" });
 
         return;
       } else {
-        console.log("result", result);
         const content = result.content;
         startTrasition(() => {
           if (category === "project") {
@@ -168,12 +173,13 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
           />
         </div>
       )}
-      {category === "qna" && (
+      {(category === "qna" || category === "information") && (
         <div className="py-4 border-y">
           <label htmlFor="detail-category" className="block mb-2">
             토픽
           </label>
-          <NoticeEditTopic topic={topic} onChange={handleTopic} />
+          {category === "qna" && <EditTopic category={category} topic={topic} onChange={handleTopic} />}
+          {category === "information" && <EditTopic category={category} topic={topic} onChange={handleTopic} />}
         </div>
       )}
       <div className="flex items-center justify-between mt-4">

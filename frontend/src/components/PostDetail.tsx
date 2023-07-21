@@ -15,6 +15,7 @@ type Props = {
 
 const categoryPath = {
   notice: [{ name: "About" }, { name: "Notice", link: "/about/notice" }],
+  information: [{ name: "Community" }, { name: "Information", link: "/community/information" }],
 };
 
 export default function PostDetail({ user, category }: Props) {

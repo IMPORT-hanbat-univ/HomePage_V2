@@ -49,7 +49,7 @@ export default function CommentContent({
 
       return;
     }
-    // 로그인여부도 추가를 해야겠지요를레히요
+
     const post = {
       group: newGroupValue,
       category: category,
@@ -90,7 +90,7 @@ export default function CommentContent({
         {pageComments &&
           pageComments.length > 0 &&
           pageComments.map((comment) =>
-            comment.UserId ? (
+            comment.userId ? (
               <CommentItem key={comment.id} comment={comment} category={category} user={user} comments={comments} />
             ) : (
               <DeleteCommentItem key={comment.id} comment={comment} />

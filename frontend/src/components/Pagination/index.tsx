@@ -12,7 +12,7 @@ export default function Pagination({
   page: number;
   nowPage: number;
   pageRangeArray: number[];
-  id: string | null;
+  id?: string | null;
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();

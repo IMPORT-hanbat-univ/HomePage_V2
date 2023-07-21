@@ -9,7 +9,7 @@ import getClientCookie from "@/util/getClientCookie";
 
 import { PostDetailType } from "@/util/type";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { deletePost } from "@/api/post";
 
 export default function PostContent({
@@ -26,6 +26,8 @@ export default function PostContent({
   category: string;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+  console.log("check", user, content.userId);
   const handleRemove = async () => {
     if (!content?.id) {
       return;
@@ -44,7 +46,7 @@ export default function PostContent({
           alert(result);
           return;
         } else {
-          return router.replace("/about/notice");
+          return router.replace(pathname ?? "/");
         }
       } catch (err: any) {
         console.log(err);

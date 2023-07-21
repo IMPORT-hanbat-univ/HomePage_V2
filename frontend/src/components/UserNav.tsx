@@ -1,38 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
-import AsSyncComponent from "./AsSyncComponent";
-import { checkUser, logout } from "@/api/auth";
+
 import LogoutButton from "./LogoutButton";
-import { getCookie } from "cookies-next";
-import axios from "axios";
-import jwt from "jsonwebtoken";
+
 import useMe from "@/hooks/useMe";
 
 export default function UserNav() {
-  // const [decodeUser, setDecodeUser] = useState<any>();
-
   const { decodeUser, error } = useMe();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await checkUser(getCookie("accessToken") as string, getCookie("refreshToken") as string);
-  //       const { decodeUser, error } = response;
-
-  //       if (decodeUser) {
-  //         setDecodeUser(decodeUser);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  console.log("decode", decodeUser, "error", typeof window);
 
   return (
     <div className="flex items-center justify-between w-full lg:w-60">

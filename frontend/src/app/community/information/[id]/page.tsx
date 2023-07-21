@@ -10,16 +10,17 @@ type Props = {
   };
 };
 
-export default async function NoticePage({ params: { id } }: Props) {
+export default async function InformationPage({ params: { id } }: Props) {
   const cookieObj = cookies();
   const { decodeUser } = await checkUser(
     cookieObj.get("accessToken")?.value || "",
     cookieObj.get("refreshToken")?.value || ""
   );
+  console.log("checkuser", decodeUser);
 
   return (
     <>
-      <PostDetail user={decodeUser} category="notice" />
+      <PostDetail user={decodeUser} category="information" />
     </>
   );
 }

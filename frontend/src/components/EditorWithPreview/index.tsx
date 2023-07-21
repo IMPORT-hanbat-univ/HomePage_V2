@@ -29,6 +29,7 @@ export default function EditorWithPreview({ nick_name, initContent, initTitle, i
   const [tagText, setTagText] = useState("");
   const [tagList, setTagList] = useState<string[]>(initTagList ?? []);
   const [modal, setModal] = useState(false);
+  const [firstFile, setFirstFile] = useState<string | null>(null);
 
   // const [notification, setNotification] = useState<string>("")
   const setNotification = useSetRecoilState(notificationAtom);
@@ -107,7 +108,13 @@ export default function EditorWithPreview({ nick_name, initContent, initTitle, i
             </div>
           </div>
           <div className="pl-3 md:pl-12 h-full w-full">
-            <MarkdownEditor text={content} setText={setContent} hideToolbar={false} />
+            <MarkdownEditor
+              text={content}
+              setText={setContent}
+              firstFile={firstFile}
+              setFirstFile={setFirstFile}
+              hideToolbar={false}
+            />
           </div>
 
           <div className="px-4 h-16 w-full flex justify-between items-center mb-2">
@@ -145,6 +152,7 @@ export default function EditorWithPreview({ nick_name, initContent, initTitle, i
               onClose={() => setModal(false)}
               title={title}
               tagList={tagList}
+              file={firstFile ?? ""}
               content={content}
             />
           </EditModalContainer>
