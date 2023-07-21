@@ -17,7 +17,6 @@ type Props = {
   initTopic?: string;
   onClose: () => void;
   nick_name: string;
-  file?: string;
 };
 
 const aboutList = [
@@ -51,7 +50,7 @@ const selectCategoryList = [
   { category: "patchnote", path: "project", categoryList: projectList },
 ];
 
-export default function EditModal({ title, file, initTopic, tagList, content, onClose, nick_name }: Props) {
+export default function EditModal({ title, initTopic, tagList, content, onClose, nick_name }: Props) {
   const searchParams = useSearchParams();
   const params = useParams();
   const categoryQuery = searchParams?.get("category");
@@ -62,6 +61,7 @@ export default function EditModal({ title, file, initTopic, tagList, content, on
   const [path, setPath] = useState<string>(selectCategory?.path ?? "");
   const [category, setCategory] = useState<string>(categoryQuery ?? "");
   const [topic, setTopic] = useState(initTopic ?? "");
+
   const setNotification = useSetRecoilState(notificationAtom);
   const [isPending, startTrasition] = useTransition();
   const router = useRouter();
@@ -93,6 +93,7 @@ export default function EditModal({ title, file, initTopic, tagList, content, on
 
     let result: any | string;
     try {
+      const file = getFirstFile(content);
       const post = {
         title,
         content,

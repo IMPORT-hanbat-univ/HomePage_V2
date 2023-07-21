@@ -15,9 +15,8 @@ const qnaTopicList = [
 ];
 
 const informationTopicList = [
-  { value: "전체" },
-  { value: "동아리" },
-  { value: "기술" },
+  { value: "교육" },
+  { value: "대외활동" },
   {
     value: "기타",
   },

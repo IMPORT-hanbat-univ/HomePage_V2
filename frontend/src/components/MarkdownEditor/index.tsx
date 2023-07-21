@@ -13,20 +13,16 @@ type Props = {
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   hideToolbar: boolean;
-  setFirstFile?: React.Dispatch<React.SetStateAction<string | null>>;
-  firstFile?: string | null;
 };
 
-export default function MarkdownEditor({ text, setText, hideToolbar, setFirstFile, firstFile }: Props) {
+export default function MarkdownEditor({ text, setText, hideToolbar }: Props) {
   const imageRef = useRef<HTMLInputElement>(null);
   console.log("text", text);
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (hideToolbar) {
       return;
     }
-    if (!setFirstFile || typeof firstFile === "undefined") {
-      return;
-    }
+
     const file = e.target.files?.[0];
     if (file) {
       const formData = new FormData();
@@ -41,10 +37,8 @@ export default function MarkdownEditor({ text, setText, hideToolbar, setFirstFil
         .then((data) => {
           // 업로드 성공 후 처리 로직
           console.log(data);
-          if (!firstFile) {
-            setFirstFile(`http://localhost:4000${data}`);
-          }
-          setText((prev) => `${prev} \n ![test](http://localhost:4000${data} "title")`);
+          //app/${data}
+          setText((prev) => `${prev} \n ![test](http://localhost:4000/app/${data} "title")`);
         })
         .catch((error) => {
           // 업로드 실패 시 처리 로직
