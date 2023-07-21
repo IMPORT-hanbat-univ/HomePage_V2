@@ -1,4 +1,4 @@
-function getFirstFile(inputString: string): string {
+export default function getFirstFile(inputString: string): string {
   const regex = /http:\/\/localhost:4000\/image.*\.(jpg|png)/;
   const match = inputString.match(regex);
 

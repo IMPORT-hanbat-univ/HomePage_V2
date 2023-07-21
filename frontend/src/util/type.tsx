@@ -29,6 +29,7 @@ export type SimplePost = {
   tagF: string;
   tagS: string;
   tagT: string;
+  file?: string;
   topic?: string;
 };
 

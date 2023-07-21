@@ -37,8 +37,8 @@ export default function MarkdownEditor({ text, setText, hideToolbar }: Props) {
         .then((data) => {
           // 업로드 성공 후 처리 로직
           console.log(data);
-          //app/${data}
-          setText((prev) => `${prev} \n ![test](http://localhost:4000/app/${data} "title")`);
+          //app${data}
+          setText((prev) => `${prev} \n ![test](http://localhost:4000${data} "title")`);
         })
         .catch((error) => {
           // 업로드 실패 시 처리 로직

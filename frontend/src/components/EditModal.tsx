@@ -9,6 +9,7 @@ import { createPost, updatePost } from "@/api/post";
 import Notification from "./Notification";
 import { ClipLoader } from "react-spinners";
 import { BiArrowBack } from "react-icons/bi";
+import getFirstFile from "@/util/getFirstFile";
 
 type Props = {
   title: string;
