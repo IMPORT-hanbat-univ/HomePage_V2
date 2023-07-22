@@ -45,7 +45,7 @@ const selectCategoryList = [
   { category: "rule", path: "about", categoryList: aboutList },
   { category: "schedule", path: "about", categoryList: aboutList, route: "/about/schedule" },
   { category: "notice", path: "about", categoryList: aboutList, route: "/about/notice" },
-  { category: "qnq", path: "community", categoryList: communityList },
+  { category: "qna", path: "community", categoryList: communityList },
   { category: "information", path: "community", categoryList: communityList },
   { category: "project", path: "project", categoryList: projectList },
   { category: "patchnote", path: "project", categoryList: projectList },
@@ -62,7 +62,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
   const [path, setPath] = useState<string>(selectCategory?.path ?? "");
   const [category, setCategory] = useState<string>(categoryQuery ?? "");
   const [topic, setTopic] = useState(initTopic ?? "");
-
+  console.log("topic", initTopic);
   const setNotification = useSetRecoilState(notificationAtom);
   const [isPending, startTrasition] = useTransition();
   const router = useRouter();

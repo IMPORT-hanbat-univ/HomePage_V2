@@ -183,11 +183,12 @@ export async function updatePostComment(
 export async function deletePostComment(
   postId: number | string,
   commentId: number | string,
+  category: string,
   accessToken: string,
   refreshToken: string
 ): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000/post/deleted/${postId}/${commentId}`, {
+    const result = await fetch(`http://localhost:4000/post/deleted/${postId}/${commentId}?category=${category}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

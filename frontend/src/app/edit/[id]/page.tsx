@@ -32,7 +32,7 @@ export default async function NoticeModifyPage({ params: { id }, searchParams: {
     console.log(postError, data);
     redirect("/");
   }
-  const { content, title, tagF, tagS, tagT } = data.content;
+  const { content, title, tagF, tagS, tagT, topic } = data.content;
   const tagList = [tagF, tagS, tagT].filter((tag) => tag.trim() !== "");
   console.log("tagList", tagList);
   return (
@@ -42,6 +42,7 @@ export default async function NoticeModifyPage({ params: { id }, searchParams: {
         initContent={content}
         initTagList={tagList}
         initTitle={title}
+        initTopic={topic ?? ""}
       />
     </div>
   );

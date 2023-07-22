@@ -11,7 +11,7 @@ const fetcher = async (url: string) => {
 
 export default function usePost(category: string, id: string | number) {
   const { data, isLoading, error, mutate } = useSWR(`http://localhost:4000/post/${id}?category=${category}`, fetcher);
-
+  console.log("datacheck", data);
   const createComment = (comment: CreateComment, accessToken: string, refreshToken: string) => {
     if (!data) {
       return;
@@ -29,7 +29,7 @@ export default function usePost(category: string, id: string | number) {
   };
 
   const deleteComment = (commentId: number | string, accessToken: string, refreshToken: string) => {
-    return mutate(deletePostComment(data.id, commentId, accessToken, refreshToken), {
+    return mutate(deletePostComment(data.content.id, commentId, data.content.category, accessToken, refreshToken), {
       revalidate: true,
       rollbackOnError: true,
       populateCache: false,
