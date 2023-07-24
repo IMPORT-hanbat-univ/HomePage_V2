@@ -28,6 +28,7 @@ export default function EditTopic({ topic, onChange, category }: Props) {
     <div className="flex w-full items-cetner justify-around">
       {valueList.map(({ value }) => (
         <button
+          key={value}
           type="button"
           onClick={() => onChange(value)}
           className={`px-4  py-2  shadow-sm rounded  ${

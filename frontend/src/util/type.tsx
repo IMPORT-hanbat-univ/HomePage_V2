@@ -79,3 +79,5 @@ export type Comment = {
   updatedAt?: Date;
   userId?: number;
 };
+
+export type QnASimplePost = SimplePost & { numberOfComments: number; content: string };
