@@ -1,18 +1,32 @@
+"use client";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 const menuArray = [
-  { title: "글 조회", category: "post" },
   { title: "회원 관리", category: "user" },
+  { title: "글 조회", category: "post" },
+
+  { title: "레벨 관리", category: "level" },
 ];
 
 export default function AdminMenu() {
+  const searchParams = useSearchParams();
+  const seletedCategory = searchParams?.get("category") ?? "user";
   return (
-    <header className="w-full h-full p-4">
-      <h2 className="pt-8 text-import-color font-extrabold text-3xl">IMPORT</h2>
-      <menu className="pl-2 flex flex-col items-center gap-4 ">
+    <header className="w-full h-full bg-white ">
+      <Link href="/" className="block py-8 pl-12 text-import-color font-extrabold text-3xl">
+        IMPORT
+      </Link>
+      <menu className=" mt-12  text-xl flex flex-col items-center gap-4 ">
         {menuArray.map(({ title, category }) => (
-          <Link href={{ pathname: "/admin", query: { category } }} prefetch={false}>
+          <Link
+            href={{ pathname: "/admin", query: { category } }}
+            prefetch={false}
+            className={`${
+              seletedCategory === category && "border-l-4  font-semibold border-blue-500"
+            } w-full  text-center hover:border-l-4 p-2 hover:font-semibold hover:border-blue-500`}
+          >
             {title}
           </Link>
         ))}

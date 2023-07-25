@@ -7,7 +7,8 @@ import React from "react";
 export default function Footer() {
   const pathname = usePathname();
   const isEdit = pathname?.includes("edit");
-  if (isEdit) {
+  const isAdmin = pathname?.includes("admin");
+  if (isEdit || isAdmin) {
     return null;
   }
   return (
