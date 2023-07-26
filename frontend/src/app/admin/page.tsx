@@ -1,3 +1,4 @@
+import AdminSection from "@/components/AdminSection";
 import AdminMenu from "@/components/ui/AdminMenu";
 import React from "react";
 
@@ -7,7 +8,9 @@ export default function AdminPage() {
       <div className="w-1/6 min-w-[200px] h-screen">
         <AdminMenu />
       </div>
-      <div className="w-full"></div>
+      <div className="w-full">
+        <AdminSection />
+      </div>
     </div>
   );
 }
