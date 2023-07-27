@@ -19,8 +19,9 @@ export default function AdminMenu() {
         IMPORT
       </Link>
       <menu className=" mt-12  text-xl flex flex-col items-center gap-4 ">
-        {menuArray.map(({ title, page }) => (
+        {menuArray.map(({ title, page }, index) => (
           <Link
+            key={index}
             href={{ pathname: "/admin", query: { page } }}
             prefetch={false}
             className={`${

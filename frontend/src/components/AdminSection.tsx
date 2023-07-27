@@ -3,6 +3,7 @@ import { useSearchParams } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import AdminInput from "./ui/AdminInput";
 import useDebounce from "@/hooks/useDebounce";
+import UserTable from "./UserTable";
 
 export default function AdminSection() {
   const searchParams = useSearchParams();
@@ -52,6 +53,7 @@ export default function AdminSection() {
         text={text}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
       />
+      <UserTable />
     </div>
   );
 }
