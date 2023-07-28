@@ -7,7 +7,7 @@ const menuArray = [
   { title: "회원 관리", page: "user" },
   { title: "글 조회", page: "post" },
 
-  { title: "레벨 관리", page: "level" },
+  { title: "레벨 관리", page: "rank" },
 ];
 
 export default function AdminMenu() {

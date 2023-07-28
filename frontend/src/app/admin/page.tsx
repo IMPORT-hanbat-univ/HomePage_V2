@@ -4,11 +4,11 @@ import React from "react";
 
 export default function AdminPage() {
   return (
-    <div className="w-screen flex bg-neutral-100">
+    <div className="w-full flex bg-neutral-100">
       <div className="w-1/6 min-w-[200px] h-screen">
         <AdminMenu />
       </div>
-      <div className="w-full">
+      <div className="w-5/6">
         <AdminSection />
       </div>
     </div>

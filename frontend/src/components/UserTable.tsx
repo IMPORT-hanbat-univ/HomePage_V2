@@ -1,15 +1,25 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import useAdmins from "@/hooks/useAdmins";
 import { DetailUser } from "@/util/type";
 import dayjs from "dayjs";
-export default function UserTable() {
+import getAdminFilter from "@/util/getAdminFilter";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+
+type Props = {
+  currentRank: string;
+  searchValue: string;
+};
+export default function UserTable({ currentRank, searchValue }: Props) {
   const { data, isLoading, error } = useAdmins("user");
   const [requestLevel, setRequestLevel] = useState("1");
-  console.log("data", data);
+  const filteredData = getAdminFilter(data, { currentRank, searchValue });
+  const target = useRef<HTMLDivElement>(null);
+  const userData = useInfiniteScroll(target, filteredData);
+  console.log("result", userData);
   return (
-    <section>
-      <div className="flex items-center gap-6 p-4">
+    <section className="w-full h-full overflow-hidden">
+      <div className="flex items-center gap-6 p-4 ">
         <select
           className="p-2"
           value={requestLevel}
@@ -23,37 +33,45 @@ export default function UserTable() {
         </select>
         <button className="px-3 py-2 bg-blue-500 border-none outline-none rounded text-white">선택 레벨 변경</button>
       </div>
-      <table className="w-full bg-white rounded">
-        <thead>
-          <tr>
-            <th className="w-[5%] py-4">
-              <input type="checkbox" />
-            </th>
-            <th className="w-[20%]">닉네임</th>
-
-            <th className="w-[20%]">가입일</th>
-            <th className="w-[30%]">이메일</th>
-            <th className="w-[15%]">레벨</th>
-            <th className="w-[10%]">탈퇴</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data &&
-            data.length > 0 &&
-            data.map(({ nick_name, email, createdAt, rank }: DetailUser) => (
-              <tr className="text-center">
-                <td className="w-[5%] py-4">
-                  <input type="checkbox" />
-                </td>
-                <td className="w-[20%]">{nick_name}</td>
-                <td className="w-[20%]">{dayjs(createdAt).format("YYYY/MM/DD")}</td>
-                <td className="w-[30%]">{email}</td>
-                <td className="w-[15%]">{rank}</td>
-                <td className="w-[10%]">탈퇴</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <div className="w-full overflow-x-hidden">
+        <table className="w-full  bg-white rounded">
+          <thead className="block w-full ">
+            <tr className=" w-[98%] flex items-center">
+              <th className="w-[5%] py-4">
+                <input type="checkbox" />
+              </th>
+              <th className="w-[20%]">닉네임</th>
+              <th className="w-[20%]">가입일</th>
+              <th className="w-[30%]">이메일</th>
+              <th className="w-[15%]">레벨</th>
+              <th className="w-[10%]">탈퇴</th>
+            </tr>
+          </thead>
+          <tbody className="block overflow-auto max-h-[38rem] w-full">
+            {userData &&
+              userData.length > 0 &&
+              userData.map(({ nick_name, email, createdAt, rank }: DetailUser) => (
+                <tr className="text-center flex items-center">
+                  <td className="w-[5%] py-4">
+                    <input type="checkbox" />
+                  </td>
+                  <td className="w-[20%]">{nick_name}</td>
+                  <td className="w-[20%]">{dayjs(createdAt).format("YYYY/MM/DD")}</td>
+                  <td className="w-[30%]">{email}</td>
+                  <td className="w-[15%]">{rank}</td>
+                  <td className="w-[10%]">
+                    <button className="border-none outline-none py-1 px-2 bg-red-500 rounded text-white">탈퇴</button>
+                  </td>
+                </tr>
+              ))}
+            <tr>
+              <td>
+                <div className={`${filteredData.length === userData?.length ? "hidden" : "block"}`} ref={target}></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }
