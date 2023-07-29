@@ -81,3 +81,19 @@ export type Comment = {
 };
 
 export type QnASimplePost = SimplePost & { numberOfComments: number; content: string };
+
+export type DetailUser = {
+  userId: number;
+  nick_name: string;
+  createdAt: Date;
+  email: string;
+  rank: string;
+  profileImg?: string | null;
+
+  department?: string;
+  grade?: string;
+  blog?: string;
+  github_url?: string;
+  framework?: string;
+  language?: string;
+};
