@@ -7,6 +7,7 @@ export default function useRelatedPost(list, post) {
     if (list && list.length > 0 && post && Object.keys(post).length > 0) {
       const postKeywordArray = post?.content.content.match(/[가-힣a-zA-Z]+(?=([^가-힣a-zA-Z]|$))/g);
       const postKeywordSet = new Set(postKeywordArray);
+      console.log("set", postKeywordSet);
       const filteredList = list
         ?.reduce((acc, cur) => {
           const keyword = cur?.content.match(/[가-힣a-zA-Z]+(?=([^가-힣a-zA-Z]|$))/g);
@@ -31,6 +32,6 @@ export default function useRelatedPost(list, post) {
       setFilteredData([]);
     }
   }, [list, post]);
-
+  console.log("filteredData", list, post, filteredData);
   return filteredData;
 }

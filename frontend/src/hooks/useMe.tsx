@@ -12,12 +12,10 @@ const fetcher = (url: string) =>
   }).then((res) => res.json());
 
 export default function useMe() {
-  const {
-    data: decodeUser,
-    isLoading,
-    error,
-    mutate,
-  } = useSWR<any>(`http://localhost:4000/auth/tokenverification`, fetcher);
-
+  const { data, isLoading, error, mutate } = useSWR<any>(`http://localhost:4000/auth/tokenverification`, fetcher);
+  let decodeUser = null;
+  if (!error) {
+    decodeUser = data;
+  }
   return { decodeUser, isLoading, error };
 }

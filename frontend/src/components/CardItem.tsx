@@ -1,13 +1,19 @@
 import dayjs from "dayjs";
 import Image from "next/image";
 import React from "react";
-import TagList from "../TagList";
+import TagList from "./TagList";
+import import_image from "../../public/images/import_image.jpg";
+import { SimplePost } from "@/util/type";
+type Props = {
+  post: SimplePost;
+};
 
-export default function CardItem({ post }) {
+export default function CardItem({ post }: Props) {
+  console.log("post", post);
   return (
     <article className="w-full py-1">
       <Image
-        src={post.image}
+        src={!post.file || post.file.trim() === "" ? import_image : post.file}
         className="rounded w-full"
         width={300}
         height={200}

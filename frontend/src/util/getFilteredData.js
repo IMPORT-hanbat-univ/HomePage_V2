@@ -14,6 +14,8 @@ export default function getFilteredData(data, filter, sort = "latest") {
           item["content"].toLowerCase().trim().includes(searchValue) ||
           item["title"].toLowerCase().trim().includes(searchValue)
         );
+      } else if (key === "topic") {
+        return filter[key] === "전체" || item[key] === filter[key];
       } else {
         return item[key] === filter[key];
       }

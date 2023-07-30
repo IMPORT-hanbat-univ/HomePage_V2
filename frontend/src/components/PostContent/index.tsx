@@ -9,7 +9,7 @@ import getClientCookie from "@/util/getClientCookie";
 
 import { PostDetailType } from "@/util/type";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { deletePost } from "@/api/post";
 
 export default function PostContent({
@@ -26,6 +26,8 @@ export default function PostContent({
   category: string;
 }) {
   const router = useRouter();
+  const pathname = usePathname() ?? "/";
+  console.log("check", user, content.userId);
   const handleRemove = async () => {
     if (!content?.id) {
       return;
@@ -39,12 +41,13 @@ export default function PostContent({
         if (!isRemove) {
           return;
         }
-        const result: string | boolean = await deletePost(content?.id as number, accessToken, refreshToken);
+        const result: string | boolean = await deletePost(category, content?.id as number, accessToken, refreshToken);
         if (typeof result === "string") {
           alert(result);
           return;
         } else {
-          return router.replace("/about/notice");
+          const listPath = pathname.substring(0, pathname.lastIndexOf("/"));
+          return router.replace(listPath.trim() === "" ? "/" : listPath);
         }
       } catch (err: any) {
         console.log(err);

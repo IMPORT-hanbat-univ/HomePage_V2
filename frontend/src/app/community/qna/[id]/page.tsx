@@ -4,22 +4,13 @@ import { cookies } from "next/headers";
 
 import { checkUser } from "@/api/auth";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-export default async function NoticePage({ params: { id } }: Props) {
+export default async function QnAPage() {
   const cookieObj = cookies();
   const { decodeUser } = await checkUser(
     cookieObj.get("accessToken")?.value || "",
     cookieObj.get("refreshToken")?.value || ""
   );
+  console.log("checkuser", decodeUser);
 
-  return (
-    <>
-      <PostDetail user={decodeUser} category="notice" />
-    </>
-  );
+  return <PostDetail category="qna" user={decodeUser} />;
 }
