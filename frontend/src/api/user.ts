@@ -1,4 +1,4 @@
-export async function withdrawUser(
+export async function userWithdraw(
   userId: number,
   accessToken: string,
   refreshToken: string

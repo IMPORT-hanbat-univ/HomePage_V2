@@ -8,7 +8,7 @@ const fetcher = async (url: string) => {
   }).then((res) => res.json());
 };
 
-export default function useUsers(page: string) {
+export default function useUsers() {
   let url = "http://localhost:3000/api/admin/userManagement";
   const { data, isLoading, error, mutate } = useSWR(url, fetcher);
 
