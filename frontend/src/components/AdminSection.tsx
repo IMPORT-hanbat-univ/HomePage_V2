@@ -4,8 +4,13 @@ import React, { ChangeEvent, useState } from "react";
 import AdminInput from "./ui/AdminInput";
 import useDebounce from "@/hooks/useDebounce";
 import UserTable from "./UserTable";
+import { DecodeUser } from "@/util/type";
 
-export default function AdminSection() {
+type Props = {
+  user: DecodeUser;
+};
+
+export default function AdminSection({ user }: Props) {
   const searchParams = useSearchParams();
   const page = searchParams?.get("page") ?? "user";
   const [text, setText] = useState("");
@@ -53,7 +58,7 @@ export default function AdminSection() {
         text={text}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
       />
-      <UserTable currentRank={currentRank} searchValue={searchValue} />
+      <UserTable user={user} currentRank={currentRank} searchValue={searchValue} />
     </div>
   );
 }

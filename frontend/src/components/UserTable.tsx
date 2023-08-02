@@ -1,23 +1,43 @@
 "use client";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import useAdmins from "@/hooks/useAdmins";
-import { DetailUser } from "@/util/type";
+import useAdmins from "@/hooks/useUsers";
+import { DecodeUser, DetailUser } from "@/util/type";
 import dayjs from "dayjs";
 import getAdminFilter from "@/util/getAdminFilter";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import useUsers from "@/hooks/useUsers";
+import getClientCookie from "@/util/getClientCookie";
+import { useSetRecoilState } from "recoil";
+import { notificationAtom } from "@/recoil/notification";
 
 type Props = {
   currentRank: string;
   searchValue: string;
+  user: DecodeUser;
 };
-export default function UserTable({ currentRank, searchValue }: Props) {
-  const { data, isLoading, error } = useAdmins("user");
-  const [sortField, setSortField] = useState<null | string>(null);
+export default function UserTable({ currentRank, searchValue, user }: Props) {
+  const { data, isLoading, error, withdrawlUser } = useUsers();
   const [requestLevel, setRequestLevel] = useState("1");
   const filteredData = getAdminFilter(data, { currentRank, searchValue });
   const target = useRef<HTMLDivElement>(null);
   const userData = useInfiniteScroll(target, filteredData);
-  console.log("result", userData, searchValue, filteredData);
+  console.log("result", userData);
+  const setNotification = useSetRecoilState(notificationAtom);
+  const handleWithdrawl = (userId: number) => {
+    if (user.rank < 5) {
+      setNotification({ notificationType: "Warning", message: "삭제 권한이 없습니다.", type: "warning" });
+    }
+    const accessToken: string = getClientCookie("accessToken") || "";
+    const refreshToken: string = getClientCookie("refreshToken") || "";
+    try {
+      withdrawlUser(userId, accessToken, refreshToken);
+    } catch (err: any) {
+      console.log(err);
+      setNotification({ notificationType: "Warning", message: "탈퇴 과정에서 에러가 발생했습니다.", type: "warning" });
+
+      return;
+    }
+  };
   return (
     <section className="w-full h-full overflow-hidden">
       <div className="flex items-center gap-6 p-4 ">
@@ -51,7 +71,7 @@ export default function UserTable({ currentRank, searchValue }: Props) {
           <tbody className="block overflow-auto max-h-[38rem] w-full">
             {userData &&
               userData.length > 0 &&
-              userData.map(({ nick_name, email, createdAt, rank }: DetailUser) => (
+              userData.map(({ nick_name, email, createdAt, rank, userId }: DetailUser) => (
                 <tr className="text-center flex items-center">
                   <td className="w-[5%] py-4">
                     <input type="checkbox" />
@@ -61,7 +81,12 @@ export default function UserTable({ currentRank, searchValue }: Props) {
                   <td className="w-[30%]">{email}</td>
                   <td className="w-[15%]">{rank}</td>
                   <td className="w-[10%]">
-                    <button className="border-none outline-none py-1 px-2 bg-red-500 rounded text-white">탈퇴</button>
+                    <button
+                      className="border-none outline-none py-1 px-2 bg-red-500 rounded text-white"
+                      onClick={() => handleWithdrawl(userId)}
+                    >
+                      탈퇴
+                    </button>
                   </td>
                 </tr>
               ))}
