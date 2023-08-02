@@ -12,11 +12,12 @@ type Props = {
 };
 export default function UserTable({ currentRank, searchValue }: Props) {
   const { data, isLoading, error } = useAdmins("user");
+  const [sortField, setSortField] = useState<null | string>(null);
   const [requestLevel, setRequestLevel] = useState("1");
   const filteredData = getAdminFilter(data, { currentRank, searchValue });
   const target = useRef<HTMLDivElement>(null);
   const userData = useInfiniteScroll(target, filteredData);
-  console.log("result", userData);
+  console.log("result", userData, searchValue, filteredData);
   return (
     <section className="w-full h-full overflow-hidden">
       <div className="flex items-center gap-6 p-4 ">
