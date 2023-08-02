@@ -37,7 +37,11 @@ module.exports = class User extends Sequelize.Model{
             rank: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
-            }
+            },
+            requestRank: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+            },
 
         },{
             sequelize,

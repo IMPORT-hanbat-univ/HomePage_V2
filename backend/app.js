@@ -14,9 +14,9 @@ const cookieParser = require('cookie-parser');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
-const noticeRouter = require('./routes/about/notice');
 const postRouter = require('./routes/post');
-
+const userManagementRouter = require('./routes/admin/userManagement')
+const rankManagementRouter = require('./routes/admin/rankManagement');
 
 
 var app = express();
@@ -47,8 +47,9 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
-app.use('/about/notice', noticeRouter);
 app.use('/post',postRouter);
+app.use('/admin/userManagement',userManagementRouter);
+app.use('/admin/rankManagement',rankManagementRouter);
 app.use('/image', express.static(path.join(__dirname, 'image')));
 
 
