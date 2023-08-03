@@ -82,6 +82,7 @@ const clubUserDataModify = async() =>{
   })
   return newClubUser;
 }
+
 //유저 데이터 띄워주기
 router.get('/',async(req,res)=>{
     //const users = userdatas;
