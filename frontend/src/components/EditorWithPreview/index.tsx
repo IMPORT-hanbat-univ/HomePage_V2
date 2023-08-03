@@ -6,12 +6,11 @@ import { BiArrowBack } from "react-icons/bi";
 import MarkdownViewer from "../MarkdownViewer";
 import MarkdownEditor from "../MarkdownEditor";
 import { useRouter } from "next/navigation";
-import { PostDetailType } from "@/util/type";
+
 import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
-import Notification from "../Notification";
-import { ClipLoader } from "react-spinners";
-import EditModalPortal from "../ui/EditModalPortal";
+
+import ModalPortal from "../ui/ModalPortal";
 import EditModalContainer from "../ui/EditModalContainer";
 import EditModal from "../EditModal";
 
@@ -137,7 +136,7 @@ export default function EditorWithPreview({ nick_name, initContent, initTitle, i
         </div>
       </div>
       {modal && (
-        <EditModalPortal>
+        <ModalPortal>
           <EditModalContainer>
             <EditModal
               nick_name={nick_name}
@@ -148,7 +147,7 @@ export default function EditorWithPreview({ nick_name, initContent, initTitle, i
               content={content}
             />
           </EditModalContainer>
-        </EditModalPortal>
+        </ModalPortal>
       )}
     </>
   );
