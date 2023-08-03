@@ -31,54 +31,64 @@ const router = express.Router();
 
 const userdatas = async ()=>{
     const users = await User.findAll({
-        attributes:['id','email','nick_name','profileImg','rank','createdAt'],
-        include:[
-            {
-                model:ClubUser,
-                attributes:['id','department','grade','blog','github_url','framework','language','createdAt'],
-                required: false,
-            }
-        ],
-        raw:true,
-        nest:true,
-       })
+      attributes:['id','email','nick_name','profileImg','rank','createdAt'],
+      include:[
+          {
+              model:ClubUser,
+              attributes:['id','department','grade','blog','github_url','framework','language','createdAt'],
+              required: false,
+          }
+      ],
+      raw:true,
+      nest:true,
+      })
+      console.log('users: ',users);
+
+    const filteredUsers= users.map((user) => {
+
+    if (!user['ClubUser']['id']) {
+      delete user['ClubUser'];
+
+    }else if(user['ClubUser']['id']){
+        user.department = user['ClubUser']['department']
+        user.grade= user['ClubUser']['grade']
+        user.blog= user['ClubUser']['blog']
+        user.github_url= user['ClubUser']['github_url']
+        user.framework= user['ClubUser']['framework']
+        user.language= user['ClubUser']['language']
+        user.createdAt= user['ClubUser']['createdAt']
+        delete user['ClubUser'];
+    }
+    console.log('user: ',user);
+    return user;
+  });
+  return filteredUsers;
     
-       const filteredUsers= users.map((user) => {
-        if (!user['ClubUser']['id']) {
-          delete user['ClubUser'];
-    
-        }else if(user['ClubUser']['id']){
-            user.department = user['ClubUser']['department']
-            user.grade= user['ClubUser']['grade']
-            user.blog= user['ClubUser']['blog']
-            user.github_url= user['ClubUser']['github_url']
-            user.framework= user['ClubUser']['framework']
-            user.language= user['ClubUser']['language']
-            user.createdAt= user['ClubUser']['createdAt']
-            delete user['ClubUser'];
-        }
-        return user;
-      });
-      return filteredUsers;
-       
-        
 }
-const userDataModify = async()=>{
-  const newUser = await User.update({
-    email: req.body.email,
-    nick_name:req.body.nick_name,
-    profileImg:req.body.profileImg
+const userDataModify = async(email,nick_name,profileImg,userId)=>{
+  const newUser = User.update({
+    email: email,
+    nick_name:nick_name,
+    profileImg:profileImg,
+  },{
+    where:{
+      id: userId
+    }
   });
   return newUser;
 }
-const clubUserDataModify = async() =>{
+const clubUserDataModify = async(department,grade,blog,github_url,framework,language,userId) =>{
   const newClubUser= await ClubUser.update({
-    department:req.body.department,
-    grade:req.body.grade,
-    blog:req.body.blog,
-    github_url:req.body.github_url,
-    framework: req.body.framework,// framework랑 language는 더 해야함. , 구분 등등
-    language: req.body.language,
+    department:department,
+    grade:grade,
+    blog:blog,
+    github_url:github_url,
+    framework: framework,// framework랑 language는 더 해야함. , 구분 등등
+    language: language,
+  },{
+    where:{
+      id:userId
+    }
   })
   return newClubUser;
 }
@@ -98,23 +108,45 @@ router.post('/userdata/:userId',async(req,res)=>{
     
     try {
         // User 테이블에서 해당 UserId를 가진 데이터 찾기
-        const userData = await User.findByPk(req.params.userId);
+        const userId = req.params.userId;
+        const userData = await User.findByPk(userId);
         console.log("userData: ",userData);
+        const {email,nick_name,profileImg,rank}=req.body;
+        console.log(email);
     
         if (userData) {
           // userData 테이블 데이터 수정
-          if (userData.email !== body.email){ 
-            const newUsesr = userDataModify();
-            console.log(newUsesr);
+          if (userData.rank !== body.rank){ 
+            if(userData.requestRank !==null){
+              console.log('레벨 변경 요청 있음')
+              res.sendStatus(401).send('레벨 변경 요청 있음')
+            }
+            const newUser = await User.update({
+              email: email,
+              nick_name:nick_name,
+              profileImg:profileImg,
+              rank:rank,
+            },{
+              where:{
+                id: userId
+              }
+            })
+            .then()
           }else if(userData.nick_name !== body.nick_name){
-            const newUsesr = userDataModify();
+            const newUsesr = await userDataModify(email,nick_name,profileImg,userId);
             console.log(newUsesr);
           }else if(userData.profileImg !== body.profileImg){
-            const newUsesr = userDataModify();
+            const newUsesr = await userDataModify(email,nick_name,profileImg,userId);
+            console.log(newUsesr);
+          }else if(userData.email !== body.email){
+            const newUsesr = await userDataModify(email,nick_name,profileImg,userId);
             console.log(newUsesr);
           }else{
             console.log('userData 변화없음')
           }
+        }else{
+          console.log('유저없음')
+          res.sendStatus(401).send('유저없음')
         }
           
     
@@ -122,22 +154,23 @@ router.post('/userdata/:userId',async(req,res)=>{
         const clubUserData = await ClubUser.findOne({ where: { UserId: req.params.userId } });
         console.log("clubUserData: ",clubUserData)
         if (clubUserData) {
+          const {department,grade,blog,github_url,framework,language}= clubUserData;
           // clubUser테이블 데이터 수정
           if (clubUserData.department !==body.department) {
-            const newClubUser= clubUserDataModify();
+            const newClubUser= clubUserDataModify(department,grade,blog,github_url,framework,language,userId);
             console.log(newClubUser);
 
           }else if(clubUserData.grade !== body.grade){
-            const newClubUser= clubUserDataModify();
+            const newClubUser= clubUserDataModify(department,grade,blog,github_url,framework,language,userId);
             console.log(newClubUser);
           }else if(clubUserData.blog !== body.blog){
-            const newClubUser= clubUserDataModify();
+            const newClubUser= clubUserDataModify(department,grade,blog,github_url,framework,language,userId);
             console.log(newClubUser);
           }else if(clubUserData.github_url !== body.github_url){
-            const newClubUser= clubUserDataModify();
+            const newClubUser= clubUserDataModify(department,grade,blog,github_url,framework,language,userId);
             console.log(newClubUser);
           }else if(clubUserData.language !== body.language){
-            const newClubUser= clubUserDataModify();
+            const newClubUser= clubUserDataModify(department,grade,blog,github_url,framework,language,userId);
             console.log(newClubUser);
           }else{
             console.log('동아리 정보 변화 없음.')
@@ -153,7 +186,6 @@ router.post('/userdata/:userId',async(req,res)=>{
       return res.json(nowUserdata);
 })
 
-//레벨 수정
 
 
 

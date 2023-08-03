@@ -23,12 +23,13 @@ const requestRankUsers = async()=>{
             }
         }
     })
+    console.log('users: ',users)
     return users;
 
 }
 //요청레벨이 있는사람 띄워주기
 router.get('/',async(req,res)=>{
-    const users = requestRankUsers();
+    const users = await requestRankUsers();
     console.log(users);
     return res.json(users);
 })
@@ -49,14 +50,14 @@ router.post('/changeRank',async(req,res)=>{
             console.log('req: ',user.requestRank);
             console.log('cha: ',changeRank);
             if(user.requestRank===changeRank||user.requestRank===null){
-                const newUser = await User.update({
+                await User.update({
                     rank: changeRank,
                     requestRank: null,
                 },{
                     where:{
                         id:userId
                     }
-                })
+                });
     
                 const nowUser = await User.findOne({
                     raw: true,
@@ -65,15 +66,16 @@ router.post('/changeRank',async(req,res)=>{
                     }
                 })
                 console.log('결과: ',nowUser);
+                const users = await requestRankUsers();
+                console.log(users);
+                res.json(users);
             }else{
                 console.log(item,'requestRank 와 changeRank 다르다')
                 res.sendStatus(401).send('requestRank와 changeRank가 다른 경우 존재')
             }
             
         }
-    const users = requestRankUsers();
-    console.log(users);
-    return res.json(users);
+    
 
     }catch(error){
         console.error('Error updating userRank:', error);
@@ -82,22 +84,26 @@ router.post('/changeRank',async(req,res)=>{
 })
 
 //반려하기
-router.post('reject/:userId',async(req,res)=>{
+router.post('/reject/:userId',async(req,res)=>{
     try{
-        const rejectUser = await User.update({
+        await User.update({
             requestRank:null
         },{
             where:{
                 id:req.params.userId
             }
         })
-        console.log(rejectUser);
-        return res.sendStatus(200).send('반려완료')
+        //return res.sendStatus(200).send('반려완료')
 
     }catch(error){
         console.log('레벨 변경 요청 반려, userId: ',req.params.userId);
         return res.sendStatus(401);
     }
+    const users = await requestRankUsers();
+    console.log(users);
+    return res.json(users);
+
+
 })
 
 
