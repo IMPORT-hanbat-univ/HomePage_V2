@@ -87,9 +87,9 @@ export type DetailUser = {
   nick_name: string;
   createdAt: Date;
   email: string;
-  rank: string;
+  rank: number;
   profileImg?: string | null;
-
+  requestRank?: number;
   department?: string;
   grade?: string;
   blog?: string;

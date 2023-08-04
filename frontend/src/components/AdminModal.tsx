@@ -2,6 +2,8 @@
 import { DetailUser } from "@/util/type";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import Image from "next/image";
+import useUsers from "@/hooks/useUsers";
+import getClientCookie from "@/util/getClientCookie";
 type Props = {
   data: DetailUser;
 };
@@ -16,7 +18,8 @@ const rank_array = [
 ];
 
 export default function AdminModal({ data }: Props) {
-  const [modifyData, setModifyData] = useState(data);
+  const { updateUser } = useUsers();
+  const [modifyData, setModifyData] = useState<DetailUser>(data);
   const [isModify, setIsModify] = useState(false);
   console.log("modal", data);
   const { nick_name, createdAt, email, rank, blog, department, framework, github_url, grade, language, profileImg } =
@@ -27,7 +30,9 @@ export default function AdminModal({ data }: Props) {
   };
   const submitModify = (e: FormEvent) => {
     e.preventDefault();
-    console.log(modifyData);
+    const accessToken: string = getClientCookie("accessToken") || "";
+    const refreshToken: string = getClientCookie("refreshToken") || "";
+    updateUser(modifyData, accessToken, refreshToken);
     setIsModify(false);
   };
   return (
@@ -99,7 +104,7 @@ export default function AdminModal({ data }: Props) {
           </div>
         </div>
 
-        {parseInt(rank) > 1 && (
+        {rank > 1 && (
           <div className="flex flex-col gap-3">
             <div className="flex items-center w-full">
               <label htmlFor="department" className="mr-2">

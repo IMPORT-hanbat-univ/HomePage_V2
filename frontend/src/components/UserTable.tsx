@@ -19,11 +19,15 @@ type Props = {
   user: DecodeUser;
 };
 export default function UserTable({ currentRank, searchValue, user }: Props) {
-  const { data, isLoading, error, withdrawlUser } = useUsers();
-  const [requestLevel, setRequestLevel] = useState("1");
+  const { data, isLoading, error, withdrawlUser, updateUsersLevel } = useUsers();
+  const [changeLevel, setChangeLevel] = useState("1");
   const [showModal, setShowModal] = useState(false);
   const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
+  const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
+  const accessToken: string = getClientCookie("accessToken") || "";
+  const refreshToken: string = getClientCookie("refreshToken") || "";
   const filteredData = getAdminFilter(data, { currentRank, searchValue });
+
   const target = useRef<HTMLDivElement>(null);
   const userData = useInfiniteScroll(target, filteredData);
   console.log("result", userData);
@@ -32,8 +36,7 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
     if (user.rank < 5) {
       setNotification({ notificationType: "Warning", message: "삭제 권한이 없습니다.", type: "warning" });
     }
-    const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
+
     try {
       withdrawlUser(userId, accessToken, refreshToken);
     } catch (err: any) {
@@ -51,6 +54,19 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
     setShowModal(true);
     setDetailUser(data);
   };
+  const changeCheckbox = (e: ChangeEvent<HTMLInputElement>, user: DetailUser) => {
+    if (e.target.checked) {
+      setLevelUser((prev) => [...prev, { userId: user.userId, rank: user.rank, requestRank: user.requestRank }]);
+    } else {
+      setLevelUser((prev) => prev.filter((item) => item.userId !== user.userId));
+    }
+  };
+
+  const handleChangeLevel = () => {
+    const newLevelUsers = levelUser.map((item) => ({ ...item, changeLevel }));
+    updateUsersLevel(newLevelUsers, accessToken, refreshToken);
+  };
+
   return (
     <>
       {detailUser && showModal && (
@@ -65,8 +81,8 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
         <div className="flex items-center gap-6 p-4 ">
           <select
             className="p-2"
-            value={requestLevel}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => setRequestLevel(e.target.value)}
+            value={changeLevel}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setChangeLevel(e.target.value)}
           >
             <option value={1}>일반회원</option>
             <option value={2}>동아리원</option>
@@ -74,7 +90,12 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
             <option value={4}>임원진</option>
             <option value={5}>관리자</option>
           </select>
-          <button className="px-3 py-2 bg-blue-500 border-none outline-none rounded text-white">선택 레벨 변경</button>
+          <button
+            onClick={handleChangeLevel}
+            className="px-3 py-2 bg-blue-500 border-none outline-none rounded text-white"
+          >
+            선택 레벨 변경
+          </button>
         </div>
         <div className="w-full overflow-x-hidden">
           <table className="w-full  bg-white rounded">
@@ -96,7 +117,7 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
                 userData.map((user: DetailUser) => (
                   <tr className="text-center flex items-center">
                     <td className="w-[5%] py-4">
-                      <input type="checkbox" />
+                      <input type="checkbox" onChange={(e) => changeCheckbox(e, user)} />
                     </td>
                     <td className="w-[20%] cursor-pointer" onClick={() => openModal(user)}>
                       {user.nick_name}
