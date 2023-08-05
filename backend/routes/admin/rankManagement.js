@@ -23,6 +23,10 @@ const requestRankUsers = async()=>{
             }
         }
     })
+    users.forEach((obj) => {
+        obj.userId = obj["id"];
+        delete obj["id"];
+    });
     console.log('users: ',users)
     return users;
 

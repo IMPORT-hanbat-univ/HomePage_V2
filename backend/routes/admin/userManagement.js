@@ -7,6 +7,7 @@ const {Op} = require("sequelize");
 const {config} = require("dotenv");
 const cors = require('cors');
 const axios = require('axios');
+const { fileLoader } = require("ejs");
 const corsOptions = {
     origin: 'http://localhost:4000',
   };
@@ -29,6 +30,7 @@ const router = express.Router();
 // framework:string,
 // language:string,
 
+
 const userdatas = async ()=>{
     const users = await User.findAll({
       attributes:['id','email','nick_name','profileImg','rank','createdAt'],
@@ -47,9 +49,13 @@ const userdatas = async ()=>{
     const filteredUsers= users.map((user) => {
 
     if (!user['ClubUser']['id']) {
+      user.userId = user['id'];
+      delete user['id'];
       delete user['ClubUser'];
 
     }else if(user['ClubUser']['id']){
+        user.userId = user['id'];
+        delete user['id'];
         user.department = user['ClubUser']['department']
         user.grade= user['ClubUser']['grade']
         user.blog= user['ClubUser']['blog']
@@ -105,10 +111,10 @@ router.post('/userdata/:userId',async(req,res)=>{
     console.log('오잉')
     const body = req.body;
     console.log(body)
-    
+    const userId = req.params.userId;
     try {
         // User 테이블에서 해당 UserId를 가진 데이터 찾기
-        const userId = req.params.userId;
+        
         const userData = await User.findByPk(userId);
         console.log("userData: ",userData);
         const {email,nick_name,profileImg,rank}=req.body;
@@ -181,16 +187,47 @@ router.post('/userdata/:userId',async(req,res)=>{
         throw error;
       }
 
-      const nowUserdata = await userdatas();
-      console.log(nowUserdata);
-      return res.json(nowUserdata);
+      const nowUserdata = await User.findAll({
+        attributes:['id','email','nick_name','profileImg','rank','createdAt'],
+        include:[
+            {
+                model:ClubUser,
+                attributes:['id','department','grade','blog','github_url','framework','language','createdAt'],
+                required: false,
+            }
+        ],
+        raw:true,
+        nest:true,
+        where:{
+          id:userId
+        }
+        })
+        console.log('users: ',nowUserdata);
+  
+      const filteredUsers= nowUserdata.map((user) => {
+  
+      if (!user['ClubUser']['id']) {
+        user.userId = user['id'];
+        delete user['id'];
+        delete user['ClubUser'];
+      }else if(user['ClubUser']['id']){
+          user.userId = user['id'];
+          delete user['id'];
+          user.department = user['ClubUser']['department']
+          user.grade= user['ClubUser']['grade']
+          user.blog= user['ClubUser']['blog']
+          user.github_url= user['ClubUser']['github_url']
+          user.framework= user['ClubUser']['framework']
+          user.language= user['ClubUser']['language']
+          user.createdAt= user['ClubUser']['createdAt']
+          delete user['ClubUser'];
+        }
+        console.log('user: ',user);
+        return user;
+      });
+      console.log(filteredUsers);
+      return res.json(filteredUsers);
 })
-
-
-
-
-
-
 
 
 module.exports = router;
