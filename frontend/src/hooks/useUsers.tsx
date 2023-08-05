@@ -10,7 +10,7 @@ const fetcher = async (url: string) => {
 };
 
 export default function useUsers() {
-  let url = "http://localhost:400/api/admin/userManagement";
+  let url = "http://localhost:4000/admin/userManagement";
   const { data, isLoading, error, mutate } = useSWR(url, fetcher);
 
   const withdrawlUser = (userId: number, accessToken: string, refreshToken: string) => {
@@ -45,7 +45,7 @@ export default function useUsers() {
     if (!users || users.length === 0) {
       return;
     }
-    return mutate(usersLevelUpdate(users, accessToken, refreshToken), {
+    return mutate(usersLevelUpdate(users, accessToken, refreshToken, "user"), {
       revalidate: true,
       rollbackOnError: true,
       populateCache: false,

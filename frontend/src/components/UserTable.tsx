@@ -24,8 +24,7 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
-  const accessToken: string = getClientCookie("accessToken") || "";
-  const refreshToken: string = getClientCookie("refreshToken") || "";
+
   const filteredData = getAdminFilter(data, { currentRank, searchValue });
 
   const target = useRef<HTMLDivElement>(null);
@@ -33,6 +32,8 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
   console.log("result", userData);
   const setNotification = useSetRecoilState(notificationAtom);
   const handleWithdrawl = (userId: number) => {
+    const accessToken: string = getClientCookie("accessToken") || "";
+    const refreshToken: string = getClientCookie("refreshToken") || "";
     if (user.rank < 5) {
       setNotification({ notificationType: "Warning", message: "삭제 권한이 없습니다.", type: "warning" });
     }
@@ -56,6 +57,7 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
   };
   const changeCheckbox = (e: ChangeEvent<HTMLInputElement>, user: DetailUser) => {
     if (e.target.checked) {
+      console.log("user check", user);
       setLevelUser((prev) => [...prev, { userId: user.userId, rank: user.rank, requestRank: user.requestRank }]);
     } else {
       setLevelUser((prev) => prev.filter((item) => item.userId !== user.userId));
@@ -63,7 +65,9 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
   };
 
   const handleChangeLevel = () => {
-    const newLevelUsers = levelUser.map((item) => ({ ...item, changeLevel }));
+    const accessToken: string = getClientCookie("accessToken") || "";
+    const refreshToken: string = getClientCookie("refreshToken") || "";
+    const newLevelUsers = levelUser.map((item) => ({ ...item, changeLevel: parseInt(changeLevel) }));
     updateUsersLevel(newLevelUsers, accessToken, refreshToken);
   };
 

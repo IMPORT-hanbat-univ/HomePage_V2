@@ -30,6 +30,7 @@ export async function userUpdate(userId: number, user: DetailUser, accessToken: 
         accessToken,
         refreshToken,
       },
+      body: JSON.stringify(user),
     });
     return result;
   } catch (err: any) {
@@ -41,10 +42,11 @@ export async function userUpdate(userId: number, user: DetailUser, accessToken: 
 export async function usersLevelUpdate(
   users: { userId: number; rank: number; requestRank?: number }[],
   accessToken: string,
-  refreshToken: string
+  refreshToken: string,
+  page: string
 ) {
   try {
-    const result = await fetch(`http://localhost:4000/admin/rankManagement/changeRank`, {
+    const result = await fetch(`http://localhost:4000/admin/rankManagement/changeRank?page=${page}`, {
       method: "POST",
       body: JSON.stringify({ changeRanks: users }),
       headers: {
