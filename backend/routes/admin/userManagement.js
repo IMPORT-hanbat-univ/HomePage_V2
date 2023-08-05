@@ -33,7 +33,7 @@ const router = express.Router();
 
 const userdatas = async ()=>{
     const users = await User.findAll({
-      attributes:['id','email','nick_name','profileImg','rank','createdAt'],
+      attributes:['id','requestRank','email','nick_name','profileImg','rank','createdAt'],
       include:[
           {
               model:ClubUser,
@@ -188,7 +188,7 @@ router.post('/userdata/:userId',async(req,res)=>{
       }
 
       const nowUserdata = await User.findAll({
-        attributes:['id','email','nick_name','profileImg','rank','createdAt'],
+        attributes:['id','requestRank','email','nick_name','profileImg','rank','createdAt'],
         include:[
             {
                 model:ClubUser,
