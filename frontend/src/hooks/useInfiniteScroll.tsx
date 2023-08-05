@@ -10,6 +10,8 @@ export default function useInfiniteScroll(target: React.RefObject<HTMLDivElement
       console.log("num", number);
       const newData = data.slice(0, number * 15);
       setFilteredData(newData);
+    } else {
+      setFilteredData([]);
     }
   }, [JSON.stringify(data), number]);
   useEffect(() => {

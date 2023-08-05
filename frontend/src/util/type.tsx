@@ -83,13 +83,15 @@ export type Comment = {
 export type QnASimplePost = SimplePost & { numberOfComments: number; content: string };
 
 export type DetailUser = {
+  // id 는 테스트용 임시
+  //id: number;
   userId: number;
   nick_name: string;
   createdAt: Date;
   email: string;
-  rank: string;
+  rank: number;
   profileImg?: string | null;
-
+  requestRank?: number;
   department?: string;
   grade?: string;
   blog?: string;

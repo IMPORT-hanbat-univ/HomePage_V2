@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Header />
               <Notification />
               <div className=" z-0 relative ">{children}</div>
-              <div id="edit-modal"></div>
+              <div id="modal"></div>
             </ReactQuery>
           </Recoil>
         </div>
