@@ -20,7 +20,7 @@ type Props = {
 };
 export default function UserTable({ currentRank, searchValue, user }: Props) {
   const { data, isLoading, error, withdrawlUser, updateUsersLevel } = useUsers();
-  const [changeLevel, setChangeLevel] = useState("1");
+  const [changeRank, setChangeRank] = useState("1");
   const [showModal, setShowModal] = useState(false);
   const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
@@ -64,10 +64,10 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
     }
   };
 
-  const handleChangeLevel = () => {
+  const handleChangeRank = () => {
     const accessToken: string = getClientCookie("accessToken") || "";
     const refreshToken: string = getClientCookie("refreshToken") || "";
-    const newLevelUsers = levelUser.map((item) => ({ ...item, changeLevel: parseInt(changeLevel) }));
+    const newLevelUsers = levelUser.map((item) => ({ ...item, changeRank: parseInt(changeRank) }));
     updateUsersLevel(newLevelUsers, accessToken, refreshToken);
   };
 
@@ -85,8 +85,8 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
         <div className="flex items-center gap-6 p-4 ">
           <select
             className="p-2"
-            value={changeLevel}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => setChangeLevel(e.target.value)}
+            value={changeRank}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setChangeRank(e.target.value)}
           >
             <option value={1}>일반회원</option>
             <option value={2}>동아리원</option>
@@ -95,7 +95,7 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
             <option value={5}>관리자</option>
           </select>
           <button
-            onClick={handleChangeLevel}
+            onClick={handleChangeRank}
             className="px-3 py-2 bg-blue-500 border-none outline-none rounded text-white"
           >
             선택 레벨 변경
