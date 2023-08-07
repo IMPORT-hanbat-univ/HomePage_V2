@@ -61,3 +61,24 @@ export async function usersLevelUpdate(
     return "유저 레벨 수정 과정에서 에러가 발생했습니다.";
   }
 }
+
+export async function userRankReject(
+  userId: number,
+  accessToken: string,
+  refreshToken: string
+): Promise<boolean | string> {
+  try {
+    const result = await fetch(`http://localhost:4000//admin/rankManagement/reject/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+        refreshToken,
+      },
+    });
+    return true;
+  } catch (err: any) {
+    console.log(err);
+    return "유저 탈퇴 과정에서 에러가 발생했습니다.";
+  }
+}

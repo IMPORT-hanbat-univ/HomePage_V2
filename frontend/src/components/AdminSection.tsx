@@ -5,6 +5,8 @@ import AdminInput from "./ui/AdminInput";
 import useDebounce from "@/hooks/useDebounce";
 import UserTable from "./UserTable";
 import { DecodeUser } from "@/util/type";
+import RankTable from "./RankTable";
+import PostTable from "./PostTable";
 
 type Props = {
   user: DecodeUser;
@@ -58,7 +60,13 @@ export default function AdminSection({ user }: Props) {
         text={text}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
       />
-      <UserTable user={user} currentRank={currentRank} searchValue={searchValue} />
+      {page === "user" ? (
+        <UserTable user={user} currentRank={currentRank} searchValue={searchValue} />
+      ) : page === "rank" ? (
+        <RankTable user={user} currentRank={currentRank} searchValue={searchValue} />
+      ) : (
+        <PostTable />
+      )}
     </div>
   );
 }
