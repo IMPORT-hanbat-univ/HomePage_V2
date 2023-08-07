@@ -12,19 +12,19 @@ import { notificationAtom } from "@/recoil/notification";
 import ModalPortal from "./ui/ModalPortal";
 import AdminModalContainer from "./ui/AdminModalContainer";
 import AdminModal from "./AdminModal";
+import useRanks from "@/hooks/userRanks";
 
 type Props = {
   currentRank: string;
   searchValue: string;
   user: DecodeUser;
 };
-export default function UserTable({ currentRank, searchValue, user }: Props) {
-  const { data, isLoading, error, withdrawlUser, updateUsersLevel } = useUsers();
+export default function RankTable({ currentRank, searchValue, user }: Props) {
   const [changeRank, setChangeRank] = useState("1");
   const [showModal, setShowModal] = useState(false);
   const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
-
+  const { data, isLoading, error, updateUsersLevel } = useRanks();
   const filteredData = getAdminFilter(data, { currentRank, searchValue });
 
   const target = useRef<HTMLDivElement>(null);
@@ -39,7 +39,6 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
     }
 
     try {
-      withdrawlUser(userId, accessToken, refreshToken);
     } catch (err: any) {
       console.log(err);
       setNotification({ notificationType: "Warning", message: "탈퇴 과정에서 에러가 발생했습니다.", type: "warning" });
@@ -64,19 +63,18 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
     }
   };
 
-  const handleChangeRank = () => {
-    const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
-    const newLevelUsers = levelUser.map((item) => ({ ...item, changeRank: parseInt(changeRank) }));
-    updateUsersLevel(newLevelUsers, accessToken, refreshToken);
-  };
-
   const handleCheckAllUsers = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setLevelUser(userData.map((item) => ({ userId: item.userId, rank: item.rank, requestRank: item.requestRank })));
     } else {
       setLevelUser([]);
     }
+  };
+  const handleChangeRank = () => {
+    const accessToken: string = getClientCookie("accessToken") || "";
+    const refreshToken: string = getClientCookie("refreshToken") || "";
+    const newLevelUsers = levelUser.map((item) => ({ ...item, changeRank: parseInt(changeRank) }));
+    updateUsersLevel(newLevelUsers, accessToken, refreshToken);
   };
 
   return (
@@ -117,10 +115,11 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
                   <input type="checkbox" onChange={handleCheckAllUsers} />
                 </th>
                 <th className="w-[20%]">닉네임</th>
-                <th className="w-[20%]">가입일</th>
-                <th className="w-[30%]">이메일</th>
-                <th className="w-[15%]">레벨</th>
-                <th className="w-[10%]">탈퇴</th>
+                <th className="w-[20%]">요청일</th>
+                <th className="w-[25%]">email</th>
+                <th className="w-[10%]">현재레벨</th>
+                <th className="w-[10%]">요청레벨</th>
+                <th className="w-[10%]">반려</th>
               </tr>
             </thead>
             <tbody className="block overflow-auto max-h-[38rem] w-full">
@@ -139,14 +138,15 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
                       {user.nick_name}
                     </td>
                     <td className="w-[20%]">{dayjs(user.createdAt).format("YYYY/MM/DD")}</td>
-                    <td className="w-[30%]">{user.email}</td>
-                    <td className="w-[15%]">{user.rank}</td>
+                    <td className="w-[25%]">{user.email}</td>
+                    <td className="w-[10%]">{user.rank}</td>
+                    <td className="w-[10%]">{user.requestRank}</td>
                     <td className="w-[10%]">
                       <button
                         className="border-none outline-none py-1 px-2 bg-red-500 rounded text-white"
-                        onClick={() => handleWithdrawl(user.userId)}
+                        onClick={() => {}}
                       >
-                        탈퇴
+                        반려
                       </button>
                     </td>
                   </tr>
