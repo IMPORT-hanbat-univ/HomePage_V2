@@ -12,7 +12,7 @@ import { notificationAtom } from "@/recoil/notification";
 import ModalPortal from "./ui/ModalPortal";
 import AdminModalContainer from "./ui/AdminModalContainer";
 import AdminModal from "./AdminModal";
-import useRanks from "@/hooks/userRanks";
+import useRanks from "@/hooks/useRanks";
 
 type Props = {
   currentRank: string;
@@ -24,7 +24,7 @@ export default function RankTable({ currentRank, searchValue, user }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
-  const { data, isLoading, error, updateUsersLevel } = useRanks();
+  const { data, isLoading, error, updateUsersLevel, rankRejectUser } = useRanks();
   const filteredData = getAdminFilter(data, { currentRank, searchValue });
 
   const target = useRef<HTMLDivElement>(null);
@@ -68,6 +68,23 @@ export default function RankTable({ currentRank, searchValue, user }: Props) {
       setLevelUser(userData.map((item) => ({ userId: item.userId, rank: item.rank, requestRank: item.requestRank })));
     } else {
       setLevelUser([]);
+    }
+  };
+
+  const handleRejectRank = (userId: number) => {
+    const accessToken: string = getClientCookie("accessToken") || "";
+    const refreshToken: string = getClientCookie("refreshToken") || "";
+    if (user.rank < 4) {
+      setNotification({ notificationType: "Warning", message: "반려 권한이 없습니다.", type: "warning" });
+    }
+
+    try {
+      rankRejectUser(userId, accessToken, refreshToken);
+    } catch (err: any) {
+      console.log(err);
+      setNotification({ notificationType: "Warning", message: "반려 과정에서 에러가 발생했습니다.", type: "warning" });
+
+      return;
     }
   };
   const handleChangeRank = () => {
@@ -144,7 +161,7 @@ export default function RankTable({ currentRank, searchValue, user }: Props) {
                     <td className="w-[10%]">
                       <button
                         className="border-none outline-none py-1 px-2 bg-red-500 rounded text-white"
-                        onClick={() => {}}
+                        onClick={() => handleRejectRank(user.userId)}
                       >
                         반려
                       </button>

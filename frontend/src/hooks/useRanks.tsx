@@ -1,4 +1,4 @@
-import { usersLevelUpdate } from "@/api/user";
+import { userRankReject, usersLevelUpdate } from "@/api/user";
 import useSWR from "swr";
 
 const fetcher = async (url: string) => {
@@ -25,5 +25,18 @@ export default function useRanks() {
       populateCache: false,
     });
   };
-  return { data, isLoading, error, updateUsersLevel };
+
+  const rankRejectUser = (userId: number, accessToken: string, refreshToken: string) => {
+    if (!userId) {
+      return;
+    }
+    return mutate(userRankReject(userId, accessToken, refreshToken), {
+      // optimisticData: newPost,
+      revalidate: true,
+      rollbackOnError: true,
+      populateCache: false,
+    });
+  };
+
+  return { data, isLoading, error, updateUsersLevel, rankRejectUser };
 }
