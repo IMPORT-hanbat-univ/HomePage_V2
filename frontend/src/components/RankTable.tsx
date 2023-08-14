@@ -13,15 +13,19 @@ import ModalPortal from "./ui/ModalPortal";
 import AdminModalContainer from "./ui/AdminModalContainer";
 import AdminModal from "./AdminModal";
 import useRanks from "@/hooks/useRanks";
+import useMe from "@/hooks/useMe";
+import { useSWRConfig } from "swr";
 
 type Props = {
   currentRank: string;
   searchValue: string;
-  user: DecodeUser;
 };
-export default function RankTable({ currentRank, searchValue, user }: Props) {
+export default function RankTable({ currentRank, searchValue }: Props) {
   const [changeRank, setChangeRank] = useState("1");
   const [showModal, setShowModal] = useState(false);
+  const [isAllChecked, setIsAllChecked] = useState(false);
+  const { decodeUser: user } = useMe();
+  const { mutate } = useSWRConfig();
   const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
   const { data, isLoading, error, updateUsersLevel, rankRejectUser } = useRanks();
@@ -35,7 +39,7 @@ export default function RankTable({ currentRank, searchValue, user }: Props) {
     const accessToken: string = getClientCookie("accessToken") || "";
     const refreshToken: string = getClientCookie("refreshToken") || "";
     if (user.rank < 5) {
-      setNotification({ notificationType: "Warning", message: "삭제 권한이 없습니다.", type: "warning" });
+      setNotification({ notificationType: "Warning", message: "탈퇴 권한이 없습니다.", type: "warning" });
     }
 
     try {
@@ -56,9 +60,10 @@ export default function RankTable({ currentRank, searchValue, user }: Props) {
   };
   const changeCheckbox = (e: ChangeEvent<HTMLInputElement>, user: DetailUser) => {
     if (e.target.checked) {
-      console.log("user check", user);
+      setIsAllChecked(true);
       setLevelUser((prev) => [...prev, { userId: user.userId, rank: user.rank, requestRank: user.requestRank }]);
     } else {
+      setIsAllChecked(false);
       setLevelUser((prev) => prev.filter((item) => item.userId !== user.userId));
     }
   };
@@ -92,6 +97,9 @@ export default function RankTable({ currentRank, searchValue, user }: Props) {
     const refreshToken: string = getClientCookie("refreshToken") || "";
     const newLevelUsers = levelUser.map((item) => ({ ...item, changeRank: parseInt(changeRank) }));
     updateUsersLevel(newLevelUsers, accessToken, refreshToken);
+    mutate(`http://localhost:4000/auth/tokenverification`);
+    setLevelUser([]);
+    setIsAllChecked(false);
   };
 
   return (
@@ -129,7 +137,7 @@ export default function RankTable({ currentRank, searchValue, user }: Props) {
             <thead className="block w-full ">
               <tr className=" w-[98%] flex items-center">
                 <th className="w-[5%] py-4">
-                  <input type="checkbox" onChange={handleCheckAllUsers} />
+                  <input type="checkbox" checked={isAllChecked} onChange={handleCheckAllUsers} />
                 </th>
                 <th className="w-[20%]">닉네임</th>
                 <th className="w-[20%]">요청일</th>

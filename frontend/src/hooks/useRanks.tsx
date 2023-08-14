@@ -7,7 +7,7 @@ const fetcher = async (url: string) => {
   }).then((res) => res.json());
 };
 
-const URL = "http://localhost:4000/amdin/rankManagement";
+const URL = "http://localhost:4000/admin/rankManagement";
 
 export default function useRanks() {
   const { data, isLoading, error, mutate } = useSWR(URL, fetcher);
