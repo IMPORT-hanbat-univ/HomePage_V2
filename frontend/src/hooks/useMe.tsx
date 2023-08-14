@@ -17,5 +17,5 @@ export default function useMe() {
   if (!error) {
     decodeUser = data;
   }
-  return { decodeUser, isLoading, error };
+  return { decodeUser, isLoading, error, mutate };
 }

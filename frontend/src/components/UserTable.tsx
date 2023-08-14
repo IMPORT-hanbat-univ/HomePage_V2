@@ -1,7 +1,6 @@
 "use client";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import useAdmins from "@/hooks/useUsers";
-import { DecodeUser, DetailUser } from "@/util/type";
+import { DetailUser } from "@/util/type";
 import dayjs from "dayjs";
 import getAdminFilter from "@/util/getAdminFilter";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -12,30 +11,38 @@ import { notificationAtom } from "@/recoil/notification";
 import ModalPortal from "./ui/ModalPortal";
 import AdminModalContainer from "./ui/AdminModalContainer";
 import AdminModal from "./AdminModal";
+import { useRouter } from "next/navigation";
+import useMe from "@/hooks/useMe";
+import { useSWRConfig } from "swr";
 
 type Props = {
   currentRank: string;
   searchValue: string;
-  user: DecodeUser;
 };
-export default function UserTable({ currentRank, searchValue, user }: Props) {
+export default function UserTable({ currentRank, searchValue }: Props) {
   const { data, isLoading, error, withdrawlUser, updateUsersLevel } = useUsers();
+  const { decodeUser: user } = useMe();
+  const { mutate } = useSWRConfig();
   const [changeRank, setChangeRank] = useState("1");
   const [showModal, setShowModal] = useState(false);
+  const [isAllChecked, setIsAllChecked] = useState(false);
   const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
-
+  console.log("check User", user);
   const filteredData = getAdminFilter(data, { currentRank, searchValue });
 
   const target = useRef<HTMLDivElement>(null);
   const userData = useInfiniteScroll(target, filteredData);
-  console.log("result", userData);
+  const router = useRouter();
+
   const setNotification = useSetRecoilState(notificationAtom);
   const handleWithdrawl = (userId: number) => {
     const accessToken: string = getClientCookie("accessToken") || "";
     const refreshToken: string = getClientCookie("refreshToken") || "";
+    console.log("data", data);
+    console.log("user", user);
     if (user.rank < 5) {
-      setNotification({ notificationType: "Warning", message: "삭제 권한이 없습니다.", type: "warning" });
+      setNotification({ notificationType: "Warning", message: "탈퇴 권한이 없습니다.", type: "warning" });
     }
 
     try {
@@ -57,7 +64,6 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
   };
   const changeCheckbox = (e: ChangeEvent<HTMLInputElement>, user: DetailUser) => {
     if (e.target.checked) {
-      console.log("user check", user);
       setLevelUser((prev) => [...prev, { userId: user.userId, rank: user.rank, requestRank: user.requestRank }]);
     } else {
       setLevelUser((prev) => prev.filter((item) => item.userId !== user.userId));
@@ -69,12 +75,17 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
     const refreshToken: string = getClientCookie("refreshToken") || "";
     const newLevelUsers = levelUser.map((item) => ({ ...item, changeRank: parseInt(changeRank) }));
     updateUsersLevel(newLevelUsers, accessToken, refreshToken);
+    mutate(`http://localhost:4000/auth/tokenverification`);
+    setLevelUser([]);
+    setIsAllChecked(false);
   };
 
   const handleCheckAllUsers = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
+      setIsAllChecked(true);
       setLevelUser(userData.map((item) => ({ userId: item.userId, rank: item.rank, requestRank: item.requestRank })));
     } else {
+      setIsAllChecked(false);
       setLevelUser([]);
     }
   };
@@ -114,7 +125,7 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
             <thead className="block w-full ">
               <tr className=" w-[98%] flex items-center">
                 <th className="w-[5%] py-4">
-                  <input type="checkbox" onChange={handleCheckAllUsers} />
+                  <input type="checkbox" checked={isAllChecked} onChange={handleCheckAllUsers} />
                 </th>
                 <th className="w-[20%]">닉네임</th>
                 <th className="w-[20%]">가입일</th>
@@ -127,7 +138,7 @@ export default function UserTable({ currentRank, searchValue, user }: Props) {
               {userData &&
                 userData.length > 0 &&
                 userData.map((user: DetailUser) => (
-                  <tr className="text-center flex items-center">
+                  <tr className="text-center flex items-center" key={user.userId}>
                     <td className="w-[5%] py-4">
                       <input
                         type="checkbox"

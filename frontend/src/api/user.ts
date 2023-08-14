@@ -6,7 +6,7 @@ export async function userWithdraw(
   refreshToken: string
 ): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000/admin/userManagement/Withdrawal/${userId}`, {
+    const result = await fetch(`http://localhost:4000/admin/userManagement/withdrawal/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
