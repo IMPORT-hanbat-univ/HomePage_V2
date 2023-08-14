@@ -6,6 +6,7 @@ import useUsers from "@/hooks/useUsers";
 import getClientCookie from "@/util/getClientCookie";
 type Props = {
   data: DetailUser;
+  onChangeDetailUser: (newData: DetailUser) => void;
 };
 
 const rank_array = [
@@ -17,7 +18,7 @@ const rank_array = [
   { value: "5", title: "관리자" },
 ];
 
-export default function AdminModal({ data }: Props) {
+export default function AdminModal({ data, onChangeDetailUser }: Props) {
   const { updateUser } = useUsers();
   const [modifyData, setModifyData] = useState<DetailUser>(data);
   const [isModify, setIsModify] = useState(false);
@@ -34,6 +35,7 @@ export default function AdminModal({ data }: Props) {
     const refreshToken: string = getClientCookie("refreshToken") || "";
     updateUser(modifyData, accessToken, refreshToken);
     setIsModify(false);
+    onChangeDetailUser(modifyData);
   };
   return (
     <article className="p-12 flex flex-col items-center h-full justify-around">

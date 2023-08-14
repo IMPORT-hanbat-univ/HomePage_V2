@@ -23,7 +23,7 @@ export async function userWithdraw(
 
 export async function userUpdate(userId: number, user: DetailUser, accessToken: string, refreshToken: string) {
   try {
-    const result = await fetch(`http://localhost:4000/admin/userMangement/userdata/${userId}`, {
+    const result = await fetch(`http://localhost:4000/admin/userManagement/userdata/${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
