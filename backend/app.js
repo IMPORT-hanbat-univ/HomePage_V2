@@ -1,3 +1,4 @@
+
 var createError = require('http-errors');
 var sequelize = require('./models').sequelize;
 var express = require('express');
@@ -5,10 +6,11 @@ const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./passport');
 var path = require('path');
-var logger = require('morgan');
+var logger = require('morgan')
 const cors = require('cors');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
+var app = express();
 
 
 var indexRouter = require('./routes/index');
@@ -19,9 +21,10 @@ const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 const userManagementRouter = require('./routes/admin/userManagement')
 const rankManagementRouter = require('./routes/admin/rankManagement');
+const adminPostRouter = require('./routes/admin/post');
 
+//const morganMiddleware = require('./routes/customMorgan');
 
-var app = express();
 sequelize.sync();
 passportConfig(passport);
 // view engine setup
@@ -44,6 +47,8 @@ app.use(cors({
   credentials:true,
   optionsSuccessStatus: 200,
 }))
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
@@ -52,11 +57,20 @@ app.use('/auth', authRouter);
 app.use('/post',postRouter);
 app.use('/test',testRouter);
 
+
 app.use('/admin/userManagement',userManagementRouter);
 app.use('/admin/rankManagement',rankManagementRouter);
+app.use('/admin/post',adminPostRouter);
 app.use('/image', express.static(path.join(__dirname, 'image')));
 
-
+//app.use(morganMiddleware)
+//app.use(morgan('dev'));
+// 로그 기록
+// if (process.env.NODE_ENV === 'production') { 
+//   app.use(morgan('combined')); // 배포환경이면
+// } else {
+//   app.use(morgan('dev')); // 개발환경이면
+// }
 
 
 // catch 404 and forward to error handler
