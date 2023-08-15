@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import QnACard from "./QnACard";
-import Pagination from "./Pagination";
+import Pagination from "./ui/Pagination";
 import usePagination from "@/hooks/usePagination";
 import { useSearchParams, usePathname } from "next/navigation";
 import { QnASimplePost } from "@/util/type";
@@ -17,6 +17,7 @@ export default function QnAPostList({ qnaList }: Props) {
   const currentPage = nowPage ? parseInt(nowPage) : 1;
   const pathname = usePathname() ?? "";
   const { page, pageData, pageRangeArray } = usePagination(qnaList, currentPage);
+
   return (
     <div className="flex items-center justify-center">
       <div className=" flex-shrink basis-0 grow ">

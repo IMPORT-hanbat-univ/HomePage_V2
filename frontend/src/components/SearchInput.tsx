@@ -1,17 +1,17 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 
 export default function SearchInput() {
   const [search, setSearch] = useState("");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const submitSearch = (e) => {
+  const submitSearch = (e: FormEvent) => {
     e.preventDefault();
     let queryString = "";
+    const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
     if (search.trim() === "") {
-      const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
       const copyQuery = { ...query };
       delete copyQuery.search;
       queryString = new URLSearchParams(copyQuery).toString();

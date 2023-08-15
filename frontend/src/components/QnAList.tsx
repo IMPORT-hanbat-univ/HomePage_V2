@@ -52,7 +52,7 @@ export default function QnAList({ user }: Props) {
         </div>
         <div className="flex items-center justify-between border-b w-full py-1">
           <OrderCategory
-            seleted={selectedOrder}
+            selected={selectedOrder}
             orderArray={[
               { order: "latest", name: "최신순" },
               { order: "oldest", name: "오래된순" },
@@ -72,9 +72,7 @@ export default function QnAList({ user }: Props) {
       </section>
 
       <section className="hidden lg:block lg:w-3/12 mt-[32px] ml-[40px] max-w-[200px]">
-        <div className="fixed">
-          <PopularTag data={data} />
-        </div>
+        <div className="fixed">{data && <PopularTag data={data} />}</div>
       </section>
     </section>
   );

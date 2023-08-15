@@ -2,7 +2,6 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import React from "react";
 import cls from "classnames";
-import { Notice } from "@/util/type";
 export default function TagList({
   post,
   disabled,

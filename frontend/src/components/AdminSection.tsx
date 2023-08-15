@@ -8,11 +8,7 @@ import { DecodeUser } from "@/util/type";
 import RankTable from "./RankTable";
 import PostTable from "./PostTable";
 
-type Props = {
-  user: DecodeUser;
-};
-
-export default function AdminSection({ user }: Props) {
+export default function AdminSection() {
   const searchParams = useSearchParams();
   const page = searchParams?.get("page") ?? "user";
   const [text, setText] = useState("");
@@ -61,9 +57,9 @@ export default function AdminSection({ user }: Props) {
         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
       />
       {page === "user" ? (
-        <UserTable user={user} currentRank={currentRank} searchValue={searchValue} />
+        <UserTable currentRank={currentRank} searchValue={searchValue} />
       ) : page === "rank" ? (
-        <RankTable user={user} currentRank={currentRank} searchValue={searchValue} />
+        <RankTable currentRank={currentRank} searchValue={searchValue} />
       ) : (
         <PostTable />
       )}

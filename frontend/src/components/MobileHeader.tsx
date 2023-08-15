@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import MobileMenu from "../MobileMenu";
+import MobileMenu from "./MobileMenu";
 import { Poppins } from "next/font/google";
-import UserNav from "../UserNav";
+import UserNav from "./UserNav";
 
 const hanuman = Poppins({
   weight: "600",

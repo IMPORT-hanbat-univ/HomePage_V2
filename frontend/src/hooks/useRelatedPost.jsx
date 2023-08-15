@@ -7,9 +7,10 @@ export default function useRelatedPost(list, post) {
     if (list && list.length > 0 && post && Object.keys(post).length > 0) {
       const postKeywordArray = post?.content.content.match(/[가-힣a-zA-Z]+(?=([^가-힣a-zA-Z]|$))/g);
       const postKeywordSet = new Set(postKeywordArray);
-      console.log("set", postKeywordSet);
+      console.log("list", list, post);
       const filteredList = list
-        ?.reduce((acc, cur) => {
+        .filter((item) => item.id !== post.content.id) // 제외할 게시글
+        .reduce((acc, cur) => {
           const keyword = cur?.content.match(/[가-힣a-zA-Z]+(?=([^가-힣a-zA-Z]|$))/g);
           const keywordSet = new Set(keyword);
           const intersection = new Set([...postKeywordSet].filter((x) => keywordSet.has(x)));
@@ -23,6 +24,7 @@ export default function useRelatedPost(list, post) {
           return acc;
         }, [])
         .sort((a, b) => b.similarity - a.similarity);
+
       if (filteredList.length > 5) {
         setFilteredData(filteredList.slice(0, 5));
       } else {
@@ -32,6 +34,6 @@ export default function useRelatedPost(list, post) {
       setFilteredData([]);
     }
   }, [list, post]);
-  console.log("filteredData", list, post, filteredData);
+
   return filteredData;
 }

@@ -62,13 +62,14 @@ export async function usersLevelUpdate(
   }
 }
 
+/** 유저 랭크변경 요청 반려 */
 export async function userRankReject(
   userId: number,
   accessToken: string,
   refreshToken: string
 ): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000//admin/rankManagement/reject/${userId}`, {
+    const result = await fetch(`http://localhost:4000/admin/rankManagement/reject/${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

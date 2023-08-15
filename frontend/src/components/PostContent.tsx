@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import React from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdArrowForwardIos } from "react-icons/md";
-import TagList from "../TagList";
+import TagList from "./TagList";
 import Link from "next/link";
 import getClientCookie from "@/util/getClientCookie";
 

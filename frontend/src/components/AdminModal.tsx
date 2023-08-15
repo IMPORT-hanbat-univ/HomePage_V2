@@ -185,7 +185,9 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
                   onChange={changeInput}
                 />
               ) : (
-                <span id="blog">{blog}</span>
+                <a href={blog} id="blog">
+                  {blog}
+                </a>
               )}
             </div>
             <div className="flex items-center w-full">
@@ -201,7 +203,9 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
                   onChange={changeInput}
                 />
               ) : (
-                <span id="github_url">{github_url}</span>
+                <a id="github_url" href={github_url}>
+                  {github_url}
+                </a>
               )}
             </div>
           </div>
