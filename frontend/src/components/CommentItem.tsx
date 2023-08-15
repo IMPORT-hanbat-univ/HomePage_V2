@@ -2,9 +2,9 @@
 import dayjs from "dayjs";
 import React, { useEffect, useState, useTransition } from "react";
 import cls from "classnames";
-import MarkdownViewer from "../MarkdownViewer";
+import MarkdownViewer from "./MarkdownViewer";
 import { BsArrowReturnRight } from "react-icons/bs";
-import MarkdownEditor from "../MarkdownEditor";
+import MarkdownEditor from "./MarkdownEditor";
 import getCommentSequenceValue from "@/util/getCommentSequenceValue";
 import { Comment } from "@/util/type";
 import getClientCookie from "@/util/getClientCookie";

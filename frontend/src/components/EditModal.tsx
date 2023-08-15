@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import SelectIinput from "./ui/SelectIinput";
-import { useSearchParams, useRouter, useParams } from "next/navigation";
+import { useSearchParams, useRouter, useParams, usePathname } from "next/navigation";
 import EditTopic from "./ui/EditTopic";
 import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
-import { createPost, updatePost } from "@/api/post";
-import Notification from "./Notification";
+import { createPost, updateAdminPost, updatePost } from "@/api/post";
 import { ClipLoader } from "react-spinners";
 import { BiArrowBack } from "react-icons/bi";
 import getFirstFile from "@/util/getFirstFile";
@@ -54,6 +53,7 @@ const selectCategoryList = [
 export default function EditModal({ title, initTopic, tagList, content, onClose, nick_name }: Props) {
   const searchParams = useSearchParams();
   const params = useParams();
+  const pathname = usePathname();
   const categoryQuery = searchParams?.get("category");
   const selectCategory = selectCategoryList.find((item) => item.category === categoryQuery);
   const [categoryList, setCategoryList] = useState<{ name: string; value: string }[] | []>(
@@ -107,8 +107,13 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
       };
       console.log("check", post);
       const postId = params?.id;
+      const adminEdit = pathname?.includes("adminedit");
       if (postId) {
-        result = await updatePost(post, postId as string);
+        if (adminEdit) {
+          result = await updateAdminPost(post, postId as string);
+        } else {
+          result = await updatePost(post, postId as string);
+        }
       } else {
         result = await createPost(post);
       }

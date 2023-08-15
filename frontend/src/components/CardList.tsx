@@ -2,7 +2,7 @@
 import usePagination from "@/hooks/usePagination";
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
-import Pagination from "./Pagination";
+import Pagination from "./ui/Pagination";
 import CardItem from "./CardItem";
 import { SimplePost } from "@/util/type";
 import Link from "next/link";

@@ -11,7 +11,7 @@ import { notificationAtom } from "@/recoil/notification";
 import ModalPortal from "./ui/ModalPortal";
 import AdminModalContainer from "./ui/AdminModalContainer";
 import AdminModal from "./AdminModal";
-import { useRouter } from "next/navigation";
+
 import useMe from "@/hooks/useMe";
 import { useSWRConfig } from "swr";
 
@@ -28,19 +28,18 @@ export default function UserTable({ currentRank, searchValue }: Props) {
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
-  console.log("check User", user);
+
   const filteredData = getAdminFilter(data, { currentRank, searchValue });
 
   const target = useRef<HTMLDivElement>(null);
   const userData = useInfiniteScroll(target, filteredData);
-  const router = useRouter();
 
+  console.log("dataList", userData, detailUser);
   const setNotification = useSetRecoilState(notificationAtom);
   const handleWithdrawl = (userId: number) => {
     const accessToken: string = getClientCookie("accessToken") || "";
     const refreshToken: string = getClientCookie("refreshToken") || "";
-    console.log("data", data);
-    console.log("user", user);
+
     if (user.rank < 5) {
       setNotification({ notificationType: "Warning", message: "탈퇴 권한이 없습니다.", type: "warning" });
     }
@@ -62,6 +61,11 @@ export default function UserTable({ currentRank, searchValue }: Props) {
     setShowModal(true);
     setDetailUser(data);
   };
+
+  const changeDetailUser = (newData: DetailUser) => {
+    setDetailUser(newData);
+  };
+
   const changeCheckbox = (e: ChangeEvent<HTMLInputElement>, user: DetailUser) => {
     if (e.target.checked) {
       setLevelUser((prev) => [...prev, { userId: user.userId, rank: user.rank, requestRank: user.requestRank }]);
@@ -95,7 +99,7 @@ export default function UserTable({ currentRank, searchValue }: Props) {
       {detailUser && showModal && (
         <ModalPortal>
           <AdminModalContainer onClose={closeModal}>
-            <AdminModal data={detailUser} />
+            <AdminModal data={detailUser} onChangeDetailUser={changeDetailUser} />
           </AdminModalContainer>
         </ModalPortal>
       )}

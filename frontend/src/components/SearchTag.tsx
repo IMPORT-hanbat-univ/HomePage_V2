@@ -1,4 +1,5 @@
 "use client";
+import getSearchParamsToObject from "@/util/getSearchParamsToObject";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -6,9 +7,10 @@ export default function SearchTag() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const tag = searchParams.get("tag");
+  const tag = searchParams?.get("tag") ?? "";
+  const query = getSearchParamsToObject(searchParams);
   const [tagText, setTagText] = useState("");
-  const [tagList, setTagList] = useState([]);
+  const [tagList, setTagList] = useState<string[]>([]);
 
   useEffect(() => {
     if (tag) {
@@ -16,7 +18,7 @@ export default function SearchTag() {
     }
   }, [tag]);
 
-  const pressTagInput = (e) => {
+  const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     let queryString = "";
     if (e.key === "Enter") {
       if (tagText.trim() === "") {
@@ -38,11 +40,11 @@ export default function SearchTag() {
     }
   };
 
-  const removeTag = (tag) => {
+  const removeTag = (tag: string) => {
     let queryString = "";
     if (tagList.length > 1) {
       const filteredTag = tagList.filter((item) => item !== tag);
-      queryString = new URLSearchParams({ ...router.query, tag: filteredTag.join("+") }).toString();
+      queryString = new URLSearchParams({ ...query, tag: filteredTag.join("+") }).toString();
       setTagList(filteredTag);
     } else {
       const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};

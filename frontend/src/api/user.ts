@@ -23,7 +23,7 @@ export async function userWithdraw(
 
 export async function userUpdate(userId: number, user: DetailUser, accessToken: string, refreshToken: string) {
   try {
-    const result = await fetch(`http://localhost:4000/admin/userMangement/userdata/${userId}`, {
+    const result = await fetch(`http://localhost:4000/admin/userManagement/userdata/${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,13 +62,14 @@ export async function usersLevelUpdate(
   }
 }
 
+/** 유저 랭크변경 요청 반려 */
 export async function userRankReject(
   userId: number,
   accessToken: string,
   refreshToken: string
 ): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000//admin/rankManagement/reject/${userId}`, {
+    const result = await fetch(`http://localhost:4000/admin/rankManagement/reject/${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

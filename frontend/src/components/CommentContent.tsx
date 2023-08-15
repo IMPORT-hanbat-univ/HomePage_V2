@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect, useState, useTransition } from "react";
-import MarkdownEditor from "../MarkdownEditor";
-import CommentItem from "../CommentItem";
+import MarkdownEditor from "./MarkdownEditor";
+import CommentItem from "./CommentItem";
 import getCommentGroupValue from "@/util/getCommentGroupValue";
 import { useSearchParams, useParams, useRouter } from "next/navigation";
-import Pagination from "../Pagination";
+import Pagination from "./ui/Pagination";
 import usePagination from "@/hooks/usePagination";
 import { PostDetailType } from "@/util/type";
 import getClientCookie from "@/util/getClientCookie";
 import useCommentList from "@/hooks/useCommentList";
-import DeleteCommentItem from "../DeleteCommentItem";
+import DeleteCommentItem from "./DeleteCommentItem";
 import usePost from "@/hooks/usePost";
 
 export default function CommentContent({

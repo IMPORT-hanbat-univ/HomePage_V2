@@ -6,7 +6,7 @@ import DesktopHeader from "@/components/DesktopHeader";
 import MobileHeader from "@/components/MobileHeader";
 import { headers } from "next/headers";
 import Header from "@/components/Header";
-import Notification from "@/components/Notification";
+import Notification from "@/components/ui/Notification";
 
 export const metadata = {
   title: "Next.js",

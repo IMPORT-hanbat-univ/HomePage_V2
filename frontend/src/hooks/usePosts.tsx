@@ -1,7 +1,8 @@
+import { SimplePost } from "@/util/type";
 import React from "react";
 import useSWR from "swr";
 
-const fetcher = async (url: string) => {
+const fetcher = async (url: string): Promise<SimplePost[]> => {
   return fetch(url, {
     method: "GET",
   })

@@ -1,17 +1,22 @@
 "use client";
 import usePopularTag from "@/hooks/usePopularTag";
+import { SimplePost } from "@/util/type";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-export default function PopularTag({ data }) {
+type Props = {
+  data: SimplePost[];
+};
+
+export default function PopularTag({ data }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const tag = searchParams.get("tag");
+  const tag = searchParams?.get("tag") ?? "";
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const tagArray = usePopularTag(data);
 
-  const clickTag = (seletedTag) => {
+  const clickTag = (seletedTag: string) => {
     let queryString = "";
     if (tag && tag.trim() !== "") {
       if (tag.includes(seletedTag)) {

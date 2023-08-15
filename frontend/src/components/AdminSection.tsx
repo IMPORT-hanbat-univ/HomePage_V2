@@ -7,17 +7,15 @@ import UserTable from "./UserTable";
 import { DecodeUser } from "@/util/type";
 import RankTable from "./RankTable";
 import PostTable from "./PostTable";
+import { request } from "http";
 
-type Props = {
-  user: DecodeUser;
-};
-
-export default function AdminSection({ user }: Props) {
+export default function AdminSection() {
   const searchParams = useSearchParams();
   const page = searchParams?.get("page") ?? "user";
   const [text, setText] = useState("");
   const [currentRank, setCurrentRank] = useState("all");
   const [requestRank, setRequestRank] = useState("all");
+  const [category, setCategory] = useState("all");
   const searchValue = useDebounce(text, 3000);
 
   const commonOptions = {
@@ -32,7 +30,7 @@ export default function AdminSection({ user }: Props) {
     onChange: (e: ChangeEvent<HTMLSelectElement>) => setCurrentRank(e.target.value),
   };
 
-  let selectArray = [];
+  let selectArray: any[] = [];
 
   switch (page) {
     case "rank": {
@@ -46,12 +44,24 @@ export default function AdminSection({ user }: Props) {
       ];
       break;
     }
-    default: {
+    case "user": {
       selectArray = [{ ...commonOptions, value: currentRank }];
+      break;
+    }
+    case "post": {
+      selectArray = [
+        {
+          valueList: [
+            { title: "전체", value: "all" },
+            { title: "Notice", value: "notice" },
+            { title: "Information", value: "information" },
+            { title: "QnA", value: "qna" },
+          ],
+          onChange: (e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value),
+        },
+      ];
     }
   }
-
-  console.log(currentRank, requestRank, searchValue);
 
   return (
     <div className="p-20 ">
@@ -61,11 +71,11 @@ export default function AdminSection({ user }: Props) {
         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
       />
       {page === "user" ? (
-        <UserTable user={user} currentRank={currentRank} searchValue={searchValue} />
+        <UserTable currentRank={currentRank} searchValue={searchValue} />
       ) : page === "rank" ? (
-        <RankTable user={user} currentRank={currentRank} searchValue={searchValue} />
+        <RankTable currentRank={currentRank} requestRank={requestRank} searchValue={searchValue} />
       ) : (
-        <PostTable />
+        <PostTable searchValue={searchValue} category={category} />
       )}
     </div>
   );

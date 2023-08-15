@@ -10,10 +10,9 @@ type Props = {
 
 export default function QnACard({ post }: Props) {
   const { tagF, tagS, tagT } = post;
-  console.log(post, !(tagF.trim() === "" && tagS.trim() === "" && tagT.trim() === ""));
   return (
     <li className="max-w-[980px] border-b border-b-zinc-400 hover:bg-gray-100">
-      <a className="cursor-pointer ">
+      <div className="cursor-pointer ">
         <div className="flex md:py-[18px] md:px-[16px] py-[18px] border-b-zinc-300">
           <div className="flex-auto w-full">
             <div className="flex flex-col md:mb-[4px] md:items-center items-start">
@@ -53,7 +52,7 @@ export default function QnACard({ post }: Props) {
             </div>
           </div>
         </div>
-      </a>
+      </div>
     </li>
   );
 }
