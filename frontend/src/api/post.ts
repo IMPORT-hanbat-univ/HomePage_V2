@@ -202,3 +202,51 @@ export async function deletePostComment(
     return "삭제과정에서 에러가 발생했습니다.";
   }
 }
+
+export async function updateAdminPost(post: CreatePost, postId: string): Promise<boolean | string> {
+  try {
+    const accessToken = getClientCookie("accessToken");
+    const refreshToken = getClientCookie("refreshToken");
+
+    const result = await fetch(`http://localhost:4000/admin/post/edit/${postId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+        refreshToken,
+      },
+      body: JSON.stringify(post),
+    });
+
+    if (result.ok) {
+      return result.json();
+    } else {
+      throw new Error("result ok false");
+    }
+  } catch (err: any) {
+    console.log(err);
+    return "글 수정 과정에서 오류가 발생했습니다.";
+  }
+}
+
+export async function deleteAdminPost(
+  category: string,
+  postId: number,
+  accessToken: string,
+  refreshToken: string
+): Promise<boolean | string> {
+  try {
+    const result = await fetch(`http://localhost:4000/admin/deleted/${postId}?category=${category}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+        refreshToken,
+      },
+    });
+    return true;
+  } catch (err: any) {
+    console.log(err);
+    return "삭제과정에서 에러가 발생했습니다.";
+  }
+}

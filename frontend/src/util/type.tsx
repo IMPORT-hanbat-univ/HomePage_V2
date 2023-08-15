@@ -26,6 +26,7 @@ export type SimplePost = {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
+  category: string;
   tagF: string;
   tagS: string;
   tagT: string;

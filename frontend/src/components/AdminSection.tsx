@@ -7,6 +7,7 @@ import UserTable from "./UserTable";
 import { DecodeUser } from "@/util/type";
 import RankTable from "./RankTable";
 import PostTable from "./PostTable";
+import { request } from "http";
 
 export default function AdminSection() {
   const searchParams = useSearchParams();
@@ -14,6 +15,7 @@ export default function AdminSection() {
   const [text, setText] = useState("");
   const [currentRank, setCurrentRank] = useState("all");
   const [requestRank, setRequestRank] = useState("all");
+  const [category, setCategory] = useState("all");
   const searchValue = useDebounce(text, 3000);
 
   const commonOptions = {
@@ -28,7 +30,7 @@ export default function AdminSection() {
     onChange: (e: ChangeEvent<HTMLSelectElement>) => setCurrentRank(e.target.value),
   };
 
-  let selectArray = [];
+  let selectArray: any[] = [];
 
   switch (page) {
     case "rank": {
@@ -42,12 +44,24 @@ export default function AdminSection() {
       ];
       break;
     }
-    default: {
+    case "user": {
       selectArray = [{ ...commonOptions, value: currentRank }];
+      break;
+    }
+    case "post": {
+      selectArray = [
+        {
+          valueList: [
+            { title: "전체", value: "all" },
+            { title: "Notice", value: "notice" },
+            { title: "Information", value: "information" },
+            { title: "QnA", value: "qna" },
+          ],
+          onChange: (e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value),
+        },
+      ];
     }
   }
-
-  console.log(currentRank, requestRank, searchValue);
 
   return (
     <div className="p-20 ">
@@ -59,9 +73,9 @@ export default function AdminSection() {
       {page === "user" ? (
         <UserTable currentRank={currentRank} searchValue={searchValue} />
       ) : page === "rank" ? (
-        <RankTable currentRank={currentRank} searchValue={searchValue} />
+        <RankTable currentRank={currentRank} requestRank={requestRank} searchValue={searchValue} />
       ) : (
-        <PostTable />
+        <PostTable searchValue={searchValue} category={category} />
       )}
     </div>
   );

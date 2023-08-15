@@ -19,45 +19,24 @@ import { useSWRConfig } from "swr";
 type Props = {
   currentRank: string;
   searchValue: string;
+  requestRank: string;
 };
-export default function RankTable({ currentRank, searchValue }: Props) {
+export default function RankTable({ currentRank, searchValue, requestRank }: Props) {
   const [changeRank, setChangeRank] = useState("1");
-  const [showModal, setShowModal] = useState(false);
+
   const [isAllChecked, setIsAllChecked] = useState(false);
   const { decodeUser: user } = useMe();
   const { mutate } = useSWRConfig();
-  const [detailUser, setDetailUser] = useState<null | DetailUser>(null);
+
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
   const { data, isLoading, error, updateUsersLevel, rankRejectUser } = useRanks();
-  const filteredData = getAdminFilter(data, { currentRank, searchValue });
+  const filteredData = getAdminFilter(data, { currentRank, requestRank, searchValue });
 
   const target = useRef<HTMLDivElement>(null);
   const userData = useInfiniteScroll(target, filteredData);
   console.log("result", userData);
   const setNotification = useSetRecoilState(notificationAtom);
-  const handleWithdrawl = (userId: number) => {
-    const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
-    if (user.rank < 5) {
-      setNotification({ notificationType: "Warning", message: "탈퇴 권한이 없습니다.", type: "warning" });
-    }
 
-    try {
-    } catch (err: any) {
-      console.log(err);
-      setNotification({ notificationType: "Warning", message: "탈퇴 과정에서 에러가 발생했습니다.", type: "warning" });
-
-      return;
-    }
-  };
-  const closeModal = () => {
-    setShowModal(false);
-    setDetailUser(null);
-  };
-  const openModal = (data: DetailUser) => {
-    setShowModal(true);
-    setDetailUser(data);
-  };
   const changeCheckbox = (e: ChangeEvent<HTMLInputElement>, user: DetailUser) => {
     if (e.target.checked) {
       setIsAllChecked(true);
@@ -104,14 +83,6 @@ export default function RankTable({ currentRank, searchValue }: Props) {
 
   return (
     <>
-      {detailUser && showModal && (
-        <ModalPortal>
-          <AdminModalContainer onClose={closeModal}>
-            <AdminModal data={detailUser} />
-          </AdminModalContainer>
-        </ModalPortal>
-      )}
-
       <section className="w-full h-full overflow-hidden">
         <div className="flex items-center gap-6 p-4 ">
           <select
@@ -159,9 +130,7 @@ export default function RankTable({ currentRank, searchValue }: Props) {
                         onChange={(e) => changeCheckbox(e, user)}
                       />
                     </td>
-                    <td className="w-[20%] cursor-pointer" onClick={() => openModal(user)}>
-                      {user.nick_name}
-                    </td>
+                    <td className="w-[20%] cursor-pointer">{user.nick_name}</td>
                     <td className="w-[20%]">{dayjs(user.createdAt).format("YYYY/MM/DD")}</td>
                     <td className="w-[25%]">{user.email}</td>
                     <td className="w-[10%]">{user.rank}</td>
