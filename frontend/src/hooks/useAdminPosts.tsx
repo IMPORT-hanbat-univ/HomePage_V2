@@ -10,7 +10,10 @@ const fetcher = async (url: string) => {
 };
 
 export default function useAdminPosts() {
-  const { data, isLoading, error, mutate } = useSWR(`http://localhost:4000/admin/post`, fetcher);
+  const { data, isLoading, error, mutate } = useSWR(
+    `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/post`,
+    fetcher
+  );
 
   const deletePost = (category: string, postId: number, accessToken: string, refreshToken: string) => {
     if (!postId || category) {

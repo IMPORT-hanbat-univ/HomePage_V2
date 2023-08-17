@@ -11,6 +11,9 @@ const fetcher = async (url: string): Promise<SimplePost[]> => {
 };
 
 export default function usePosts(category: string) {
-  const { data, isLoading, error, mutate } = useSWR(`http://localhost:4000/post?category=${category}`, fetcher);
+  const { data, isLoading, error, mutate } = useSWR(
+    `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post?category=${category}`,
+    fetcher
+  );
   return { data, isLoading, error };
 }

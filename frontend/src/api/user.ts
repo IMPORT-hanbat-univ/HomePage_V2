@@ -6,14 +6,17 @@ export async function userWithdraw(
   refreshToken: string
 ): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000/admin/userManagement/withdrawal/${userId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        accessToken,
-        refreshToken,
-      },
-    });
+    const result = await fetch(
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/userManagement/withdrawal/${userId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken,
+          refreshToken,
+        },
+      }
+    );
     return true;
   } catch (err: any) {
     console.log(err);
@@ -23,15 +26,19 @@ export async function userWithdraw(
 
 export async function userUpdate(userId: number, user: DetailUser, accessToken: string, refreshToken: string) {
   try {
-    const result = await fetch(`http://localhost:4000/admin/userManagement/userdata/${userId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accessToken,
-        refreshToken,
-      },
-      body: JSON.stringify(user),
-    });
+    const result = await fetch(
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/userManagement/userdata/${userId}`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken,
+          refreshToken,
+        },
+        body: JSON.stringify(user),
+      }
+    );
     return result;
   } catch (err: any) {
     console.log(err);
@@ -46,15 +53,19 @@ export async function usersLevelUpdate(
   page: string
 ) {
   try {
-    const result = await fetch(`http://localhost:4000/admin/rankManagement/changeRank?page=${page}`, {
-      method: "POST",
-      body: JSON.stringify({ changeRanks: users }),
-      headers: {
-        "Content-Type": "application/json",
-        accessToken,
-        refreshToken,
-      },
-    });
+    const result = await fetch(
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/rankManagement/changeRank?page=${page}`,
+      {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ changeRanks: users }),
+        headers: {
+          "Content-Type": "application/json",
+          accessToken,
+          refreshToken,
+        },
+      }
+    );
     return result;
   } catch (err: any) {
     console.log(err);
@@ -69,14 +80,18 @@ export async function userRankReject(
   refreshToken: string
 ): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000/admin/rankManagement/reject/${userId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accessToken,
-        refreshToken,
-      },
-    });
+    const result = await fetch(
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/rankManagement/reject/${userId}`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken,
+          refreshToken,
+        },
+      }
+    );
     return true;
   } catch (err: any) {
     console.log(err);

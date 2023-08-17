@@ -46,7 +46,11 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
             className="object-cover rounded-full w-20 h-20"
             width={200}
             height={200}
-            src={profileImg ? `http://localhost:4000${profileImg}` : "/images/import_image.jpg"}
+            src={
+              profileImg
+                ? `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}${profileImg}`
+                : "/images/import_image.jpg"
+            }
           />
           <div className="flex flex-col gap-1 text-lg">
             <div className="flex items-center w-full">

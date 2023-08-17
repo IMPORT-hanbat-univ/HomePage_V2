@@ -28,9 +28,9 @@ export default function MarkdownEditor({ text, setText, hideToolbar }: Props) {
       const formData = new FormData();
       formData.append("fileupload", file);
 
-      fetch("http://localhost:4000/post/file", {
+      fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/file`, {
         method: "POST",
-
+        credentials: "include",
         body: formData,
       })
         .then((response) => response.text())
@@ -38,7 +38,7 @@ export default function MarkdownEditor({ text, setText, hideToolbar }: Props) {
           // 업로드 성공 후 처리 로직
           console.log(data);
           //app${data}
-          setText((prev) => `${prev} \n ![test](http://localhost:4000${data} "title")`);
+          setText((prev) => `${prev} \n ![test](http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}${data} "title")`);
         })
         .catch((error) => {
           // 업로드 실패 시 처리 로직

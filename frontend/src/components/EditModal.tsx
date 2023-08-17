@@ -21,9 +21,9 @@ type Props = {
 
 const aboutList = [
   { name: "세부 카테고리를 선택해주세요", value: "" },
-  { name: "Introduce", value: "introduce" },
-  { name: "Rule", value: "rule" },
-  { name: "Schedule", value: "schedule" },
+  // { name: "Introduce", value: "introduce" },
+  // { name: "Rule", value: "rule" },
+  // { name: "Schedule", value: "schedule" },
   { name: "Notice", value: "notice" },
 ];
 
@@ -33,11 +33,11 @@ const communityList = [
   { name: "Information", value: "information" },
 ];
 
-const projectList = [
-  { name: "세부 카테고리를 선택해주세요", value: "" },
-  { name: "Project", value: "project" },
-  { name: "Patchnote", value: "patch" },
-];
+// const projectList = [
+//   { name: "세부 카테고리를 선택해주세요", value: "" },
+//   { name: "Project", value: "project" },
+//   { name: "Patchnote", value: "patch" },
+// ];
 
 const selectCategoryList = [
   { category: "introduce", path: "about", categoryList: aboutList },
@@ -46,8 +46,8 @@ const selectCategoryList = [
   { category: "notice", path: "about", categoryList: aboutList, route: "/about/notice" },
   { category: "qna", path: "community", categoryList: communityList },
   { category: "information", path: "community", categoryList: communityList },
-  { category: "project", path: "project", categoryList: projectList },
-  { category: "patchnote", path: "project", categoryList: projectList },
+  // { category: "project", path: "project", categoryList: projectList },
+  // { category: "patchnote", path: "project", categoryList: projectList },
 ];
 
 export default function EditModal({ title, initTopic, tagList, content, onClose, nick_name }: Props) {
@@ -160,7 +160,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
             { name: "카테고리를 선택해주세요", value: "" },
             { name: "About", value: "about" },
             { name: "Community", value: "community" },
-            { name: "Project", value: "project" },
+            // { name: "Project", value: "project" },
           ]}
           currentValue={path}
         />
