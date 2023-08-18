@@ -1,4 +1,4 @@
-import Recoil from "@/components/Recoil";
+import Recoil from "@/components/ui/Recoil";
 import "./global.scss";
 import ReactQuery from "@/components/ReactQuery";
 import Footer from "@/components/Footer";

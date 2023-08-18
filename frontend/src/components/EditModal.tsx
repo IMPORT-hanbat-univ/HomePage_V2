@@ -108,30 +108,31 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
       console.log("check", post);
       const postId = params?.id;
       const adminEdit = pathname?.includes("adminedit");
-      if (postId) {
-        if (adminEdit) {
-          result = await updateAdminPost(post, postId as string);
-        } else {
-          result = await updatePost(post, postId as string);
-        }
-      } else {
-        result = await createPost(post);
-      }
-      console.log("result", result);
-      if (!result.content || typeof result === "string") {
-        setNotification({ notificationType: "Warning", message: result, type: "warning" });
 
-        return;
-      } else {
-        const content = result.content;
-        startTrasition(() => {
-          if (category === "project") {
-            router.replace(`/${category}/${content.id}`);
+      startTrasition(async () => {
+        if (postId) {
+          if (adminEdit) {
+            result = await updateAdminPost(post, postId as string);
           } else {
-            router.replace(`/${path}/${category}/${content.id}`);
+            result = await updatePost(post, postId as string);
           }
-        });
-      }
+        } else {
+          result = await createPost(post);
+        }
+        console.log("result", result);
+        if (!result.content || typeof result === "string") {
+          setNotification({ notificationType: "Warning", message: result, type: "warning" });
+
+          return;
+        } else {
+          const content = result.content;
+        }
+        if (category === "project") {
+          router.replace(`/${category}/${result.content.id}`);
+        } else {
+          router.replace(`/${path}/${category}/${result.content.id}`);
+        }
+      });
     } catch (err) {
       console.log(err);
       setNotification({

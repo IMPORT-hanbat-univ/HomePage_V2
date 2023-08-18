@@ -9,6 +9,7 @@ const fetcher = (url: string) =>
     credentials: "same-origin",
     headers: {
       accessToken: (getClientCookie("accessToken") as string) || "",
+      refreshToken: (getClientCookie("refreshToken") as string) || "",
     },
   }).then((res) => res.json());
 
