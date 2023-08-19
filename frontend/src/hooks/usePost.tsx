@@ -10,7 +10,10 @@ const fetcher = async (url: string) => {
 };
 
 export default function usePost(category: string, id: string | number) {
-  const { data, isLoading, error, mutate } = useSWR(`http://localhost:4000/post/${id}?category=${category}`, fetcher);
+  const { data, isLoading, error, mutate } = useSWR(
+    `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/${id}?category=${category}`,
+    fetcher
+  );
   console.log("datacheck", data);
   const createComment = (comment: CreateComment, accessToken: string, refreshToken: string) => {
     if (!data) {

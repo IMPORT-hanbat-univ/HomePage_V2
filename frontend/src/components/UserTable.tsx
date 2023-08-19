@@ -79,7 +79,7 @@ export default function UserTable({ currentRank, searchValue }: Props) {
     const refreshToken: string = getClientCookie("refreshToken") || "";
     const newLevelUsers = levelUser.map((item) => ({ ...item, changeRank: parseInt(changeRank) }));
     updateUsersLevel(newLevelUsers, accessToken, refreshToken);
-    mutate(`http://localhost:4000/auth/tokenverification`);
+    mutate(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/tokenverification`);
     setLevelUser([]);
     setIsAllChecked(false);
   };

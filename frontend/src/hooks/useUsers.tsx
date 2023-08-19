@@ -10,7 +10,7 @@ const fetcher = async (url: string) => {
 };
 
 export default function useUsers() {
-  let url = "http://localhost:4000/admin/userManagement";
+  let url = `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/userManagement`;
   const { data, isLoading, error, mutate } = useSWR(url, fetcher);
 
   const withdrawlUser = (userId: number, accessToken: string, refreshToken: string) => {

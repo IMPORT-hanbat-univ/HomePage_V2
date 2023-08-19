@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 export async function logout(accessToken: string, refreshToken: string) {
   try {
-    await fetch("http://localhost:4000/auth/logout", {
+    await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS_ADRESS}/auth/logout`, {
       method: "GET",
       headers: {
         accessToken: accessToken || "",
@@ -24,16 +24,13 @@ export async function checkUser(accessToken: string, refreshToken: string) {
   // console.log("cookie", cookie);
 
   try {
-    const res = await fetch(
-      `http://${process.env.NETWORK_BACK_NODE_ADRESS ?? "localhost"}:4000/auth/tokenverification`,
-      {
-        method: "GET",
-        headers: {
-          accessToken: accessToken || "",
-          refreshToken: refreshToken || "",
-        },
-      }
-    );
+    const res = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}/auth/tokenverification`, {
+      method: "GET",
+      headers: {
+        accessToken: accessToken || "",
+        refreshToken: refreshToken || "",
+      },
+    });
     //console.log("res", res);
     if (res.ok) {
       console.log("result", res);

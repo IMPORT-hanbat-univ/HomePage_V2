@@ -21,7 +21,7 @@ type Props = {
 export default function PostTable({ searchValue, category }: Props) {
   const { decodeUser: user } = useMe();
   const { data = [], isLoading, deletePost } = useAdminPosts();
-
+  console.log("checkData", data);
   const filteredData = getAdminFilter(data, { category, searchValue });
 
   const target = useRef<HTMLDivElement>(null);
@@ -32,6 +32,7 @@ export default function PostTable({ searchValue, category }: Props) {
     if (user.rank < 4) {
       setNotification({ notificationType: "Warning", message: "삭제 권한이 없습니다.", type: "warning" });
     }
+    console.log("123123");
     const accessToken: string = getClientCookie("accessToken") || "";
     const refreshToken: string = getClientCookie("refreshToken") || "";
     try {
@@ -69,7 +70,7 @@ export default function PostTable({ searchValue, category }: Props) {
                     <td className="w-[35%]">{post.title}</td>
                     <td className="w-[10%]">
                       <Link
-                        href={`/adminedit/${post.id}`}
+                        href={`/adminedit/${post.id}?category=${post.category}`}
                         className="border-none outline-none py-1 px-2 bg-blue-500 rounded text-white"
                       >
                         수정
