@@ -18,7 +18,7 @@ export default function Footer() {
           <h4 className="text-import-color  md:text-[40px] font-extrabold md:leading-[60px] tracking-[-0.6px] ">
             궁금한게 있을 땐
           </h4>
-          <div className="rounded-[10px] bg-white flex items-center md:gap-4 md:px-4">
+          <Link href="/community/qna" className="rounded-[10px] bg-white flex items-center md:gap-4 md:px-4">
             <span className="font-extrabold md:text-[40px]  md:leading-[60px] tracking-[-0.6px] ">Community QnA</span>
             <div className="md:block hidden">
               <svg xmlns="http://www.w3.org/2000/svg" width="74" height="36" viewBox="0 0 74 36" fill="none">
@@ -30,14 +30,14 @@ export default function Footer() {
                 <path d="M74 18L44 0.679491L44 35.3205L74 18ZM0 21L47 21V15L0 15L0 21Z" fill="#4CD773" />
               </svg>
             </div>
-          </div>
+          </Link>
         </div>
 
         <div>
           <h4 className="text-import-color md:text-[40px] font-extrabold md:leading-[60px] tracking-[-0.6px] ">
             개발 소식이 궁금할 땐
           </h4>
-          <div className="rounded-[10px] bg-white flex items-center md:gap-4 md:px-4">
+          <Link href="/community/information" className="rounded-[10px] bg-white flex items-center md:gap-4 md:px-4">
             <span className="font-extrabold md:text-[40px] md:leading-[60px] tracking-[-0.6px] ">
               Community Dev News
             </span>
@@ -51,7 +51,7 @@ export default function Footer() {
                 <path d="M74 18L44 0.679491L44 35.3205L74 18ZM0 21L47 21V15L0 15L0 21Z" fill="#4CD773" />
               </svg>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
       <Link href="/" className="mt-[26px]">
