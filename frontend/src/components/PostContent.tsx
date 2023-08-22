@@ -35,13 +35,13 @@ export default function PostContent({
       return;
     } else {
       const accessToken: string = getClientCookie("accessToken") || "";
-      const refreshToken: string = getClientCookie("refreshToken") || "";
+
       try {
         const isRemove = confirm("정말 삭제하시겠습니까?");
         if (!isRemove) {
           return;
         }
-        const result: string | boolean = await deletePost(category, content?.id as number, accessToken, refreshToken);
+        const result: string | boolean = await deletePost(category, content?.id as number, accessToken);
         if (typeof result === "string") {
           alert(result);
           return;

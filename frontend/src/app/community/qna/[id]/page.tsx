@@ -6,10 +6,7 @@ import { checkUser } from "@/api/auth";
 
 export default async function QnAPage() {
   const cookieObj = cookies();
-  const { decodeUser } = await checkUser(
-    cookieObj.get("accessToken")?.value || "",
-    cookieObj.get("refreshToken")?.value || ""
-  );
+  const { decodeUser } = await checkUser(cookieObj.get("accessToken")?.value || "");
   console.log("checkuser", decodeUser);
 
   return <PostDetail category="qna" user={decodeUser} />;

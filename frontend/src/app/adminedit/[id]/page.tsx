@@ -20,7 +20,7 @@ export default async function AdminModifyPage({ params: { id }, searchParams: { 
   }
   const dataPromise = getPostDetail(category, parseInt(id));
   const cookieObj = cookies();
-  const userPromise = checkUser(cookieObj.get("accessToken")?.value || "", cookieObj.get("refreshToken")?.value || "");
+  const userPromise = checkUser(cookieObj.get("accessToken")?.value || "");
   const [{ data, error: postError }, { decodeUser, error: decodeUserError }] = await Promise.all([
     dataPromise,
     userPromise,

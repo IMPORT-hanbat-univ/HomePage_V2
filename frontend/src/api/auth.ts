@@ -1,13 +1,12 @@
 import { getCookie, getCookies } from "cookies-next";
 import jwt from "jsonwebtoken";
 
-export async function logout(accessToken: string, refreshToken: string) {
+export async function logout(accessToken: string) {
   try {
     await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS_ADRESS}/auth/logout`, {
       method: "GET",
       headers: {
         accessToken: accessToken || "",
-        refreshToken: refreshToken || "",
       },
     });
     return;
@@ -17,7 +16,7 @@ export async function logout(accessToken: string, refreshToken: string) {
   }
 }
 
-export async function checkUser(accessToken: string, refreshToken: string) {
+export async function checkUser(accessToken: string) {
   let decodeUser: any = {};
   let error = null;
   // const cookie = header.cookie && Object.keys(header.cookie).length > 0 ? header.cookie : "";
@@ -28,7 +27,6 @@ export async function checkUser(accessToken: string, refreshToken: string) {
       method: "GET",
       headers: {
         accessToken: accessToken || "",
-        refreshToken: refreshToken || "",
       },
     });
     //console.log("res", res);

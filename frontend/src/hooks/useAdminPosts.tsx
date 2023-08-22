@@ -15,11 +15,11 @@ export default function useAdminPosts() {
     fetcher
   );
 
-  const deletePost = (category: string, postId: number, accessToken: string, refreshToken: string) => {
+  const deletePost = (category: string, postId: number, accessToken: string) => {
     if (!postId || category) {
       return;
     }
-    return mutate(deleteAdminPost(category, postId, accessToken, refreshToken), {
+    return mutate(deleteAdminPost(category, postId, accessToken), {
       // optimisticData: newPost,
       revalidate: true,
       rollbackOnError: true,

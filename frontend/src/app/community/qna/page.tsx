@@ -6,10 +6,7 @@ import QnAList from "@/components/QnAList";
 
 export default async function QnAPage() {
   const cookieObj = cookies();
-  const { decodeUser, error } = await checkUser(
-    cookieObj.get("accessToken")?.value || "",
-    cookieObj.get("refreshToken")?.value || ""
-  );
+  const { decodeUser, error } = await checkUser(cookieObj.get("accessToken")?.value || "");
 
   return <QnAList user={decodeUser} />;
 }

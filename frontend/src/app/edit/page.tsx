@@ -11,10 +11,7 @@ type Props = {
 
 export default async function EditPage({ searchParams: { category } }: Props) {
   const cookieObj = cookies();
-  const { decodeUser, error } = await checkUser(
-    cookieObj.get("accessToken")?.value || "",
-    cookieObj.get("refreshToken")?.value || ""
-  );
+  const { decodeUser, error } = await checkUser(cookieObj.get("accessToken")?.value || "");
 
   if (!decodeUser || Object.keys(decodeUser).length === 0) {
     redirect("/");

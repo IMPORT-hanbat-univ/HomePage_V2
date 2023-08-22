@@ -13,24 +13,24 @@ export default function useUsers() {
   let url = `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/userManagement`;
   const { data, isLoading, error, mutate } = useSWR(url, fetcher);
 
-  const withdrawlUser = (userId: number, accessToken: string, refreshToken: string) => {
+  const withdrawlUser = (userId: number, accessToken: string) => {
     if (!userId) {
       return;
     }
-    return mutate(userWithdraw(userId, accessToken, refreshToken), {
+    return mutate(userWithdraw(userId, accessToken), {
       // optimisticData: newPost,
       revalidate: true,
       rollbackOnError: true,
       populateCache: false,
     });
   };
-  const updateUser = (user: DetailUser, accessToken: string, refreshToken: string) => {
+  const updateUser = (user: DetailUser, accessToken: string) => {
     if (!user || !user.userId) {
       return;
     }
     const newUsers = data?.map((item: DetailUser) => (item.userId === user.userId ? user : item));
     console.log("newUser", newUsers);
-    return mutate(userUpdate(user.userId, user, accessToken, refreshToken), {
+    return mutate(userUpdate(user.userId, user, accessToken), {
       optimisticData: newUsers,
       revalidate: true,
       rollbackOnError: true,
@@ -38,15 +38,11 @@ export default function useUsers() {
     });
   };
 
-  const updateUsersLevel = (
-    users: { userId: number; rank: number; requestRank?: number }[],
-    accessToken: string,
-    refreshToken: string
-  ) => {
+  const updateUsersLevel = (users: { userId: number; rank: number; requestRank?: number }[], accessToken: string) => {
     if (!users || users.length === 0) {
       return;
     }
-    return mutate(usersLevelUpdate(users, accessToken, refreshToken, "user"), {
+    return mutate(usersLevelUpdate(users, accessToken, "user"), {
       revalidate: true,
       rollbackOnError: true,
       populateCache: false,

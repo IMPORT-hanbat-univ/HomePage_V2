@@ -47,12 +47,7 @@ export async function getPostDetail(category: string, id: number) {
   }
 }
 
-export async function deletePost(
-  category: string,
-  postId: number,
-  accessToken: string,
-  refreshToken: string
-): Promise<boolean | string> {
+export async function deletePost(category: string, postId: number, accessToken: string): Promise<boolean | string> {
   try {
     const result = await fetch(
       `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/deleted/${postId}?category=${category}`,
@@ -61,7 +56,6 @@ export async function deletePost(
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
       }
     );
@@ -75,15 +69,13 @@ export async function deletePost(
 export async function createPost(post: CreatePost): Promise<boolean | string> {
   try {
     const accessToken = getClientCookie("accessToken");
-    const refreshToken = getClientCookie("refreshToken");
-    console.log("token", accessToken, refreshToken);
+
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/edit`, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
         accessToken,
-        refreshToken,
       },
       body: JSON.stringify(post),
     });
@@ -102,15 +94,13 @@ export async function createPost(post: CreatePost): Promise<boolean | string> {
 export async function updatePost(post: CreatePost, postId: string): Promise<boolean | string> {
   try {
     const accessToken = getClientCookie("accessToken");
-    const refreshToken = getClientCookie("refreshToken");
-    console.log("token", accessToken, refreshToken);
+
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/edit/${postId}`, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
         accessToken,
-        refreshToken,
       },
       body: JSON.stringify(post),
     });
@@ -129,7 +119,7 @@ export async function updatePost(post: CreatePost, postId: string): Promise<bool
 export async function createPostComment(
   post: CreateComment,
   accessToken: string,
-  refreshToken: string,
+
   postId: string
 ): Promise<boolean | string> {
   try {
@@ -143,7 +133,6 @@ export async function createPostComment(
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
         body: JSON.stringify(post),
       }
@@ -163,7 +152,7 @@ export async function createPostComment(
 export async function updatePostComment(
   post: CreateComment,
   accessToken: string,
-  refreshToken: string,
+
   postId: string | number,
   commentId: number | string
 ): Promise<boolean | string> {
@@ -176,7 +165,6 @@ export async function updatePostComment(
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
         body: JSON.stringify(post),
       }
@@ -197,8 +185,7 @@ export async function deletePostComment(
   postId: number | string,
   commentId: number | string,
   category: string,
-  accessToken: string,
-  refreshToken: string
+  accessToken: string
 ): Promise<boolean | string> {
   try {
     const result = await fetch(
@@ -208,7 +195,6 @@ export async function deletePostComment(
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
       }
     );
@@ -222,7 +208,6 @@ export async function deletePostComment(
 export async function updateAdminPost(post: CreatePost, postId: string): Promise<boolean | string> {
   try {
     const accessToken = getClientCookie("accessToken");
-    const refreshToken = getClientCookie("refreshToken");
 
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/post/edit/${postId}`, {
       method: "POST",
@@ -230,7 +215,6 @@ export async function updateAdminPost(post: CreatePost, postId: string): Promise
       headers: {
         "Content-Type": "application/json",
         accessToken,
-        refreshToken,
       },
       body: JSON.stringify(post),
     });
@@ -249,8 +233,7 @@ export async function updateAdminPost(post: CreatePost, postId: string): Promise
 export async function deleteAdminPost(
   category: string,
   postId: number,
-  accessToken: string,
-  refreshToken: string
+  accessToken: string
 ): Promise<boolean | string> {
   try {
     const result = await fetch(
@@ -260,7 +243,6 @@ export async function deleteAdminPost(
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
       }
     );

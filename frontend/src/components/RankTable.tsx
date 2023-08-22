@@ -57,13 +57,13 @@ export default function RankTable({ currentRank, searchValue, requestRank }: Pro
 
   const handleRejectRank = (userId: number) => {
     const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
+
     if (user.rank < 4) {
       setNotification({ notificationType: "Warning", message: "반려 권한이 없습니다.", type: "warning" });
     }
 
     try {
-      rankRejectUser(userId, accessToken, refreshToken);
+      rankRejectUser(userId, accessToken);
     } catch (err: any) {
       console.log(err);
       setNotification({ notificationType: "Warning", message: "반려 과정에서 에러가 발생했습니다.", type: "warning" });
@@ -73,9 +73,9 @@ export default function RankTable({ currentRank, searchValue, requestRank }: Pro
   };
   const handleChangeRank = () => {
     const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
+
     const newLevelUsers = levelUser.map((item) => ({ ...item, changeRank: parseInt(changeRank) }));
-    updateUsersLevel(newLevelUsers, accessToken, refreshToken);
+    updateUsersLevel(newLevelUsers, accessToken);
     mutate(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/tokenverification`);
     setLevelUser([]);
     setIsAllChecked(false);

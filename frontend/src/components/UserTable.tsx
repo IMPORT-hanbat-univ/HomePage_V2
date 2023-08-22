@@ -38,14 +38,13 @@ export default function UserTable({ currentRank, searchValue }: Props) {
   const setNotification = useSetRecoilState(notificationAtom);
   const handleWithdrawl = (userId: number) => {
     const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
 
     if (user.rank < 5) {
       setNotification({ notificationType: "Warning", message: "탈퇴 권한이 없습니다.", type: "warning" });
     }
 
     try {
-      withdrawlUser(userId, accessToken, refreshToken);
+      withdrawlUser(userId, accessToken);
     } catch (err: any) {
       console.log(err);
       setNotification({ notificationType: "Warning", message: "탈퇴 과정에서 에러가 발생했습니다.", type: "warning" });
@@ -76,9 +75,9 @@ export default function UserTable({ currentRank, searchValue }: Props) {
 
   const handleChangeRank = () => {
     const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
+
     const newLevelUsers = levelUser.map((item) => ({ ...item, changeRank: parseInt(changeRank) }));
-    updateUsersLevel(newLevelUsers, accessToken, refreshToken);
+    updateUsersLevel(newLevelUsers, accessToken);
     mutate(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/tokenverification`);
     setLevelUser([]);
     setIsAllChecked(false);

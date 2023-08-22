@@ -1,10 +1,6 @@
 import { DetailUser } from "@/util/type";
 
-export async function userWithdraw(
-  userId: number,
-  accessToken: string,
-  refreshToken: string
-): Promise<boolean | string> {
+export async function userWithdraw(userId: number, accessToken: string): Promise<boolean | string> {
   try {
     const result = await fetch(
       `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/userManagement/withdrawal/${userId}`,
@@ -13,7 +9,6 @@ export async function userWithdraw(
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
       }
     );
@@ -24,7 +19,7 @@ export async function userWithdraw(
   }
 }
 
-export async function userUpdate(userId: number, user: DetailUser, accessToken: string, refreshToken: string) {
+export async function userUpdate(userId: number, user: DetailUser, accessToken: string) {
   try {
     const result = await fetch(
       `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/userManagement/userdata/${userId}`,
@@ -34,7 +29,6 @@ export async function userUpdate(userId: number, user: DetailUser, accessToken: 
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
         body: JSON.stringify(user),
       }
@@ -49,7 +43,7 @@ export async function userUpdate(userId: number, user: DetailUser, accessToken: 
 export async function usersLevelUpdate(
   users: { userId: number; rank: number; requestRank?: number }[],
   accessToken: string,
-  refreshToken: string,
+
   page: string
 ) {
   try {
@@ -62,7 +56,6 @@ export async function usersLevelUpdate(
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
       }
     );
@@ -74,11 +67,7 @@ export async function usersLevelUpdate(
 }
 
 /** 유저 랭크변경 요청 반려 */
-export async function userRankReject(
-  userId: number,
-  accessToken: string,
-  refreshToken: string
-): Promise<boolean | string> {
+export async function userRankReject(userId: number, accessToken: string): Promise<boolean | string> {
   try {
     const result = await fetch(
       `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/rankManagement/reject/${userId}`,
@@ -88,7 +77,6 @@ export async function userRankReject(
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
       }
     );

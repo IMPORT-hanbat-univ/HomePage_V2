@@ -12,10 +12,7 @@ type Props = {
 
 export default async function NoticePage({ params: { id } }: Props) {
   const cookieObj = cookies();
-  const { decodeUser } = await checkUser(
-    cookieObj.get("accessToken")?.value || "",
-    cookieObj.get("refreshToken")?.value || ""
-  );
+  const { decodeUser } = await checkUser(cookieObj.get("accessToken")?.value || "");
 
   return (
     <>

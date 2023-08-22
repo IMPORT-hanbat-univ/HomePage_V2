@@ -6,10 +6,7 @@ import { checkUser } from "@/api/auth";
 
 export default async function NoticeListPage() {
   const cookieObj = cookies();
-  const { decodeUser, error } = await checkUser(
-    cookieObj.get("accessToken")?.value || "",
-    cookieObj.get("refreshToken")?.value || ""
-  );
+  const { decodeUser, error } = await checkUser(cookieObj.get("accessToken")?.value || "");
 
   return (
     <div className="flex items-center justify-center">

@@ -32,8 +32,8 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
   const submitModify = (e: FormEvent) => {
     e.preventDefault();
     const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
-    updateUser(modifyData, accessToken, refreshToken);
+
+    updateUser(modifyData, accessToken);
     setIsModify(false);
     onChangeDetailUser(modifyData);
   };
