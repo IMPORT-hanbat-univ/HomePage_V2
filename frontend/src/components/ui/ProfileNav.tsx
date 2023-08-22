@@ -20,7 +20,7 @@ export default function ProfileNav({ category }: Props) {
     router.push(`/mypage/${decodeUser.userId}?${queryString}`);
   };
   return (
-    <div className="flex flex-col gap-6 rounded-[10px] border bg-white border-[#E2E2E2] w-fit  px-10 py-4  shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
+    <div className="flex flex-col gap-6  rounded-[10px] border bg-white border-[#E2E2E2] w-fit  px-10 py-4  shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
       <button
         onClick={() => handleCategory("profile")}
         className={`flex items-center gap-9 ${category === "profile" && "text-import-color"}`}
