@@ -14,7 +14,7 @@ export default function usePost(category: string, id: string | number) {
     `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/${id}?category=${category}`,
     fetcher
   );
-  console.log("datacheck", data);
+
   const createComment = (comment: CreateComment, accessToken: string) => {
     if (!data) {
       return;

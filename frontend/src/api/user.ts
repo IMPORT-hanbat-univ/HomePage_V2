@@ -86,3 +86,21 @@ export async function userRankReject(userId: number, accessToken: string): Promi
     return "유저 탈퇴 과정에서 에러가 발생했습니다.";
   }
 }
+
+export async function userProfileUpdate(userId: number, newProfile: DetailUser, accessToken: string) {
+  try {
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/mypage/profile/modify`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(newProfile),
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+      },
+    });
+    return true;
+  } catch (err: any) {
+    console.log(err);
+    return "프로필 업데이트 과정에서 에러가 발생했습니다.";
+  }
+}

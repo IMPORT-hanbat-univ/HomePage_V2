@@ -13,6 +13,7 @@ export type NotificationType = {
 };
 
 export type DecodeUser = {
+  userId: number;
   nick_name: string;
   rank: number;
   kakaoId: string;
