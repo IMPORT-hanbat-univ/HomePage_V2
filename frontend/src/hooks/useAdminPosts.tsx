@@ -6,6 +6,7 @@ import useSWR from "swr";
 const fetcher = async (url: string) => {
   return fetch(url, {
     method: "GET",
+    credentials: "include",
   }).then((res) => res.json());
 };
 
@@ -15,11 +16,11 @@ export default function useAdminPosts() {
     fetcher
   );
 
-  const deletePost = (category: string, postId: number, accessToken: string, refreshToken: string) => {
+  const deletePost = (category: string, postId: number, accessToken: string) => {
     if (!postId || category) {
       return;
     }
-    return mutate(deleteAdminPost(category, postId, accessToken, refreshToken), {
+    return mutate(deleteAdminPost(category, postId, accessToken), {
       // optimisticData: newPost,
       revalidate: true,
       rollbackOnError: true,

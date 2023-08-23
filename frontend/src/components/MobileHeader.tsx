@@ -18,7 +18,9 @@ export default function MobileHeader() {
       </Link>
 
       <MobileMenu>
-        <UserNav />
+        <div className="w-full">
+          <UserNav />
+        </div>
       </MobileMenu>
     </header>
   );

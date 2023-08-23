@@ -51,7 +51,7 @@ export default function CommentItem({
       return;
     }
 
-    if (!getClientCookie("accessToken") && !getClientCookie("refreshToken")) {
+    if (!getClientCookie("accessToken")) {
       alert("로그인을 해주세요");
       return;
     }
@@ -67,9 +67,9 @@ export default function CommentItem({
     };
 
     if (isModify) {
-      updateComment(comment.id, post, getClientCookie("accessToken"), getClientCookie("refreshToken"));
+      updateComment(comment.id, post, getClientCookie("accessToken"));
     } else {
-      createComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"));
+      createComment(post, getClientCookie("accessToken"));
     }
 
     startTrasition(() => {
@@ -87,9 +87,9 @@ export default function CommentItem({
       return;
     } else {
       const accessToken: string = getClientCookie("accessToken") || "";
-      const refreshToken: string = getClientCookie("refreshToken") || "";
+
       try {
-        deleteComment(comment.id, accessToken, refreshToken);
+        deleteComment(comment.id, accessToken);
       } catch (err: any) {
         console.log(err);
         alert("삭제 과정에서 에러가 발생했습니다.");

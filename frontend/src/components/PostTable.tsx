@@ -34,9 +34,9 @@ export default function PostTable({ searchValue, category }: Props) {
     }
     console.log("123123");
     const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
+
     try {
-      deletePost(post.category, post.id, accessToken, refreshToken);
+      deletePost(post.category, post.id, accessToken);
     } catch (err: any) {
       console.log(err);
       setNotification({ notificationType: "Warning", message: "탈퇴 과정에서 에러가 발생했습니다.", type: "warning" });

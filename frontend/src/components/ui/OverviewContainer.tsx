@@ -7,6 +7,7 @@ type Props = {
   content: string;
   badgeText: string;
   imageOrder: "right" | "left";
+  style?: string;
 };
 
 export default function OverviewContainer({
@@ -15,10 +16,11 @@ export default function OverviewContainer({
   tagText,
   content,
   badgeText,
+  style,
   imageOrder = "left",
 }: Props) {
   return (
-    <div className="flex flex-col md:flex-row md:justify-center items-center">
+    <div className={`flex flex-col md:flex-row md:justify-center items-center ${style ? style : ""}`}>
       {imageOrder === "left" ? (
         <>
           {children}

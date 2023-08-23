@@ -18,17 +18,15 @@ export default async function NoticeModifyPage({ params: { id }, searchParams: {
     alert("카테고리를 못찾았습니다.");
     redirect("/");
   }
-  const dataPromise = getPostDetail(category, parseInt(id));
-  const cookieObj = cookies();
-  const userPromise = checkUser(cookieObj.get("accessToken")?.value || "", cookieObj.get("refreshToken")?.value || "");
-  const [{ data, error: postError }, { decodeUser, error: decodeUserError }] = await Promise.all([
-    dataPromise,
-    userPromise,
-  ]);
-
-  if (!decodeUser || Object.keys(decodeUser).length === 0 || decodeUserError) {
-    redirect("/");
-  } else if (typeof data === "string" || postError) {
+  const { data, error: postError } = await getPostDetail(category, parseInt(id));
+  // const cookieObj = cookies();
+  // const userPromise = checkUser(cookieObj.get("accessToken")?.value || "");
+  // const [{ data, error: postError }, { decodeUser, error: decodeUserError }] = await Promise.all([
+  //   dataPromise,
+  //   userPromise,
+  // ]);
+  console.log("...", data);
+  if (typeof data === "string" || postError) {
     console.log(postError, data);
     redirect("/");
   }
@@ -37,13 +35,7 @@ export default async function NoticeModifyPage({ params: { id }, searchParams: {
   console.log("tagList", tagList);
   return (
     <div>
-      <EditorWithPreview
-        nick_name={decodeUser?.nick_name}
-        initContent={content}
-        initTagList={tagList}
-        initTitle={title}
-        initTopic={topic ?? ""}
-      />
+      <EditorWithPreview initContent={content} initTagList={tagList} initTitle={title} initTopic={topic ?? ""} />
     </div>
   );
 }

@@ -13,11 +13,13 @@ import TopicNav from "./TopicNav";
 import { DecodeUser, QnASimplePost } from "@/util/type";
 import QnAPostList from "./QnAPostList";
 import Link from "next/link";
+import useMe from "@/hooks/useMe";
 type Props = {
   user: DecodeUser | {};
 };
 
-export default function QnAList({ user }: Props) {
+export default function QnAList() {
+  const { decodeUser: user } = useMe();
   const searchParams = useSearchParams();
   const {
     topic = "",

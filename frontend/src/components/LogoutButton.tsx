@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function LogoutButton() {
   const router = useRouter();
   const handleLogout = async () => {
-    await logout(getClientCookie("accessToken") || "", getClientCookie("refreshToken") || "");
+    await logout(getClientCookie("accessToken") || "");
     return router.push("/");
   };
   return (

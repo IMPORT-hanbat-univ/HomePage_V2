@@ -44,7 +44,7 @@ export default function CommentContent({
     if (parentCommentText.trim() === "") {
       return;
     }
-    if (!getClientCookie("accessToken") && !getClientCookie("refreshToken")) {
+    if (!getClientCookie("accessToken")) {
       alert("로그인을 해주세요");
 
       return;
@@ -60,7 +60,7 @@ export default function CommentContent({
     let result: any | string;
 
     startTrasition(() => {
-      createComment(post, getClientCookie("accessToken"), getClientCookie("refreshToken"));
+      createComment(post, getClientCookie("accessToken"));
       setParentCommentText("");
     });
   };

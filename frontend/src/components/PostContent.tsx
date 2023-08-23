@@ -35,13 +35,13 @@ export default function PostContent({
       return;
     } else {
       const accessToken: string = getClientCookie("accessToken") || "";
-      const refreshToken: string = getClientCookie("refreshToken") || "";
+
       try {
         const isRemove = confirm("정말 삭제하시겠습니까?");
         if (!isRemove) {
           return;
         }
-        const result: string | boolean = await deletePost(category, content?.id as number, accessToken, refreshToken);
+        const result: string | boolean = await deletePost(category, content?.id as number, accessToken);
         if (typeof result === "string") {
           alert(result);
           return;
@@ -56,7 +56,7 @@ export default function PostContent({
       }
     }
   };
-
+  console.log("user", user);
   return (
     <div>
       <div className="mt-[10px] pl-1 flex items-center">
@@ -92,7 +92,7 @@ export default function PostContent({
           post={{ tagF: content?.tagF || "", tagS: content?.tagS || "", tagT: content?.tagT || "" }}
           disabled={true}
         />
-        {(user.userId === content.userId || user.rank >= 4) && (
+        {user && (user.userId === content.userId || user.rank >= 4) && (
           <div className="flex items-center">
             <Link
               href={`/edit/${content.id}?category=${category}`}

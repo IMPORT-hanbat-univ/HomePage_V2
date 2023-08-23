@@ -57,7 +57,7 @@ export default function VacationOverview() {
                 width={350}
                 className="object-cover "
               />
-              <div className="px-4 flex flex-col justify-between pt-3 pb-5 gap-1 rounded-[20px] bg-[#F6F6E2] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-full  ">
+              <div className="px-4 flex flex-col justify-between pt-3 pb-5 gap-1 rounded-[20px] bg-[#EADEFA] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-full  ">
                 <span className="font-normal text-lg  tracking-[-0.27px] w-full">매일매일 GitHub 잔디를 채워보자!</span>
                 <h4 className="opacity-80 text-[40px]  font-extrabold leading-[50px]  tracking-[-0.6px]">
                   잔디 심기 챌린지
@@ -71,7 +71,7 @@ export default function VacationOverview() {
         </div>
         <div className="md:hidden block mt-8">
           <CarouselContainer>
-            <div className="w-80  ml-2">
+            <div className="w-80  md:ml-2">
               <Image
                 src={"/images/sideproject.svg"}
                 alt="사이드 프로젝트"
@@ -89,7 +89,7 @@ export default function VacationOverview() {
                 </span>
               </div>
             </div>
-            <div className="w-80  ml-2">
+            <div className="w-80  md:ml-2">
               <Image
                 src={"/images/codingtest_study.svg"}
                 alt="코딩테스트 스터디"
@@ -108,7 +108,7 @@ export default function VacationOverview() {
               </div>
             </div>
 
-            <div className="w-80 ml-2">
+            <div className="w-80 md:ml-2">
               <Image
                 src={"/images/github_til.svg"}
                 alt="잔디심기 챌린지"
@@ -116,7 +116,7 @@ export default function VacationOverview() {
                 width={200}
                 className="object-cover mx-auto"
               />
-              <div className="px-4 flex flex-col justify-between pt-3 pb-5 gap-1 rounded-[20px] bg-[#F6F6E2] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-full  ">
+              <div className="px-4 flex flex-col justify-between pt-3 pb-5 gap-1 rounded-[20px] bg-[#EADEFA] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-full  ">
                 <span className="font-normal text-lg  tracking-[-0.27px] w-full">매일매일 GitHub 잔디를 채워보자!</span>
                 <h4 className="opacity-80 text-[35px]  font-extrabold leading-[50px]  tracking-[-0.6px]">
                   잔디 심기 챌린지

@@ -22,7 +22,7 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
   const { updateUser } = useUsers();
   const [modifyData, setModifyData] = useState<DetailUser>(data);
   const [isModify, setIsModify] = useState(false);
-  console.log("modal", data);
+
   const { nick_name, createdAt, email, rank, blog, department, framework, github_url, grade, language, profileImg } =
     data;
   const rank_title = rank_array.find((item) => item.value === rank.toString())?.title;
@@ -32,8 +32,8 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
   const submitModify = (e: FormEvent) => {
     e.preventDefault();
     const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
-    updateUser(modifyData, accessToken, refreshToken);
+
+    updateUser(modifyData, accessToken);
     setIsModify(false);
     onChangeDetailUser(modifyData);
   };

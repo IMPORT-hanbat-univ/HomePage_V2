@@ -16,7 +16,7 @@ export default function ScrollAnimationContainer({ children }: Props) {
         style={{
           transform: isInView ? "none" : "translateY(100px)",
           opacity: isInView ? 1 : 0,
-          transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
+          transition: "all 1.35s cubic-bezier(0.17, 0.55, 0.55, 1) 0.75s",
         }}
       >
         {children}

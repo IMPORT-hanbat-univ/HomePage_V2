@@ -24,6 +24,7 @@ export default function ClubOverview() {
           imageOrder="left"
           title={"IMPORT Web 프로젝트"}
           badgeText={"유지보수 모집중"}
+          style="px-5 break-words"
           tagText={"#Next.13 #Node.js #Docker #Jenkins #mariaDB"}
           content={`해당 동아리 홈페이지 개발 프로젝트
           <br /> 단순 개발이 끝이 아닌
@@ -35,7 +36,7 @@ export default function ClubOverview() {
             alt="1"
             height={570}
             width={500}
-            className="max-md:w-[200px] max-md:h-[230px] rotate-[30deg] mb-4 md:mr-24 object-cover"
+            className="max-md:w-[200px]  max-md:h-[230px] rotate-[30deg] mb-4 md:mr-24 object-cover"
           />
         </OverviewContainer>
       </ScrollAnimationContainer>

@@ -12,7 +12,7 @@ const sarabun = Sarabun({
 
 export default function Home() {
   return (
-    <main className={sarabun.className}>
+    <main className={`${sarabun.className} overflow-x-hidden`}>
       <MainSection />
       <section className="md:mx-72 mx-4">
         <ClubOverview />
