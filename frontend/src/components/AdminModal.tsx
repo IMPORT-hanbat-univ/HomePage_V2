@@ -22,7 +22,7 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
   const { updateUser } = useUsers();
   const [modifyData, setModifyData] = useState<DetailUser>(data);
   const [isModify, setIsModify] = useState(false);
-  console.log("modal", data);
+
   const { nick_name, createdAt, email, rank, blog, department, framework, github_url, grade, language, profileImg } =
     data;
   const rank_title = rank_array.find((item) => item.value === rank.toString())?.title;
@@ -32,8 +32,8 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
   const submitModify = (e: FormEvent) => {
     e.preventDefault();
     const accessToken: string = getClientCookie("accessToken") || "";
-    const refreshToken: string = getClientCookie("refreshToken") || "";
-    updateUser(modifyData, accessToken, refreshToken);
+
+    updateUser(modifyData, accessToken);
     setIsModify(false);
     onChangeDetailUser(modifyData);
   };
@@ -46,7 +46,11 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
             className="object-cover rounded-full w-20 h-20"
             width={200}
             height={200}
-            src={profileImg ? `http://localhost:4000${profileImg}` : "/images/import_image.jpg"}
+            src={
+              profileImg
+                ? `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}${profileImg}`
+                : "/images/import_image.jpg"
+            }
           />
           <div className="flex flex-col gap-1 text-lg">
             <div className="flex items-center w-full">
@@ -185,7 +189,9 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
                   onChange={changeInput}
                 />
               ) : (
-                <span id="blog">{blog}</span>
+                <a href={blog} id="blog">
+                  {blog}
+                </a>
               )}
             </div>
             <div className="flex items-center w-full">
@@ -201,7 +207,9 @@ export default function AdminModal({ data, onChangeDetailUser }: Props) {
                   onChange={changeInput}
                 />
               ) : (
-                <span id="github_url">{github_url}</span>
+                <a id="github_url" href={github_url}>
+                  {github_url}
+                </a>
               )}
             </div>
           </div>

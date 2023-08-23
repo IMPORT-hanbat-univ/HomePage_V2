@@ -3,8 +3,9 @@ import { CreateComment, CreatePost, PostDetailType, SimplePost } from "@/util/ty
 
 export async function getPostList(category: string): Promise<SimplePost[] | string | null> {
   try {
-    const result = await fetch(`http://localhost:4000/post?category=${category}`, {
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post?category=${category}`, {
       method: "GET",
+      credentials: "include",
       next: {
         revalidate: 0,
       },
@@ -22,8 +23,9 @@ export async function getPostDetail(category: string, id: number) {
 
   let data: PostDetailType | string = "";
   try {
-    const result = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}:4000/post/${id}?category=${category}`, {
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/${id}?category=${category}`, {
       method: "GET",
+      credentials: "include",
       next: {
         revalidate: 0,
       },
@@ -44,21 +46,19 @@ export async function getPostDetail(category: string, id: number) {
   }
 }
 
-export async function deletePost(
-  category: string,
-  postId: number,
-  accessToken: string,
-  refreshToken: string
-): Promise<boolean | string> {
+export async function deletePost(category: string, postId: number, accessToken: string): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000/post/deleted/${postId}?category=${category}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        accessToken,
-        refreshToken,
-      },
-    });
+    const result = await fetch(
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/deleted/${postId}?category=${category}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken,
+        },
+      }
+    );
     return true;
   } catch (err: any) {
     console.log(err);
@@ -69,14 +69,13 @@ export async function deletePost(
 export async function createPost(post: CreatePost): Promise<boolean | string> {
   try {
     const accessToken = getClientCookie("accessToken");
-    const refreshToken = getClientCookie("refreshToken");
-    console.log("token", accessToken, refreshToken);
-    const result = await fetch("http://localhost:4000/post/edit", {
+
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/edit`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         accessToken,
-        refreshToken,
       },
       body: JSON.stringify(post),
     });
@@ -95,14 +94,13 @@ export async function createPost(post: CreatePost): Promise<boolean | string> {
 export async function updatePost(post: CreatePost, postId: string): Promise<boolean | string> {
   try {
     const accessToken = getClientCookie("accessToken");
-    const refreshToken = getClientCookie("refreshToken");
-    console.log("token", accessToken, refreshToken);
-    const result = await fetch(`http://localhost:4000/post/edit/${postId}`, {
+
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/edit/${postId}`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         accessToken,
-        refreshToken,
       },
       body: JSON.stringify(post),
     });
@@ -121,20 +119,20 @@ export async function updatePost(post: CreatePost, postId: string): Promise<bool
 export async function createPostComment(
   post: CreateComment,
   accessToken: string,
-  refreshToken: string,
+
   postId: string
 ): Promise<boolean | string> {
   try {
     console.log("createNotice", post);
     const result = await fetch(
-      `http://localhost:4000/post/comment/${postId}
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/comment/${postId}
     `,
       {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           accessToken,
-          refreshToken,
         },
         body: JSON.stringify(post),
       }
@@ -154,20 +152,23 @@ export async function createPostComment(
 export async function updatePostComment(
   post: CreateComment,
   accessToken: string,
-  refreshToken: string,
+
   postId: string | number,
   commentId: number | string
 ): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000/post/comment/${postId}/${commentId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accessToken,
-        refreshToken,
-      },
-      body: JSON.stringify(post),
-    });
+    const result = await fetch(
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/comment/${postId}/${commentId}`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken,
+        },
+        body: JSON.stringify(post),
+      }
+    );
 
     if (result.ok) {
       return result.json();
@@ -184,18 +185,68 @@ export async function deletePostComment(
   postId: number | string,
   commentId: number | string,
   category: string,
-  accessToken: string,
-  refreshToken: string
+  accessToken: string
 ): Promise<boolean | string> {
   try {
-    const result = await fetch(`http://localhost:4000/post/deleted/${postId}/${commentId}?category=${category}`, {
-      method: "DELETE",
+    const result = await fetch(
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/deleted/${postId}/${commentId}?category=${category}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken,
+        },
+      }
+    );
+    return true;
+  } catch (err: any) {
+    console.log(err);
+    return "삭제과정에서 에러가 발생했습니다.";
+  }
+}
+
+export async function updateAdminPost(post: CreatePost, postId: string): Promise<boolean | string> {
+  try {
+    const accessToken = getClientCookie("accessToken");
+
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/post/edit/${postId}`, {
+      method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         accessToken,
-        refreshToken,
       },
+      body: JSON.stringify(post),
     });
+
+    if (result.ok) {
+      return result.json();
+    } else {
+      throw new Error("result ok false");
+    }
+  } catch (err: any) {
+    console.log(err);
+    return "글 수정 과정에서 오류가 발생했습니다.";
+  }
+}
+
+export async function deleteAdminPost(
+  category: string,
+  postId: number,
+  accessToken: string
+): Promise<boolean | string> {
+  try {
+    const result = await fetch(
+      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/deleted/${postId}?category=${category}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken,
+        },
+      }
+    );
     return true;
   } catch (err: any) {
     console.log(err);

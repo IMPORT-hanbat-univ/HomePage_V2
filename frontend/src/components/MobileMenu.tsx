@@ -19,6 +19,10 @@ export default function MobileMenu({ children }: { children: ReactNode }) {
     setIsModal((prev) => !prev);
   };
 
+  const handleAlert = () => {
+    alert("추후 업데이트 예정입니다.");
+  };
+
   return (
     <>
       <button className="border-none outline-none" onClick={handleModal}>
@@ -65,7 +69,7 @@ export default function MobileMenu({ children }: { children: ReactNode }) {
                   ]}
                 />
                 <div className="w-full pl-6 pr-3 text-ellipsis text-left border-none h-14 overflow-hidden font-semibold text-lg flex items-center">
-                  <Link href="/">Project</Link>
+                  <button onClick={handleAlert}>Project</button>
                 </div>
               </motion.div>
             </div>

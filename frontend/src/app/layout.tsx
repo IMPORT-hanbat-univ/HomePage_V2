@@ -1,4 +1,4 @@
-import Recoil from "@/components/Recoil";
+import Recoil from "@/components/ui/Recoil";
 import "./global.scss";
 import ReactQuery from "@/components/ReactQuery";
 import Footer from "@/components/Footer";
@@ -6,7 +6,7 @@ import DesktopHeader from "@/components/DesktopHeader";
 import MobileHeader from "@/components/MobileHeader";
 import { headers } from "next/headers";
 import Header from "@/components/Header";
-import Notification from "@/components/Notification";
+import Notification from "@/components/ui/Notification";
 
 export const metadata = {
   title: "Next.js",
@@ -21,12 +21,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body>
-        <div className="min-h-screen relative">
+        <div className="min-h-screen relative overflow-x-hidden">
           <Recoil>
             <ReactQuery>
               <Header />
               <Notification />
-              <div className=" z-0 relative ">{children}</div>
+              <div className=" z-0 relative  overflow-x-hidden">{children}</div>
               <div id="modal"></div>
             </ReactQuery>
           </Recoil>

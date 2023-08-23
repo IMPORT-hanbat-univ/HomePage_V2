@@ -8,7 +8,13 @@ import { useSearchParams } from "next/navigation";
 
 export default function PatchnoteNav() {
   const searchParams = useSearchParams();
-  const { patchnoteId, projectId } = Object.fromEntries(searchParams.entries());
+  const { patchnoteId, projectId } = Object.fromEntries(
+    searchParams?.entries() ??
+      new Map([
+        ["patchnoteId", ""],
+        ["projectId", ""],
+      ])
+  );
   const patchnoteApi = usePatchnoteApi();
   const {
     data: patchnoteDetail,

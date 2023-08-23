@@ -13,6 +13,7 @@ export type NotificationType = {
 };
 
 export type DecodeUser = {
+  userId: number;
   nick_name: string;
   rank: number;
   kakaoId: string;
@@ -26,6 +27,7 @@ export type SimplePost = {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
+  category: string;
   tagF: string;
   tagS: string;
   tagT: string;

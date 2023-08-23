@@ -1,13 +1,13 @@
 import { getCookie, getCookies } from "cookies-next";
 import jwt from "jsonwebtoken";
 
-export async function logout(accessToken: string, refreshToken: string) {
+export async function logout(accessToken: string) {
   try {
-    await fetch("http://localhost:4000/auth/logout", {
+    await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS_ADRESS}/auth/logout`, {
       method: "GET",
+      credentials: "include",
       headers: {
         accessToken: accessToken || "",
-        refreshToken: refreshToken || "",
       },
     });
     return;
@@ -17,26 +17,23 @@ export async function logout(accessToken: string, refreshToken: string) {
   }
 }
 
-export async function checkUser(accessToken: string, refreshToken: string) {
+export async function checkUser(accessToken: string) {
   let decodeUser: any = {};
   let error = null;
   // const cookie = header.cookie && Object.keys(header.cookie).length > 0 ? header.cookie : "";
   // console.log("cookie", cookie);
 
   try {
-    const res = await fetch(
-      `http://${process.env.NETWORK_BACK_NODE_ADRESS ?? "localhost"}:4000/auth/tokenverification`,
-      {
-        method: "GET",
-        headers: {
-          accessToken: accessToken || "",
-          refreshToken: refreshToken || "",
-        },
-      }
-    );
-    //console.log("res", res);
+    console.log("accessToken", accessToken);
+    const res = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}/auth/tokenverification`, {
+      method: "GET",
+      credentials: "same-origin",
+      headers: {
+        accessToken: accessToken || "",
+      },
+    });
+    console.log("result", res);
     if (res.ok) {
-      console.log("result", res);
       const user = await res.json();
       console.log("result", res, user);
 

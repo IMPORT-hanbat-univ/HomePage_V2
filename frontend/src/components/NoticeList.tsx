@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import NoticeCard from "./NoticeCard";
 import usePagination from "@/hooks/usePagination";
 import { useSearchParams } from "next/navigation";
-import Pagination from "./Pagination";
+import Pagination from "./ui/Pagination";
 import { DecodeUser, SimplePost } from "@/util/type";
 
 import Link from "next/link";
@@ -12,10 +12,12 @@ import Link from "next/link";
 import OrderCategory from "./OrderCategory";
 import getFilteredData from "@/util/getFilteredData";
 import usePosts from "@/hooks/usePosts";
+import useMe from "@/hooks/useMe";
 
-type Props = { user: DecodeUser | {} };
+// type Props = { user: DecodeUser | {} };
 
-const NoticeList = ({ user }: Props) => {
+const NoticeList = () => {
+  const { decodeUser: user } = useMe();
   const searchParams = useSearchParams();
 
   const order = searchParams?.get("order");
@@ -39,7 +41,7 @@ const NoticeList = ({ user }: Props) => {
       <div className="mb-[32px]">
         <div className="flex items-center justify-between border-b w-full py-1">
           <OrderCategory
-            seleted={selectedOrder}
+            selected={selectedOrder}
             orderArray={[
               { order: "latest", name: "최신순" },
               { order: "oldest", name: "오래된순" },

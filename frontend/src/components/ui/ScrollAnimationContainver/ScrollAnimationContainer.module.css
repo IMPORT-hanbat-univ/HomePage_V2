@@ -1,0 +1,5 @@
+.span {
+  display: block;
+  transform: translateY(300px);
+  opacity: 0;
+}

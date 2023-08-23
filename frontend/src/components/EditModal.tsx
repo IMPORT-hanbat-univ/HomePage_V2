@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import SelectIinput from "./ui/SelectIinput";
-import { useSearchParams, useRouter, useParams } from "next/navigation";
+import { useSearchParams, useRouter, useParams, usePathname } from "next/navigation";
 import EditTopic from "./ui/EditTopic";
 import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
-import { createPost, updatePost } from "@/api/post";
-import Notification from "./Notification";
+import { createPost, updateAdminPost, updatePost } from "@/api/post";
 import { ClipLoader } from "react-spinners";
 import { BiArrowBack } from "react-icons/bi";
 import getFirstFile from "@/util/getFirstFile";
@@ -22,9 +21,9 @@ type Props = {
 
 const aboutList = [
   { name: "세부 카테고리를 선택해주세요", value: "" },
-  { name: "Introduce", value: "introduce" },
-  { name: "Rule", value: "rule" },
-  { name: "Schedule", value: "schedule" },
+  // { name: "Introduce", value: "introduce" },
+  // { name: "Rule", value: "rule" },
+  // { name: "Schedule", value: "schedule" },
   { name: "Notice", value: "notice" },
 ];
 
@@ -34,11 +33,11 @@ const communityList = [
   { name: "Information", value: "information" },
 ];
 
-const projectList = [
-  { name: "세부 카테고리를 선택해주세요", value: "" },
-  { name: "Project", value: "project" },
-  { name: "Patchnote", value: "patch" },
-];
+// const projectList = [
+//   { name: "세부 카테고리를 선택해주세요", value: "" },
+//   { name: "Project", value: "project" },
+//   { name: "Patchnote", value: "patch" },
+// ];
 
 const selectCategoryList = [
   { category: "introduce", path: "about", categoryList: aboutList },
@@ -47,13 +46,14 @@ const selectCategoryList = [
   { category: "notice", path: "about", categoryList: aboutList, route: "/about/notice" },
   { category: "qna", path: "community", categoryList: communityList },
   { category: "information", path: "community", categoryList: communityList },
-  { category: "project", path: "project", categoryList: projectList },
-  { category: "patchnote", path: "project", categoryList: projectList },
+  // { category: "project", path: "project", categoryList: projectList },
+  // { category: "patchnote", path: "project", categoryList: projectList },
 ];
 
 export default function EditModal({ title, initTopic, tagList, content, onClose, nick_name }: Props) {
   const searchParams = useSearchParams();
   const params = useParams();
+  const pathname = usePathname();
   const categoryQuery = searchParams?.get("category");
   const selectCategory = selectCategoryList.find((item) => item.category === categoryQuery);
   const [categoryList, setCategoryList] = useState<{ name: string; value: string }[] | []>(
@@ -107,26 +107,32 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
       };
       console.log("check", post);
       const postId = params?.id;
-      if (postId) {
-        result = await updatePost(post, postId as string);
-      } else {
-        result = await createPost(post);
-      }
-      console.log("result", result);
-      if (!result.content || typeof result === "string") {
-        setNotification({ notificationType: "Warning", message: result, type: "warning" });
+      const adminEdit = pathname?.includes("adminedit");
 
-        return;
-      } else {
-        const content = result.content;
-        startTrasition(() => {
-          if (category === "project") {
-            router.replace(`/${category}/${content.id}`);
+      startTrasition(async () => {
+        if (postId) {
+          if (adminEdit) {
+            result = await updateAdminPost(post, postId as string);
           } else {
-            router.replace(`/${path}/${category}/${content.id}`);
+            result = await updatePost(post, postId as string);
           }
-        });
-      }
+        } else {
+          result = await createPost(post);
+        }
+        console.log("result", result);
+        if (!result.content || typeof result === "string") {
+          setNotification({ notificationType: "Warning", message: result, type: "warning" });
+
+          return;
+        } else {
+          const content = result.content;
+        }
+        if (category === "project") {
+          router.replace(`/${category}/${result.content.id}`);
+        } else {
+          router.replace(`/${path}/${category}/${result.content.id}`);
+        }
+      });
     } catch (err) {
       console.log(err);
       setNotification({
@@ -155,7 +161,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
             { name: "카테고리를 선택해주세요", value: "" },
             { name: "About", value: "about" },
             { name: "Community", value: "community" },
-            { name: "Project", value: "project" },
+            // { name: "Project", value: "project" },
           ]}
           currentValue={path}
         />

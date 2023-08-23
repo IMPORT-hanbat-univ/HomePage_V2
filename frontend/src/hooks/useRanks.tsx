@@ -4,33 +4,30 @@ import useSWR from "swr";
 const fetcher = async (url: string) => {
   return fetch(url, {
     method: "GET",
+    credentials: "include",
   }).then((res) => res.json());
 };
 
-const URL = "http://localhost:4000/admin/rankManagement";
+const URL = `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/rankManagement`;
 
 export default function useRanks() {
   const { data, isLoading, error, mutate } = useSWR(URL, fetcher);
-  const updateUsersLevel = (
-    users: { userId: number; rank: number; requestRank?: number }[],
-    accessToken: string,
-    refreshToken: string
-  ) => {
+  const updateUsersLevel = (users: { userId: number; rank: number; requestRank?: number }[], accessToken: string) => {
     if (!users || users.length === 0) {
       return;
     }
-    return mutate(usersLevelUpdate(users, accessToken, refreshToken, "user"), {
+    return mutate(usersLevelUpdate(users, accessToken, "user"), {
       revalidate: true,
       rollbackOnError: true,
       populateCache: false,
     });
   };
 
-  const rankRejectUser = (userId: number, accessToken: string, refreshToken: string) => {
+  const rankRejectUser = (userId: number, accessToken: string) => {
     if (!userId) {
       return;
     }
-    return mutate(userRankReject(userId, accessToken, refreshToken), {
+    return mutate(userRankReject(userId, accessToken), {
       // optimisticData: newPost,
       revalidate: true,
       rollbackOnError: true,
