@@ -6,9 +6,9 @@ import usePost from "@/hooks/usePost";
 import { useParams, notFound } from "next/navigation";
 import React from "react";
 import RelatedPost from "./RelatedPosts";
+import useMe from "@/hooks/useMe";
 
 type Props = {
-  user: any;
   category: string;
 };
 
@@ -18,7 +18,8 @@ const categoryPath = {
   qna: [{ name: "Community" }, { name: "QnA", link: "/community/qna" }],
 };
 
-export default function PostDetail({ user, category }: Props) {
+export default function PostDetail({ category }: Props) {
+  const { decodeUser: user } = useMe();
   const params = useParams();
   const id = params?.id;
   console.log();

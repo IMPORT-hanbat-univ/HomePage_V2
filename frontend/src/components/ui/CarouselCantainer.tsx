@@ -30,12 +30,13 @@ export default function CarouselContainer({ children }: { children: React.ReactN
       showDots={false}
       responsive={responsive}
       infinite={true}
-      autoPlaySpeed={1000}
+      arrows={true}
+      autoPlay={true}
+      autoPlaySpeed={2000}
       keyBoardControl={true}
       customTransition="all .5"
-      transitionDuration={500}
+      transitionDuration={5000}
       containerClass="w-auto flex p-3  overflow-hidden"
-      removeArrowOnDeviceType={["tablet", "mobile"]}
     >
       {children}
     </Carousel>

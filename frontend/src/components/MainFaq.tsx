@@ -3,7 +3,7 @@ import React from "react";
 import Question from "./ui/Question";
 export default function MainFaq() {
   return (
-    <section className="mt-20 w-full mx-auto flex flex-col ">
+    <section className="mt-20 py-2 w-full mx-auto flex flex-col ">
       <div className=" flex gap-3 w-full items-center text-import-color text-2xl md:text-4xl font-extrabold leading-[30px] md:leading-[60px] tracking-[-0.6px]">
         <h3>FAQ</h3>
         <div className="h-1 w-full bg-import-color border"> </div>

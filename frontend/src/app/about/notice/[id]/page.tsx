@@ -1,8 +1,8 @@
 import React from "react";
 import PostDetail from "@/components/PostDetail";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 
-import { checkUser } from "@/api/auth";
+// import { checkUser } from "@/api/auth";
 
 type Props = {
   params: {
@@ -11,12 +11,12 @@ type Props = {
 };
 
 export default async function NoticePage({ params: { id } }: Props) {
-  const cookieObj = cookies();
-  const { decodeUser } = await checkUser(cookieObj.get("accessToken")?.value || "");
+  // const cookieObj = cookies();
+  // const { decodeUser } = await checkUser(cookieObj.get("accessToken")?.value || "");
 
   return (
     <>
-      <PostDetail user={decodeUser} category="notice" />
+      <PostDetail category="notice" />
     </>
   );
 }

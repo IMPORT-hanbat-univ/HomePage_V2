@@ -56,7 +56,7 @@ export default function PostContent({
       }
     }
   };
-
+  console.log("user", user);
   return (
     <div>
       <div className="mt-[10px] pl-1 flex items-center">
@@ -92,7 +92,7 @@ export default function PostContent({
           post={{ tagF: content?.tagF || "", tagS: content?.tagS || "", tagT: content?.tagT || "" }}
           disabled={true}
         />
-        {(user.userId === content.userId || user.rank >= 4) && (
+        {user && (user.userId === content.userId || user.rank >= 4) && (
           <div className="flex items-center">
             <Link
               href={`/edit/${content.id}?category=${category}`}

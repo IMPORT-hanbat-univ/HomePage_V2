@@ -5,6 +5,7 @@ export async function logout(accessToken: string) {
   try {
     await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS_ADRESS}/auth/logout`, {
       method: "GET",
+      credentials: "include",
       headers: {
         accessToken: accessToken || "",
       },
@@ -23,15 +24,16 @@ export async function checkUser(accessToken: string) {
   // console.log("cookie", cookie);
 
   try {
+    console.log("accessToken", accessToken);
     const res = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}/auth/tokenverification`, {
       method: "GET",
+      credentials: "same-origin",
       headers: {
         accessToken: accessToken || "",
       },
     });
-    //console.log("res", res);
+    console.log("result", res);
     if (res.ok) {
-      console.log("result", res);
       const user = await res.json();
       console.log("result", res, user);
 

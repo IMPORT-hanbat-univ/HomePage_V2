@@ -9,7 +9,7 @@ export async function GET(req: Request, { params: { id } }: { params: { id: stri
     rank: 4,
     profileImg: null,
     department: "모바일융합공학과",
-    grade: 2,
+    grade: "2학년",
     blog: "https://mayrang.tistory.com/",
     github_url: "https://github.com/mayrang",
     framework: "React, Nextjs",

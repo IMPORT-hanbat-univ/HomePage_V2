@@ -13,7 +13,7 @@ export default function Question({ title, children, isFirst = false }: Props) {
   return (
     <motion.div className="shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] bg-[#FBFFFC] py-2 px-5 md:py-4 md:px-10">
       <motion.button
-        className="flex items-center w-full justify-between font-bold md:text-[24px] text-lg"
+        className="flex items-center w-full justify-between font-bold md:text-[24px] text-[15px]"
         onClick={() => setIsOpen(!isOpen)}
       >
         <p>
@@ -41,7 +41,7 @@ export default function Question({ title, children, isFirst = false }: Props) {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <div className="p-4 md:text-[20px] text-base font-bold leading-[25px] md:leading-[30px] tracking-[-0.3px] ">
+            <div className="p-4 md:text-[20px] text-[13px] font-bold leading-[25px] md:leading-[30px] tracking-[-0.3px] ">
               {children}
             </div>
           </motion.div>

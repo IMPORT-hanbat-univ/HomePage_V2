@@ -12,10 +12,12 @@ import Link from "next/link";
 import OrderCategory from "./OrderCategory";
 import getFilteredData from "@/util/getFilteredData";
 import usePosts from "@/hooks/usePosts";
+import useMe from "@/hooks/useMe";
 
-type Props = { user: DecodeUser | {} };
+// type Props = { user: DecodeUser | {} };
 
-const NoticeList = ({ user }: Props) => {
+const NoticeList = () => {
+  const { decodeUser: user } = useMe();
   const searchParams = useSearchParams();
 
   const order = searchParams?.get("order");

@@ -85,7 +85,7 @@ export default function ProfileNav({ category }: Props) {
           <circle cx="1.5" cy="6.5" r="1.1" stroke={category === "activity" ? "#4CD773" : "black"} stroke-width="0.8" />
         </svg>
 
-        <span className="text-[15px] tracking-[-0.225px]">나의 활동</span>
+        <span className="text-[15px] tracking-[-0.225px] line-clamp-1">나의 활동</span>
       </button>
     </div>
   );

@@ -5,6 +5,7 @@ export async function getPostList(category: string): Promise<SimplePost[] | stri
   try {
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post?category=${category}`, {
       method: "GET",
+      credentials: "include",
       next: {
         revalidate: 0,
       },
@@ -22,16 +23,14 @@ export async function getPostDetail(category: string, id: number) {
 
   let data: PostDetailType | string = "";
   try {
-    const result = await fetch(
-      `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}:4000/post/${id}?category=${category}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 0,
-        },
-        cache: "no-store",
-      }
-    );
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/${id}?category=${category}`, {
+      method: "GET",
+      credentials: "include",
+      next: {
+        revalidate: 0,
+      },
+      cache: "no-store",
+    });
 
     const contentType = result.headers.get("content-type");
     if (contentType && contentType.includes("application/json")) {
@@ -53,6 +52,7 @@ export async function deletePost(category: string, postId: number, accessToken: 
       `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/deleted/${postId}?category=${category}`,
       {
         method: "DELETE",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           accessToken,
@@ -240,6 +240,7 @@ export async function deleteAdminPost(
       `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/deleted/${postId}?category=${category}`,
       {
         method: "DELETE",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           accessToken,

@@ -12,14 +12,20 @@ export default function Footer() {
     return null;
   }
   return (
-    <footer className="w-full mt-8  overflow-x-hidden relative bg-black  flex flex-col items-center opacity-80 -z-10">
-      <div className="flex items-center md:px-60 justify-between md:py-10 w-full py-4 px-4">
-        <div>
+    <footer className="w-full mt-20 md:mt-36 overflow-x-hidden relative bg-black  flex flex-col items-center  -z-10">
+      <div className="flex items-center gap-4 md:gap-72 md:px-60 justify-between md:py-10 w-full py-4 px-4">
+        <div className="w-full md:w-auto">
           <h4 className="text-import-color  md:text-[40px] font-extrabold md:leading-[60px] tracking-[-0.6px] ">
             궁금한게 있을 땐
           </h4>
-          <Link href="/community/qna" className="rounded-[10px] bg-white flex items-center md:gap-4 md:px-4">
-            <span className="font-extrabold md:text-[40px]  md:leading-[60px] tracking-[-0.6px] ">Community QnA</span>
+          <Link
+            href="/community/qna"
+            className="rounded-[10px] w-full justify-between bg-white flex items-center px-4 py-1 md:gap-4 md:px-4"
+          >
+            <span className="font-extrabold md:text-[40px]  md:leading-[60px] tracking-[-0.6px] ">
+              Community
+              <br className="md:hidden block" /> QnA
+            </span>
             <div className="md:block hidden">
               <svg xmlns="http://www.w3.org/2000/svg" width="74" height="36" viewBox="0 0 74 36" fill="none">
                 <path d="M74 18L44 0.679491L44 35.3205L74 18ZM0 21L47 21V15L0 15L0 21Z" fill="#4CD773" />
@@ -33,13 +39,17 @@ export default function Footer() {
           </Link>
         </div>
 
-        <div>
+        <div className="w-full md:w-auto">
           <h4 className="text-import-color md:text-[40px] font-extrabold md:leading-[60px] tracking-[-0.6px] ">
             개발 소식이 궁금할 땐
           </h4>
-          <Link href="/community/information" className="rounded-[10px] bg-white flex items-center md:gap-4 md:px-4">
-            <span className="font-extrabold md:text-[40px] md:leading-[60px] tracking-[-0.6px] ">
-              Community Dev News
+          <Link
+            href="/community/information"
+            className="rounded-[10px] w-full bg-white flex items-center md:gap-4 px-2 py-1 md:px-4"
+          >
+            <span className="font-extrabold w-full md:text-[40px] md:leading-[60px] tracking-[-0.6px] ">
+              Community
+              <br className="md:hidden block" /> Dev News
             </span>
             <div className="md:block hidden">
               <svg xmlns="http://www.w3.org/2000/svg" width="74" height="36" viewBox="0 0 74 36" fill="none">

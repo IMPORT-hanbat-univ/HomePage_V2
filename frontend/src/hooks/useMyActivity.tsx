@@ -5,7 +5,7 @@ import useSWR from "swr";
 const fetcher = (url: string) =>
   fetch(url, {
     method: "GET",
-    credentials: "same-origin",
+    credentials: "include",
     headers: {
       accessToken: (getClientCookie("accessToken") as string) || "",
     },
@@ -15,7 +15,9 @@ const fetcher = (url: string) =>
 
 export default function useMyActivity(type: "post" | "comment", userId: number) {
   const { data, isLoading, error } = useSWR(
-    `http://localhost:3000/api/mypage/${type === "comment" ? "myComment" : "myPost"}/${userId}`,
+    `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/mypage/${
+      type === "comment" ? "myComment" : "myPost"
+    }/${userId}`,
     fetcher
   );
   return { data, isLoading, error };

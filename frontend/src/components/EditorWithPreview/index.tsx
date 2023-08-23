@@ -13,16 +13,18 @@ import { notificationAtom } from "@/recoil/notification";
 import ModalPortal from "../ui/ModalPortal";
 import EditModalContainer from "../ui/EditModalContainer";
 import EditModal from "../EditModal";
+import useMe from "@/hooks/useMe";
 
 type Props = {
-  nick_name: string;
   initTitle?: string;
   initContent?: string;
   initTagList?: string[];
   initTopic?: string;
 };
 
-export default function EditorWithPreview({ nick_name, initContent, initTitle, initTagList, initTopic }: Props) {
+export default function EditorWithPreview({ initContent, initTitle, initTagList, initTopic }: Props) {
+  const { decodeUser, error } = useMe();
+
   const [title, setTitle] = useState(initTitle ?? "");
   const [content, setContent] = useState(initContent ?? "");
   const [tagText, setTagText] = useState("");
@@ -34,7 +36,10 @@ export default function EditorWithPreview({ nick_name, initContent, initTitle, i
   const markdownRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
-
+  if (!decodeUser || Object.keys(decodeUser).length === 0 || error || decodeUser.rank < 4) {
+    router.replace("/");
+  }
+  const nick_name: string = decodeUser.nick_name;
   const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (tagText.trim() === "") {

@@ -6,6 +6,7 @@ import useSWR from "swr";
 const fetcher = async (url: string) => {
   return fetch(url, {
     method: "GET",
+    credentials: "include",
   }).then((res) => res.json());
 };
 

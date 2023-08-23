@@ -1,7 +1,6 @@
 "use client";
-import useMe from "@/hooks/useMe";
 import React, { useRef } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import useMyActivity from "@/hooks/useMyActivity";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import dayjs from "dayjs";
@@ -20,18 +19,13 @@ const categoryArray = [
 export default function ActivityTable({ type }: Props) {
   const params = useParams();
   const userId = parseInt(params?.id as string);
-  const router = useRouter();
-  const { decodeUser } = useMe();
-  // if (!userId || userId !== decodeUser.userId) {
-  //   alert("권한이 없습니다.");
-  //   router.replace("/");
-  // }
+
   const { data, isLoading, error } = useMyActivity(type, userId);
-  console.log("data", data);
+
   const target = useRef<HTMLDivElement>(null);
   const filteredData = useInfiniteScroll(target, data);
   return (
-    <div className="w-full overflow-x-hidde n py-8">
+    <div className="w-full overflow-x-hidden py-8">
       <table className="w-full border-none bg-white rounded  ">
         <thead className="w-full block  md:text-[15px] tracking-[-0.225px]  ">
           <tr className="w-[99%]  flex items-center">
@@ -40,7 +34,7 @@ export default function ActivityTable({ type }: Props) {
             <th className="w-[14%]">날짜</th>
           </tr>
         </thead>
-        <tbody className="md:text-[12px]  tracking-[-0.225px] block overflow-auto max-h-[38rem] w-full">
+        <tbody className="md:text-[12px] text-[10px]  tracking-[-0.225px] block overflow-auto max-h-[27rem] md:max-h-[38rem] w-full">
           {filteredData &&
             filteredData.length > 0 &&
             filteredData.map((data) => (
@@ -48,7 +42,7 @@ export default function ActivityTable({ type }: Props) {
                 <td className="w-[25%] py-4 tracking-[-0.18px]">
                   {categoryArray.find((item) => item.category === data.category)?.title || data.category}
                 </td>
-                <th className="w-[60%] text-[15px] py-4">
+                <td className="w-[60%] text-[12px] md:text-[15px]  overflow-hidden text-ellipsis whitespace-normal break-all py-4">
                   <Link
                     href={`${categoryArray.find((item) => item.category === data.category)?.url ?? ""}/${
                       data?.postId ? data.postId : data.id
@@ -57,8 +51,8 @@ export default function ActivityTable({ type }: Props) {
                   >
                     {data.title}
                   </Link>
-                </th>
-                <th className="w-[15%] py-4 tracking-[-0.18px]">{dayjs(data.createdAt).format("YYYY/MM/DD")}</th>
+                </td>
+                <td className="w-[15%] py-4 tracking-[-0.18px]">{dayjs(data.createdAt).format("YYYY/MM/DD")}</td>
               </tr>
             ))}
           <tr>

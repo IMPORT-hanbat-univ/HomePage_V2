@@ -21,12 +21,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body>
-        <div className="min-h-screen relative">
+        <div className="min-h-screen relative overflow-x-hidden">
           <Recoil>
             <ReactQuery>
               <Header />
               <Notification />
-              <div className=" z-0 relative ">{children}</div>
+              <div className=" z-0 relative  overflow-x-hidden">{children}</div>
               <div id="modal"></div>
             </ReactQuery>
           </Recoil>

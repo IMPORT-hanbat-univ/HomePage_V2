@@ -11,12 +11,10 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import { DecodeUser } from "@/util/type";
+import useMe from "@/hooks/useMe";
 
-type Props = {
-  user: DecodeUser | {};
-};
-
-export default function DevelopmentInfo({ user }: Props) {
+export default function DevelopmentInfo() {
+  const { decodeUser: user } = useMe();
   const searchParams = useSearchParams();
 
   const { topic, tag, order, search } = Object.fromEntries(searchParams?.entries() ?? []);

@@ -5,6 +5,7 @@ import useSWR from "swr";
 const fetcher = async (url: string): Promise<SimplePost[]> => {
   return fetch(url, {
     method: "GET",
+    credentials: "include",
   })
     .then((res) => res.json())
     .then((res) => res.item);

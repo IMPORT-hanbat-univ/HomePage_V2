@@ -6,6 +6,7 @@ export async function userWithdraw(userId: number, accessToken: string): Promise
       `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/userManagement/withdrawal/${userId}`,
       {
         method: "DELETE",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           accessToken,
@@ -80,14 +81,18 @@ export async function userRankReject(userId: number, accessToken: string): Promi
         },
       }
     );
-    return true;
+    if (result.ok) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (err: any) {
     console.log(err);
     return "유저 탈퇴 과정에서 에러가 발생했습니다.";
   }
 }
 
-export async function userProfileUpdate(userId: number, newProfile: DetailUser, accessToken: string) {
+export async function userProfileUpdate(newProfile: DetailUser, accessToken: string) {
   try {
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/mypage/profile/modify`, {
       method: "POST",
@@ -98,9 +103,34 @@ export async function userProfileUpdate(userId: number, newProfile: DetailUser, 
         accessToken,
       },
     });
-    return true;
+    if (result.ok) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (err: any) {
     console.log(err);
     return "프로필 업데이트 과정에서 에러가 발생했습니다.";
+  }
+}
+
+export async function userProfileWithDrawal(accessToken: string) {
+  try {
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/mypage/profile/withdrawal`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+      },
+    });
+    if (result.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err: any) {
+    console.log(err);
+    return "계정 탈퇴 과정에서 에러가 발생했습니다.";
   }
 }
