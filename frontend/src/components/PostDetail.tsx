@@ -3,9 +3,7 @@ import CommentContent from "@/components/CommentContent";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import PostContent from "@/components/PostContent";
 import usePost from "@/hooks/usePost";
-import { useParams } from "next/navigation";
-import { PostDetailType } from "@/util/type";
-
+import { useParams, notFound } from "next/navigation";
 import React from "react";
 import RelatedPost from "./RelatedPosts";
 
@@ -27,7 +25,9 @@ export default function PostDetail({ user, category }: Props) {
   const { data, isLoading, error } = usePost(category, id as string);
   console.log("data", data, error);
   const pathArray = categoryPath[category as keyof typeof categoryPath] || [{ name: category }];
-
+  if (error || (!isLoading && !data?.content)) {
+    notFound();
+  }
   return (
     <>
       {!isLoading && (
