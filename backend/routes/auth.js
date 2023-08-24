@@ -9,11 +9,11 @@ const {config} = require("dotenv");
 const cors = require('cors');
 const axios = require('axios');
 const corsOptions = {
-    origin: 'http://localhost:4000',
+    origin: 'http://import-hanbat.com/',
   };
 
 const router = express.Router();
-const frontURL =  'http://localhost:3000';
+const frontURL =  'http://import-hanbat.com/';
 
 router.get('/logout',async(req,res)=>{
     // https://kapi.kakao/com/v1/user/logout

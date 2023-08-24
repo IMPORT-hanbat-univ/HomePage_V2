@@ -9,7 +9,7 @@ const cors = require('cors');
 const axios = require('axios');
 const { update } = require("../../models/user");
 const corsOptions = {
-    origin: 'http://localhost:4000',
+    origin: 'http://import-hanbat.com/',
   };
 
 const router = express.Router();
