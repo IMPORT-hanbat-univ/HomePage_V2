@@ -59,6 +59,6 @@ services:
 networks:
   import_network:
     driver: bridge
-  import home network:
+  import_home_network:
     driver: bridge 
     external: true
