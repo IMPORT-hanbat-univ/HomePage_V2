@@ -10,7 +10,7 @@ import ProfileNav from "./ui/ProfileNav";
 export default function UserNav() {
   const { decodeUser, error } = useMe();
   console.log("decodeUser", decodeUser);
-  const loginURL = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+process.env.REST_API_KEY+'&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback'
+  const loginURL = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+'b5f944b0e0a992163bbdee9dbbf729a3'+'&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback'
   return (
     <div className="flex items-center justify-between w-full xl:w-60">
       {decodeUser && decodeUser?.nick_name ? (
