@@ -6,7 +6,7 @@ export default function MainSection() {
   return (
     <section className="w-full h-[calc(100vh-60px)] bg-black">
       <div className="w-full relative h-full flex justify-center">
-        <div className="w-full relative h-[35rem]  lg:h-[485px]  bg-black overflow-hidden ">
+        <div className="w-full relative h-[63vh]  lg:h-[485px]  bg-black overflow-hidden ">
           <div className="md:w-[1960px] w-[800px]  absolute md:-top-36 -left-4 h-full rotate-[-15deg]">
             <MarqueeContainer style={"-left-12"}>
               <Image
@@ -144,7 +144,7 @@ export default function MainSection() {
             </MarqueeContainer>
           </div>
         </div>
-        <div className="absolute bottom-16 md:bottom-28 text-center text-2xl md:text-[50px] font-extrabold md:tracking-[-0.75px] md:leading-[60px]">
+        <div className="absolute bottom-16 w-full bg-black md:bottom-28 text-center text-2xl md:text-[50px] font-extrabold md:tracking-[-0.75px] md:leading-[60px]">
           <div className="text-import-color ">
             <p>IMPORT와 함께 경험하고 성장할</p>
             <p>여러분들을 기다리고 있습니다.</p>
