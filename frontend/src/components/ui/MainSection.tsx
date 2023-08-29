@@ -150,7 +150,12 @@ export default function MainSection() {
             <p>IMPORT와 함께 경험하고 성장할</p>
             <p>여러분들을 기다리고 있습니다.</p>
           </div>
-          <button className="mt-7 md:mt-11 relative bg-white px-7 py-4 md:px-11 md:py-6 border-none rounded-[20px]">
+          <Link
+            prefetch={false}
+            target="_blank"
+            href="https://forms.gle/dgTANW9fcMtu9iT68"
+            className="mt-7 md:mt-11 relative bg-white px-7 py-4 md:px-11 md:py-6 border-none rounded-[20px]"
+          >
             <div className="md:block hidden">
               <div className="absolute left-[-25px] top-[-30px]">
                 <svg width="112" height="87" viewBox="0 0 112 87" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -187,10 +192,8 @@ export default function MainSection() {
                 </svg>
               </div>
             </div>
-            <Link prefetch={false} target="_blank" href="https://forms.gle/dgTANW9fcMtu9iT68">
-              2023 하반기 지원하기
-            </Link>
-          </button>
+            2023 하반기 지원하기
+          </Link>
         </div>
       </div>
     </section>
