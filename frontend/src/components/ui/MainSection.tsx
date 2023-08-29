@@ -6,7 +6,7 @@ export default function MainSection() {
   return (
     <section className="w-full h-[calc(100vh-60px)] bg-black">
       <div className="w-full relative h-full flex justify-center">
-        <div className="w-full relative h-[35rem]  lg:h-[415px]  bg-black overflow-hidden ">
+        <div className="w-full relative h-[35rem]  lg:h-[948px]  bg-black overflow-hidden ">
           <div className="md:w-[1960px] w-[800px]  absolute md:-top-36 -left-4 h-full rotate-[-15deg]">
             <MarqueeContainer style={"-left-10"}>
               <Image
