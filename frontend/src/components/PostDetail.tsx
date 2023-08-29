@@ -14,7 +14,7 @@ type Props = {
 
 const categoryPath = {
   notice: [{ name: "About" }, { name: "Notice", link: "/about/notice" }],
-  devnews: [{ name: "Community" }, { name: "DevNews", link: "/community/devNews" }],
+  devNews: [{ name: "Community" }, { name: "DevNews", link: "/community/devNews" }],
   qna: [{ name: "Community" }, { name: "QnA", link: "/community/qna" }],
 };
 
