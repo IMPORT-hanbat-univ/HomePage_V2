@@ -13,7 +13,7 @@ import Link from "next/link";
 import { DecodeUser } from "@/util/type";
 import useMe from "@/hooks/useMe";
 
-export default function DevelopmentInfo() {
+export default function DevNewsInfo() {
   const { decodeUser: user } = useMe();
   const searchParams = useSearchParams();
 
@@ -23,7 +23,7 @@ export default function DevelopmentInfo() {
   const selectedOrder = order || "latest";
   const currentSearch = search || "";
 
-  const { data, isLoading, error } = usePosts("information");
+  const { data, isLoading, error } = usePosts("devNews");
 
   const filteredData = getFilteredData(
     data,
@@ -54,7 +54,7 @@ export default function DevelopmentInfo() {
           {user && Object.keys(user).length > 0 && (
             <Link
               prefetch={false}
-              href="/edit?category=information"
+              href="/edit?category=devNews"
               className="py-1 px-3 rounded w-auto  text-white border-none outline-none bg-import-color "
             >
               글쓰기

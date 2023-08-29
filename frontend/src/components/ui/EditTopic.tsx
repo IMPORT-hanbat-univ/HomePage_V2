@@ -3,7 +3,7 @@ import React from "react";
 type Props = {
   topic: string;
   onChange: (value: string) => void;
-  category: "qna" | "information";
+  category: "qna" | "devNews";
 };
 
 const qnaTopicList = [
@@ -14,7 +14,7 @@ const qnaTopicList = [
   },
 ];
 
-const informationTopicList = [
+const devNewsTopicList = [
   { value: "교육" },
   { value: "대외활동" },
   {
@@ -23,7 +23,7 @@ const informationTopicList = [
 ];
 
 export default function EditTopic({ topic, onChange, category }: Props) {
-  const valueList = category === "qna" ? qnaTopicList : informationTopicList;
+  const valueList = category === "qna" ? qnaTopicList : devNewsTopicList;
   return (
     <div className="flex w-full items-cetner justify-around">
       {valueList.map(({ value }) => (

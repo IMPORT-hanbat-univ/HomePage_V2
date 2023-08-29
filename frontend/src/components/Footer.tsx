@@ -44,7 +44,7 @@ export default function Footer() {
             개발 소식이 궁금할 땐
           </h4>
           <Link
-            href="/community/information"
+            href="/community/devNews"
             className="rounded-[10px] w-full bg-white flex items-center md:gap-4 px-2 py-1 md:px-4"
           >
             <span className="font-extrabold w-full md:text-[40px] md:leading-[60px] tracking-[-0.6px] ">

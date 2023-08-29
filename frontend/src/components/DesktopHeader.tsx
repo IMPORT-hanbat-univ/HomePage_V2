@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import UserNav from "./UserNav";
 import Link from "next/link";
@@ -12,6 +13,9 @@ const hanuman = Poppins({
 });
 
 export default function DesktopHeader() {
+  const handleAlert = () => {
+    alert("오픈 준비중 입니다.");
+  };
   return (
     <header className={` h-[60px] sticky z-10 flex bg-white justify-between items-center px-[75px] w-full`}>
       <div className="flex items-center">
@@ -47,17 +51,17 @@ export default function DesktopHeader() {
                 <Link href="/community/qna" className="hover:text-import-color">
                   QnA
                 </Link>
-                <Link href="/community/information" className="hover:text-import-color">
-                  Information
+                <Link href="/community/devNews" className="hover:text-import-color">
+                  DevNews
                 </Link>
               </div>
               <div className="absolute top-[-5px] left-[30%] transform -translate-x-1/2 w-2 h-2 bg-white border-t border-r border-gray-300 rotate-[-45deg]"></div>
             </div>
           </div>
           <div className="p-6 group ">
-            <Link href="/project" className="relative group-hover:text-import-color">
+            <button onClick={handleAlert} className="relative group-hover:text-import-color">
               Project
-            </Link>
+            </button>
           </div>
         </menu>
       </div>

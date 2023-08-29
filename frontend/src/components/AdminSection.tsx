@@ -54,7 +54,7 @@ export default function AdminSection() {
           valueList: [
             { title: "전체", value: "all" },
             { title: "Notice", value: "notice" },
-            { title: "Information", value: "information" },
+            { title: "DevNews", value: "devNews" },
             { title: "QnA", value: "qna" },
           ],
           onChange: (e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value),

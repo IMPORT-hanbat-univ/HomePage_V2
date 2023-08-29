@@ -20,7 +20,7 @@ export default function MobileMenu({ children }: { children: ReactNode }) {
   };
 
   const handleAlert = () => {
-    alert("추후 업데이트 예정입니다.");
+    alert("오픈 준비중 입니다.");
   };
 
   return (
@@ -52,20 +52,12 @@ export default function MobileMenu({ children }: { children: ReactNode }) {
                   </Link>
                   <div className="mt-6 w-full">{children}</div>
                 </div>
-                <MobileDetailMenu
-                  header={"about"}
-                  menuArray={[
-                    { title: "Introduce", link: "/" },
-                    { title: "Rule", link: "/" },
-                    { title: "Schedule", link: "/" },
-                    { title: "Notice", link: "/about/notice" },
-                  ]}
-                />
+                <MobileDetailMenu header={"about"} menuArray={[{ title: "Notice", link: "/about/notice" }]} />
                 <MobileDetailMenu
                   header={"Community"}
                   menuArray={[
                     { title: "QnA", link: "/community/qna" },
-                    { title: "Information", link: "/community/information" },
+                    { title: "DevNews", link: "/community/devNews" },
                   ]}
                 />
                 <div className="w-full pl-6 pr-3 text-ellipsis text-left border-none h-14 overflow-hidden font-semibold text-lg flex items-center">

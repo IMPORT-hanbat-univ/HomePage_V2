@@ -10,7 +10,7 @@ type Props = {
 };
 
 const categoryArray = [
-  { category: "devnews", title: "Community - Dev News", url: "/community/devnews" },
+  { category: "devNews", title: "Community - Dev News", url: "/community/devNews" },
   { category: "qna", title: "Community - QnA", url: "/community/qna" },
   { category: "notice", title: "About - Notice", url: "/about/notice" },
   { project: "project", title: "Project", url: "/project/patchnote" },
