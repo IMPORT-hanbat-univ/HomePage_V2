@@ -4,7 +4,7 @@ import OverviewContainer from "./ui/OverviewContainer";
 import Image from "next/image";
 import ImportMobile from "../../public/images/ImportMobile.svg";
 import AwsSvg from "../../public/images/aws.svg";
-
+import ImportWeb from "../../public/images/import_web.svg";
 export default function ClubOverview() {
   return (
     <section className="flex flex-col items-center md:gap-52 gap-44 mt-16 md:mt-24">
@@ -32,11 +32,11 @@ export default function ClubOverview() {
           유지보수의 경험까지!`}
         >
           <Image
-            src={ImportMobile}
+            src={ImportWeb}
             alt="1"
-            height={570}
-            width={500}
-            className="max-md:w-[200px]  max-md:h-[230px] rotate-[30deg] mb-4 md:mr-24 object-cover"
+            height={385}
+            width={600}
+            className="max-md:w-[385px]  max-md:h-[230px] md:mt-32 mb-4 mr-3 md:mr-24 object-cover"
           />
         </OverviewContainer>
       </ScrollAnimationContainer>
