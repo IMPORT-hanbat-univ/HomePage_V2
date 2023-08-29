@@ -28,15 +28,6 @@ export default function DesktopHeader() {
             <span className="relative group-hover:text-import-color">About</span>
             <div className="absolute hidden group-hover:block top-14 bg-white z-20 hover:block shadow-md p-4 border h-auto w-36">
               <div className="gap-y-4 flex flex-col justify-center">
-                <Link href="/" className="hover:text-import-color">
-                  Introduce
-                </Link>
-                <Link href="/" className="hover:text-import-color">
-                  Rule
-                </Link>
-                <Link href="/" className="hover:text-import-color">
-                  Schedule
-                </Link>
                 <Link href="/about/notice" className="hover:text-import-color">
                   Notice
                 </Link>
