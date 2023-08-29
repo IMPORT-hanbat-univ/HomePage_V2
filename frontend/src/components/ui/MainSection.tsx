@@ -144,7 +144,7 @@ export default function MainSection() {
             </MarqueeContainer>
           </div>
         </div>
-        <div className="absolute bottom-16 w-full bg-black md:bottom-28 text-center text-2xl md:text-[50px] font-extrabold md:tracking-[-0.75px] md:leading-[60px]">
+        <div className="absolute bottom-16 pt-5 w-full bg-black md:bottom-28 text-center text-2xl md:text-[50px] font-extrabold md:tracking-[-0.75px] md:leading-[60px]">
           <div className="text-import-color ">
             <p>IMPORT와 함께 경험하고 성장할</p>
             <p>여러분들을 기다리고 있습니다.</p>
