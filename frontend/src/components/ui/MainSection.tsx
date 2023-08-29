@@ -1,6 +1,7 @@
 import React from "react";
 import MarqueeContainer from "./MarqueeContainer";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function MainSection() {
   return (
@@ -186,7 +187,9 @@ export default function MainSection() {
                 </svg>
               </div>
             </div>
-            2023 하반기 지원하기
+            <Link prefetch={false} target="_blank" href="https://forms.gle/dgTANW9fcMtu9iT68">
+              2023 하반기 지원하기
+            </Link>
           </button>
         </div>
       </div>
