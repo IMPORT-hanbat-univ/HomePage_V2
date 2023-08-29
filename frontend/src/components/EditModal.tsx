@@ -30,7 +30,7 @@ const aboutList = [
 const communityList = [
   { name: "세부 카테고리를 선택해주세요", value: "" },
   { name: "QnA", value: "qna" },
-  { name: "Information", value: "information" },
+  { name: "DevNews", value: "devNews" },
 ];
 
 // const projectList = [
@@ -45,7 +45,7 @@ const selectCategoryList = [
   { category: "schedule", path: "about", categoryList: aboutList, route: "/about/schedule" },
   { category: "notice", path: "about", categoryList: aboutList, route: "/about/notice" },
   { category: "qna", path: "community", categoryList: communityList },
-  { category: "information", path: "community", categoryList: communityList },
+  { category: "devNews", path: "community", categoryList: communityList },
   // { category: "project", path: "project", categoryList: projectList },
   // { category: "patchnote", path: "project", categoryList: projectList },
 ];
@@ -179,13 +179,13 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
           />
         </div>
       )}
-      {(category === "qna" || category === "information") && (
+      {(category === "qna" || category === "devNews") && (
         <div className="py-4 border-y">
           <label htmlFor="detail-category" className="block mb-2">
             토픽
           </label>
           {category === "qna" && <EditTopic category={category} topic={topic} onChange={handleTopic} />}
-          {category === "information" && <EditTopic category={category} topic={topic} onChange={handleTopic} />}
+          {category === "devNews" && <EditTopic category={category} topic={topic} onChange={handleTopic} />}
         </div>
       )}
       <div className="flex items-center justify-between mt-4">

@@ -10,14 +10,14 @@ type Props = {
   };
 };
 
-export default async function InformationPage({ params: { id } }: Props) {
+export default async function DevNewsPage({ params: { id } }: Props) {
   // const cookieObj = cookies();
   // const { decodeUser } = await checkUser(cookieObj.get("accessToken")?.value || "");
   // console.log("checkuser", decodeUser);
 
   return (
     <>
-      <PostDetail category="information" />
+      <PostDetail category="devNews" />
     </>
   );
 }

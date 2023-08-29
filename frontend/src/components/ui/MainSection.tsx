@@ -154,7 +154,7 @@ export default function MainSection() {
             prefetch={false}
             target="_blank"
             href="https://forms.gle/dgTANW9fcMtu9iT68"
-            className="mt-7 md:mt-11 relative bg-white px-7 py-4 md:px-11 md:py-6 border-none rounded-[20px]"
+            className="mt-7 md:mt-11 relative inline-block bg-white px-7 py-4 md:px-11 md:py-6 border-none rounded-[20px]"
           >
             <div className="md:block hidden">
               <div className="absolute left-[-25px] top-[-30px]">
