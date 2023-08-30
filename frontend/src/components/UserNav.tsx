@@ -6,10 +6,14 @@ import LogoutButton from "./LogoutButton";
 
 import useMe from "@/hooks/useMe";
 import ProfileNav from "./ui/ProfileNav";
+const [loginLoading, setLoginLoading] = useState(false);
+
 
 export default function UserNav() {
   const { decodeUser, error } = useMe();
   console.log("decodeUser", decodeUser);
+  
+
   const loginURL = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+'b5f944b0e0a992163bbdee9dbbf729a3'+'&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback'
   return (
     <div className="flex items-center justify-between w-full xl:w-60">
@@ -24,8 +28,8 @@ export default function UserNav() {
         </div>
       ) : (
         <Link
-          href={loginURL}
-          //href={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/kakao`}
+          //href={loginURL}
+          href={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/kakao`}
           className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px] bg-white"
         >
           Log in
