@@ -9,8 +9,9 @@ import ProfileNav from "./ui/ProfileNav";
 //const [loginLoading, setLoginLoading] = useState(false);
 const handleLogin = async () => {
   try {
-    const response = await fetch(
-      "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=b5f944b0e0a992163bbdee9dbbf729a3&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback"
+    const response = await fetch("https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID+"&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback",{
+      method:"POST"
+    }
     );
 
     if (response.ok) {
