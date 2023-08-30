@@ -6,29 +6,6 @@ import LogoutButton from "./LogoutButton";
 
 import useMe from "@/hooks/useMe";
 import ProfileNav from "./ui/ProfileNav";
-//const [loginLoading, setLoginLoading] = useState(false);
-const handleLogin = async () => {
-  console.log("handleLogin function called");
-  try {
-    const response = await fetch("https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID+"&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback",{
-      method:"POST"
-    }
-    );
-
-    if (response.ok) {
-      // Redirect or handle the response as needed
-      // For example, you might redirect to the authorization URL
-      window.location.href = response.url;
-    } else {
-      // Handle error case
-      console.error("Login request failed");
-    }
-  } catch (error) {
-    console.error("Login request failed", error);
-  }
- 
-};
-
 
 export default function UserNav() {
   const { decodeUser, error } = useMe();
@@ -68,8 +45,9 @@ export default function UserNav() {
           </div>
         </div>
       ) : (
-        /*<Link
-          href={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/kakao`}
+        <Link
+          href={loginURL}
+          //href={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/kakao`}
           className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px] bg-white"
         >
           Log in
