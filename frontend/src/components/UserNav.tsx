@@ -8,6 +8,7 @@ import useMe from "@/hooks/useMe";
 import ProfileNav from "./ui/ProfileNav";
 //const [loginLoading, setLoginLoading] = useState(false);
 const handleLogin = async () => {
+  console.log("handleLogin function called");
   try {
     const response = await fetch("https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID+"&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback",{
       method:"POST"
@@ -34,7 +35,7 @@ export default function UserNav() {
   console.log("decodeUser", decodeUser);
   
 
-  const loginURL = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+'b5f944b0e0a992163bbdee9dbbf729a3'+'&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback'
+  const loginURL = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID+'&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback'
   return (
     <div className="flex items-center justify-between w-full xl:w-60">
       {decodeUser && decodeUser?.nick_name ? (
@@ -47,9 +48,14 @@ export default function UserNav() {
           </div>
         </div>
       ) : (
-        <button onClick= {handleLogin} className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px] bg-white" >
-          Log in
-        </button>
+        <Link
+          href={loginURL}
+          //href={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/kakao`}
+          className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px] bg-white"
+        ></Link>
+       /* <button onClick={handleLogin} className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px] bg-white">
+  Log in
+</button>*/
         
       )}
     </div>
