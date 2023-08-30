@@ -6,7 +6,7 @@ import LogoutButton from "./LogoutButton";
 
 import useMe from "@/hooks/useMe";
 import ProfileNav from "./ui/ProfileNav";
-const [loginLoading, setLoginLoading] = useState(false);
+//const [loginLoading, setLoginLoading] = useState(false);
 
 
 export default function UserNav() {
