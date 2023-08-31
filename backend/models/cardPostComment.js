@@ -4,7 +4,7 @@ module.exports = class CardPostComment extends Sequelize.Model{
     static init(sequelize){
         return super.init({
             content: {
-                type: Sequelize.TEXT,
+                type: Sequelize.TEXT('long'),
                 allowNull: false,
             },
             group:{ //=모 댓글번호

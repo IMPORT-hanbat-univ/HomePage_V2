@@ -9,7 +9,7 @@ module.exports = class RootPost extends Sequelize.Model {
           allowNull: false,
         },
         content: {
-          type: Sequelize.TEXT,
+          type: Sequelize.TEXT('long'),
           allowNull: false,
         },
         tagF: {

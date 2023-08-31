@@ -8,7 +8,7 @@ module.exports = class Project extends Sequelize.Model{
                 allowNull: false,
             },
             content: {
-                type: Sequelize.TEXT,
+                type: Sequelize.TEXT('long'),
                 allowNull: false,
             },
             tagF: { //1

@@ -20,7 +20,7 @@ module.exports = class ListPost extends Sequelize.Model{
                 allowNull: true,
             },
             content: {
-                type: Sequelize.TEXT,
+                type: Sequelize.TEXT('long'),
                 allowNull: false,
             },
             category: {
