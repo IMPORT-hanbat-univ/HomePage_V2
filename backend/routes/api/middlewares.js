@@ -43,6 +43,7 @@ exports.admin= (req,res,next)=>{
         
     } catch (error) {
         console.log('임원진 외 admin 접근,',error)
+        res.sendStatus(404)
         
     }
 }
@@ -63,6 +64,7 @@ exports.notice = (req,res,next)=>{
 
         }catch(error){
             console.log(error)
+            res.sendStatus(404)
 
         }
 
