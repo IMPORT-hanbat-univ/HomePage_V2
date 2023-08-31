@@ -49,7 +49,7 @@ exports.verifyToken = async (req, res, next) => {
             console.log("accessToken success");
             req.user = {
                 userId:decoded.userId,
-                kakao:decoded.kakaoId,
+                kakaoId:decoded.kakaoId,
                 nick_name:decoded.nick_name,
                 rank:decoded.rank
             }
@@ -68,7 +68,7 @@ exports.verifyToken = async (req, res, next) => {
                     })
                     const user = {
                         userId:loggedInUser.id,
-                        kakao:loggedInUser.kakaoId,
+                        kakaoId:loggedInUser.kakaoId,
                         nick_name:loggedInUser.nick_name,
                         rank:loggedInUser.rank
                     }
@@ -116,7 +116,7 @@ exports.verifyToken = async (req, res, next) => {
             });
             const user = {
                 userId:loggedInUser.id,
-                kakao:loggedInUser.kakaoId,
+                kakaoId:loggedInUser.kakaoId,
                 nick_name:loggedInUser.nick_name,
                 rank:loggedInUser.rank
             }
