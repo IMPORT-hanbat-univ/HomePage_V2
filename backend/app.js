@@ -57,7 +57,7 @@ app.use('/users', usersRouter);
 
 app.use('/api/auth', authRouter);
 app.use('/api/post',postRouter);
-app.use('/api/test',testRouter);
+//app.use('/test',testRouter);
 
 
 app.use('/api/admin/userManagement',userManagementRouter);
