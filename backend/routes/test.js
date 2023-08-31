@@ -1,3 +1,4 @@
+/*
 const { RootPost, RootComment, User,ListPost,CardPost,ListPostComment,ProjectComment,PatchNoteComment,CardPostComment, Project,PatchNote, ClubUser} = require("../models");
 const sequelize = require("sequelize");
 const { upload,tokenValidationMiddleware, authenticationToken, verifyToken} = require("./middlewares");
@@ -42,3 +43,4 @@ router.post('/clubUser',async(req,res)=>{
 
 
 module.exports = router;
+*/

@@ -2,18 +2,20 @@ const express = require('express');
 const passport = require('passport');
 const jwt =require("jsonwebtoken")
 const { verifyToken,authenticationToken,logout,isLoggedIn} = require('./middlewares');
-const { User } = require('../models');
+const { User } = require("../../models");
 const { v4: uuidv4 } = require('uuid');
 const {Op} = require("sequelize");
 const {config} = require("dotenv");
 const cors = require('cors');
+const qs = require("qs");
 const axios = require('axios');
 const corsOptions = {
-    origin: 'http://import-hanbat.com/',
+    origin: ['http://localhost:3000','https://kauth.kakao.com','http://kauth.kakao.com'],
+    credentials:true,
   };
 
 const router = express.Router();
-const frontURL =  'http://import-hanbat.com/';
+const frontURL =  'http://localhost:3000';
 
 router.get('/logout',async(req,res)=>{
     // https://kapi.kakao/com/v1/user/logout
@@ -58,9 +60,11 @@ router.get('/logout',async(req,res)=>{
 
 router.get('/kakao', passport.authenticate('kakao'));
 
+
 router.get('/kakao/callback',passport.authenticate('kakao',{
     failureRedirect: frontURL,
     failureMessage: true,
+    
 }),async (req, res) => {
     const kakao = Number(req.user.kakaoId);
 

@@ -17,8 +17,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const testRouter = require('./routes/test');
 
-const authRouter = require('./routes/auth');
-const postRouter = require('./routes/post');
+const authRouter = require('./routes/api/auth');
+const postRouter = require('./routes/api/post');
 const userManagementRouter = require('./routes/admin/userManagement')
 const rankManagementRouter = require('./routes/admin/rankManagement');
 const adminPostRouter = require('./routes/admin/post');
@@ -43,7 +43,7 @@ app.use(session({
   secret: process.env.COOKIE_SECRET,
 }));
 app.use(cors({
-  origin:true,
+  origin: ['http://localhost:3000','https://kauth.kakao.com','http://kauth.kakao.com'],
   credentials:true,
   optionsSuccessStatus: 200,
 }))
@@ -53,15 +53,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('api/auth', authRouter);
-app.use('/post',postRouter);
-app.use('/test',testRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/post',postRouter);
+//app.use('/test',testRouter);
 
 
-app.use('/admin/userManagement',userManagementRouter);
-app.use('/admin/rankManagement',rankManagementRouter);
-app.use('/admin/post',adminPostRouter);
-app.use('/image', express.static(path.join(__dirname, 'image')));
+app.use('/api/admin/userManagement',userManagementRouter);
+app.use('/api/admin/rankManagement',rankManagementRouter);
+app.use('/api/admin/post',adminPostRouter);
+app.use('/api/image', express.static(path.join(__dirname, 'image')));
 
 //app.use(morganMiddleware)
 //app.use(morgan('dev'));
