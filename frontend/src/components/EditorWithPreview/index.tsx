@@ -48,6 +48,7 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
 
   //const nick_name: string = decodeUser.nick_name;
   const nick_name: string = decodeUser?.nick_name;
+  console.log("nick_name!!!!!!!!!!",nick_name)
   const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (tagText.trim() === "") {
