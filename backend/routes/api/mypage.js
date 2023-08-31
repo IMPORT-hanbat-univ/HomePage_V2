@@ -142,12 +142,13 @@ router.post('/profile/modify',async(req,res)=>{
 })
 
 //탈퇴
-router.post('/profile/withdrawal/:id',async(req,res)=>{
+router.post('/profile/withdrawal',verifyToken,async(req,res)=>{
+
     try{
         const access = await User.findOne({
-            attributes:['accessToken',],
+            attributes:['accessToken'],
             where:{
-                id:req.params.id
+                id:req.user.userId
             },
             raw:true
         })
@@ -157,7 +158,7 @@ router.post('/profile/withdrawal/:id',async(req,res)=>{
             method:'post',
             url:'https://kapi.kakao.com/v1/user/unlink',
             headers:{
-              'Authorization': `Bearer ${access}`
+              'Authorization': `Bearer ${accessToken}`
             }
           });
         
@@ -166,7 +167,7 @@ router.post('/profile/withdrawal/:id',async(req,res)=>{
 
         await User.destroy({
             where:{
-                id:req.params.id
+                id:req.user.userId
             }
         }).catch(error=> {
             console.error(`Error occurred while destroy User: ${error}`);
@@ -174,7 +175,7 @@ router.post('/profile/withdrawal/:id',async(req,res)=>{
 
         await ClubUser.destroy({
             where:{
-                id:req.params.id
+                id:req.user.userId
             }
         }).catch(error=> {
             console.error(`Error occurred while destroy ClubUser: ${error}`);
@@ -182,7 +183,7 @@ router.post('/profile/withdrawal/:id',async(req,res)=>{
 
         res.redirect(frontURL)
     }catch(error){
-        console.log("탈퇴중 에러 userId: ",req.params.id,error)
+        console.log("탈퇴중 에러 userId: ",req.user.userId,error)
         res.sendStatus(403)
 
     }
