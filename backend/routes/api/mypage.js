@@ -151,12 +151,13 @@ router.post('/profile/withdrawal/:id',async(req,res)=>{
             },
             raw:true
         })
+        console.log(access)
         const accessToken = access.accessToken;
         let logout = await axios({
             method:'post',
             url:'https://kapi.kakao.com/v1/user/unlink',
             headers:{
-              'Authorization': `Bearer ${accessToken}`
+              'Authorization': `Bearer ${access}`
             }
           });
         
