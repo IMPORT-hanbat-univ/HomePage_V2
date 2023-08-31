@@ -24,7 +24,7 @@ module.exports = class CardPostComment extends Sequelize.Model{
             modelName: 'CardPostComment',
             tableName: 'cardPostComments',
             paranoid: true,
-            charset: 'utf8',
+            charset: 'utf8mb4',
             collate: 'utf8_general_ci',
         });
     }

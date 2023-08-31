@@ -48,7 +48,7 @@ module.exports = class Project extends Sequelize.Model{
             modelName: 'Project',
             tableName: 'projects',
             paranoid: true,
-            charset: 'utf8',
+            charset: 'utf8mb4',
             collate: 'utf8_general_ci',
         });
     }

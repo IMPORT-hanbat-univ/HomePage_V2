@@ -24,7 +24,7 @@ module.exports = class ListPostComment extends Sequelize.Model{
             modelName: 'ListPostComment',
             tableName: 'listPostComments',
             paranoid: true,
-            charset: 'utf8',
+            charset: 'utf8mb4',
             collate: 'utf8_general_ci',
         });
     }

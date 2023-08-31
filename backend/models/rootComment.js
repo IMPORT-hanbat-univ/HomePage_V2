@@ -24,7 +24,7 @@ module.exports = class RootComment extends Sequelize.Model{
             modelName: 'RootComment',
             tableName: 'rootComments',
             paranoid: true,
-            charset: 'utf8',
+            charset: 'utf8mb4',
             collate: 'utf8_general_ci',
         });
     }

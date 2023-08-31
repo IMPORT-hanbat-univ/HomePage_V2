@@ -24,7 +24,7 @@ module.exports = class Schedule extends Sequelize.Model {
                 modelName: "Schedule",
                 tableName: "schedules",
                 paranoid: true,
-                charset: "utf8",
+                charset: "utf8mb4",
                 collate: "utf8_general_ci",
             }
         );
