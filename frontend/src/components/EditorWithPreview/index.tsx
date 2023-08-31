@@ -38,8 +38,8 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
     //router.replace("/");
     console.log("decodeUser", decodeUser)
   }
-  
-  const nick_name: string = decodeUser.nick_name;
+  const nick_name:string = decodeUser?.nick_name || ""
+  //const nick_name: string = decodeUser.nick_name;
   //const nick_name: string = decodeUser?.nick_name;
   console.log("nick_name!!!!!!!!!!",nick_name)
   const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
