@@ -34,9 +34,8 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
 
   const router = useRouter();
   
-  if (!decodeUser || Object.keys(decodeUser).length === 0 || error || decodeUser.rank < 4) {
-    //router.replace("/");
-    console.log("decodeUser", decodeUser)
+  if (!decodeUser || Object.keys(decodeUser).length === 0 || error ) {
+    router.replace("/");
   }
   const nick_name:string = decodeUser?.nick_name || ""
   //const nick_name: string = decodeUser.nick_name;
