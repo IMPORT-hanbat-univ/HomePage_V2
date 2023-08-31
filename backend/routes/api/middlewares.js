@@ -31,6 +31,44 @@ exports.logout = (req, res) => {
         res.redirect('/');
     });
 };
+exports.admin= (req,res,next)=>{
+    const userRank = req.user.rank;
+
+    try {
+        if(userRank>=4){
+            next();
+        }else{
+            throw error
+        }
+        
+    } catch (error) {
+        console.log('임원진 외 admin 접근,',error)
+        
+    }
+}
+exports.notice = (req,res,next)=>{
+    const userRank = req.user.rank;
+    const category = req.body.category;
+    console.log('어드민 랭크 관리',category)
+
+    if(category=='notice'){
+        try{
+            if(userRank>=4){
+
+                console.log('임원진 공지사항 작성')
+                next();
+            }else if(userRank<4){
+                throw error;
+            }
+
+        }catch(error){
+            console.log(error)
+
+        }
+
+    }else{next();}
+
+}
 
 /*토큰 유효성 검증
 1. accessToken 존재 => decode => 유효하면 넘어가고 만료라면 refreshToken검증 => refreshToken 유효시 토큰 두개다 다시 발급해서 전달, 유효하지 않다면 에러

@@ -161,7 +161,7 @@ const clubUserDataCreate = async(department,grade,blog,github_url,framework,lang
 }
 
 //유저 데이터 띄워주기
-router.get('/',async(req,res)=>{
+router.get('/',verifyToken,admin,async(req,res)=>{
     //const users = userdatas;
     const users = await userdatas();
     console.log(users);
@@ -169,7 +169,7 @@ router.get('/',async(req,res)=>{
 })
 
 //유저데이터 수정
-router.post('/userdata/:userId',async(req,res)=>{
+router.post('/userdata/:userId',verifyToken,admin,async(req,res)=>{
     //console.log('오잉')
     const body = req.body;
     console.log("/userdata/:userId 요청의 body: ",body);
@@ -335,12 +335,12 @@ router.post('/userdata/:userId',async(req,res)=>{
       console.log(filteredUsers);
       return res.json(filteredUsers);
 })
-router.post('/hi/:userId',async(req,res)=>{
+router.post('/hi/:userId',verifyToken,admin,async(req,res)=>{
   console.log(req.params.userId);
 })
 
 //탈퇴
-router.post('/withdrawal/:userId', async (req, res) => {
+router.post('/withdrawal/:userId',verifyToken,admin, async (req, res) => {
 
   try {
     const user = await User.findOne({

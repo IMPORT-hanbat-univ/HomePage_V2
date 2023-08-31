@@ -34,14 +34,14 @@ const requestRankUsers = async()=>{
 
 }
 /** 요청레벨이 있는사람 띄워주기 */
-router.get('/',async(req,res)=>{
+router.get('/',verifyToken,admin,async(req,res)=>{
     const users = await requestRankUsers();
     console.log(users);
     return res.json(users);
 })
 
 //레벨 바꾸기
-router.post('/changeRank',async(req,res)=>{
+router.post('/changeRank',verifyToken,admin,async(req,res)=>{
     console.log("changeRanks:으아아ㅏ아아아아아아아ㅏ아아아아아아앙ㅇ\n",req.body.changeRanks);
 
     
@@ -116,7 +116,7 @@ router.post('/changeRank',async(req,res)=>{
 })
 
 //반려하기
-router.post('/reject/:userId',async(req,res)=>{
+router.post('/reject/:userId',verifyToken,admin,async(req,res)=>{
     try{
         //반려기때문에 요청레벨을 지운다.
         await User.update({

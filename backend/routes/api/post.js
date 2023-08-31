@@ -1,6 +1,6 @@
 const { RootPost, RootComment, User,ListPost,CardPost,ListPostComment,ProjectComment,PatchNoteComment,CardPostComment, Project,PatchNote} = require("../../models");
 const sequelize = require("sequelize");
-const { upload,tokenValidationMiddleware, authenticationToken, verifyToken} = require("./middlewares");
+const { notice,upload,tokenValidationMiddleware, authenticationToken, verifyToken} = require("./middlewares");
 const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
@@ -165,7 +165,7 @@ router.get("/", async function (req, res) {
 });
 
 //create
-router.post("/edit",verifyToken, async (req, res) => {
+router.post("/edit",verifyToken,notice, async (req, res) => {
     const body = req.body;
     const user = req.user;
 
@@ -286,7 +286,7 @@ router.get("/:id",async (req, res) => {
 });
 
 //업데이트
-router.post("/edit/:id", verifyToken,async (req, res) => {
+router.post("/edit/:id", verifyToken,notice,async (req, res) => {
     const body = req.body;
     const user = req.user;
     let table, postId;
@@ -400,7 +400,7 @@ router.post("/edit/:id", verifyToken,async (req, res) => {
 });
 
 //글 삭제
-router.delete("/deleted/:id", async (req, res) => {
+router.delete("/deleted/:id",verifyToken,notice, async (req, res) => {
     const body = req.body;
     //const user = req.user;
     //body.category = "notice";

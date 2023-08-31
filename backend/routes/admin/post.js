@@ -7,7 +7,8 @@ const {Op} = require("sequelize");
 const {config} = require("dotenv");
 const cors = require('cors');
 const axios = require('axios');
-const { update } = require("../../models/user");
+const { update,verifyToken } = require("../../models/user");
+const {admin} = require('../api/middlewares')
 const corsOptions = {
     origin: 'http://import-hanbat.com/',
   };
@@ -39,7 +40,7 @@ const getdatas = async (table) =>{
 }
 
 //모든 글 띄워주기
-router.get('/',async(req,res)=>{
+router.get('/',verifyToken,admin,async(req,res)=>{
     const cardPosts = await getdatas(CardPost);
     console.log(cardPosts)
     const listPosts = await getdatas(ListPost)
