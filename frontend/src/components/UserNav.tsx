@@ -10,6 +10,8 @@ import ProfileNav from "./ui/ProfileNav";
 export default function UserNav() {
   const { decodeUser, error } = useMe();
   console.log("decodeUser", decodeUser);
+
+  const loginURL = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID+'&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback'
   const handleLogin = async () => {
     console.log("handleLogin function called");
     try {
@@ -32,6 +34,7 @@ export default function UserNav() {
    
   };
 
+
   
   return (
     <div className="flex items-center justify-between w-full xl:w-60">
@@ -45,15 +48,15 @@ export default function UserNav() {
           </div>
         </div>
       ) : (
-        /*
+        
         <Link
           href={loginURL}
           //href={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/kakao`}
           className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px] bg-white"
         >
           Log in
-        </Link>*/
-        <button onClick={handleLogin} className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px] bg-white">Log in</button>
+        </Link>
+        //<button onClick={handleLogin} className="border border-import-color rounded-md px-7 py-2 lg:leading-[18px] lg:px-[42px] lg:py-[11px] bg-white">Log in</button>
       )}
     </div>
   );
