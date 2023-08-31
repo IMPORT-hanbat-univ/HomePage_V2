@@ -332,6 +332,7 @@ router.post("/edit/:id", verifyToken,async (req, res) => {
                 const devNews = await CardPost.update({
                     title: body.title,
                     content: body.content,
+                    topic:body.topic,
                     tagF: body.tagF,
                     tagS: body.tagS,
                     tagT: body.tagT,
@@ -399,8 +400,9 @@ router.delete("/deleted/:id", async (req, res) => {
     //const user = req.user;
     //body.category = "notice";
     const category = req.query.category;
+    
     try{
-        const { table, tableComment, relatedTableId } = getTables(body.category);
+        const { table, tableComment, relatedTableId } = getTables(category);
         await table.destroy({
             where: {
                 id: { [Op.eq]: req.params.id },
@@ -486,8 +488,9 @@ router.delete("/deleted/:id/:commentId",verifyToken, async (req, res) => {
     const body = req.body;
     const user = req.user;
     //body.category = "notice";
+    
     try{
-        const { table, tableComment, relatedTableId } = getTables(body.category);
+        const { table, tableComment, relatedTableId } = getTables(category);
         await tableComment.destroy({
             where: {
                 id: { [Op.eq]: req.params.commentId },
