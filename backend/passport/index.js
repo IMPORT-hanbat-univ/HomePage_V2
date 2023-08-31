@@ -11,7 +11,11 @@ module.exports = (passport) => {
 
     passport.deserializeUser((user,done) => {
         
-        
+        User.findOne({
+            where: {id:user.id},
+        })
+            .then(user=> done(null, {id: user.id,accessToken:user.accessToken}))
+            .catch(err => done(err));
     });
 
 
