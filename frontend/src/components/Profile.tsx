@@ -197,17 +197,17 @@ export default function Profile() {
                       d="M127 65C127 99.2417 99.2417 127 65 127C30.7583 127 3 99.2417 3 65C3 30.7583 30.7583 3 65 3C99.2417 3 127 30.7583 127 65Z"
                       fill="white"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                     />
                     <path
                       d="M86.75 43.375C86.75 55.1801 77.1801 64.75 65.375 64.75C53.5699 64.75 44 55.1801 44 43.375C44 31.5699 53.5699 22 65.375 22C77.1801 22 86.75 31.5699 86.75 43.375Z"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                     />
                     <path
                       d="M25 112V112C37.8135 73.5595 92.1865 73.5595 105 112V112"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                       stroke-linecap="round"
                     />
                   </svg>
@@ -221,17 +221,17 @@ export default function Profile() {
                       d="M127 65C127 99.2417 99.2417 127 65 127C30.7583 127 3 99.2417 3 65C3 30.7583 30.7583 3 65 3C99.2417 3 127 30.7583 127 65Z"
                       fill="white"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                     />
                     <path
                       d="M86.75 43.375C86.75 55.1801 77.1801 64.75 65.375 64.75C53.5699 64.75 44 55.1801 44 43.375C44 31.5699 53.5699 22 65.375 22C77.1801 22 86.75 31.5699 86.75 43.375Z"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                     />
                     <path
                       d="M25 112V112C37.8135 73.5595 92.1865 73.5595 105 112V112"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                       stroke-linecap="round"
                     />
                   </svg>
