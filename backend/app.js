@@ -53,15 +53,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-<<<<<<< HEAD
+
 app.use('/api/auth', authRouter);
 app.use('/api/post',postRouter);
 //app.use('/test',testRouter);
-=======
-app.use('api/auth', authRouter);
-app.use('/post',postRouter);
-app.use('/test',testRouter);
->>>>>>> d6ec8191 (약간 수정)
 
 
 app.use('/api/admin/userManagement',userManagementRouter);
