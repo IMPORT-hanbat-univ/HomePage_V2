@@ -135,6 +135,7 @@ router.get("/tokenverification",verifyToken, async(req, res) => {
         attributes:[nick_name,id,kakaoId,rank]
     })
     */
+   console.log("유저 닉네임 타입 체크!!",typeof req.user.nick_name)
     const user = {
         nick_name: req.user.nick_name,
         userId: req.user.userId,
