@@ -10,12 +10,13 @@ const cors = require('cors');
 const qs = require("qs");
 const axios = require('axios');
 const corsOptions = {
-    origin: ['http://localhost:3000','https://kauth.kakao.com','http://kauth.kakao.com'],
+    origin: ['http://www.import-hanbat.com','http://localhost:3000','https://kauth.kakao.com','http://kauth.kakao.com'],
     credentials:true,
   };
 
 const router = express.Router();
-const frontURL =  'http://localhost:3000';
+//const frontURL =  'http://localhost:3000';
+const frontURL = 'http://www.import-hanbat.com'
 
 router.get('/logout',async(req,res)=>{
     // https://kapi.kakao/com/v1/user/logout
