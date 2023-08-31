@@ -285,6 +285,7 @@ router.get("/:id",async (req, res) => {
     }
 });
 
+
 //업데이트
 router.post("/edit/:id", verifyToken,notice,async (req, res) => {
     const body = req.body;
@@ -398,7 +399,126 @@ router.post("/edit/:id", verifyToken,notice,async (req, res) => {
         return res.sendStatus(401);
     }
 });
+/*
+//업데이트
+router.post("/edit/:id", verifyToken,notice,async (req, res) => {
+    const body = req.body;
+    const user = req.user;
+    let table, postId;
+    
+    if(body.category == body.existingCategory){
+        try {
+            switch (body.category){
+                case 'notice':
+                    const notice = await RootPost.update({
+                            title: body.title,
+                            content: body.content,
+                            tagF: body.tagF,
+                            tagS: body.tagS,
+                            tagT: body.tagT,
+                            category: body.category,
+                            file: "",
+                            UserId: user.userId,
+                        },
+                        {
+                            where: {
+                                id: { [Op.eq]: req.params.id },
+                            },
+                        });
+                    table = RootPost;
+                    postId = notice.id;
+                    break
+                case 'qna':
+                    const qna = await ListPost.update({
+                            title: body.title,
+                            content: body.content,
+                            topic:body.topic,
+                            tagF: body.tagF,
+                            tagS: body.tagS,
+                            tagT: body.tagT,
+                            category: body.category,
+                            file: "",
+                            UserId: user.userId,
+                        },
+                        {
+                            where: {
+                                id: { [Op.eq]: req.params.id },
+                            },
+                        });
+                    table = ListPost;
+                    postId = qna.id;
+                    break
+                case 'devNews':
+                    const devNews = await CardPost.update({
+                        title: body.title,
+                        content: body.content,
+                        topic:body.topic,
+                        tagF: body.tagF,
+                        tagS: body.tagS,
+                        tagT: body.tagT,
+                        category: body.category,
+                        file: "",
+                        UserId: user.userId,
+                    });
+                    table = CardPost;
+                    postId = devNews.id;
+                    break
+                case 'project':
+    
+                    const project = await Project.update({
+                            title: body.title,
+                            content: body.content,
+                            tagF: body.tagF,
+                            tagS: body.tagS,
+                            tagT: body.tagT,
+                            category: body.category,
+                            file: "",
+                            leader:user.userId,
+                            member:body.member,
+                            UserId: user.userId,
+                        },
+                        {
+                            where: {
+                                id: { [Op.eq]: req.params.id },
+                            },
+                        });
+                    table = Project;
+                    postId = project.id;
+                    break
+                case 'patch':
+                    const patch = await PatchNote.update({
+                            title: body.title,
+                            content: body.content,
+                            category: body.category,
+                            file: "",
+                            UserId: user.userId,
+                        },
+                        {
+                            where: {
+                                id: { [Op.eq]: req.params.id },
+                            },
+                        });
+                    table = PatchNote;
+                    postId = patch.id;
+                    break
+                default:
+                    throw new Error('데이터를 수정하지 못했습니다.');
+            }
+            const updatedPost = await getdata(table, "id", req.params.id);
+    
+            console.log({ content: updatedPost[0] });
+            return res.json({ content: updatedPost[0] });
+        } catch (error) {
+            console.error(error);
+            return res.sendStatus(401);
+        }
+        
+    }else if(body.category != body.existingCategory){
 
+    }
+    
+});
+*/
 //글 삭제
 router.delete("/deleted/:id",verifyToken,notice, async (req, res) => {
     const body = req.body;
