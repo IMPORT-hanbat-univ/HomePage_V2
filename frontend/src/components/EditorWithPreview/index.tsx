@@ -29,25 +29,17 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
   const [tagText, setTagText] = useState("");
   const [tagList, setTagList] = useState<string[]>(initTagList ?? []);
   const [modal, setModal] = useState(false);
-
-  // const [notification, setNotification] = useState<string>("")
   const setNotification = useSetRecoilState(notificationAtom);
   const markdownRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
-  /*
+  
   if (!decodeUser || Object.keys(decodeUser).length === 0 || error || decodeUser.rank < 4) {
     router.replace("/");
   }
-  */
-  useEffect(() => {
-    if (!decodeUser || Object.keys(decodeUser).length === 0 || error || decodeUser.rank < 4) {
-      router.replace("/");
-    }
-  }, [decodeUser])
-
-  //const nick_name: string = decodeUser.nick_name;
-  const nick_name: string = decodeUser?.nick_name;
+  
+  const nick_name: string = decodeUser.nick_name;
+  //const nick_name: string = decodeUser?.nick_name;
   console.log("nick_name!!!!!!!!!!",nick_name)
   const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
