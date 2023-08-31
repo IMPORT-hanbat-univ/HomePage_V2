@@ -115,9 +115,9 @@ export async function userProfileUpdate(newProfile: DetailUser, accessToken: str
   }
 }
 
-export async function userProfileWithDrawal(accessToken: string) {
+export async function userProfileWithDrawal(userId: number,accessToken: string) {
   try {
-    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/mypage/profile/withdrawal`, {
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/mypage/profile/withdrawal/${userId}`, {
       method: "POST",
       credentials: "include",
       headers: {
