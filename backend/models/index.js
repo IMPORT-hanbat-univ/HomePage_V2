@@ -17,12 +17,7 @@ const CardPostComment = require('./cardPostComment');
 const CardPost = require('./cardPost');
 
 const db = {};
-const sequelize = new Sequelize(config.database, config.username, config.password, {...config,
-define:{
-    charset: 'utf8mb4',
-    dialectOptions: {
-      collate: 'utf8mb4_unicode_ci'}
-}});
+const sequelize = new Sequelize(config.database, config.username, config.password,config);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
