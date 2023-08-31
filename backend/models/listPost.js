@@ -43,8 +43,8 @@ module.exports = class ListPost extends Sequelize.Model{
             modelName: 'ListPost',
             tableName: 'listPosts',
             paranoid: true,
-            charset: 'utf8',
-            collate: 'utf8_general_ci',
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_unicode_ci',
         });
     }
     static associate(db) {

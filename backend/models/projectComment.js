@@ -24,8 +24,8 @@ module.exports = class ProjectComment extends Sequelize.Model{
             modelName: 'ProjectComment',
             tableName: 'projectComments',
             paranoid: true,
-            charset: 'utf8',
-            collate: 'utf8_general_ci',
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_unicode_ci',
         });
     }
     static associate(db) {
