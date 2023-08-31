@@ -21,7 +21,7 @@ const getTables = (category) => {
             tableComment = ListPostComment;
             relatedTableId = "ListPostId";
             break;
-        case 'information':
+        case 'devNews':
             table = CardPost;
             tableComment = CardPostComment;
             relatedTableId = "CardPostId";
@@ -167,7 +167,7 @@ router.post("/edit",verifyToken, async (req, res) => {
     let table, postId;
 
     /*
-    1. 큰 카테고리(카테고리-테이블명 / notice-RootPost, QnA-ListPost, information(개발정보)-CardPost,project-Project, patch-PatchNote)
+    1. 큰 카테고리(카테고리-테이블명 / notice-RootPost, QnA-ListPost, devNews(개발정보)-CardPost,project-Project, patch-PatchNote)
     2. switch case로 카테고리가 a 라면 db create, table이라는 변수에 테이블명 넣어주기
     3. 다시 nowPost에 지금 해당 데이터 담아서 리턴
     * */
@@ -202,19 +202,20 @@ router.post("/edit",verifyToken, async (req, res) => {
                 table = ListPost;
                 postId = qna.id;
                 break
-            case 'information':
-                const information = await CardPost.create({
+            case 'devNews':
+                const devNews = await CardPost.create({
                     title: body.title,
                     content: body.content,
                     tagF: body.tagF,
                     tagS: body.tagS,
                     tagT: body.tagT,
+                    topic: body.topic,
                     category: body.category,
                     file: "",
                     UserId: user.userId,
                 });
-                table = RootPost;
-                postId = information.id;
+                table = CardPost;
+                postId = devNews.id;
                 break
             case 'project':
 
@@ -327,8 +328,8 @@ router.post("/edit/:id", verifyToken,async (req, res) => {
                 table = ListPost;
                 postId = qna.id;
                 break
-            case 'information':
-                const information = await CardPost.update({
+            case 'devNews':
+                const devNews = await CardPost.update({
                     title: body.title,
                     content: body.content,
                     tagF: body.tagF,
@@ -338,8 +339,8 @@ router.post("/edit/:id", verifyToken,async (req, res) => {
                     file: "",
                     UserId: user.userId,
                 });
-                table = RootPost;
-                postId = information.id;
+                table = CardPost;
+                postId = devNews.id;
                 break
             case 'project':
 
