@@ -18,33 +18,31 @@ const router = express.Router();
 //const frontURL =  'http://localhost:3000';
 const frontURL = 'http://www.import-hanbat.com'
 
-router.get('/logout',async(req,res)=>{
-    // https://kapi.kakao/com/v1/user/logout
-    const accessToken = req.headers['accesstoken'];
-    const refreshToken = req.headers['refreshtoken'];
-    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-    req.user = decoded;
+router.post('/logout',verifyToken,async(req,res)=>{
+
   try {
-    //console.log(req.user)
-    
-    
     const ACCESS = await User.findOne({
         attributes:['accessToken'],
         raw:true,
         where:{
             id:req.user.userId
         }
+    }).catch(error=> {
+        console.error(`Error occurred while fetching User: ${error}`);
     });
+
     const ACCESS_TOKEN = ACCESS.accessToken;
     console.log("accessToken: ",ACCESS_TOKEN);
-    let logout = await axios({
+    await axios({
       method:'post',
-      url:'https://kapi.kakao.com/v1/user/unlink',
+      url:"https://kapi.kakao.com/v1/user/logout" ,
       headers:{
         'Authorization': `Bearer ${ACCESS_TOKEN}`
       }
+    }).catch(error=> {
+        console.error(`Error occurred while axios: ${error}`);
     });
-    res.cookie('accessToken','',{maxAge:0}); //쿠키 만료 10분
+    res.cookie('accessToken','',{maxAge:0}); 
     res.cookie('refreshToken','',{maxAge:0});
   } catch (error) {
     console.error(error);
@@ -54,6 +52,7 @@ router.get('/logout',async(req,res)=>{
   //req.logout();
   
   req.session.destroy();
+  res.redirect(frontURL)
 
   
   

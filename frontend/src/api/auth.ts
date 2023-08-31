@@ -3,9 +3,10 @@ import jwt from "jsonwebtoken";
 
 export async function logout(accessToken: string) {
   try {
-    await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS_ADRESS}/auth/logout`, {
-      method: "GET",
+    await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/logout`, {
+      method: "POST",
       credentials: "include",
+      withCredentials: true,
       headers: {
         accessToken: accessToken || "",
       },
@@ -26,7 +27,7 @@ export async function checkUser(accessToken: string) {
   try {
     console.log("accessToken", accessToken);
     const res = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}/auth/tokenverification`, {
-      method: "GET",
+      method: "POST",
       credentials: "same-origin",
       headers: {
         accessToken: accessToken || "",

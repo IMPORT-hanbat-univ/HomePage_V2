@@ -12,10 +12,13 @@ const axios = require('axios');
 const { fileLoader } = require("ejs");
 const { error } = require("winston");
 const corsOptions = {
-    origin: 'http://localhost:4000',
-  };
+  origin: ['http://www.import-hanbat.com','http://localhost:3000','https://kauth.kakao.com','http://kauth.kakao.com'],
+  credentials:true,
+};
 
 const router = express.Router();
+//const frontURL =  'http://localhost:3000';
+const frontURL = 'http://www.import-hanbat.com'
 
 
 const userdatas = async ()=>{

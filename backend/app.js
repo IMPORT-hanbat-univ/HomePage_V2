@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser');
 var app = express();
 
 
-var indexRouter = require('./routes/index');
+//var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const testRouter = require('./routes/test');
 
@@ -22,6 +22,7 @@ const postRouter = require('./routes/api/post');
 const userManagementRouter = require('./routes/admin/userManagement')
 const rankManagementRouter = require('./routes/admin/rankManagement');
 const adminPostRouter = require('./routes/admin/post');
+const mypageRouter = require('./routes/api/mypage')
 
 //const morganMiddleware = require('./routes/customMorgan');
 
@@ -51,7 +52,7 @@ app.use(cors({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.use('/api/auth', authRouter);
@@ -62,6 +63,8 @@ app.use('/api/post',postRouter);
 app.use('/api/admin/userManagement',userManagementRouter);
 app.use('/api/admin/rankManagement',rankManagementRouter);
 app.use('/api/admin/post',adminPostRouter);
+app.use('/api/mypage',mypageRouter)
+
 app.use('/api/image', express.static(path.join(__dirname, 'image')));
 
 //app.use(morganMiddleware)
