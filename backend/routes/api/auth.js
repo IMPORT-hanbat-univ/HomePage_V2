@@ -142,7 +142,7 @@ router.get("/tokenverification",verifyToken, async(req, res) => {
         kakaoId: req.user.kakaoId,
         rank: req.user.rank,
       };
-      console.log(user);
+      console.log("user",user);
     res.json(user);
     
      // Success
