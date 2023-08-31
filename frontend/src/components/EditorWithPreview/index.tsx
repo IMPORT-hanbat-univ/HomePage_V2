@@ -39,6 +39,7 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
   if (!decodeUser || Object.keys(decodeUser).length === 0 || error || decodeUser.rank < 4) {
     router.replace("/");
   }
+  console.log("여기야!!!",decodeUser);
   const nick_name: string = decodeUser.nick_name;
   const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
