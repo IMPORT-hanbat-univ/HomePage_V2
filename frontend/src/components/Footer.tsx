@@ -26,16 +26,13 @@ export default function Footer() {
               Community
               <br className="md:hidden block" /> QnA
             </span>
-            <div className="md:block hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" width="74" height="36" viewBox="0 0 74 36" fill="none">
-                <path d="M74 18L44 0.679491L44 35.3205L74 18ZM0 21L47 21V15L0 15L0 21Z" fill="#4CD773" />
-              </svg>
-            </div>
-            <div className="md:hidden block">
-              <svg xmlns="http://www.w3.org/2000/svg" width="37" height="36" viewBox="0 0 74 36" fill="none">
-                <path d="M74 18L44 0.679491L44 35.3205L74 18ZM0 21L47 21V15L0 15L0 21Z" fill="#4CD773" />
-              </svg>
-            </div>
+            <Image
+              src={"/images/arrow.svg"}
+              alt={"화살표"}
+              width={74}
+              height={36}
+              className="object-cover max-md:w-[37px] max-md:h-[36px]"
+            />
           </Link>
         </div>
 
@@ -51,16 +48,13 @@ export default function Footer() {
               Community
               <br className="md:hidden block" /> Dev News
             </span>
-            <div className="md:block hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" width="74" height="36" viewBox="0 0 74 36" fill="none">
-                <path d="M74 18L44 0.679491L44 35.3205L74 18ZM0 21L47 21V15L0 15L0 21Z" fill="#4CD773" />
-              </svg>
-            </div>
-            <div className="md:hidden block">
-              <svg xmlns="http://www.w3.org/2000/svg" width="37" height="36" viewBox="0 0 74 36" fill="none">
-                <path d="M74 18L44 0.679491L44 35.3205L74 18ZM0 21L47 21V15L0 15L0 21Z" fill="#4CD773" />
-              </svg>
-            </div>
+            <Image
+              src={"/images/arrow.svg"}
+              alt={"화살표"}
+              width={74}
+              height={36}
+              className="object-cover max-md:w-[37px] max-md:h-[36px]"
+            />
           </Link>
         </div>
       </div>
