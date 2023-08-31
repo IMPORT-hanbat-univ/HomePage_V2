@@ -24,7 +24,7 @@ type Props = {
 
 export default function EditorWithPreview({ initContent, initTitle, initTagList, initTopic }: Props) {
   const { decodeUser, error } = useMe();
-  const test = typeof(decodeUser.nick_name)
+  const test = typeof decodeUser.nick_name
   console.log("여기야!!!",decodeUser);
   console.log("여기야!!!",test);
   const [title, setTitle] = useState(initTitle ?? "");
