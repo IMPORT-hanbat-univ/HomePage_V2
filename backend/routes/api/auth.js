@@ -83,7 +83,7 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
         nick_name: loggedInUser[0].nick_name,
         rank: loggedInUser[0].rank,
     }, process.env.ACCESS_TOKEN_SECRET,{
-        expiresIn: '10m', //기간 10분
+        expiresIn: '1h', //기간 1시간
     });
 
     const refreshToken = jwt.sign({
@@ -98,8 +98,8 @@ router.get('/kakao/callback',passport.authenticate('kakao',{
     console.log("token: " + accessToken);
     console.log("refresh: " + refreshToken);
 
-    res.cookie('accessToken',accessToken,{maxAge:60*180*1000}); //쿠키 만료 180분
-    res.cookie('refreshToken',refreshToken,{maxAge:60*60*12*1000}); //쿠키 만료 12시간
+    res.cookie('accessToken',accessToken,{maxAge:60*120*1000}); //쿠키 만료 180분
+    res.cookie('refreshToken',refreshToken,{httpOnly:'http://www.import-hanbat.com',maxAge:60*60*12*1000}); //쿠키 만료 12시간
 
     try {
         await User.update(

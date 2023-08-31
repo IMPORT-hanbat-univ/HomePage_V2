@@ -3,6 +3,7 @@ const {Op} = require("sequelize");
 const jwt = require("jsonwebtoken")
 const {v4:uuidv4} = require("uuid")
 const multer = require('multer');
+const { log } = require("winston");
 exports.isLoggedIn =  (req, res, next) => {
     console.log(req.session);
     if (req.isAuthenticated()) {
@@ -38,8 +39,8 @@ exports.logout = (req, res) => {
 
 exports.verifyToken = async (req, res, next) => {
 
-    const accessToken = req.headers['accesstoken'];
-    const refreshToken = req.headers['refreshtoken'];
+    const accessToken = req.headers['accesstoken']||req.cookies.accessToken;
+    const refreshToken = req.headers['refreshtoken']||req.cookies.refreshToken;
     console.log("verifytoken", accessToken, refreshToken);
     // Access token이 있는 경우 검증
     if (accessToken) {
@@ -53,14 +54,19 @@ exports.verifyToken = async (req, res, next) => {
             if (err.name === 'TokenExpiredError' && refreshToken) {
                 try {
                     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-                    const user = await User.findAll({
+                    const loggedInUser = await User.findAll({
                         raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
                         attributes:['id','nick_name','rank','kakaoId'],
                         where:{
                              refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                         }
                     })
-
+                    const user = {
+                        userId:loggedInUser.id,
+                        kakao:loggedInUser.kakaoId,
+                        nick_name:loggedInUser.nick_name,
+                        rank:loggedInUser.rank
+                    }
 
                     const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
                     const refresh = uuidv4();
@@ -79,8 +85,8 @@ exports.verifyToken = async (req, res, next) => {
                         res.sendStatus(500);
                         return;
                     }
-                    res.cookie('accessToken', newAccessToken, { httpOnly: 'http://localhost:3000/' ,maxAge:60*10*1000});
-                    res.cookie('refreshToken', newRefreshToken, { httpOnly: 'http://localhost:3000/' ,maxAge:60*60*12*1000});
+                    res.cookie('accessToken', newAccessToken, {maxAge:60*120*1000});
+                    res.cookie('refreshToken', newRefreshToken, { httpOnly: 'http://www.import-hanbat.com' ,maxAge:60*60*12*1000});
 
                     req.user = user;
                     return next();
@@ -96,15 +102,21 @@ exports.verifyToken = async (req, res, next) => {
     } else if (refreshToken) { // Access token이 없는 경우 Refresh token 검증
         try {
             const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-            const user = User.findAll({
+            const loggedInUser = User.findAll({
                 raw:true, //쓸데없는 데이터 말고 dataValues 안의 내용만 나옴(궁금하면 옵션빼고 아래 us 사용하는 데이터 주석처리하고 확인)
                 attributes:['id','nick_name','rank','kakaoId'],
                 where:{
                     refreshToken:{ [Op.eq]:decoded.refreshToken } ,
                 }
             });
+            const user = {
+                userId:loggedInUser.id,
+                kakao:loggedInUser.kakaoId,
+                nick_name:loggedInUser.nick_name,
+                rank:loggedInUser.rank
+            }
             const newAccessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
-            const refresh = "updated";
+            const refresh = uuidv4();
             const newRefreshToken = jwt.sign({refresh}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '12h' });
             try {
                 await User.update(
@@ -120,8 +132,8 @@ exports.verifyToken = async (req, res, next) => {
                 return;
             }
             console.log("accessToken None, refreshToken success");
-            res.cookie('accessToken', newAccessToken, { httpOnly: 'http://localhost:3000/',maxAge:60*10*1000 });
-            res.cookie('refreshToken', newRefreshToken, { httpOnly: 'http://localhost:3000/' ,maxAge:60*60*12*1000});
+            res.cookie('accessToken', newAccessToken, { maxAge:60*10*1000 });
+            res.cookie('refreshToken', newRefreshToken, { httpOnly: 'http://www.import-hanbat.com' ,maxAge:60*60*12*1000});
 
             return next();
         } catch (err) {
