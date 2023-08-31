@@ -7,8 +7,8 @@ const {Op} = require("sequelize");
 const {config} = require("dotenv");
 const cors = require('cors');
 const axios = require('axios');
-const { update,verifyToken } = require("../../models/user");
-const {admin} = require('../api/middlewares')
+const { update } = require("../../models/user");
+const {admin,verifyToken} = require('../api/middlewares')
 const corsOptions = {
     origin: 'http://import-hanbat.com/',
   };

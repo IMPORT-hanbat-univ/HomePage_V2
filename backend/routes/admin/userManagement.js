@@ -11,6 +11,7 @@ const cors = require('cors');
 const axios = require('axios');
 const { fileLoader } = require("ejs");
 const { error } = require("winston");
+const {admin,verifyToken} = require('../api/middlewares')
 const corsOptions = {
   origin: ['http://www.import-hanbat.com','http://localhost:3000','https://kauth.kakao.com','http://kauth.kakao.com'],
   credentials:true,

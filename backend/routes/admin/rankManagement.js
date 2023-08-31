@@ -9,6 +9,7 @@ const cors = require('cors');
 const axios = require('axios');
 const { update } = require("../../models/user");
 const { error } = require("winston");
+const {admin,verifyToken} = require('../api/middlewares')
 const corsOptions = {
     origin: 'http://localhost:4000',
   };
