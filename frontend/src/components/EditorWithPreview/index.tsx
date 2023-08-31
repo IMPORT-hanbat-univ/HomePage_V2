@@ -38,11 +38,19 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
   const markdownRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
+  /*
   if (!decodeUser || Object.keys(decodeUser).length === 0 || error || decodeUser.rank < 4) {
     router.replace("/");
   }
-  
-  const nick_name: string = decodeUser.nick_name;
+  */
+  useEffect(() => {
+    if (!decodeUser || Object.keys(decodeUser).length === 0 || error || decodeUser.rank < 4) {
+      router.replace("/");
+    }
+  }, [decodeUser])
+
+  //const nick_name: string = decodeUser.nick_name;
+  const nick_name: string = decodeUser?.nick_name;
   const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (tagText.trim() === "") {
