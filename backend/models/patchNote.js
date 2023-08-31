@@ -39,8 +39,8 @@ module.exports = class PatchNote extends Sequelize.Model{
             modelName: 'PatchNote',
             tableName: 'patchNotes',
             paranoid: true,
-            charset: 'utf8mb4',
-            collate: 'utf8_general_ci',
+            //charset: 'utf8mb4',
+            //collate: 'utf8_general_ci',
         });
     }
     static associate(db) {

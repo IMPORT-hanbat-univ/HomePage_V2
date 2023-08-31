@@ -37,8 +37,8 @@ module.exports = class ClubUser extends Sequelize.Model {
                 modelName: "ClubUser",
                 tableName: "clubUsers",
                 paranoid: true,
-                charset: "utf8mb4",
-                collate: "utf8_general_ci",
+                //charset: "utf8mb4",
+                //collate: "utf8_general_ci",
             }
         );
     }

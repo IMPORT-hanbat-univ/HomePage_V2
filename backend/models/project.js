@@ -48,8 +48,8 @@ module.exports = class Project extends Sequelize.Model{
             modelName: 'Project',
             tableName: 'projects',
             paranoid: true,
-            charset: 'utf8mb4',
-            collate: 'utf8_general_ci',
+            //charset: 'utf8mb4',
+            //collate: 'utf8_general_ci',
         });
     }
     static associate(db) {
