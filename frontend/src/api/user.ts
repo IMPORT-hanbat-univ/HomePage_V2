@@ -97,6 +97,7 @@ export async function userProfileUpdate(newProfile: DetailUser, accessToken: str
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/mypage/profile/modify`, {
       method: "POST",
       credentials: "include",
+      withCredentials: true,
       body: JSON.stringify(newProfile),
       headers: {
         "Content-Type": "application/json",

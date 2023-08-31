@@ -116,6 +116,26 @@ router.post('/profile/modify',async(req,res)=>{
     delete user.id; // id 프로퍼티 삭제
     user.userId = body.userId; // 새로운 userId 프로퍼티 추가
 
+    //쿠키 다시 발급
+    const accessToken = jwt.sign({
+        kakaoId: user.kakaoId,
+        userId: user.id,
+        nick_name: user.nick_name,
+        rank: user.rank,
+    }, process.env.ACCESS_TOKEN_SECRET,{
+        expiresIn: '1h', //기간 1시간
+    });
+
+    const refreshToken = jwt.sign({
+            uuid:uuidv4(), //고유한 난수를 사용하고싶어서 uuid 사용
+        },process.env.REFRESH_TOKEN_SECRET,{
+            expiresIn: '12h', //기간 12시간
+        }
+    );
+    res.cookie('accessToken',accessToken,{maxAge:60*120*1000}); //쿠키 만료 180분
+    res.cookie('refreshToken',refreshToken,{httpOnly:'http://www.import-hanbat.com',maxAge:60*60*12*1000}); //쿠키 만료 12시간
+
+
     res.json(user)
 
     
