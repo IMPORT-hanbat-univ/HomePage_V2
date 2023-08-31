@@ -102,7 +102,7 @@ const getdatas = async (table,tableComment) =>{
     comments.forEach((item) => {
         const id = item.id-1;
         console.log(item)
-        if (item.tableComment+'s'.id=== null) {
+        if (item.tableComment+'s'.id == null) {
             countComments[id]= countComments[id] ? countComments[id] : 0;
         } else {
             countComments[id] = countComments[id] ? countComments[id] + 1 : 1;
