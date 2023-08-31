@@ -1,4 +1,4 @@
-const {User} = require("../models");
+const {User} =  require("../../models");
 const {Op} = require("sequelize");
 const jwt = require("jsonwebtoken")
 const {v4:uuidv4} = require("uuid")

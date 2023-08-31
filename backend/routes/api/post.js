@@ -1,4 +1,4 @@
-const { RootPost, RootComment, User,ListPost,CardPost,ListPostComment,ProjectComment,PatchNoteComment,CardPostComment, Project,PatchNote} = require("../models");
+const { RootPost, RootComment, User,ListPost,CardPost,ListPostComment,ProjectComment,PatchNoteComment,CardPostComment, Project,PatchNote} = require("../../models");
 const sequelize = require("sequelize");
 const { upload,tokenValidationMiddleware, authenticationToken, verifyToken} = require("./middlewares");
 const express = require("express");
