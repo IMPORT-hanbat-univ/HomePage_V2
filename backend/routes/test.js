@@ -1,4 +1,4 @@
-/*
+
 const { RootPost, RootComment, User,ListPost,CardPost,ListPostComment,ProjectComment,PatchNoteComment,CardPostComment, Project,PatchNote, ClubUser} = require("../models");
 const sequelize = require("sequelize");
 const { upload,tokenValidationMiddleware, authenticationToken, verifyToken} = require("./middlewares");
@@ -41,6 +41,18 @@ router.post('/clubUser',async(req,res)=>{
     }
 })
 
+router.post('/rankup', async(req,res)=>{
+    const user = await User.update({
+        rank:req.body.requestRank
+    },{
+        where:{
+            id:req.body.userId
+        }
+    }).catch(error=> {
+        console.error(`Error occurred while fetching User: ${error}`);
+    })
+
+    res.sendStatus(200)
+})
 
 module.exports = router;
-*/
