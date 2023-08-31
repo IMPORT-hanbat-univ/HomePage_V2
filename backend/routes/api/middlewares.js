@@ -47,7 +47,12 @@ exports.verifyToken = async (req, res, next) => {
         try {
             const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
             console.log("accessToken success");
-            req.user = decoded;
+            req.user = {
+                userId:decoded.userId,
+                kakao:decoded.kakaoId,
+                nick_name:decoded.nick_name,
+                rank:decoded.rank
+            }
             return next();
         } catch (err) {
             // Access token이 만료된 경우, Refresh token 검증
