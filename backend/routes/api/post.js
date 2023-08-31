@@ -66,7 +66,7 @@ const getdata = async (table,column, dataId) =>{
         delete obj["User.rank"];
         delete obj["User.nick_name"];
 
-        if(obj.nick_name == null)obj.nick_name="탈퇴한 회원"
+        if(obj.nick_name == null)obj.nick_name="탈퇴 회원"
     });
     return data;
 
@@ -124,7 +124,7 @@ const getdatas = async (table,tableComment) =>{
         delete obj["User.nick_name"];
         obj.userId = obj["UserId"];
         delete obj["UserId"];
-        if(obj.nick_name == null)obj.nick_name="탈퇴한 회원"
+        if(obj.nick_name == null)obj.nick_name="탈퇴 회원"
     });
     return datas;
 }
