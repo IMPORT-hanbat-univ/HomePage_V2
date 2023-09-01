@@ -27,7 +27,7 @@ export default function PostContent({
 }) {
   const router = useRouter();
   const pathname = usePathname() ?? "/";
-  console.log("check", user, content.userId);
+
   const handleRemove = async () => {
     if (!content?.id) {
       return;

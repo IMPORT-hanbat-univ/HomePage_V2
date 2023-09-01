@@ -4,11 +4,20 @@ import React from "react";
 
 import getClientCookie from "@/util/getClientCookie";
 import { useRouter } from "next/navigation";
+import { useSetRecoilState } from "recoil";
+import { notificationAtom } from "@/recoil/notification";
 export default function LogoutButton() {
   const router = useRouter();
+  const setNotification = useSetRecoilState(notificationAtom);
   const handleLogout = async () => {
-    await logout(getClientCookie("accessToken") || "");
-    return router.push("/");
+    const result = await logout(getClientCookie("accessToken") || "");
+    if (typeof result === "string") {
+      console.log(result);
+      setNotification({ notificationType: "Error", message: "로그아웃 과정에서 에러가 발생했습니다.", type: "danger" });
+      return;
+    } else {
+      router.refresh();
+    }
   };
   return (
     <button

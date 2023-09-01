@@ -6,12 +6,12 @@ export async function logout(accessToken: string) {
     await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/logout`, {
       method: "POST",
       credentials: "include",
-      withCredentials: true,
+
       headers: {
         accessToken: accessToken || "",
       },
     });
-    return;
+    return true;
   } catch (err: any) {
     console.log(err);
     return "로그아웃 과정에서 에러 발생!!";
