@@ -119,7 +119,7 @@ router.post('/profile/modify',verifyToken,async(req,res)=>{
     //쿠키 다시 발급
     const accessToken = jwt.sign({
         kakaoId: user.kakaoId,
-        userId: body.userId,
+        userId: user.userId,
         nick_name: user.nick_name,
         rank: user.rank,
     }, process.env.ACCESS_TOKEN_SECRET,{
