@@ -15,31 +15,31 @@ const getTables = (category) => {
             table = RootPost;
             tableComment = RootComment;
             relatedTableId = "RootPostId";
-            tableComments='RootComments'
+            
             break;
         case 'qna':
             table = ListPost;
             tableComment = ListPostComment;
             relatedTableId = "ListPostId";
-            tableComments = "ListPostComments";
+            
             break;
         case 'devNews':
             table = CardPost;
             tableComment = CardPostComment;
             relatedTableId = "CardPostId";
-            tableComments = "CardPostComments";
+            
             break;
         case 'project':
             table = Project;
             tableComment = ProjectComment;
             relatedTableId = "ProjectId";
-            tableComments = "ProjectComments";
+            
             break;
         case 'patch':
             table = PatchNote;
             tableComment = PatchNoteComment;
             relatedTableId = "PatchNoteId";
-            tableComments = "PatchNoteComments";
+            
             break;
         default:
             throw new Error('테이블을 불러오지 못했습니다.');
@@ -77,7 +77,7 @@ const getdata = async (table,column, dataId) =>{
 
 };
 //목록
-const getdatas = async (table,tableComment,tableComments) =>{
+const getdatas = async (table,tableComment) =>{
     
     const datas = await table.findAll({
         raw: true,
@@ -107,11 +107,70 @@ const getdatas = async (table,tableComment,tableComments) =>{
 
     const countComments = [];
 
+    switch (table) {
+        case RootPost:
+            comments.forEach((item) => {
+                const id = item.id-1;
+                if (item.RootComments.id == null) {
+                    countComments[id]= countComments[id] ? countComments[id] : 0;
+                } else {
+                    countComments[id] = countComments[id] ? countComments[id] + 1 : 1;
+                }
+            });
+            break;
+        case ListPost:
+            comments.forEach((item) => {
+                const id = item.id-1;
+                if (item.CardPostComments.id == null) {
+                    countComments[id]= countComments[id] ? countComments[id] : 0;
+                } else {
+                    countComments[id] = countComments[id] ? countComments[id] + 1 : 1;
+                }
+            });
+            break;
+        case CardPost:
+            comments.forEach((item) => {
+                const id = item.id-1;
+                if (item.CardPostComments.id == null) {
+                    countComments[id]= countComments[id] ? countComments[id] : 0;
+                } else {
+                    countComments[id] = countComments[id] ? countComments[id] + 1 : 1;
+                }
+            });
+            
+            break;
+        case Project:
+            comments.forEach((item) => {
+                const id = item.id-1;
+                if (item.ProjectComments.id == null) {
+                    countComments[id]= countComments[id] ? countComments[id] : 0;
+                } else {
+                    countComments[id] = countComments[id] ? countComments[id] + 1 : 1;
+                }
+            });
+            
+            break;
+        case PatchNote:
+            comments.forEach((item) => {
+                const id = item.id-1;
+                if (item.PatchNoteComments.id == null) {
+                    countComments[id]= countComments[id] ? countComments[id] : 0;
+                } else {
+                    countComments[id] = countComments[id] ? countComments[id] + 1 : 1;
+                }
+            });
+            
+            break;
+        default:
+            throw new Error('테이블을 불러오지 못했습니다.');
+    }
+
     comments.forEach((item) => {
         const id = item.id-1;
         console.log(item)
+        const tableCommentsName = item.tableComments
         
-        if (item.tableComments.id == null) {
+        if (tableCommentsName.id == null) {
             countComments[id]= countComments[id] ? countComments[id] : 0;
         } else {
             countComments[id] = countComments[id] ? countComments[id] + 1 : 1;
@@ -158,9 +217,9 @@ router.get("/", async function (req, res) {
     const category = req.query.category
     
     try {
-        const { table, tableComment, relatedTableId ,tableComments} = getTables(category);
+        const { table, tableComment, relatedTableId } = getTables(category);
 
-        const posts = await getdatas(table,tableComment,tableComments);
+        const posts = await getdatas(table,tableComment);
 
         console.log({ item: posts });
         res.json({ item: posts }); //배열 안에 내용이 없을때 {item: []} 로 보내짐
