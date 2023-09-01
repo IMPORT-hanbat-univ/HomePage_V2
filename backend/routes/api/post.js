@@ -121,6 +121,8 @@ const getdatas = async (table,tableComment) =>{
         case ListPost:
             comments.forEach((item) => {
                 const id = item.id-1;
+                console.log(item)
+                console.log(item.ListPostComments)
                 if (item.ListPostComments.id == null) {
                     countComments[id]= countComments[id] ? countComments[id] : 0;
                 } else {
@@ -131,6 +133,8 @@ const getdatas = async (table,tableComment) =>{
         case CardPost:
             comments.forEach((item) => {
                 const id = item.id-1;
+                console.log(item)
+                console.log(item)
                 if (item.CardPostComments.id == null) {
                     countComments[id]= countComments[id] ? countComments[id] : 0;
                 } else {
