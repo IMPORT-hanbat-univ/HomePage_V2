@@ -19,7 +19,7 @@ const router = express.Router();
 const frontURL = 'http://www.import-hanbat.com'
 
 
-router.get('/profile/:id', async (req, res) => {
+router.get('/profile/:id',verifyToken, async (req, res) => {
     const userId = req.params.id;
     console.log("마이페이지")
 
@@ -55,7 +55,7 @@ router.get('/profile/:id', async (req, res) => {
     res.json(user)
 })
 
-router.post('/profile/modify',async(req,res)=>{
+router.post('/profile/modify',verifyToken,async(req,res)=>{
     const body =req.body
     console.log("마이페이지")
 
@@ -276,7 +276,7 @@ const getcommnets = async (commnet,userId,post) =>{
 }
 
 
-router.get('/myPost/:userId',async(req,res)=>{
+router.get('/myPost/:userId',verifyToken,async(req,res)=>{
     const userId = req.params.userId
     const card = await getdatas(CardPost,userId);
     const listPost = await getdatas(ListPost,userId);
@@ -289,7 +289,7 @@ router.get('/myPost/:userId',async(req,res)=>{
 
 })
 
-router.get('/myComment/:userId',async(req,res)=>{
+router.get('/myComment/:userId',verifyToken,async(req,res)=>{
     const userId = req.params.userId
     const card = await getcommnets(CardPostComment,userId,CardPost);
     const listPost = await getcommnets(ListPostComment,userId,ListPost);
