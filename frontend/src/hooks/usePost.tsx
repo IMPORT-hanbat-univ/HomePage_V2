@@ -32,8 +32,13 @@ export default function usePost(category: string, id: string | number) {
     });
   };
 
-  const deleteComment = (commentId: number | string, accessToken: string) => {
+  const deleteComment = (commentId: number, accessToken: string) => {
+    const newData = {
+      content: { ...data.content },
+      comment: data.comment.filter((item: Comment) => item.id !== commentId) || [],
+    };
     return mutate(deletePostComment(data.content.id, commentId, data.content.category, accessToken), {
+      optimisticData: newData,
       revalidate: true,
       rollbackOnError: true,
       populateCache: false,

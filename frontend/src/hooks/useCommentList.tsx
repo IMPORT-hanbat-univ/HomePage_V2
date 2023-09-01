@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 export default function useCommentList(comments: Comment[]) {
   const [commentList, setCommentList] = useState<Comment[]>(comments);
   useEffect(() => {
+    console.log("comment check", comments);
     if (comments && comments.length > 0) {
       const sortComments = comments.sort((a, b) => a.group - b.group || a.sequence - b.sequence);
       const mapComments: Comment[] = [...sortComments];
@@ -29,6 +30,8 @@ export default function useCommentList(comments: Comment[]) {
         }
       }
       setCommentList(mapComments);
+    } else {
+      setCommentList([]);
     }
   }, [comments]);
   return commentList;

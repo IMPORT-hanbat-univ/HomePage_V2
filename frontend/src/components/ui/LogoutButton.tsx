@@ -16,7 +16,7 @@ export default function LogoutButton() {
       setNotification({ notificationType: "Error", message: "로그아웃 과정에서 에러가 발생했습니다.", type: "danger" });
       return;
     } else {
-      router.refresh();
+      window.location.reload();
     }
   };
   return (

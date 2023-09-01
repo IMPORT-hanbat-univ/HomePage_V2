@@ -26,7 +26,6 @@ export default function CommentContent({
   const [isPending, startTrasition] = useTransition();
   const nowPage = searchParams?.get("nowPage");
   const currentPage = nowPage ? parseInt(nowPage) : 1;
-  const router = useRouter();
   const { page, pageData, pageRangeArray } = usePagination(comments, currentPage);
   const pageComments = useCommentList(pageData);
   console.log(pageComments);

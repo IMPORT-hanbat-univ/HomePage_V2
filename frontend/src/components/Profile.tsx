@@ -141,6 +141,9 @@ export default function Profile() {
     }
     updateUserProfile(parseInt(userId as string), modifyData, accessToken);
     setIsModify(false);
+
+    console.log("check");
+    window.location.reload();
   };
 
   const handleWithDrawal = () => {
@@ -422,6 +425,7 @@ export default function Profile() {
         <div className="w-full flex justify-end mt-6 md:mt-10 ">
           <button
             onClick={submitModify}
+            disabled={!isModify}
             className={`px-2 py-1 ${
               isModify ? "bg-import-color" : "bg-[#A5E3B6]"
             } rounded-[10px]  text-white px-8 text-[12px] border-none `}

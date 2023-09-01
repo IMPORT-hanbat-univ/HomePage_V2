@@ -89,7 +89,7 @@ export default function CommentItem({
       const accessToken: string = getClientCookie("accessToken") || "";
 
       try {
-        deleteComment(comment.id, accessToken);
+        deleteComment(comment.id as number, accessToken);
       } catch (err: any) {
         console.log(err);
         alert("삭제 과정에서 에러가 발생했습니다.");
