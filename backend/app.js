@@ -15,7 +15,6 @@ var app = express();
 
 //var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const testRouter = require('./routes/test');
 
 const authRouter = require('./routes/api/auth');
 const postRouter = require('./routes/api/post');
@@ -57,14 +56,13 @@ app.use('/users', usersRouter);
 
 app.use('/api/auth', authRouter);
 app.use('/api/post',postRouter);
-//app.use('/test',testRouter);
+
 
 
 app.use('/api/admin/userManagement',userManagementRouter);
 app.use('/api/admin/rankManagement',rankManagementRouter);
 app.use('/api/admin/post',adminPostRouter);
 app.use('/api/mypage',mypageRouter)
-
 app.use('/api/image', express.static(path.join(__dirname, 'image')));
 
 //app.use(morganMiddleware)
