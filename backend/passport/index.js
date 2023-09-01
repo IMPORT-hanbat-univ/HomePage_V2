@@ -9,15 +9,12 @@ module.exports = (passport) => {
         done(null, {id: user.id,accessToken:user.accessToken});
     });
 
-    passport.deserializeUser((user,done) => {
-        
-        User.findOne({
-            where: {id:user.id},
-        })
-            .then(user=> done(null, {id: user.id,accessToken:user.accessToken}))
-            .catch(err => done(err));
+    passport.deserializeUser(function(user, done) {
+        //findById(id, function (err, user) {
+        //console.log('deserialize');   
+        done(null, user);
+        //});
     });
-
 
     //local(passport);
     kakao(passport);
