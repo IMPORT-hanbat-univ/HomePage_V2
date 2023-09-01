@@ -10,10 +10,14 @@ const axios = require('axios');
 const { update } = require("../../models/user");
 const {admin,verifyToken} = require('../api/middlewares')
 const corsOptions = {
-    origin: 'http://import-hanbat.com/',
+    origin: ['http://www.import-hanbat.com','http://localhost:3000','https://kauth.kakao.com','http://kauth.kakao.com'],
+    credentials:true,
   };
-
-const router = express.Router();
+  
+  const router = express.Router();
+  //const frontURL =  'http://localhost:3000';
+  const frontURL = 'http://www.import-hanbat.com'
+  
 //목록
 const getdatas = async (table) =>{
     

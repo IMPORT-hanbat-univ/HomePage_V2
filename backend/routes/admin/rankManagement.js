@@ -11,10 +11,14 @@ const { update } = require("../../models/user");
 const { error } = require("winston");
 const {admin,verifyToken} = require('../api/middlewares')
 const corsOptions = {
-    origin: 'http://localhost:4000',
+    origin: ['http://www.import-hanbat.com','http://localhost:3000','https://kauth.kakao.com','http://kauth.kakao.com'],
+    credentials:true,
   };
-const router = express.Router();
-
+  
+  const router = express.Router();
+  //const frontURL =  'http://localhost:3000';
+  const frontURL = 'http://www.import-hanbat.com'
+  
 /** 요청레벨이 있는 user목록 */
 const requestRankUsers = async()=>{
     const users =  await User.findAll({
