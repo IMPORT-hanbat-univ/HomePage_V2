@@ -168,18 +168,6 @@ const getdatas = async (table,tableComment) =>{
         default:
             throw new Error('테이블을 불러오지 못했습니다.');
     }
-
-    comments.forEach((item) => {
-        const id = item.id-1;
-        console.log(item)
-        const tableCommentsName = item.tableComments
-        
-        if (tableCommentsName.id == null) {
-            countComments[id]= countComments[id] ? countComments[id] : 0;
-        } else {
-            countComments[id] = countComments[id] ? countComments[id] + 1 : 1;
-        }
-    });
     console.log(countComments);
 
     
