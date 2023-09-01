@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import EditorWithPreview from "@/components/EditorWithPreview";
 import { checkUser } from "@/api/auth";

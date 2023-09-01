@@ -6,12 +6,12 @@ export async function getPostList(category: string): Promise<SimplePost[] | stri
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post?category=${category}`, {
       method: "GET",
       credentials: "include",
-      withCredentials: true,
+
       next: {
         revalidate: 0,
       },
     });
-    console.log(process.env.NEXT_PUBLIC_BACK_NODE_ADRESS)
+    console.log(process.env.NEXT_PUBLIC_BACK_NODE_ADRESS);
     const data = await result.json();
     return data.item as SimplePost[] | [];
   } catch (err: any) {
@@ -28,7 +28,7 @@ export async function getPostDetail(category: string, id: number) {
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/${id}?category=${category}`, {
       method: "GET",
       credentials: "include",
-      withCredentials: true,
+
       next: {
         revalidate: 0,
       },
@@ -56,7 +56,7 @@ export async function deletePost(category: string, postId: number, accessToken: 
       {
         method: "DELETE",
         credentials: "include",
-        withCredentials: true,
+
         headers: {
           "Content-Type": "application/json",
           accessToken,
@@ -77,7 +77,7 @@ export async function createPost(post: CreatePost): Promise<boolean | string> {
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/edit`, {
       method: "POST",
       credentials: "include",
-      withCredentials: true,
+
       headers: {
         "Content-Type": "application/json",
         accessToken,
@@ -103,7 +103,7 @@ export async function updatePost(post: CreatePost, postId: string): Promise<bool
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/edit/${postId}`, {
       method: "POST",
       credentials: "include",
-      withCredentials: true,
+
       headers: {
         "Content-Type": "application/json",
         accessToken,
@@ -168,7 +168,7 @@ export async function updatePostComment(
       {
         method: "POST",
         credentials: "include",
-        withCredentials: true,
+
         headers: {
           "Content-Type": "application/json",
           accessToken,
@@ -199,7 +199,7 @@ export async function deletePostComment(
       `http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/post/deleted/${postId}/${commentId}?category=${category}`,
       {
         method: "DELETE",
-        withCredentials: true,
+
         headers: {
           "Content-Type": "application/json",
           accessToken,
@@ -220,7 +220,7 @@ export async function updateAdminPost(post: CreatePost, postId: string): Promise
     const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/admin/post/edit/${postId}`, {
       method: "POST",
       credentials: "include",
-      withCredentials: true,
+
       headers: {
         "Content-Type": "application/json",
         accessToken,
@@ -250,7 +250,7 @@ export async function deleteAdminPost(
       {
         method: "DELETE",
         credentials: "include",
-        withCredentials: true,
+
         headers: {
           "Content-Type": "application/json",
           accessToken,
