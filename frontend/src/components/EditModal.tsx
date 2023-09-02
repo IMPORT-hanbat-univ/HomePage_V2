@@ -95,7 +95,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
     let result: any | string;
     try {
       const file = getFirstFile(content);
-      const post = {
+      let post = {
         title,
         content,
         tagF,
@@ -110,23 +110,23 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
       const adminEdit = pathname?.includes("adminedit");
 
       startTrasition(async () => {
-        if (postId) {
+        if (postId && categoryQuery) {
+          const updatedPost = { ...post, existingCategory: categoryQuery };
           if (adminEdit) {
-            result = await updateAdminPost(post, postId as string);
+            result = await updateAdminPost(updatedPost, postId as string);
           } else {
-            result = await updatePost(post, postId as string);
+            result = await updatePost(updatedPost, postId as string);
           }
         } else {
           result = await createPost(post);
         }
         console.log("result", result);
         if (!result.content || typeof result === "string") {
-          setNotification({ notificationType: "Warning", message: result, type: "warning" });
+          setNotification({ notificationType: "Warning", message: result || "에러가 발생했습니다.", type: "warning" });
 
           return;
-        } else {
-          const content = result.content;
         }
+        console.log("check", `/${path}/${category}/${result.content.id}`);
         if (category === "project") {
           router.replace(`/${category}/${result.content.id}`);
         } else {

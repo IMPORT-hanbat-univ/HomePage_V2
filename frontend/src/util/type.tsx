@@ -29,6 +29,7 @@ export type SimplePost = {
   deletedAt: Date;
   category: string;
   tagF: string;
+  rank: number;
   tagS: string;
   tagT: string;
   file?: string;
@@ -56,6 +57,7 @@ export interface PostDetailType {
 export interface CreatePost {
   title: string;
   content: string;
+  existingCategory?: string;
   tagF?: string;
   tagS?: string;
   category: string;
@@ -80,6 +82,7 @@ export type Comment = {
   nick_name?: string;
   updatedAt?: Date;
   userId?: number;
+  rank: number;
 };
 
 export type QnASimplePost = SimplePost & { numberOfComments: number; content: string };
