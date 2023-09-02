@@ -103,7 +103,13 @@ export default function CommentItem({
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           {comment.sequence !== 0 && <BsArrowReturnRight className="mr-2 text-import-color" />}
-          <span className="text-xl leading-6 tracking-[-0.015em] font-semibold opacity-80">{comment.nick_name}</span>
+          <span
+            className={`text-xl leading-6 tracking-[-0.015em] font-semibold opacity-80 ${
+              comment.rank === 0 ? "text-base text-opacity-60" : ""
+            }`}
+          >
+            {comment.nick_name}
+          </span>
           <span className="text-sm opacity-80 font-normal leading-6 tracking-[-0.015em] ml-3">
             {dayjs(comment.createdAt).format("YYYY년 M월 D일 H시 m분")}
           </span>

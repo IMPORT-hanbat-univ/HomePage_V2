@@ -25,7 +25,7 @@ export default function NoticeCard({ post, index }: { post: SimplePost; index: n
 
         <div className="text-xs mt-1 text-preview-gray flex">
           <time dateTime={dayjs(post.createdAt).format()}>{dayjs(post.createdAt).format("MM월DD일")}</time>
-          <div className="ml-2">{post.nick_name}</div>
+          <div className={`ml-2 ${post.rank === 0 ? "text-[10px] text-opacity-70" : ""}`}>{post.nick_name}</div>
         </div>
       </Link>
     </article>

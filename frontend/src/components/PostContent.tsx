@@ -82,7 +82,13 @@ export default function PostContent({
       </div>
       <h2 className="mt-10 text-4xl font-extrabold  tracking-[-0.015em] h-full">{content.title}</h2>
       <div className="mt-9 flex items-center justify-between">
-        <span className="leading-6 tracking-[-0.015em] text-[20px] font-semibold opacity-80">{content.nick_name}</span>
+        <span
+          className={`leading-6 tracking-[-0.015em] text-[20px] font-semibold opacity-80 ${
+            content.rank === 0 ? "text-[16px] text-opacity-60" : ""
+          }`}
+        >
+          {content.nick_name}
+        </span>
         <time className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-80">
           {dayjs(content.createdAt).format("YYYY년 M월 D일")}
         </time>

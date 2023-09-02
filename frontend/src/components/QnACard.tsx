@@ -34,7 +34,13 @@ export default function QnACard({ post }: Props) {
 
             <div className="!flex overflow-hidden line-clamp-1 whitespace-nowrap mt-1 md:mt-4 justify-between text-[12px] font-normal text-light-gray">
               <div className="flex-auto w-0 max-w-[520px] min-w-0 flex items-center">
-                <span className="shrink overflow-ellipsis whitespace-nowrap inline-block">{post.nick_name}</span>
+                <span
+                  className={`shrink overflow-ellipsis whitespace-nowrap inline-block  ${
+                    post.rank === 0 ? "text-[8px] text-opacity-70" : ""
+                  }`}
+                >
+                  {post.nick_name}
+                </span>
                 <span className=" shrink-0 inline-block">&nbsp;·&nbsp;</span>
                 <span className=" shrink-0 inline-block">{dayjs(post.createdAt).format("YYYY년MM월DD일")}</span>
                 <span className=" shrink-0 md:inline-block hidden">&nbsp;·&nbsp;</span>
