@@ -12,7 +12,6 @@ export default function LogoutButton() {
   const handleLogout = async () => {
     const result = await logout(getClientCookie("accessToken") || "");
     if (typeof result === "string") {
-      console.log(result);
       setNotification({ notificationType: "Error", message: "로그아웃 과정에서 에러가 발생했습니다.", type: "danger" });
       return;
     } else {

@@ -34,7 +34,6 @@ export default function Profile() {
   const { decodeUser } = useMe();
 
   const { data, isLoading, error, updateUserProfile } = useProfile(parseInt(userId as string));
-  console.log(data);
 
   useEffect(() => {
     if (data) {
@@ -142,7 +141,6 @@ export default function Profile() {
     updateUserProfile(parseInt(userId as string), modifyData, accessToken);
     setIsModify(false);
 
-    console.log("check");
     window.location.reload();
   };
 

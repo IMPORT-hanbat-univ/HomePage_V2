@@ -19,7 +19,7 @@ export default function usePatchnoteList(data) {
         targetYear = dayjs(latestDate.replace(".", "-"), "YYYY-MM").year();
         targetMonth = dayjs(latestDate.replace(".", "-"), "YYYY-MM").month();
       }
-      console.log("target", targetYear, targetMonth);
+
       const { monthArray, monthDataArray } = data.reduce(
         (acc, item) => {
           const dateString = dayjs(item.createdAt).format("YYYY.MM");

@@ -62,7 +62,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
   const [path, setPath] = useState<string>(selectCategory?.path ?? "");
   const [category, setCategory] = useState<string>(categoryQuery ?? "");
   const [topic, setTopic] = useState(initTopic ?? "");
-  console.log("topic", initTopic);
+
   const setNotification = useSetRecoilState(notificationAtom);
   const [isPending, startTrasition] = useTransition();
   const router = useRouter();
@@ -105,7 +105,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
         category,
         topic,
       };
-      console.log("check", post);
+
       const postId = params?.id;
       const adminEdit = pathname?.includes("adminedit");
 
@@ -120,13 +120,13 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
         } else {
           result = await createPost(post);
         }
-        console.log("result", result);
+
         if (!result.content || typeof result === "string") {
           setNotification({ notificationType: "Warning", message: result || "에러가 발생했습니다.", type: "warning" });
 
           return;
         }
-        console.log("check", `/${path}/${category}/${result.content.id}`);
+
         if (category === "project") {
           router.replace(`/${category}/${result.content.id}`);
         } else {

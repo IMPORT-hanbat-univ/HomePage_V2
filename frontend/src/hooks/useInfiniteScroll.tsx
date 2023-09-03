@@ -7,7 +7,6 @@ export default function useInfiniteScroll(target: React.RefObject<HTMLDivElement
   useEffect(() => {
     // data가 변경될 때마다 새로운 데이터의 첫 15개를 가져옴
     if (data && data.length > 0) {
-      console.log("num", number);
       const newData = data.slice(0, number * 15);
       setFilteredData(newData);
     } else {

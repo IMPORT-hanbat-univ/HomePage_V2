@@ -9,7 +9,6 @@ export default function Notification() {
   const [{ notificationType, message, type }, setNotification] = useRecoilState(notificationAtom);
   useEffect(() => {
     if (typeof notificationType === "string" && typeof message === "string" && typeof type === "string") {
-      console.log(message);
       Store.addNotification({
         title: notificationType,
         message: message,

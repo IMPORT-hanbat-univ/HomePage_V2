@@ -1,6 +1,8 @@
 import AdminSection from "@/components/AdminSection";
 import AdminMenu from "@/components/ui/AdminMenu";
-import React from "react";
+import useMe from "@/hooks/useMe";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default async function AdminPage() {
   return (

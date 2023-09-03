@@ -1,31 +1,30 @@
 "use client";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import useAdmins from "@/hooks/useUsers";
+
 import { DecodeUser, DetailUser } from "@/util/type";
 import dayjs from "dayjs";
 import getAdminFilter from "@/util/getAdminFilter";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import useUsers from "@/hooks/useUsers";
+
 import getClientCookie from "@/util/getClientCookie";
 import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
-import ModalPortal from "./ui/ModalPortal";
-import AdminModalContainer from "./ui/AdminModalContainer";
-import AdminModal from "./AdminModal";
+
 import useRanks from "@/hooks/useRanks";
-import useMe from "@/hooks/useMe";
+
 import { useSWRConfig } from "swr";
 
 type Props = {
   currentRank: string;
   searchValue: string;
   requestRank: string;
+  user: DecodeUser;
 };
-export default function RankTable({ currentRank, searchValue, requestRank }: Props) {
+export default function RankTable({ currentRank, searchValue, requestRank, user }: Props) {
   const [changeRank, setChangeRank] = useState("1");
 
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const { decodeUser: user } = useMe();
+
   const { mutate } = useSWRConfig();
 
   const [levelUser, setLevelUser] = useState<{ userId: number; rank: number; requestRank?: number }[]>([]);
@@ -34,7 +33,7 @@ export default function RankTable({ currentRank, searchValue, requestRank }: Pro
 
   const target = useRef<HTMLDivElement>(null);
   const userData = useInfiniteScroll(target, filteredData);
-  console.log("result", userData);
+
   const setNotification = useSetRecoilState(notificationAtom);
 
   const changeCheckbox = (e: ChangeEvent<HTMLInputElement>, user: DetailUser) => {

@@ -22,9 +22,9 @@ export default function PostDetail({ category }: Props) {
   const { decodeUser: user } = useMe();
   const params = useParams();
   const id = params?.id;
-  console.log();
+
   const { data, isLoading, error } = usePost(category, id as string);
-  console.log("data", data, error);
+
   const pathArray = categoryPath[category as keyof typeof categoryPath] || [{ name: category }];
   if (error || (!isLoading && !data?.content)) {
     notFound();

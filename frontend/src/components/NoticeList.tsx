@@ -24,7 +24,7 @@ const NoticeList = () => {
   const selectedOrder = order || "latest";
   const nowPage: string | null | undefined = searchParams?.get("nowPage");
   const { data: notices, isLoading } = usePosts("notice");
-  console.log("data", user);
+
   const currentPage = nowPage ? parseInt(nowPage) : 1;
 
   const filteredData = getFilteredData(notices, { category: "", tag: "", search: "" }, selectedOrder);
@@ -33,8 +33,6 @@ const NoticeList = () => {
     pageData = [],
     pageRangeArray,
   }: { page: number; pageData: SimplePost[] | []; pageRangeArray: number[] } = usePagination(filteredData, currentPage);
-
-  console.log("pageData", pageData, pageRangeArray);
 
   return (
     <div className="p-3 flex-shrink basis-0 grow max-w-[980px]">

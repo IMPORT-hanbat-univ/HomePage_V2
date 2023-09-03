@@ -1,13 +1,14 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import AdminInput from "./ui/AdminInput";
 import useDebounce from "@/hooks/useDebounce";
 import UserTable from "./UserTable";
-import { DecodeUser } from "@/util/type";
+import { useRouter } from "next/navigation";
 import RankTable from "./RankTable";
 import PostTable from "./PostTable";
-import { request } from "http";
+
+import useMe from "@/hooks/useMe";
 
 export default function AdminSection() {
   const searchParams = useSearchParams();
@@ -17,6 +18,13 @@ export default function AdminSection() {
   const [requestRank, setRequestRank] = useState("all");
   const [category, setCategory] = useState("all");
   const searchValue = useDebounce(text, 3000);
+  const { decodeUser, isLoading } = useMe();
+
+  const router = useRouter();
+
+  if (!isLoading && (!decodeUser || decodeUser.rank < 4)) {
+    router.replace("/");
+  }
 
   const commonOptions = {
     valueList: [
@@ -71,11 +79,11 @@ export default function AdminSection() {
         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
       />
       {page === "user" ? (
-        <UserTable currentRank={currentRank} searchValue={searchValue} />
+        <UserTable user={decodeUser} currentRank={currentRank} searchValue={searchValue} />
       ) : page === "rank" ? (
-        <RankTable currentRank={currentRank} requestRank={requestRank} searchValue={searchValue} />
+        <RankTable user={decodeUser} currentRank={currentRank} requestRank={requestRank} searchValue={searchValue} />
       ) : (
-        <PostTable searchValue={searchValue} category={category} />
+        <PostTable user={decodeUser} searchValue={searchValue} category={category} />
       )}
     </div>
   );

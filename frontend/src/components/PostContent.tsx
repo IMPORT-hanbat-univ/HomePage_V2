@@ -56,7 +56,7 @@ export default function PostContent({
       }
     }
   };
-  console.log("user", user);
+
   return (
     <div>
       <div className="mt-[10px] pl-1 flex items-center">

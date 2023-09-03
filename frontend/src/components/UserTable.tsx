@@ -1,6 +1,6 @@
 "use client";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { DetailUser } from "@/util/type";
+import { DecodeUser, DetailUser } from "@/util/type";
 import dayjs from "dayjs";
 import getAdminFilter from "@/util/getAdminFilter";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -18,10 +18,11 @@ import { useSWRConfig } from "swr";
 type Props = {
   currentRank: string;
   searchValue: string;
+  user: DecodeUser;
 };
-export default function UserTable({ currentRank, searchValue }: Props) {
+export default function UserTable({ currentRank, searchValue, user }: Props) {
   const { data, isLoading, error, withdrawlUser, updateUsersLevel } = useUsers();
-  const { decodeUser: user } = useMe();
+
   const { mutate } = useSWRConfig();
   const [changeRank, setChangeRank] = useState("1");
   const [showModal, setShowModal] = useState(false);
@@ -34,7 +35,6 @@ export default function UserTable({ currentRank, searchValue }: Props) {
   const target = useRef<HTMLDivElement>(null);
   const userData = useInfiniteScroll(target, filteredData);
 
-  console.log("dataList", userData, detailUser);
   const setNotification = useSetRecoilState(notificationAtom);
   const handleWithdrawl = (userId: number) => {
     const accessToken: string = getClientCookie("accessToken") || "";

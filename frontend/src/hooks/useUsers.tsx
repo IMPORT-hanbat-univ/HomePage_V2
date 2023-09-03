@@ -30,7 +30,7 @@ export default function useUsers() {
       return;
     }
     const newUsers = data?.map((item: DetailUser) => (item.userId === user.userId ? user : item));
-    console.log("newUser", newUsers);
+
     return mutate(userUpdate(user.userId, user, accessToken), {
       optimisticData: newUsers,
       revalidate: true,

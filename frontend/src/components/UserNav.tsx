@@ -9,7 +9,6 @@ import ProfileNav from "./ui/ProfileNav";
 
 export default function UserNav() {
   const { decodeUser, error } = useMe();
-  console.log("decodeUser", decodeUser);
 
   const loginURL =
     "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" +

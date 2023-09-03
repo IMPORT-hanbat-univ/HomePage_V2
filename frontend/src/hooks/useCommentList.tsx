@@ -4,17 +4,17 @@ import React, { useEffect, useState } from "react";
 export default function useCommentList(comments: Comment[]) {
   const [commentList, setCommentList] = useState<Comment[]>(comments);
   useEffect(() => {
-    console.log("comment check", comments);
     if (comments && comments.length > 0) {
       const sortComments = comments.sort((a, b) => a.group - b.group || a.sequence - b.sequence);
       const mapComments: Comment[] = [...sortComments];
-      console.log(mapComments);
+
       if (mapComments[0].sequence !== 0) {
         mapComments.splice(0, 0, {
           id: `삭제된 댓글_${mapComments[0].group}`,
           sequence: 0,
           group: mapComments[0].group,
           content: "삭제된 댓글입니다.",
+          rank: 0,
         });
       }
       for (let i = 1; i < mapComments.length; i++) {
@@ -26,6 +26,7 @@ export default function useCommentList(comments: Comment[]) {
             sequence: 0,
             group: currrentComment.group,
             content: "삭제된 댓글입니다.",
+            rank: 0,
           });
         }
       }

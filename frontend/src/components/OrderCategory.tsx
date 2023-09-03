@@ -16,7 +16,7 @@ export default function OrderCategory({ selected, orderArray }: Props) {
   const query = searchParams ? Object.fromEntries(searchParams.entries()) : {};
   const clickSort = (order: string) => {
     const queryString = new URLSearchParams({ ...query, order }).toString();
-    console.log("order", `${pathname}?${queryString}`);
+
     router.push(`${pathname}?${queryString}`);
   };
   return (

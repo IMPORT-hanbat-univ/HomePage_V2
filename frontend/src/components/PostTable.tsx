@@ -1,14 +1,12 @@
 "use client";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { DetailUser, SimplePost } from "@/util/type";
+import React, { useRef } from "react";
+import { DecodeUser, DetailUser, SimplePost } from "@/util/type";
 import dayjs from "dayjs";
 import getAdminFilter from "@/util/getAdminFilter";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
-
-import useMe from "@/hooks/useMe";
 
 import useAdminPosts from "@/hooks/useAdminPosts";
 import Link from "next/link";
@@ -17,11 +15,11 @@ import getClientCookie from "@/util/getClientCookie";
 type Props = {
   category: string;
   searchValue: string;
+  user: DecodeUser;
 };
-export default function PostTable({ searchValue, category }: Props) {
-  const { decodeUser: user } = useMe();
+export default function PostTable({ searchValue, category, user }: Props) {
   const { data = [], isLoading, deletePost } = useAdminPosts();
-  console.log("checkData", data);
+
   const filteredData = getAdminFilter(data, { category, searchValue });
 
   const target = useRef<HTMLDivElement>(null);
@@ -32,7 +30,7 @@ export default function PostTable({ searchValue, category }: Props) {
     if (user.rank < 4) {
       setNotification({ notificationType: "Warning", message: "삭제 권한이 없습니다.", type: "warning" });
     }
-    console.log("123123");
+
     const accessToken: string = getClientCookie("accessToken") || "";
 
     try {

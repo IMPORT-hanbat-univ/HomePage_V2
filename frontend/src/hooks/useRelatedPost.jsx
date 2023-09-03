@@ -7,7 +7,7 @@ export default function useRelatedPost(list, post) {
     if (list && list.length > 0 && post && Object.keys(post).length > 0) {
       const postKeywordArray = post?.content.content.match(/[가-힣a-zA-Z]+(?=([^가-힣a-zA-Z]|$))/g);
       const postKeywordSet = new Set(postKeywordArray);
-      console.log("list", list, post);
+
       const filteredList = list
         .filter((item) => item.id !== post.content.id) // 제외할 게시글
         .reduce((acc, cur) => {

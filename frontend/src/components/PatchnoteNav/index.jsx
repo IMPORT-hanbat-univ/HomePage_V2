@@ -23,7 +23,7 @@ export default function PatchnoteNav() {
   } = useQuery(["patchnoteDetail", patchnoteId], () => patchnoteApi.getDetail(patchnoteId));
   const { data: patchnoteList } = useQuery(["patchnoteList", projectId], () => patchnoteApi.getList(projectId));
   const { prevPatchnote, nextPatchnote } = usePatchnoteNav(patchnoteList?.patchnote, patchnoteDetail?.patchnote);
-  console.log(prevPatchnote, nextPatchnote);
+
   return (
     <div
       className={cls(

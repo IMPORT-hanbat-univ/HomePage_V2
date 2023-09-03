@@ -17,7 +17,7 @@ type Props = {
 
 export default function MarkdownEditor({ text, setText, hideToolbar }: Props) {
   const imageRef = useRef<HTMLInputElement>(null);
-  console.log("text", text);
+
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (hideToolbar) {
       return;
@@ -36,7 +36,7 @@ export default function MarkdownEditor({ text, setText, hideToolbar }: Props) {
         .then((response) => response.text())
         .then((data) => {
           // 업로드 성공 후 처리 로직
-          console.log(data);
+
           //app${data}
           setText((prev) => `${prev} \n ![test](http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}${data} "title")`);
         })

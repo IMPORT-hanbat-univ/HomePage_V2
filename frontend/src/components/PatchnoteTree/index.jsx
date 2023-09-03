@@ -4,7 +4,6 @@ import cls from "classnames";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 export default function PatchnoteTree({ monthList, monthDataList, month, setMonth }) {
-  console.log(month);
   return (
     <div className="relative w-full ml-36">
       <ul className="max-w-[500px] w-full  text-base font-thin leading-6 text-right rounded-sm relative">
