@@ -1,7 +1,7 @@
 
 const { RootPost, RootComment, User,ListPost,CardPost,ListPostComment,ProjectComment,PatchNoteComment,CardPostComment, Project,PatchNote, ClubUser} = require("../models");
 const sequelize = require("sequelize");
-const { upload,tokenValidationMiddleware, authenticationToken, verifyToken} = require("./middlewares");
+const { upload,tokenValidationMiddleware, authenticationToken, verifyToken} = require("./api/middlewares");
 const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
