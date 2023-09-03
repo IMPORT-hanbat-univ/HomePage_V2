@@ -31,22 +31,21 @@ exports.logout = (req, res) => {
         res.redirect('/');
     });
 };
-exports.admin= (req,res,next)=>{
+exports.admin = (req, res, next) => {
     const userRank = req.user.rank;
 
     try {
-        if(userRank>=4){
+        if (userRank >= 4) {
             next();
-        }else{
-            throw error
+        } else {
+            throw new Error('권한이 없습니다.');
         }
-        
     } catch (error) {
-        console.log('임원진 외 admin 접근,',error)
-        res.sendStatus(404)
+        console.log('임원진 외 admin 접근,', error);
+        res.sendStatus(403); // 403 Forbidden status code
     }
-    next();
-}
+};
+
 exports.notice = (req,res,next)=>{
     const userRank = req.user.rank;
     const category = req.body.category;
