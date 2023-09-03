@@ -27,7 +27,7 @@ services:
     environment:
       TZ: Asia/Seoul
     ports:
-      - "4000:4000"
+      - "4006:4006"
     volumes:
       #이미지 파일 저장 경로
       - ./backend/image:/app/image
