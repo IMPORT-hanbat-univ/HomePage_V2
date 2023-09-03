@@ -13,7 +13,7 @@ services:
       - "3000:3000"
     networks:
       - import_network
-      #- import_home_network
+      - import_home_network
     depends_on:
       - node-server
 
@@ -33,7 +33,7 @@ services:
       - ./backend/image:/app/image
     networks:
       - import_network
-      #- import_home_network
+      - import_home_network
     depends_on:
       - mariadb
 
@@ -59,6 +59,6 @@ services:
 networks:
   import_network:
     driver: bridge
-  #import_home_network:
-    #driver: bridge
-   # external: true
+  import_home_network:
+    driver: bridge
+    external: true
