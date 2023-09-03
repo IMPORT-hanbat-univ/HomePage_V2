@@ -32,19 +32,19 @@ exports.logout = (req, res) => {
     });
 };
 exports.admin= (req,res,next)=>{
-    // const userRank = req.user.rank;
+    const userRank = req.user.rank;
 
-    // try {
-    //     if(userRank>=4){
-    //         next();
-    //     }else{
-    //         throw error
-    //     }
+    try {
+        if(userRank>=4){
+            next();
+        }else{
+            throw error
+        }
         
-    // } catch (error) {
-    //     console.log('임원진 외 admin 접근,',error)
-    //     res.sendStatus(404)
-    // }
+    } catch (error) {
+        console.log('임원진 외 admin 접근,',error)
+        res.sendStatus(404)
+    }
     next();
 }
 exports.notice = (req,res,next)=>{
