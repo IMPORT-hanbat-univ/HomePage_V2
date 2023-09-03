@@ -26,7 +26,7 @@ export async function checkUser(accessToken: string) {
 
   try {
     console.log("accessToken", accessToken);
-    const res = await fetch(`http://${process.env.NETWORK_BACK_NODE_ADRESS}/auth/tokenverification`, {
+    const res = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/tokenverification`, {
       method: "POST",
       credentials: "same-origin",
       headers: {
