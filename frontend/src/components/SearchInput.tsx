@@ -14,9 +14,9 @@ export default function SearchInput() {
     if (search.trim() === "") {
       const copyQuery = { ...query };
       delete copyQuery.search;
-      queryString = new URLSearchParams(copyQuery).toString();
+      queryString = new URLSearchParams({ ...copyQuery, nowPage: "1" }).toString();
     } else {
-      queryString = new URLSearchParams({ ...query, search: search.trim() }).toString();
+      queryString = new URLSearchParams({ ...query, search: search.trim(), nowPage: "1" }).toString();
     }
     router.push(`${pathname}?${queryString}`);
   };
