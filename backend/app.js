@@ -93,9 +93,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(4006, function() {
-  console.log("start! express server on port 4000")
-})
+
 
 
 module.exports = app;
