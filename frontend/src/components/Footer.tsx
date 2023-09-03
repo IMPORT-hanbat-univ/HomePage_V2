@@ -12,7 +12,7 @@ export default function Footer() {
     return null;
   }
   return (
-    <footer className="w-full mt-20 md:mt-36 overflow-x-hidden relative bg-black  flex flex-col items-center  -z-10">
+    <footer className="w-full mt-20 md:mt-36 overflow-x-hidden relative bg-black  flex flex-col items-center  ">
       <div className="flex items-center gap-4 md:gap-72 md:px-60 justify-between md:py-10 w-full py-4 px-4">
         <div className="w-full md:w-auto">
           <h4 className="text-import-color  md:text-[40px] font-extrabold md:leading-[60px] tracking-[-0.6px] ">
