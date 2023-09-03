@@ -14,7 +14,7 @@ export default function UserNav() {
   const loginURL =
     "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" +
     process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID +
-    `&redirect_uri=http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/auth/kakao/callback`;
+    `&redirect_uri=http://www.import-hanbat.com/api/auth/kakao/callback`;
   const handleLogin = async () => {
     console.log("handleLogin function called");
     try {
