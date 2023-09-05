@@ -20,10 +20,11 @@ type Props = {
   initContent?: string;
   initTagList?: string[];
   initTopic?: string;
+  category?: string;
 };
 
-export default function EditorWithPreview({ initContent, initTitle, initTagList, initTopic }: Props) {
-  const { decodeUser, error } = useMe();
+export default function EditorWithPreview({ initContent, initTitle, initTagList, initTopic, category }: Props) {
+  const { decodeUser, error, isLoading } = useMe();
   const [title, setTitle] = useState(initTitle ?? "");
   const [content, setContent] = useState(initContent ?? "");
   const [tagText, setTagText] = useState("");
@@ -33,14 +34,18 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
   const markdownRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
-  
-  if (!decodeUser || Object.keys(decodeUser).length === 0 || error ) {
+
+  if (!isLoading && (!decodeUser || Object.keys(decodeUser).length === 0 || error)) {
     router.replace("/");
   }
-  const nick_name:string = decodeUser?.nick_name || ""
+  if (!isLoading && category === "notice" && decodeUser && decodeUser.rank < 4) {
+    router.replace("/");
+  }
+  const nick_name: string = decodeUser?.nick_name || "";
+  const rank: number = decodeUser?.rank || 0;
   //const nick_name: string = decodeUser.nick_name;
   //const nick_name: string = decodeUser?.nick_name;
-  console.log("nick_name!!!!!!!!!!",nick_name)
+  console.log("nick_name!!!!!!!!!!", nick_name);
   const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (tagText.trim() === "") {
@@ -146,6 +151,7 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
           <EditModalContainer>
             <EditModal
               nick_name={nick_name}
+              userRank={rank}
               initTopic={initTopic}
               onClose={() => setModal(false)}
               title={title}

@@ -15,7 +15,7 @@ type Props = {
     category?: string | undefined;
   };
 };
-export default async function NoticeModifyPage({ params: { id }, searchParams: { category } }: Props) {
+export default async function ModifyPage({ params: { id }, searchParams: { category } }: Props) {
   if (!category) {
     alert("카테고리를 못찾았습니다.");
     redirect("/");
@@ -37,7 +37,13 @@ export default async function NoticeModifyPage({ params: { id }, searchParams: {
   console.log("tagList", tagList);
   return (
     <div>
-      <EditorWithPreview initContent={content} initTagList={tagList} initTitle={title} initTopic={topic ?? ""} />
+      <EditorWithPreview
+        initContent={content}
+        initTagList={tagList}
+        initTitle={title}
+        initTopic={topic ?? ""}
+        category={category}
+      />
     </div>
   );
 }

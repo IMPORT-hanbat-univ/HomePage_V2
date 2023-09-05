@@ -98,19 +98,20 @@ export default function PostContent({
           post={{ tagF: content?.tagF || "", tagS: content?.tagS || "", tagT: content?.tagT || "" }}
           disabled={true}
         />
-        {user && (user.userId === content.userId || user.rank >= 4) && (
-          <div className="flex items-center">
-            <Link
-              href={`/edit/${content.id}?category=${category}`}
-              className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2"
-            >
-              수정
-            </Link>
-            <button onClick={handleRemove} className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">
-              삭제
-            </button>
-          </div>
-        )}
+        {(user && (user.userId === content.userId || user.rank >= 4)) ||
+          (category === "notice" && user.rank >= 4 && (
+            <div className="flex items-center">
+              <Link
+                href={`/edit/${content.id}?category=${category}`}
+                className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50 mr-2"
+              >
+                수정
+              </Link>
+              <button onClick={handleRemove} className="font-normal text-sm leading-6 tracking-[-0.015em] opacity-50">
+                삭제
+              </button>
+            </div>
+          ))}
       </div>
       <div className="mt-[92px]">{children}</div>
     </div>

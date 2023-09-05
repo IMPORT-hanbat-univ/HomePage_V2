@@ -31,8 +31,12 @@ export default function Profile() {
   const [frameList, setFrameList] = useState<string[]>([]);
   const [languageText, setLanguageText] = useState("");
   const [languageList, setLanguageList] = useState<string[]>([]);
-  const { decodeUser } = useMe();
+  const { decodeUser, isLoading: isUserLoading } = useMe();
 
+  const id: string = (params?.id as string | undefined) || "";
+  if (!isUserLoading && (!decodeUser || decodeUser.userId !== parseInt(id))) {
+    router.replace("/");
+  }
   const { data, isLoading, error, updateUserProfile } = useProfile(parseInt(userId as string));
 
   useEffect(() => {

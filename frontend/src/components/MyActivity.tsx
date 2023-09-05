@@ -1,10 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import ActivityTable from "./ActivityTable";
-
+import useMe from "@/hooks/useMe";
+import { useRouter, useParams } from "next/navigation";
 export default function MyActivity() {
   const [type, setType] = useState<"post" | "comment">("post");
-
+  const { decodeUser, isLoading } = useMe();
+  const router = useRouter();
+  const params = useParams();
+  const id: string = (params?.id as string | undefined) || "";
+  if (!isLoading && (!decodeUser || decodeUser.userId !== parseInt(id))) {
+    router.replace("/");
+  }
   const handleType = (value: "post" | "comment") => {
     setType(value);
   };

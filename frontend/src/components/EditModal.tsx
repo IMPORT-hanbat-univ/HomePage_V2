@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import SelectIinput from "./ui/SelectIinput";
+import SelectInput from "./ui/SelectInput";
 import { useSearchParams, useRouter, useParams, usePathname } from "next/navigation";
 import EditTopic from "./ui/EditTopic";
 import { useSetRecoilState } from "recoil";
@@ -17,6 +17,7 @@ type Props = {
   initTopic?: string;
   onClose: () => void;
   nick_name: string;
+  userRank: number;
 };
 
 const aboutList = [
@@ -50,7 +51,7 @@ const selectCategoryList = [
   // { category: "patchnote", path: "project", categoryList: projectList },
 ];
 
-export default function EditModal({ title, initTopic, tagList, content, onClose, nick_name }: Props) {
+export default function EditModal({ title, initTopic, tagList, content, onClose, nick_name, userRank }: Props) {
   const searchParams = useSearchParams();
   const params = useParams();
   const pathname = usePathname();
@@ -89,6 +90,9 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
     } else if (category.trim() === "") {
       setNotification({ notificationType: "Warning", message: "카테고리를 선택해주세요.", type: "warning" });
 
+      return;
+    } else if (category === "notice" && userRank < 4) {
+      setNotification({ notificationType: "Warning", message: "작성권한이 없습니다.", type: "danger" });
       return;
     }
 
@@ -154,15 +158,23 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
         <label htmlFor="category" className="block mb-2">
           카테고리
         </label>
-        <SelectIinput
+        <SelectInput
           id="category"
           onChange={handlePathChange}
-          valueList={[
-            { name: "카테고리를 선택해주세요", value: "" },
-            { name: "About", value: "about" },
-            { name: "Community", value: "community" },
-            // { name: "Project", value: "project" },
-          ]}
+          valueList={
+            userRank < 4
+              ? [
+                  { name: "카테고리를 선택해주세요", value: "" },
+                  { name: "Community", value: "community" },
+                  // { name: "Project", value: "project" },
+                ]
+              : [
+                  { name: "카테고리를 선택해주세요", value: "" },
+                  { name: "About", value: "about" },
+                  { name: "Community", value: "community" },
+                  // { name: "Project", value: "project" },
+                ]
+          }
           currentValue={path}
         />
       </div>
@@ -171,7 +183,7 @@ export default function EditModal({ title, initTopic, tagList, content, onClose,
           <label htmlFor="detail-category" className="block mb-2">
             세부 카테고리
           </label>
-          <SelectIinput
+          <SelectInput
             id="detail-category"
             onChange={(e) => setCategory(e.target.value)}
             valueList={categoryList}

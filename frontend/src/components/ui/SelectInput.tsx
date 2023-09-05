@@ -7,7 +7,7 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-export default function SelectIinput({ id, onChange, valueList, currentValue }: Props) {
+export default function SelectInput({ id, onChange, valueList, currentValue }: Props) {
   return (
     <select id={id} onChange={onChange} className="shadow-select leading-6" value={currentValue}>
       {valueList.map(({ value, name }) => (
