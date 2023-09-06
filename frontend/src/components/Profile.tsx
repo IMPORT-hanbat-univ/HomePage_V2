@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState, useTransition } from "react";
 import { useSetRecoilState } from "recoil";
+import ClubInput from "./ui/ClubInput";
+import ClubTagInput from "./ui/ClubTagInput";
 
 const rank_array = [
   { title: "일반", value: "1" },
@@ -28,7 +30,8 @@ export default function Profile() {
   const setNotification = useSetRecoilState(notificationAtom);
   const [isPending, startTransition] = useTransition();
   const [frameText, setFrameText] = useState("");
-  const [frameList, setFrameList] = useState<string[]>([]);
+  const [frameList, setFrameList] = useState<string[]>(["test"]);
+
   const [languageText, setLanguageText] = useState("");
   const [languageList, setLanguageList] = useState<string[]>([]);
   const { decodeUser, isLoading: isUserLoading } = useMe();
@@ -37,7 +40,15 @@ export default function Profile() {
   if (!isUserLoading && (!decodeUser || decodeUser.userId !== parseInt(id))) {
     router.replace("/");
   }
-  const { data, isLoading, error, updateUserProfile } = useProfile(parseInt(userId as string));
+  const {
+    data,
+    isLoading,
+    updateUserProfile,
+  }: {
+    data: DetailUser;
+    isLoading: boolean;
+    updateUserProfile: (id: number, newProfile: DetailUser, accessToken: string) => Promise<any> | undefined;
+  } = useProfile(parseInt(userId as string));
 
   useEffect(() => {
     if (data) {
@@ -65,20 +76,18 @@ export default function Profile() {
 
   useEffect(() => {
     if (data?.language) {
-      setLanguageList(language.split(","));
+      setLanguageList(data.language.split(","));
     }
     if (data?.framework) {
-      setFrameList(framework.split(","));
+      setFrameList(data.framework.split(","));
     }
   }, [data]);
 
-  if (!data) {
+  if (!isLoading && !data) {
     return null;
   }
-  const { nick_name, createdAt, email, rank, blog, department, framework, github_url, grade, language, profileImg } =
-    data;
 
-  const rank_title = rank_array.find((item) => item.value === rank.toString())?.title;
+  const rank_title = rank_array.find((item) => parseInt(item.value) === data?.rank)?.title;
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     if (modifyData) {
@@ -86,49 +95,55 @@ export default function Profile() {
     }
   };
 
-  const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>, type: string) => {
-    if (e.key === "Enter") {
+  const pressTagInput = React.useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>, type: string) => {
+      if (e.key === "Enter") {
+        if (type === "framework") {
+          if (frameText.trim() === "") {
+            return;
+          } else if (frameList.find((prevFrame) => prevFrame === frameText.trim())) {
+            return;
+          } else {
+            setFrameList((prev) => [...prev, frameText]);
+            setFrameText("");
+          }
+        } else {
+          if (languageText.trim() === "") {
+            return;
+          } else if (languageList.find((prevLanguage) => prevLanguage === languageText.trim())) {
+            return;
+          } else {
+            setLanguageList((prev) => [...prev, languageText]);
+            setLanguageText("");
+          }
+        }
+      }
+    },
+    [frameList, languageList, frameText, languageText]
+  );
+
+  const removeTag = React.useCallback(
+    (tag: string, type: string) => {
       if (type === "framework") {
-        if (frameText.trim() === "") {
-          return;
-        } else if (frameList.find((prevFrame) => prevFrame === frameText.trim())) {
-          return;
+        if (frameList.length > 1) {
+          const filteredTag = frameList.filter((item) => item !== tag);
+
+          setFrameList(filteredTag);
         } else {
-          setFrameList((prev) => [...prev, frameText]);
-          setFrameText("");
+          setFrameList([]);
         }
       } else {
-        if (languageText.trim() === "") {
-          return;
-        } else if (languageList.find((prevLanguage) => prevLanguage === languageText.trim())) {
-          return;
+        if (languageList.length > 1) {
+          const filteredTag = languageList.filter((item) => item !== tag);
+
+          setLanguageList(filteredTag);
         } else {
-          setLanguageList((prev) => [...prev, languageText]);
-          setLanguageText("");
+          setLanguageList([]);
         }
       }
-    }
-  };
-
-  const removeTag = (tag: string, type: string) => {
-    if (type === "framework") {
-      if (frameList.length > 1) {
-        const filteredTag = frameList.filter((item) => item !== tag);
-
-        setFrameList(filteredTag);
-      } else {
-        setFrameList([]);
-      }
-    } else {
-      if (languageList.length > 1) {
-        const filteredTag = languageList.filter((item) => item !== tag);
-
-        setLanguageList(filteredTag);
-      } else {
-        setLanguageList([]);
-      }
-    }
-  };
+    },
+    [frameList, languageList]
+  );
 
   const submitModify = (e: React.FormEvent) => {
     e.preventDefault();
@@ -173,7 +188,7 @@ export default function Profile() {
       <div className="text-xl w-full md:pl-32 ">
         <div className="flex w-full items-center md:gap-32 gap-4 mb-6 md:mb-14">
           <div className="shrink-0">
-            {profileImg ? (
+            {data?.profileImg ? (
               <>
                 <div className="md:block hidden">
                   <Image
@@ -181,7 +196,7 @@ export default function Profile() {
                     className="object-cover rounded-full"
                     width={130}
                     height={130}
-                    src={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}${profileImg}`}
+                    src={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}${data.profileImg}`}
                   />
                 </div>
                 <div className="md:hidden block">
@@ -190,7 +205,7 @@ export default function Profile() {
                     className="object-cover rounded-full"
                     width={100}
                     height={100}
-                    src={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}${profileImg}`}
+                    src={`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}${data.profileImg}`}
                   />
                 </div>
               </>
@@ -202,18 +217,18 @@ export default function Profile() {
                       d="M127 65C127 99.2417 99.2417 127 65 127C30.7583 127 3 99.2417 3 65C3 30.7583 30.7583 3 65 3C99.2417 3 127 30.7583 127 65Z"
                       fill="white"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                     />
                     <path
                       d="M86.75 43.375C86.75 55.1801 77.1801 64.75 65.375 64.75C53.5699 64.75 44 55.1801 44 43.375C44 31.5699 53.5699 22 65.375 22C77.1801 22 86.75 31.5699 86.75 43.375Z"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                     />
                     <path
                       d="M25 112V112C37.8135 73.5595 92.1865 73.5595 105 112V112"
                       stroke="#4CD773"
-                      stroke-width="6"
-                      stroke-linecap="round"
+                      strokeWidth="6"
+                      strokeLinecap="round"
                     />
                   </svg>
                   <div className="group-hover:flex hidden absolute top-0 left-0 z-10 h-[130px] w-[130px]  items-center justify-center text-[15px] text-white rounded-full opacity-60 bg-[#041f00]">
@@ -226,18 +241,18 @@ export default function Profile() {
                       d="M127 65C127 99.2417 99.2417 127 65 127C30.7583 127 3 99.2417 3 65C3 30.7583 30.7583 3 65 3C99.2417 3 127 30.7583 127 65Z"
                       fill="white"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                     />
                     <path
                       d="M86.75 43.375C86.75 55.1801 77.1801 64.75 65.375 64.75C53.5699 64.75 44 55.1801 44 43.375C44 31.5699 53.5699 22 65.375 22C77.1801 22 86.75 31.5699 86.75 43.375Z"
                       stroke="#4CD773"
-                      stroke-width="6"
+                      strokeWidth="6"
                     />
                     <path
                       d="M25 112V112C37.8135 73.5595 92.1865 73.5595 105 112V112"
                       stroke="#4CD773"
-                      stroke-width="6"
-                      stroke-linecap="round"
+                      strokeWidth="6"
+                      strokeLinecap="round"
                     />
                   </svg>
                   <div className="group-hover:flex hidden absolute top-0 left-0 z-10 h-[100px] w-[100px]  items-center justify-center text-[12px] text-white rounded-full opacity-60 bg-[#041f00]">
@@ -253,30 +268,20 @@ export default function Profile() {
           </div>
 
           <div className=" w-full h-full">
-            <div className=" w-full md:mb-6">
-              <label htmlFor="nick_name" className="md:text-[13px] text-[11px] tracking-[-0.195px] text-[#565656]">
-                닉네임
-              </label>
-
-              <input
-                name="nick_name"
-                id="nick_name"
-                className="border md:text-[15px] text-[13px] rounded-[10px] p-1 leading-6 md:leading-7 w-full block grow "
+            <div className="w-full md:mb-6">
+              <ClubInput
+                label={"닉네임"}
+                name={"nick_name"}
                 value={modifyData?.nick_name || ""}
                 onChange={changeInput}
               />
             </div>
-            <div className=" w-full">
-              <label htmlFor="nick_name" className="md:text-[13px] text-[11px] tracking-[-0.195px] text-[#565656]">
-                email
-              </label>
-
-              <input
-                name="email"
-                id="email"
-                type="email"
-                className="border md:text-[15px] text-[13px] rounded-[10px] p-1 leading-6 md:leading-7 w-full block grow "
+            <div className="w-full">
+              <ClubInput
+                label={"email"}
+                type={"email"}
                 value={modifyData?.email || ""}
+                name={"email"}
                 onChange={changeInput}
               />
             </div>
@@ -284,20 +289,16 @@ export default function Profile() {
         </div>
         <div className="w-full h-[1px] bg-[#C1C1C1] md:mb-7"></div>
 
-        {rank > 1 && (
+        {data?.rank > 0 && (
           <div className="flex flex-col gap-3 md:gap-6">
             <div className="flex items-center gap-4 md:gap-6">
               <div>
-                <label htmlFor="grade" className="md:text-[13px] text-[11px] tracking-[-0.195px] text-[#565656]">
-                  학년
-                </label>
-
-                <select
-                  className="border w-20 md:w-24  md:text-[15px] text-[13px] rounded-[10px] p-2 leading-6 md:leading-7 block grow "
+                <ClubInput
+                  isSelect
+                  name={"grade"}
                   value={modifyData?.grade || "1학년"}
                   onChange={changeInput}
-                  id="grade"
-                  name="grade"
+                  label="학년"
                 >
                   <option value="1학년">1학년</option>
                   <option value="2학년">2학년</option>
@@ -305,122 +306,40 @@ export default function Profile() {
                   <option value="4학년 이상">4학년 이상</option>
                   <option value="휴학생">휴학생</option>
                   <option value="졸업생">졸업생</option>
-                </select>
+                </ClubInput>
               </div>
               <div>
-                <label htmlFor="department" className="md:text-[13px] text-[11px] tracking-[-0.195px] text-[#565656]">
-                  학과
-                </label>
-
-                <input
-                  name="department"
-                  id="department"
-                  className="border md:text-[15px] text-[13px] rounded-[10px] p-1 leading-6 md:leading-7 w-52 md:w-60 block grow "
-                  value={modifyData?.department || ""}
-                  onChange={changeInput}
-                />
+                <ClubInput label="학과" name="department" value={modifyData?.department || ""} onChange={changeInput} />
               </div>
             </div>
 
             <div className="w-full">
-              <label htmlFor="language" className="md:text-[13px] text-[12px] tracking-[-0.195px] text-[#565656]">
-                언어
-              </label>
-
-              <div className="w-full">
-                <div className="w-full overflow-x-auto overflow-y-hidden items-center border rounded-[10px] p-1  flex grow ">
-                  {languageList.map((language) => (
-                    <button
-                      key={language}
-                      onClick={() => removeTag(language, "language")}
-                      className="bg-[#EFEFEF] rounded-[10px]    w-fit px-2 py-1 whitespace-nowrap text-xs border-none mt-1 mr-2 mb-1 gap-2 flex item-center"
-                    >
-                      {language}
-                      <svg
-                        className=" h-4"
-                        width="6"
-                        height="7"
-                        viewBox="0 0 6 7"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M1 1.31274L5 6.31241" stroke="#515151" stroke-linecap="round" />
-                        <path d="M1 6.3125L4.99955 1.3125" stroke="#515151" stroke-linecap="round" />
-                      </svg>
-                    </button>
-                  ))}
-                  <input
-                    className="w-full md:text-[15px] text-[12px] border-none bg-none outline-none"
-                    value={languageText}
-                    onChange={(e) => setLanguageText(e.target.value)}
-                    onKeyDown={(e) => pressTagInput(e, "language")}
-                    placeholder="언어를 입력해주세요"
-                  />
-                </div>
-              </div>
+              <ClubTagInput
+                label="언어"
+                name="language"
+                tagList={languageList}
+                onRemove={removeTag}
+                value={languageText}
+                onChange={setLanguageText}
+                onKeydown={pressTagInput}
+              />
             </div>
             <div className="w-full">
-              <label htmlFor="framework" className="md:text-[13px] text-[12px] tracking-[-0.195px] text-[#565656]">
-                프레임워크
-              </label>
-
-              <div className="w-full">
-                <div className="w-full overflow-x-auto overflow-y-hidden items-center border  rounded-[10px] p-1  flex grow ">
-                  {frameList.map((frame) => (
-                    <button
-                      key={frame}
-                      onClick={() => removeTag(frame, "framework")}
-                      className="bg-[#EFEFEF] rounded-[10px]    w-fit px-2 py-1 whitespace-nowrap text-xs border-none mt-1 mr-2 mb-1 gap-2 flex item-center"
-                    >
-                      {frame}
-                      <svg
-                        className=" h-4"
-                        width="6"
-                        height="7"
-                        viewBox="0 0 6 7"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M1 1.31274L5 6.31241" stroke="#515151" stroke-linecap="round" />
-                        <path d="M1 6.3125L4.99955 1.3125" stroke="#515151" stroke-linecap="round" />
-                      </svg>
-                    </button>
-                  ))}
-                  <input
-                    className="w-full md:text-[15px] text-[12px] border-none bg-none outline-none"
-                    value={frameText}
-                    onChange={(e) => setFrameText(e.target.value)}
-                    onKeyDown={(e) => pressTagInput(e, "framework")}
-                    placeholder="프레임워크를 입력해주세요"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className=" w-full">
-              <label htmlFor="blog" className="md:text-[13px] text-[12px] tracking-[-0.195px] text-[#565656]">
-                블로그
-              </label>
-
-              <input
-                name="blog"
-                id="blog"
-                className="border md:text-[15px] text-[13px] rounded-[10px] p-1 leading-6 md:leading-7 w-full block grow "
-                value={modifyData?.blog || ""}
-                onChange={changeInput}
+              <ClubTagInput
+                label="프레임워크"
+                name="framework"
+                tagList={frameList}
+                onRemove={removeTag}
+                value={frameText}
+                onChange={setFrameText}
+                onKeydown={pressTagInput}
               />
             </div>
             <div className=" w-full">
-              <label htmlFor="github_url" className="md:text-[13px] text-[12px] tracking-[-0.195px] text-[#565656]">
-                깃허브
-              </label>
-
-              <input
-                name="github_url"
-                id="github_url"
-                className="border md:text-[15px] text-[13px] rounded-[10px] p-1 leading-6 md:leading-7 w-full block grow "
-                value={modifyData?.github_url || ""}
-                onChange={changeInput}
-              />
+              <ClubInput name="blog" label="블로그" value={modifyData?.blog || ""} onChange={changeInput} />
+            </div>
+            <div className=" w-full">
+              <ClubInput name="github_url" label="깃허브" value={modifyData?.github_url || ""} onChange={changeInput} />
             </div>
           </div>
         )}
