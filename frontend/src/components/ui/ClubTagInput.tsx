@@ -1,17 +1,54 @@
 "use client";
-import React, { KeyboardEvent } from "react";
+import React, { Dispatch, KeyboardEvent, SetStateAction, useCallback } from "react";
 
 type Props = {
   value: string;
   label: string;
   name: string;
-  onChange: (value: string) => void;
-  onKeydown: (e: KeyboardEvent<HTMLInputElement>, name: string) => void;
+
   tagList: string[];
-  onRemove: (tag: string, name: string) => void;
+  setValue: Dispatch<SetStateAction<string>>;
+  setTagList: Dispatch<SetStateAction<string[]>>;
 };
 
-export default function ClubTagInput({ value, label, name, onChange, onKeydown, tagList, onRemove }: Props) {
+export default function ClubTagInput({
+  value,
+  label,
+  name,
+
+  tagList,
+  setTagList,
+  setValue,
+}: Props) {
+  const removeTag = React.useCallback(
+    (tag: string) => {
+      if (tagList.length > 1) {
+        const filteredTag = tagList.filter((item) => item !== tag);
+
+        setTagList(filteredTag);
+      } else {
+        setTagList([]);
+      }
+    },
+    [tagList]
+  );
+
+  const pressTagInput = React.useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        if (value.trim() === "") {
+          return;
+        } else if (tagList.find((prevFrame) => prevFrame === value.trim())) {
+          return;
+        } else {
+          setTagList((prev) => [...prev, value]);
+          setValue("");
+        }
+      }
+    },
+    [tagList, value]
+  );
+
   return (
     <>
       <label htmlFor={name} className="md:text-[13px] text-[12px] tracking-[-0.195px] text-[#565656]">
@@ -22,7 +59,7 @@ export default function ClubTagInput({ value, label, name, onChange, onKeydown, 
           {tagList.map((tag) => (
             <button
               key={tag}
-              onClick={() => onRemove(tag, name)}
+              onClick={() => removeTag(tag)}
               className="bg-[#EFEFEF] rounded-[10px]    w-fit px-2 py-1 whitespace-nowrap text-xs border-none mt-1 mr-2 mb-1 gap-2 flex item-center"
             >
               {tag}
@@ -44,8 +81,8 @@ export default function ClubTagInput({ value, label, name, onChange, onKeydown, 
             name={name}
             className="w-full md:text-[15px] text-[12px] border-none bg-none outline-none"
             value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onKeyDown={(e) => onKeydown(e, name)}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={pressTagInput}
             placeholder="프레임워크를 입력해주세요"
           />
         </div>

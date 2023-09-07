@@ -318,10 +318,9 @@ export default function Profile() {
                 label="언어"
                 name="language"
                 tagList={languageList}
-                onRemove={removeTag}
                 value={languageText}
-                onChange={setLanguageText}
-                onKeydown={pressTagInput}
+                setValue={setLanguageText}
+                setTagList={setLanguageList}
               />
             </div>
             <div className="w-full">
@@ -329,10 +328,9 @@ export default function Profile() {
                 label="프레임워크"
                 name="framework"
                 tagList={frameList}
-                onRemove={removeTag}
                 value={frameText}
-                onChange={setFrameText}
-                onKeydown={pressTagInput}
+                setValue={setFrameText}
+                setTagList={setFrameList}
               />
             </div>
             <div className=" w-full">
