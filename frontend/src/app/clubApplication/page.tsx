@@ -1,5 +1,10 @@
+import ApplicationForm from "@/components/ApplicationForm";
 import React from "react";
 
 export default function ClubApplicationPage() {
-  return <div></div>;
+  return (
+    <section>
+      <ApplicationForm />
+    </section>
+  );
 }

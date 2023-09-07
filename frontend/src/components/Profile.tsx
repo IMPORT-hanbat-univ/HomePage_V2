@@ -30,7 +30,7 @@ export default function Profile() {
   const setNotification = useSetRecoilState(notificationAtom);
   const [isPending, startTransition] = useTransition();
   const [frameText, setFrameText] = useState("");
-  const [frameList, setFrameList] = useState<string[]>(["test"]);
+  const [frameList, setFrameList] = useState<string[]>([]);
 
   const [languageText, setLanguageText] = useState("");
   const [languageList, setLanguageList] = useState<string[]>([]);
@@ -94,56 +94,6 @@ export default function Profile() {
       setModifyData({ ...modifyData, [e.target.name]: e.target.value });
     }
   };
-
-  const pressTagInput = React.useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>, type: string) => {
-      if (e.key === "Enter") {
-        if (type === "framework") {
-          if (frameText.trim() === "") {
-            return;
-          } else if (frameList.find((prevFrame) => prevFrame === frameText.trim())) {
-            return;
-          } else {
-            setFrameList((prev) => [...prev, frameText]);
-            setFrameText("");
-          }
-        } else {
-          if (languageText.trim() === "") {
-            return;
-          } else if (languageList.find((prevLanguage) => prevLanguage === languageText.trim())) {
-            return;
-          } else {
-            setLanguageList((prev) => [...prev, languageText]);
-            setLanguageText("");
-          }
-        }
-      }
-    },
-    [frameList, languageList, frameText, languageText]
-  );
-
-  const removeTag = React.useCallback(
-    (tag: string, type: string) => {
-      if (type === "framework") {
-        if (frameList.length > 1) {
-          const filteredTag = frameList.filter((item) => item !== tag);
-
-          setFrameList(filteredTag);
-        } else {
-          setFrameList([]);
-        }
-      } else {
-        if (languageList.length > 1) {
-          const filteredTag = languageList.filter((item) => item !== tag);
-
-          setLanguageList(filteredTag);
-        } else {
-          setLanguageList([]);
-        }
-      }
-    },
-    [frameList, languageList]
-  );
 
   const submitModify = (e: React.FormEvent) => {
     e.preventDefault();
@@ -345,7 +295,7 @@ export default function Profile() {
           <button
             onClick={submitModify}
             disabled={!isModify}
-            className={`px-2 py-1 ${
+            className={` py-1 ${
               isModify ? "bg-import-color" : "bg-[#A5E3B6]"
             } rounded-[10px]  text-white px-8 text-[12px] border-none `}
           >
