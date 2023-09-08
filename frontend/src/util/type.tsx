@@ -104,3 +104,15 @@ export type DetailUser = {
   framework?: string;
   language?: string;
 };
+
+export type RankApplication = {
+  userId: number;
+  nick_name: string;
+  email: string;
+  department: string;
+  grade: string;
+  blog?: string;
+  github_url?: string;
+  language: string;
+  framework: string;
+};

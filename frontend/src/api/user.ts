@@ -1,4 +1,4 @@
-import { DetailUser } from "@/util/type";
+import { DetailUser, RankApplication } from "@/util/type";
 
 export async function userWithdraw(userId: number, accessToken: string): Promise<boolean | string> {
   try {
@@ -133,5 +133,27 @@ export async function userProfileWithDrawal(accessToken: string) {
   } catch (err: any) {
     console.log(err);
     return "계정 탈퇴 과정에서 에러가 발생했습니다.";
+  }
+}
+
+export async function rankUp(data: RankApplication, accessToken: string) {
+  try {
+    const result = await fetch(`http://${process.env.NEXT_PUBLIC_BACK_NODE_ADRESS}/rankUp?requestRank=2`, {
+      body: JSON.stringify(data),
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+      },
+    });
+    if (result.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err: any) {
+    console.log(err);
+    return "등급 신청 과정에서 에러가 발생했습니다.";
   }
 }
