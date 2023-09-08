@@ -239,7 +239,7 @@ export default function Profile() {
         </div>
         <div className="w-full h-[1px] bg-[#C1C1C1] md:mb-7"></div>
 
-        {data?.rank > 0 && (
+        {data?.rank > 1 && (
           <div className="flex flex-col gap-3 md:gap-6">
             <div className="flex items-center gap-4 md:gap-6">
               <div>

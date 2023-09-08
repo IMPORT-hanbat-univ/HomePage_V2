@@ -1,21 +1,42 @@
 "use client";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react";
 import ClubInput from "./ui/ClubInput";
 import ClubTagInput from "./ui/ClubTagInput";
+import { notificationAtom } from "@/recoil/notification";
+import { useSetRecoilState } from "recoil";
+import { rankUp } from "@/api/user";
+import getClientCookie from "@/util/getClientCookie";
+import useMe from "@/hooks/useMe";
+import { useRouter } from "next/navigation";
+import { DecodeUser } from "@/util/type";
 
-export default function ApplicationForm() {
+type Props = {
+  setSuccess: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function ApplicationForm({ setSuccess }: Props) {
+  const { decodeUser, isLoading }: { decodeUser: DecodeUser; isLoading: boolean } = useMe();
   const [applicationData, setApplicationData] = useState({
     grade: "1학년",
     department: "",
     framework: "",
     language: "",
     github_url: "",
+    email: "",
     blog: "",
   });
   const [frameList, setFrameList] = useState<string[]>([]);
   const [languageList, setLanguageList] = useState<string[]>([]);
   const [frameText, setFrameText] = useState<string>("");
   const [languageText, setLanguageText] = useState<string>("");
+
+  const router = useRouter();
+
+  if (!isLoading && (!decodeUser || !decodeUser?.userId)) {
+    router.replace("/");
+  }
+
+  const setNotification = useSetRecoilState(notificationAtom);
 
   useEffect(() => {
     setApplicationData((prev) => {
@@ -27,16 +48,47 @@ export default function ApplicationForm() {
     setApplicationData({ ...applicationData, [e.target.name]: e.target.value });
   };
 
-  const submitApplication = (e: FormEvent) => {
+  const submitApplication = async (e: FormEvent) => {
     e.preventDefault();
     if (applicationData.department.trim() === "") {
       return;
+    }
+
+    try {
+      const data = { ...applicationData, userId: decodeUser.userId, nick_name: decodeUser.nick_name };
+      const accessToken = getClientCookie("accessToken");
+      const result = await rankUp(data, accessToken);
+      if (result) {
+        setSuccess(true);
+      } else {
+        setNotification({
+          type: "warning",
+          message: "등업 신청과정에서 에러가 발생했습니다.",
+          notificationType: "Warning",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      setNotification({
+        type: "warning",
+        message: "등업 신청과정에서 에러가 발생했습니다.",
+        notificationType: "Warning",
+      });
     }
   };
 
   return (
     <>
       <div className="flex flex-col gap-3 md:gap-6">
+        <div className="w-full">
+          <ClubInput
+            label={"email"}
+            type={"email"}
+            value={applicationData.email}
+            name={"email"}
+            onChange={changeInput}
+          />
+        </div>
         <div className="flex items-center gap-4 md:gap-6">
           <div>
             <ClubInput isSelect name={"grade"} value={applicationData.grade} onChange={changeInput} label="학년">
@@ -83,7 +135,7 @@ export default function ApplicationForm() {
       <div className="w-full flex justify-end mt-6 md:mt-10 ">
         <button
           onClick={submitApplication}
-          className={` py-1 bg-import-color rounded-[10px]  text-white px-8 text-[12px] border-none `}
+          className={` py-2 bg-import-color rounded-[10px]  text-white px-8 text-[12px] border-none `}
         >
           저장
         </button>
