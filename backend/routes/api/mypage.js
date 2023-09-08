@@ -113,13 +113,16 @@ router.post('/profile/modify',async(req,res)=>{
         
     }
 
-    delete user.id; // id 프로퍼티 삭제
-    user.userId = body.userId; // 새로운 userId 프로퍼티 추가
+     // id 프로퍼티 삭제
+    user.userId = Number(body.userId); // 새로운 userId 프로퍼티 추가
+    delete user.id;
+    
+    console.log("user.userId: ",user.userId,"user.userId's type: ",typeof user.userId);
 
     //쿠키 다시 발급
     const accessToken = jwt.sign({
         kakaoId: user.kakaoId,
-        userId: user.id,
+        userId: user.userId,
         nick_name: user.nick_name,
         rank: user.rank,
     }, process.env.ACCESS_TOKEN_SECRET,{
