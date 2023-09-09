@@ -125,17 +125,18 @@ textarea.w-md-editor-text-input {
 
 ::-webkit-scrollbar {
   width: 10px;
+  background: transparent; /* 스크롤바의 배경을 투명하게 설정합니다. */
 }
 
 ::-webkit-scrollbar-track-piece {
-  background-color: #fff;
+  background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background-color: #cbcbcb;
   outline: 2px solid #fff;
   outline-offset: -2px;
   border: 0.1px solid #b7b7b7;
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
