@@ -23,6 +23,7 @@ const userManagementRouter = require('./routes/admin/userManagement')
 const rankManagementRouter = require('./routes/admin/rankManagement');
 const adminPostRouter = require('./routes/admin/post');
 const mypageRouter = require('./routes/api/mypage')
+const rankUpRouter = require('./routes/api/rankUp')
 
 //const morganMiddleware = require('./routes/customMorgan');
 
@@ -64,6 +65,7 @@ app.use('/api/admin/userManagement',userManagementRouter);
 app.use('/api/admin/rankManagement',rankManagementRouter);
 app.use('/api/admin/post',adminPostRouter);
 app.use('/api/mypage',mypageRouter)
+app.use('/api/rankUp',rankUpRouter)
 
 app.use('/api/image', express.static(path.join(__dirname, 'image')));
 
