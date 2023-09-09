@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function RankApplication() {
   const [isSuccess, setSuccess] = useState(false);
+
   if (isSuccess) {
     return (
       <section className="w-full max-w-4xl px-4 mx-auto my-10 md:my-16">
@@ -15,11 +16,6 @@ export default function RankApplication() {
       </section>
     );
   } else {
-    return (
-      <section className="w-full max-w-4xl px-4 mx-auto my-6 md:my-12">
-        <h2 className="px-4 py-6 md:py-10  text-2xl md:text-4xl font-bold">등업 신청서</h2>
-        <ApplicationForm setSuccess={setSuccess} />
-      </section>
-    );
+    return <ApplicationForm setSuccess={setSuccess} />;
   }
 }
