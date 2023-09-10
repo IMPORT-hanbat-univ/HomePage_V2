@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const path = require("path");
 
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: true,
+  openAnalyzer: true,
+});
+const removeImports = require("next-remove-imports")();
+
 const nextConfig = {
   reactStrictMode: false,
   experimental: {
@@ -15,6 +21,4 @@ const nextConfig = {
   },
 };
 
-const removeImports = require("next-remove-imports")();
-
-module.exports = removeImports(nextConfig);
+module.exports = withBundleAnalyzer(removeImports(nextConfig));

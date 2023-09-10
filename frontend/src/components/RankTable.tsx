@@ -121,7 +121,7 @@ export default function RankTable({ currentRank, searchValue, requestRank, user 
               {userData &&
                 userData.length > 0 &&
                 userData.map((user: DetailUser) => (
-                  <tr className="text-center flex items-center">
+                  <tr className="text-center flex items-center" key={user.userId}>
                     <td className="w-[5%] py-4">
                       <input
                         type="checkbox"
