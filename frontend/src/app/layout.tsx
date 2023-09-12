@@ -1,6 +1,5 @@
 import Recoil from "@/components/ui/Recoil";
 import "./global.scss";
-import ReactQuery from "@/components/ReactQuery";
 import Footer from "@/components/Footer";
 
 import Header from "@/components/Header";
@@ -21,12 +20,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="min-h-screen relative overflow-x-hidden">
           <Recoil>
-            <ReactQuery>
-              <Header />
-              <Notification />
-              <div className=" z-0 relative  overflow-x-hidden">{children}</div>
-              <div id="modal"></div>
-            </ReactQuery>
+            <Header />
+            <Notification />
+            <div className=" z-0 relative  overflow-x-hidden">{children}</div>
+            <div id="modal"></div>
           </Recoil>
         </div>
         <Footer />

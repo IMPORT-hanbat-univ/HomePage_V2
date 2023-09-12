@@ -17,11 +17,7 @@ export default function MobileHeader() {
         <span className={hanuman.className}>#IMPORT</span>
       </Link>
 
-      <MobileMenu>
-        <div className="w-full">
-          <UserNav />
-        </div>
-      </MobileMenu>
+      <MobileMenu />
     </header>
   );
 }

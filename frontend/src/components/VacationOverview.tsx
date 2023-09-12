@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import ScrollAnimationContainer from "./ui/ScrollAnimationContainver";
+import ScrollAnimationContainer from "./ui/ScrollAnimationContainer";
 import CarouselContainer from "./ui/CarouselCantainer";
 
 export default function VacationOverview() {

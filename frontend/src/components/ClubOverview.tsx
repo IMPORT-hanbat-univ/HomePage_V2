@@ -1,5 +1,5 @@
 import React from "react";
-import ScrollAnimationContainer from "./ui/ScrollAnimationContainver";
+import ScrollAnimationContainer from "./ui/ScrollAnimationContainer";
 import OverviewContainer from "./ui/OverviewContainer";
 import Image from "next/image";
 import ImportMobile from "../../public/images/ImportMobile.svg";
