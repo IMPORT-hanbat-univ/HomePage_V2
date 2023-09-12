@@ -53,7 +53,6 @@ export default function DevNewsInfo() {
           />
           {user && Object.keys(user).length > 0 && (
             <Link
-              prefetch={false}
               href="/edit?category=devNews"
               className="py-1 px-3 rounded w-auto  text-white border-none outline-none bg-import-color "
             >

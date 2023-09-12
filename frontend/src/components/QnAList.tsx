@@ -62,7 +62,6 @@ export default function QnAList() {
           />
           {user && Object.keys(user).length > 0 && (
             <Link
-              prefetch={false}
               href="/edit?category=qna"
               className="py-1 px-3 rounded w-auto  text-white border-none outline-none bg-import-color "
             >

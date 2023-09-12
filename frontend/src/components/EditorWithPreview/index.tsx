@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./EditorWithPreview.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
 import { BiArrowBack } from "react-icons/bi";
-import MarkdownViewer from "../MarkdownViewer";
+// import MarkdownViewer from "../MarkdownViewer";
 import MarkdownEditor from "../MarkdownEditor";
 import { useRouter } from "next/navigation";
 
@@ -11,9 +11,10 @@ import { useSetRecoilState } from "recoil";
 import { notificationAtom } from "@/recoil/notification";
 
 import ModalPortal from "../ui/ModalPortal";
-import EditModalContainer from "../ui/EditModalContainer";
-import EditModal from "../EditModal";
+// import EditModalContainer from "../ui/EditModalContainer";
+// import EditModal from "../EditModal";
 import useMe from "@/hooks/useMe";
+import lazyComponent from "@/util/lazyComponent";
 
 type Props = {
   initTitle?: string;
@@ -22,6 +23,11 @@ type Props = {
   initTopic?: string;
   category?: string;
 };
+
+const EditModalContainer = lazyComponent(() => import("../ui/EditModalContainer"));
+const EditModal = lazyComponent(() => import("../EditModal"));
+
+const MarkdownViewer = lazyComponent(() => import("../MarkdownViewer"));
 
 export default function EditorWithPreview({ initContent, initTitle, initTagList, initTopic, category }: Props) {
   const { decodeUser, error, isLoading } = useMe();
@@ -46,6 +52,11 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
   //const nick_name: string = decodeUser.nick_name;
   //const nick_name: string = decodeUser?.nick_name;
   console.log("nick_name!!!!!!!!!!", nick_name);
+
+  useEffect(() => {
+    MarkdownViewer.preload();
+  }, []);
+
   const pressTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (tagText.trim() === "") {
@@ -85,6 +96,11 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
       return;
     }
     setModal(true);
+  };
+
+  const handleImportModal = () => {
+    EditModalContainer.preload();
+    EditModal.preload();
   };
 
   return (
@@ -133,6 +149,7 @@ export default function EditorWithPreview({ initContent, initTitle, initTagList,
 
             <button
               onClick={handleOpenModal}
+              onMouseEnter={handleImportModal}
               className="h-10 text-lg inline-flex items-center justify-center font-bold cursor-pointer outline-none border-none px-5 bg-green-300 text-white rounded-sm hover:bg-green-200"
             >
               완료
