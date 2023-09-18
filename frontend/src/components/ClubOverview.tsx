@@ -2,9 +2,8 @@ import React from "react";
 import ScrollAnimationContainer from "./ui/ScrollAnimationContainer";
 import OverviewContainer from "./ui/OverviewContainer";
 import Image from "next/image";
-import ImportMobile from "../../public/images/ImportMobile.svg";
 import AwsSvg from "../../public/images/aws.svg";
-import ImportWeb from "../../public/images/import_web.svg";
+
 export default function ClubOverview() {
   return (
     <section className="flex flex-col items-center md:gap-52 gap-44 mt-16 md:mt-24">
@@ -31,13 +30,21 @@ export default function ClubOverview() {
           <br />
           유지보수의 경험까지!`}
         >
-          <Image
-            src={ImportWeb}
-            alt="1"
-            height={385}
-            width={600}
-            className="max-md:w-[385px]  max-md:h-[230px] md:mt-32 mb-4 mr-3 md:mr-24 object-cover"
-          />
+          <picture className="w-[385px]  h-[230px] md:w-[600px] md:h-[385px] lg:mt-32 mb-4 mr-3 lg:mr-24 object-cover">
+            <source
+              height={385}
+              width={600}
+              className="w-[385px]  h-[230px] md:w-[600px] md:h-[385px]"
+              srcSet={"/images/import-web-webp.webp"}
+              type="image/webp"
+            />
+            <img
+              height={385}
+              width={600}
+              className="w-[385px]  h-[230px] md:w-[600px] md:h-[385px]"
+              src={"/images/import-web.png"}
+            />
+          </picture>
         </OverviewContainer>
       </ScrollAnimationContainer>
       <ScrollAnimationContainer>
@@ -50,13 +57,21 @@ export default function ClubOverview() {
           <br /> 동아리 어플 개발 프로젝트
          `}
         >
-          <Image
-            src={ImportMobile}
-            alt="1"
-            height={570}
-            width={500}
-            className="max-md:w-[200px] max-md:h-[230px] rotate-[-30deg] mt-8 md:ml-8 object-cover"
-          />
+          <picture className="w-[200px]  h-[230px] md:w-[570px] md:h-[500px] mt-8 lg:ml-8 object-cover">
+            <source
+              height={570}
+              width={500}
+              className="w-[200px]  h-[230px] md:w-[570px] md:h-[500px]"
+              srcSet={"/images/import-mobile-webp.webp"}
+              type="image/webp"
+            />
+            <img
+              height={570}
+              width={500}
+              className="w-[200px]  h-[230px] md:w-[570px] md:h-[500px]"
+              src={"/images/import-mobile.png"}
+            />
+          </picture>
         </OverviewContainer>
       </ScrollAnimationContainer>
       <ScrollAnimationContainer>
