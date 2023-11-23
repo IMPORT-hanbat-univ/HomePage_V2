@@ -3,6 +3,7 @@ import React from "react";
 import cls from "classnames";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
+import Link from "next/link";
 export default function PatchnoteTree({ monthList, monthDataList, month, setMonth }) {
   return (
     <div className="relative w-full ml-36">
@@ -36,12 +37,14 @@ export default function PatchnoteTree({ monthList, monthDataList, month, setMont
             key={monthData.id}
             className="hover:text-light-gray cursor-pointer"
           >
-            <h3 className="mb-1 text-base font-bold leading-5 text-light-gray">
-              {dayjs(monthData.createdAt).format("YYYY.MM.DD")}
-            </h3>
-            <h3 className="mb-8 text-base font-semibold leading-6 whitespace-nowrap  overflow-hidden  text-ellipsis">
-              {monthData.title}
-            </h3>
+            <Link href={"/project/1/1"}>
+              <h3 className="mb-1 text-base font-bold leading-5 text-light-gray">
+                {dayjs(monthData.createdAt).format("YYYY.MM.DD")}
+              </h3>
+              <h3 className="mb-8 text-base font-semibold leading-6 whitespace-nowrap  overflow-hidden  text-ellipsis">
+                {monthData.title}
+              </h3>
+            </Link>
           </motion.li>
         ))}
       </ul>

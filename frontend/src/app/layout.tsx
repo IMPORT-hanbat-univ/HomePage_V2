@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 
 import Header from "@/components/Header";
 import Notification from "@/components/ui/Notification";
+import ReactQuery from "@/components/ReactQuery";
 
 export const metadata = {
   title: "IMPORT",
@@ -20,10 +21,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="min-h-screen relative overflow-x-hidden">
           <Recoil>
-            <Header />
-            <Notification />
-            <div className=" z-0 relative  overflow-x-hidden">{children}</div>
-            <div id="modal"></div>
+            <ReactQuery>
+              <Header />
+              <Notification />
+
+              <div className=" z-0 relative  overflow-x-hidden">{children}</div>
+              <div id="modal"></div>
+            </ReactQuery>
           </Recoil>
         </div>
         <Footer />

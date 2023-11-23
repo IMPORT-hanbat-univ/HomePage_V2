@@ -21,4 +21,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withBundleAnalyzer(removeImports(nextConfig));
+module.exports = removeImports(nextConfig);
